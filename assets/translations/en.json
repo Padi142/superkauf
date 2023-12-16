@@ -1,6 +1,15 @@
 {
   "app_title": "SuperKauf",
+
+
+
   "feed_page_title": "Feed",
   "shopping_list_page_title": "Shopping List",
-  "discover_page_title": "Discover"
+  "discover_page_title": "Discover",
+  "profile_page_title": "Profile",
+  "login_page_title": "Log in",
+
+
+
+  "login_button_text": "Log in"
 }

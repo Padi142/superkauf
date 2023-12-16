@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
 import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_state.dart';
 import 'package:superkauf/generic/constants.dart';
+import 'package:superkauf/library/app.dart';
 import 'package:superkauf/library/app_navigation.dart';
 
 import '../../../library/app_screen.dart';
@@ -26,36 +27,39 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: BlocBuilder<NavigationBloc, NavigationState>(
-          builder: (context, state) {
+      child: BlocBuilder<NavigationBloc, NavigationState>(builder: (context, state) {
         switch (state) {
           case final NavigationStateLoaded loaded:
             return Scaffold(
+              backgroundColor: App.appTheme.colorScheme.background,
               appBar: AppBar(
                 title: Text('app_title'.tr()),
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      BlocProvider.of<NavigationBloc>(context).add(const OpenProfileScreen());
+                    },
+                    icon: const Icon(Icons.person),
+                  ),
+                ],
               ),
               bottomNavigationBar: NavigationBar(
                 onDestinationSelected: (index) {
                   switch (index) {
                     case 0:
-                      BlocProvider.of<NavigationBloc>(context)
-                          .add(OpenFeedScreen(index));
+                      BlocProvider.of<NavigationBloc>(context).add(OpenFeedScreen(index));
                       break;
                     case 1:
-                      BlocProvider.of<NavigationBloc>(context)
-                          .add(OpenStoresScreen(index));
+                      BlocProvider.of<NavigationBloc>(context).add(OpenStoresScreen(index));
                       break;
                     case 2:
-                      BlocProvider.of<NavigationBloc>(context)
-                          .add(OpenDiscoverScreen(index));
+                      BlocProvider.of<NavigationBloc>(context).add(OpenDiscoverScreen(index));
                       break;
                     case 3:
-                      BlocProvider.of<NavigationBloc>(context)
-                          .add(OpenMyChannelScreen(index));
+                      BlocProvider.of<NavigationBloc>(context).add(OpenMyChannelScreen(index));
                       break;
                     case 4:
-                      BlocProvider.of<NavigationBloc>(context)
-                          .add(OpenShoppingListScreen(index));
+                      BlocProvider.of<NavigationBloc>(context).add(OpenShoppingListScreen(index));
                       break;
                     default:
                       break;
@@ -85,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   NavigationDestination(
                     selectedIcon: Icon(Icons.shopping_basket),
                     icon: Icon(Icons.shopping_basket_outlined),
-                    label: 'My Channel',
+                    label: 'Saved',
                   ),
                 ],
                 selectedIndex: loaded.bottomNavIndex,

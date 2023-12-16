@@ -27,6 +27,8 @@ dependencies:
   retrofit: ^4.0.3
   json_annotation: ^4.8.1
   font_awesome_flutter: ^10.6.0
+  flutter_dotenv: ^5.1.0
+  flutter_svg: ^2.0.9
 
 
 dev_dependencies:
@@ -51,3 +53,5 @@ flutter:
   uses-material-design: true
   assets:
     - assets/translations/
+    - assets/images/
+    - .env

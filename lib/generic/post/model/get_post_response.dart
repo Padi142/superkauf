@@ -17,8 +17,7 @@ class FeedPostModel extends Equatable {
     required this.user,
   });
 
-  factory FeedPostModel.fromJson(Map<String, dynamic> json) =>
-      _$FeedPostModelFromJson(json);
+  factory FeedPostModel.fromJson(Map<String, dynamic> json) => _$FeedPostModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$FeedPostModelToJson(this);
 

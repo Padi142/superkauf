@@ -3,40 +3,55 @@ import 'package:google_fonts/google_fonts.dart' as fonts;
 
 abstract class AppTheme {
   String get appFont;
+
   Brightness get brightness;
 
   //colors
   Color get colorPrimary;
+
   Color get colorSecondary;
+
   Color get colorBlack;
-  Color get colorBackground1;
-  Color get colorBackground2;
-  Color get colorBackground3;
+
+  Color get colorBackground;
+
   Color get colorText;
+
   Color get colorTextSecondary;
+
   Color get colorIcon;
+
   Color get colorInactive;
+
   Color get colorNavbar;
+
   Color get colorActive;
+
   Color get colorActive2;
 
   Color get colorError;
+
   Color get colorWarning;
+
   Color get colorSuccess;
 
   //text
   TextStyle get textSuperHeader => TextStyle(fontSize: 35.0, color: colorText, fontWeight: FontWeight.bold);
+
   TextStyle get textHeader => TextStyle(fontSize: 18.0, color: colorText, fontWeight: FontWeight.bold);
+
   TextStyle get textTitle => TextStyle(
         fontSize: 15.0,
         color: colorText,
         fontWeight: FontWeight.normal,
       );
+
   TextStyle get textBody => TextStyle(
         fontSize: 12.0,
         color: colorText,
         fontWeight: FontWeight.normal,
       );
+
   TextStyle get textNote => TextStyle(
         fontSize: 10.0,
         color: colorText,
@@ -47,7 +62,7 @@ abstract class AppTheme {
     final ThemeData theme = ThemeData(
         brightness: brightness,
         fontFamily: appFont,
-        scaffoldBackgroundColor: colorBackground2,
+        scaffoldBackgroundColor: colorBackground,
         primaryColor: colorPrimary,
         primaryColorLight: colorPrimary,
         primaryColorDark: colorPrimary,

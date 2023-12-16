@@ -4,12 +4,15 @@ import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:superkauf/feature/account/account_module.dart';
 import 'package:superkauf/feature/feed/feed_module.dart';
 import 'package:superkauf/feature/home/home_module.dart';
 import 'package:superkauf/feature/init/init_module.dart';
+import 'package:superkauf/feature/login/login_module.dart';
 import 'package:superkauf/generic/api/post_api.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/locale/locale_resource.dart';
@@ -25,11 +28,15 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
+  await dotenv.load(fileName: ".env");
+
   await Supabase.initialize(
-    url: const String.fromEnvironment('SUPABASE_URL'),
-    anonKey: const String.fromEnvironment('SUPABASE_SECRET'),
-    debug: true,
-  );
+      url: dotenv.env['SUPABASE_URL'] ?? '',
+      anonKey: dotenv.env['SUPABASE_SECRET'] ?? '',
+      debug: true,
+      authOptions: const FlutterAuthClientOptions(
+        authFlowType: AuthFlowType.pkce,
+      ));
 
   final AppConfig config = appConfig();
 
@@ -80,6 +87,8 @@ List<AppModule> modules() {
     HomeModule(),
     FeedModule(),
     PostModule(),
+    LoginModule(),
+    AccountModule(),
   ];
 }
 
@@ -91,22 +100,16 @@ class MainTheme extends AppTheme {
   Brightness get brightness => Brightness.dark;
 
   @override
-  Color get colorPrimary => const Color(0xFFEC4899);
+  Color get colorPrimary => const Color(0xFF7286D3);
 
   @override
-  Color get colorSecondary => const Color(0xff6366F1);
+  Color get colorSecondary => const Color(0xff8EA7E9);
 
   @override
   Color get colorBlack => const Color(0xFF000000);
 
   @override
-  Color get colorBackground1 => const Color(0xFF151133);
-
-  @override
-  Color get colorBackground2 => const Color(0xFF302B63);
-
-  @override
-  Color get colorBackground3 => const Color(0xFF24243E);
+  Color get colorBackground => const Color(0xFFFFF2F2);
 
   @override
   Color get colorText => const Color(0xFFFFFFFF);
@@ -118,7 +121,7 @@ class MainTheme extends AppTheme {
   Color get colorIcon => const Color(0xff344C73);
 
   @override
-  Color get colorInactive => const Color(0xff2B2B2B);
+  Color get colorInactive => const Color(0xffE5E0FF);
 
   @override
   Color get colorNavbar => const Color(0xFFAFAFAF);

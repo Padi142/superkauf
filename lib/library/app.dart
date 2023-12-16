@@ -80,17 +80,28 @@ class App {
         labelMedium: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
         labelSmall: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
       ),
-      primarySwatch: const MaterialColor(0xFF2BC261, <int, Color>{
-        50: Color(0xFFE6F9E2),
-        100: Color(0xFFC4E5C4),
-        200: Color(0xFFA1D8A3),
-        300: Color(0xFF7FCC82),
-        400: Color(0xFF63C16A),
-        500: Color(0xFF2BC261), // primary color
-        600: Color(0xFF28B95A),
-        700: Color(0xFF24B151),
-        800: Color(0xFF21A848),
-        900: Color(0xFF1C9B39),
+      colorScheme: const ColorScheme.light(
+        primary: Color(0xFF7286D3),
+        secondary: Color(0xFF8EA7E9),
+        surface: Color(0xFFE5E0FF),
+        background: Color(0xFFFFF2F2),
+        error: Color(0xFFB00020),
+        onPrimary: Color(0xFFFFFFFF),
+        onSecondary: Color(0xFFFFFFFF),
+        onSurface: Color(0xFF000000),
+        onBackground: Color(0xFF000000),
+        onError: Color(0xFFFFFFFF),
+      ),
+      primarySwatch: const MaterialColor(0xFF7286D3, <int, Color>{
+        50: Color(0xFFFFF2F2),
+        100: Color(0xFFE5E0FF),
+        200: Color(0xFFE5E0FF),
+        300: Color(0xFF8EA7E9),
+        400: Color(0xFF8EA7E9),
+        500: Color(0xFF7286D3), // primary color
+        600: Color(0xFF7286D3), // primary color
+        700: Color(0xFF7286D3), // primary color
+        800: Color(0xFF7286D3), // primary color
       }),
     );
   }
@@ -124,8 +135,12 @@ extension CustomTextStyles on TextTheme {
 // custom colors
 extension CustomColors on ThemeData {
   Color get failureColor => Colors.red;
+
   Color get successColor => Colors.green;
+
   Color get occupiedColor => Colors.orange;
+
   Color get secondaryColor => Colors.blue;
+
   Color get greyShadeColor => const Color(0xFFE8E8E8);
 }
