@@ -8,8 +8,14 @@
   "discover_page_title": "Discover",
   "profile_page_title": "Profile",
   "login_page_title": "Log in",
+  "create_post_title": "Create post",
 
+  "description_post_create_label": "Describe what did you find!",
+  "price_post_create_label": "Price",
+  "store_post_create_label": "Store",
+  "button_post_create_label": "Create post",
 
+  "logout_button_text": "Log out",
 
   "login_button_text": "Log in"
 }

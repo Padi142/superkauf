@@ -29,6 +29,8 @@ dependencies:
   font_awesome_flutter: ^10.6.0
   flutter_dotenv: ^5.1.0
   flutter_svg: ^2.0.9
+  image_picker: ^1.0.5
+  cached_network_image: ^3.3.0
 
 
 dev_dependencies:

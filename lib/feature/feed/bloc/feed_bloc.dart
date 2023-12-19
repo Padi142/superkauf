@@ -12,6 +12,7 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     required this.getPostsUseCase,
   }) : super(const FeedState.loading()) {
     on<GetFeed>(_onGetFeed);
+    on<ReloadFeed>(_onReloadFeed);
   }
 
   Future<void> _onGetFeed(
@@ -25,5 +26,15 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     }, failure: (failure) {
       emit(FeedState.error(failure.message));
     });
+  }
+
+  Future<void> _onReloadFeed(
+    ReloadFeed event,
+    Emitter<FeedState> emit,
+  ) async {
+    if (event.wait) {
+      await Future.delayed(const Duration(milliseconds: 400));
+    }
+    add(const GetFeed());
   }
 }

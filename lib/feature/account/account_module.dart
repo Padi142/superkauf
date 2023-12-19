@@ -3,6 +3,8 @@ import 'package:get_it/get_it.dart';
 import 'package:superkauf/feature/account/bloc/account_bloc.dart';
 import 'package:superkauf/feature/account/use_case/account_navigation.dart';
 import 'package:superkauf/feature/account/view/account_screen.dart';
+import 'package:superkauf/generic/user/use_case/get_user_by_uid_use_case.dart';
+import 'package:superkauf/generic/user/use_case/updat_user_use_case.dart';
 
 import '../../library/app_module.dart';
 
@@ -15,7 +17,11 @@ class AccountModule extends AppModule {
   @override
   void registerBloc() {
     GetIt.I.registerFactory<AccountBloc>(
-      () => AccountBloc(accountNavigation: GetIt.I.get<AccountNavigation>()),
+      () => AccountBloc(
+        accountNavigation: GetIt.I.get<AccountNavigation>(),
+        getUserByUidUseCase: GetIt.I.get<GetUserByUidUseCase>(),
+        updateUserUseCase: GetIt.I.get<UpdateUserUseCase>(),
+      ),
     );
   }
 

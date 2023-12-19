@@ -10,7 +10,7 @@ class AppleLoginUseCase extends UnitUseCase<void> {
     final supabase = Supabase.instance.client;
     await supabase.auth.signInWithOAuth(
       OAuthProvider.apple,
-      redirectTo: "io.padisoft.superkauf//login-callback/",
+      redirectTo: "io.padisoft.superkauf://login-callback/",
     );
   }
 }

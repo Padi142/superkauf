@@ -10,7 +10,7 @@ class SpotifyLoginUseCase extends UnitUseCase<void> {
     final supabase = Supabase.instance.client;
     await supabase.auth.signInWithOAuth(
       OAuthProvider.spotify,
-      redirectTo: "io.padisoft.superkauf//login-callback/",
+      redirectTo: "io.padisoft.superkauf://login-callback/",
     );
   }
 }

@@ -10,3 +10,9 @@ abstract class FeedEvent extends Equatable {
 class GetFeed extends FeedEvent {
   const GetFeed();
 }
+
+class ReloadFeed extends FeedEvent {
+  final bool wait;
+
+  const ReloadFeed({this.wait = false});
+}

@@ -1,6 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:superkauf/feature/feed/bloc/feed_bloc.dart';
 import 'package:superkauf/feature/feed/view/components/time_ago_widget.dart';
+import 'package:superkauf/generic/post/bloc/post_bloc.dart';
 import 'package:superkauf/generic/post/model/get_post_response.dart';
+import 'package:superkauf/generic/widget/app_progress.dart';
 import 'package:superkauf/library/app.dart';
 
 class FeedPostContainer extends StatelessWidget {
@@ -44,12 +49,40 @@ class FeedPostContainer extends StatelessWidget {
                                 width: 5,
                               ),
                               Text(
-                                post.user.name,
+                                post.user.username,
                                 style: App.appTheme.textTheme.titleSmall,
                               ),
                               const Spacer(),
                               TimeAgoWidget(
                                 dateTime: post.post.createdAt,
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              PopupMenuButton<String>(
+                                icon: const Icon(
+                                  Icons.more_vert,
+                                ),
+                                // Icon for three dots
+                                onSelected: (String value) async {
+                                  switch (value) {
+                                    case 'delete':
+                                      {
+                                        BlocProvider.of<PostBloc>(context).add(DeletePost(postId: post.post.id.toString()));
+
+                                        BlocProvider.of<FeedBloc>(context).add(const ReloadFeed(wait: true));
+                                        break;
+                                      }
+                                    default:
+                                      break;
+                                  }
+                                },
+                                itemBuilder: (BuildContext context) => [
+                                  const PopupMenuItem<String>(
+                                    value: 'delete',
+                                    child: Text('Delete post'),
+                                  ),
+                                ],
                               ),
                               const SizedBox(
                                 width: 5,
@@ -68,7 +101,18 @@ class FeedPostContainer extends StatelessWidget {
                                     children: [
                                       Container(
                                         width: constraints.maxWidth,
-                                        decoration: BoxDecoration(image: DecorationImage(image: NetworkImage(post.post.image), fit: BoxFit.cover)),
+                                        child: CachedNetworkImage(
+                                          imageUrl: post.post.image,
+                                          imageBuilder: (context, imageProvider) => Container(
+                                            decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.cover,
+                                            )),
+                                          ),
+                                          placeholder: (context, url) => const Center(child: AppProgress()),
+                                          errorWidget: (context, url, error) => const Icon(Icons.error),
+                                        ),
                                       ),
                                       Positioned(
                                         right: 2,

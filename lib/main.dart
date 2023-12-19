@@ -9,14 +9,18 @@ import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:superkauf/feature/account/account_module.dart';
+import 'package:superkauf/feature/create_post/create_post_module.dart';
 import 'package:superkauf/feature/feed/feed_module.dart';
 import 'package:superkauf/feature/home/home_module.dart';
 import 'package:superkauf/feature/init/init_module.dart';
 import 'package:superkauf/feature/login/login_module.dart';
+import 'package:superkauf/feature/my_channel/my_channel_module.dart';
 import 'package:superkauf/generic/api/post_api.dart';
+import 'package:superkauf/generic/api/user_api.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/locale/locale_resource.dart';
 import 'package:superkauf/generic/post/posts_module.dart';
+import 'package:superkauf/generic/user/user_module.dart';
 import 'package:superkauf/library/app_navigation.dart';
 
 import 'library/app.dart';
@@ -65,6 +69,7 @@ Future<void> main() async {
         () => LocaleResource(appConfig: config),
       );
       GetIt.I.registerFactory<PostApi>(() => PostApi(_dio(config.endpoint)));
+      GetIt.I.registerFactory<UserApi>(() => UserApi(_dio(config.endpoint)));
     },
   );
 
@@ -75,7 +80,7 @@ Future<void> main() async {
 
 AppConfig appConfig() {
   return AppConfig(
-    endpoint: 'https://superkauf-api.krejzac.cz/', //'
+    endpoint: dotenv.env['API_URL'] ?? '',
     languages: ['en'],
     theme: MainTheme(),
   );
@@ -89,6 +94,9 @@ List<AppModule> modules() {
     PostModule(),
     LoginModule(),
     AccountModule(),
+    CreatePostModule(),
+    MyChannelModule(),
+    UserModule(),
   ];
 }
 

@@ -14,7 +14,9 @@ class OpenMyChannelScreen extends NavigationEvent {
 }
 
 class OpenProfileScreen extends NavigationEvent {
-  const OpenProfileScreen();
+  final bool shouldReplace;
+
+  const OpenProfileScreen({this.shouldReplace = false});
 
   @override
   List<Object?> get props => [];
@@ -51,6 +53,13 @@ class OpenStoresScreen extends NavigationEvent {
   final int? index;
 
   const OpenStoresScreen(this.index);
+
+  @override
+  List<Object?> get props => [];
+}
+
+class GoToCreatePostScreen extends NavigationEvent {
+  const GoToCreatePostScreen();
 
   @override
   List<Object?> get props => [];
