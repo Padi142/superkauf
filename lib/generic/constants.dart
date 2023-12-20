@@ -9,6 +9,7 @@ class ScreenPath {
   static const String shoppingListScreen = '/shoppingList';
   static const String loginScreen = '/login';
   static const String createPostScreen = '/create_post';
+  static const String postDetailScreen = '/post_detail';
 }
 
 class Constants {

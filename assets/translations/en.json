@@ -1,7 +1,8 @@
 {
   "app_title": "SuperKauf",
 
-
+  "error__validate_min_length": "Text is short",
+  "error__validate_empty": "Can not be empty",
 
   "feed_page_title": "Feed",
   "shopping_list_page_title": "Shopping List",
@@ -13,7 +14,15 @@
   "description_post_create_label": "Describe what did you find!",
   "price_post_create_label": "Price",
   "store_post_create_label": "Store",
-  "button_post_create_label": "Create post",
+  "button_post_create_label": "Create a post!",
+
+  "post_tags_label": "Tags",
+
+  "no_posts_for_store_1":"No posts for this store yet",
+  "no_posts_for_store_2":"Maybe you could go out and find something!",
+
+  "no_posts_for_user_1":"You haven't posted anything yet",
+  "no_posts_for_user_2":"Try posting something with that big button down there!",
 
   "logout_button_text": "Log out",
 

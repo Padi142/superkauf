@@ -15,11 +15,15 @@ import 'package:superkauf/feature/home/home_module.dart';
 import 'package:superkauf/feature/init/init_module.dart';
 import 'package:superkauf/feature/login/login_module.dart';
 import 'package:superkauf/feature/my_channel/my_channel_module.dart';
+import 'package:superkauf/feature/post_detail/post_detail_module.dart';
+import 'package:superkauf/feature/store_posts/store_posts_module.dart';
 import 'package:superkauf/generic/api/post_api.dart';
+import 'package:superkauf/generic/api/store_api.dart';
 import 'package:superkauf/generic/api/user_api.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/locale/locale_resource.dart';
 import 'package:superkauf/generic/post/posts_module.dart';
+import 'package:superkauf/generic/store/store_module.dart';
 import 'package:superkauf/generic/user/user_module.dart';
 import 'package:superkauf/library/app_navigation.dart';
 
@@ -37,7 +41,6 @@ Future<void> main() async {
   await Supabase.initialize(
       url: dotenv.env['SUPABASE_URL'] ?? '',
       anonKey: dotenv.env['SUPABASE_SECRET'] ?? '',
-      debug: true,
       authOptions: const FlutterAuthClientOptions(
         authFlowType: AuthFlowType.pkce,
       ));
@@ -70,6 +73,7 @@ Future<void> main() async {
       );
       GetIt.I.registerFactory<PostApi>(() => PostApi(_dio(config.endpoint)));
       GetIt.I.registerFactory<UserApi>(() => UserApi(_dio(config.endpoint)));
+      GetIt.I.registerFactory<StoreApi>(() => StoreApi(_dio(config.endpoint)));
     },
   );
 
@@ -88,15 +92,18 @@ AppConfig appConfig() {
 
 List<AppModule> modules() {
   return [
+    PostModule(),
     InitModule(),
     HomeModule(),
     FeedModule(),
-    PostModule(),
     LoginModule(),
     AccountModule(),
     CreatePostModule(),
     MyChannelModule(),
     UserModule(),
+    PostDetailModule(),
+    StoreModule(),
+    StorePostsModule(),
   ];
 }
 
@@ -167,6 +174,7 @@ class MainWidget extends StatelessWidget {
     );
 
     return MaterialApp(
+      showSemanticsDebugger: false,
       navigatorKey: AppNavigation().navigationKey,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,

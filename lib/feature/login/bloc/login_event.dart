@@ -14,6 +14,7 @@ class CallbackEvent extends LoginEvent {
 class EmailLogin extends LoginEvent {
   final String email;
   final String password;
+
   const EmailLogin({required this.email, required this.password});
 }
 
@@ -31,4 +32,8 @@ class AppleLogin extends LoginEvent {
 
 class SpotifyEvent extends LoginEvent {
   const SpotifyEvent();
+}
+
+class CreateUserProfile extends LoginEvent {
+  const CreateUserProfile();
 }

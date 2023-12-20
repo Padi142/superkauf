@@ -35,6 +35,7 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     if (event.wait) {
       await Future.delayed(const Duration(milliseconds: 400));
     }
+    emit(const FeedState.loading());
     add(const GetFeed());
   }
 }

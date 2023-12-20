@@ -4,8 +4,11 @@ import 'package:superkauf/generic/post/bloc/post_bloc.dart';
 import 'package:superkauf/generic/post/data/post_repository.dart';
 import 'package:superkauf/generic/post/use_case/create_post_use_case.dart';
 import 'package:superkauf/generic/post/use_case/delete_post_use_case.dart';
+import 'package:superkauf/generic/post/use_case/get_post_detail_use_case.dart';
+import 'package:superkauf/generic/post/use_case/get_posts_by_user.dart';
 import 'package:superkauf/generic/post/use_case/get_posts_use_case.dart';
 import 'package:superkauf/generic/post/use_case/upload_post_image_use_case.dart';
+import 'package:superkauf/generic/user/use_case/get_user_by_uid_use_case.dart';
 import 'package:superkauf/library/app_module.dart';
 
 class PostModule extends AppModule {
@@ -24,7 +27,10 @@ class PostModule extends AppModule {
   @override
   void registerBloc() {
     GetIt.I.registerFactory<PostBloc>(
-      () => PostBloc(deletePostUseCase: GetIt.I.get<DeletePostUseCase>()),
+      () => PostBloc(
+        deletePostUseCase: GetIt.I.get<DeletePostUseCase>(),
+        getUserByUidUseCase: GetIt.I.get<GetUserByUidUseCase>(),
+      ),
     );
   }
 
@@ -47,6 +53,14 @@ class PostModule extends AppModule {
 
     GetIt.I.registerFactory<DeletePostUseCase>(
       () => DeletePostUseCase(repository: GetIt.I.get<PostsRepository>()),
+    );
+
+    GetIt.I.registerFactory<GetPostDetailUseCase>(
+      () => GetPostDetailUseCase(repository: GetIt.I.get<PostsRepository>()),
+    );
+
+    GetIt.I.registerFactory<GetPostsByUserUseCase>(
+      () => GetPostsByUserUseCase(repository: GetIt.I.get<PostsRepository>()),
     );
   }
 

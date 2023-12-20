@@ -55,14 +55,12 @@ class _FeedScreenState extends State<AccountScreen> {
                                 child: SizedBox(
                                   width: constraints.maxWidth * 0.65,
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       const SizedBox(height: 4.0),
                                       CircleAvatar(
                                         radius: 50.0,
-                                        backgroundImage: NetworkImage(
-                                            loaded.user.profilePicture),
+                                        backgroundImage: NetworkImage(loaded.user.profilePicture),
                                       ),
                                       const SizedBox(height: 16.0),
                                       Text(
@@ -82,17 +80,11 @@ class _FeedScreenState extends State<AccountScreen> {
                                   child: IconButton(
                                       iconSize: 16.0,
                                       onPressed: () {
-                                        _showUsernamePopUp(
-                                            context, loaded.user.id,
-                                            (String username) {
-                                          BlocProvider.of<AccountBloc>(context)
-                                              .add(ChangeUsername(
-                                                  username: username,
-                                                  id: loaded.user.id));
+                                        _showUsernamePopUp(context, loaded.user.id, (String username) {
+                                          BlocProvider.of<AccountBloc>(context).add(ChangeUsername(username: username, id: loaded.user.id));
                                         });
                                       },
-                                      icon:
-                                          const FaIcon(FontAwesomeIcons.pen))),
+                                      icon: const FaIcon(FontAwesomeIcons.pen))),
                             ],
                           ),
                         ),
@@ -121,8 +113,7 @@ class _FeedScreenState extends State<AccountScreen> {
     );
   }
 
-  void _showUsernamePopUp(
-      BuildContext context, int userId, Function(String username) onDone) {
+  void _showUsernamePopUp(BuildContext context, int userId, Function(String username) onDone) {
     final usernameModel = TextEntryModel(text: '');
 
     showDialog(
@@ -142,11 +133,7 @@ class _FeedScreenState extends State<AccountScreen> {
                     usernameModel,
                     filled: App.appTheme.colorScheme.surface,
                     hint: 'Username',
-                    validators: [
-                      ValidatorEmpty(),
-                      ValidatorRegex(r'^[a-zA-Z0-9_]{3,}$',
-                          'Username can only contain letters, numbers and underscores')
-                    ],
+                    validators: [ValidatorEmpty(), ValidatorRegex(r'^[a-zA-Z0-9_]{3,}$', 'Username can only contain letters, numbers and underscores')],
                   ),
                 ),
               ],
@@ -154,8 +141,7 @@ class _FeedScreenState extends State<AccountScreen> {
             actions: <Widget>[
               TextButton(
                 onPressed: () async {
-                  final valid =
-                      await TextEntryModel.validateFields([usernameModel]);
+                  final valid = await TextEntryModel.validateFields([usernameModel]);
                   if (!valid) {
                     setState(() {});
                     return;

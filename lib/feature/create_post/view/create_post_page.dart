@@ -4,12 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:superkauf/feature/create_post/bloc/create_post_bloc.dart';
 import 'package:superkauf/feature/create_post/bloc/create_post_state.dart';
 import 'package:superkauf/generic/constants.dart';
+import 'package:superkauf/generic/store/model/store_model.dart';
 import 'package:superkauf/generic/widget/app_button.dart';
 import 'package:superkauf/generic/widget/app_progress.dart';
 import 'package:superkauf/generic/widget/app_text_field/index.dart';
 import 'package:superkauf/library/app.dart';
 
 import '../../../library/app_screen.dart';
+import 'components/store_picker.dart';
 
 class CreatePostScreen extends Screen {
   static const String name = ScreenPath.createPostScreen;
@@ -29,15 +31,17 @@ class _CreatePostScreen extends State<CreatePostScreen> {
 
   final TextEntryModel descriptionField = TextEntryModel();
   final TextEntryModel priceField = TextEntryModel();
-  var selectedStore = '';
+  StoreModel? selectedStore;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: App.appTheme.colorScheme.background,
       appBar: AppBar(
         title: Text(
           'create_post_title'.tr(),
-          style: App.appTheme.textTheme.titleMedium,
+          style:
+              App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
         ),
       ),
       body: LayoutBuilder(builder: (context, constraints) {
@@ -49,29 +53,58 @@ class _CreatePostScreen extends State<CreatePostScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(
-                  height: 80,
+                  height: 40,
                 ),
                 SizedBox(
                   width: constraints.maxWidth * 0.75,
-                  height: 220,
-                  child: BlocBuilder<CreatePostBloc, CreatePostState>(builder: (context, state) {
+                  height: 300,
+                  child: BlocBuilder<CreatePostBloc, CreatePostState>(
+                      builder: (context, state) {
                     return state.maybeWhen(initial: () {
-                      return GestureDetector(
-                        onTap: () {
-                          BlocProvider.of<CreatePostBloc>(context).add(const UploadImage());
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.circular(10),
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            height: 220,
+                            width: constraints.maxWidth * 0.30,
+                            child: GestureDetector(
+                              onTap: () {
+                                BlocProvider.of<CreatePostBloc>(context)
+                                    .add(const UploadImage(isCamera: false));
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: const Icon(Icons.upload),
+                              ),
+                            ),
                           ),
-                          child: const Icon(Icons.upload),
-                        ),
+                          SizedBox(
+                            height: 220,
+                            width: constraints.maxWidth * 0.30,
+                            child: GestureDetector(
+                              onTap: () {
+                                BlocProvider.of<CreatePostBloc>(context)
+                                    .add(const UploadImage(isCamera: true));
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: const Icon(Icons.camera_alt_outlined),
+                              ),
+                            ),
+                          ),
+                        ],
                       );
                     }, imageUploaded: (image) {
                       return GestureDetector(
                         onTap: () {
-                          BlocProvider.of<CreatePostBloc>(context).add(const UploadImage());
+                          BlocProvider.of<CreatePostBloc>(context)
+                              .add(const UploadImage(isCamera: false));
                         },
                         child: Container(
                             decoration: BoxDecoration(
@@ -82,112 +115,118 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                               fit: BoxFit.cover,
                             )),
                       );
+                    }, loading: () {
+                      return const AppProgress();
                     }, error: (error) {
                       return Text(
                         error,
                         style: App.appTheme.textTheme.bodyMedium,
                       );
                     }, orElse: () {
-                      return const AppProgress();
+                      return const Center(child: AppProgress());
                     });
                   }),
                 ),
                 const SizedBox(
-                  height: 40,
+                  height: 20,
                 ),
                 SizedBox(
-                  width: 330,
+                  width: constraints.maxWidth * 0.85,
                   child: AppTextField(
                     descriptionField,
                     filled: App.appTheme.colorScheme.surface,
+                    lines: 6,
                     hint: 'description_post_create_label'.tr(),
+                    beginEdit: (te) {
+                      te.model.error = null;
+                      setState(() {});
+                    },
                     validators: [ValidatorEmpty()],
                   ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                SizedBox(
-                  width: constraints.maxWidth * 0.70,
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: constraints.maxWidth * 0.30,
-                        child: AppButton(
-                          text: 'store_post_create_label'.tr(),
-                          popupMenu: [
-                            PopupOption(
-                              title: 'Albert',
-                              value: 'Albert',
-                            ),
-                            PopupOption(
-                              title: 'Lidl',
-                              value: 'Lidl',
-                            ),
-                            PopupOption(
-                              title: 'Kaufland',
-                              value: 'Kaufland',
-                            ),
-                            PopupOption(
-                              title: 'Billa',
-                              value: 'Billa',
-                            ),
-                            PopupOption(
-                              title: 'Zabka',
-                              value: 'Zabka',
-                            ),
-                          ],
-                          onSelectPopup: (value) {
-                            selectedStore = value.value;
-                          },
-                        ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    StorePicker(
+                      constraints: constraints,
+                      onSelectStore: (store) {
+                        selectedStore = store;
+                      },
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    SizedBox(
+                      width: constraints.maxWidth * 0.30,
+                      child: AppTextField(
+                        priceField,
+                        filled: App.appTheme.colorScheme.surface,
+                        keyboardType: TextInputType.number,
+                        hint: 'price_post_create_label'.tr(),
+                        beginEdit: (te) {
+                          te.model.error = null;
+                          setState(() {});
+                        },
+                        validators: [
+                          ValidatorEmpty(),
+                          ValidatorRegex(
+                              r'^\d{1,5}(?:[.,]\d{1,5})?$', 'invalid number')
+                        ],
                       ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      SizedBox(
-                        width: constraints.maxWidth * 0.30,
-                        child: AppTextField(
-                          priceField,
-                          filled: App.appTheme.colorScheme.surface,
-                          hint: 'price_post_create_label'.tr(),
-                          validators: [ValidatorEmpty()],
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
                 const SizedBox(
-                  width: 50,
+                  height: 50,
                 ),
                 SizedBox(
                   height: 50,
                   width: 270,
-                  child: BlocBuilder<CreatePostBloc, CreatePostState>(builder: (context, state) {
+                  child: BlocBuilder<CreatePostBloc, CreatePostState>(
+                      builder: (context, state) {
                     return state.maybeWhen(imageUploaded: (image) {
                       return AppButton(
                         backgroundColor: App.appTheme.colorScheme.primary,
                         radius: 6,
                         text: 'button_post_create_label'.tr(),
-                        textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
-                        onClick: () {
-                          if (selectedStore == '') {
+                        textStyle: App.appTheme.textTheme.titleMedium!
+                            .copyWith(color: Colors.white),
+                        onClick: () async {
+                          if (selectedStore == null) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text('No store selected'),
+                            ));
                             return;
                           }
-                          BlocProvider.of<CreatePostBloc>(context).add(CreatePost(
+
+                          final valid = await TextEntryModel.validateFields(
+                              [priceField, descriptionField]);
+                          if (!valid) {
+                            setState(() {});
+                            return;
+                          }
+
+                          BlocProvider.of<CreatePostBloc>(context)
+                              .add(CreatePost(
                             description: descriptionField.text,
-                            price: double.parse(priceField.text),
-                            storeName: selectedStore,
+                            price: double.parse(
+                                priceField.text.replaceAll(',', '.')),
+                            store: selectedStore!,
                             image: image,
                           ));
                         },
                       );
                     }, orElse: () {
                       return AppButton(
-                        backgroundColor: App.appTheme.colorScheme.surface,
+                        backgroundColor: Colors.grey,
                         radius: 6,
                         text: 'button_post_create_label'.tr(),
-                        textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
+                        textStyle: App.appTheme.textTheme.titleMedium!
+                            .copyWith(color: Colors.white),
                         onClick: () {},
                       );
                     });

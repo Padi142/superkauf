@@ -21,4 +21,14 @@ abstract class PostApi {
   Future<PostModel> deletePost({
     @Body() required Map<String, dynamic> body,
   });
+
+  @GET('/post/{id}')
+  Future<PostModel> getPostById({
+    @Path() required String id,
+  });
+
+  @GET('/user/posts/{id}')
+  Future<List<FeedPostModel>> getPostsByUser({
+    @Path() required String id,
+  });
 }

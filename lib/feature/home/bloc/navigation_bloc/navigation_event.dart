@@ -64,3 +64,10 @@ class GoToCreatePostScreen extends NavigationEvent {
   @override
   List<Object?> get props => [];
 }
+
+class OpenPostDetailScreen extends NavigationEvent {
+  const OpenPostDetailScreen();
+
+  @override
+  List<Object?> get props => [];
+}

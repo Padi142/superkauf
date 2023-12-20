@@ -18,6 +18,7 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     on<OpenProfileScreen>(_onOpenProfileScreen);
     on<OpenShoppingListScreen>(_onOpenShoppingListScreen);
     on<GoToCreatePostScreen>(_onGoToCreatePostScreen);
+    on<OpenPostDetailScreen>(_onOpenPostDetailScreen);
   }
 
   var bottomBarIndex = 0;
@@ -77,5 +78,12 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     Emitter<NavigationState> emit,
   ) async {
     AppNavigation().push(ScreenPath.createPostScreen);
+  }
+
+  Future<void> _onOpenPostDetailScreen(
+    OpenPostDetailScreen event,
+    Emitter<NavigationState> emit,
+  ) async {
+    AppNavigation().push(ScreenPath.postDetailScreen);
   }
 }

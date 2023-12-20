@@ -1,0 +1,30 @@
+{
+  "app_title": "SuperKauf",
+
+  "error__validate_min_length": "Moc kratke",
+  "error__validate_empty": "Prázné pole",
+
+  "feed_page_title": "Feed",
+  "shopping_list_page_title": "Nákupní seznam",
+  "discover_page_title": "Objevit",
+  "profile_page_title": "Profil",
+  "login_page_title": "Přihlásit",
+  "create_post_title": "Vytvořit",
+
+  "description_post_create_label": "Popiš tvůj nález!",
+  "price_post_create_label": "Cena",
+  "store_post_create_label": "Obchod",
+  "button_post_create_label": "Vytvořit!",
+
+  "post_tags_label": "Tagy",
+
+  "no_posts_for_store_1":"Žádné slevy v tomto obchoodu :/",
+  "no_posts_for_store_2":"Můžeš být první kdo něco objeví!",
+
+  "no_posts_for_user_1":"Zatím jsi nic nepřidal/a/o :/",
+  "no_posts_for_user_2":"Zkus to tím velkým tlačítkem dole!",
+
+  "logout_button_text": "Odhlásit",
+
+  "login_button_text": "Příhlásit "
+}

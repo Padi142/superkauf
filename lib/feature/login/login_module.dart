@@ -8,7 +8,9 @@ import 'package:superkauf/feature/login/use_case/email_login_use_case.dart';
 import 'package:superkauf/feature/login/use_case/google_login.dart';
 import 'package:superkauf/feature/login/use_case/spotify_login.dart';
 import 'package:superkauf/feature/login/view/login_screen.dart';
+import 'package:superkauf/feature/my_channel/bloc/my_channel_bloc.dart';
 
+import '../../generic/user/use_case/create_user_use_case.dart';
 import '../../library/app_module.dart';
 import 'bloc/login_bloc.dart';
 
@@ -45,6 +47,7 @@ class LoginModule extends AppModule {
         spotifyLoginUseCase: GetIt.I.get<SpotifyLoginUseCase>(),
         emailLoginUseCase: GetIt.I.get<EmailLoginUseCase>(),
         loginNavigation: GetIt.I.get<AccountNavigation>(),
+        createUserUseCase: GetIt.I.get<CreateUserUseCase>(),
       ),
     );
   }
@@ -61,6 +64,9 @@ class LoginModule extends AppModule {
         providers: [
           BlocProvider<LoginBloc>.value(
             value: GetIt.I.get<LoginBloc>(),
+          ),
+          BlocProvider<MyChannelBloc>.value(
+            value: GetIt.I.get<MyChannelBloc>(),
           ),
           BlocProvider<NavigationBloc>.value(
             value: GetIt.I.get<NavigationBloc>(),

@@ -12,19 +12,23 @@ class InitialEvent extends CreatePostEvent {
 }
 
 class UploadImage extends CreatePostEvent {
-  const UploadImage();
+  final bool isCamera;
+
+  const UploadImage({
+    required this.isCamera,
+  });
 }
 
 class CreatePost extends CreatePostEvent {
   final String description;
   final double price;
-  final String storeName;
+  final StoreModel store;
   final String image;
 
   const CreatePost({
     required this.description,
     required this.price,
-    required this.storeName,
+    required this.store,
     required this.image,
   });
 }

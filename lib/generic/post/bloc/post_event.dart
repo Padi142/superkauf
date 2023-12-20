@@ -9,8 +9,10 @@ abstract class PostEvent extends Equatable {
 
 class DeletePost extends PostEvent {
   final String postId;
+  final int author;
 
   const DeletePost({
     required this.postId,
+    required this.author,
   });
 }

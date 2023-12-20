@@ -11,6 +11,7 @@ CreatePostModel _$CreatePostModelFromJson(Map<String, dynamic> json) => CreatePo
       price: (json['price'] as num).toDouble(),
       author: json['author'] as String,
       storeName: json['store_name'] as String,
+      store: json['store'] as int,
       image: json['image'] as String,
     );
 
@@ -19,5 +20,6 @@ Map<String, dynamic> _$CreatePostModelToJson(CreatePostModel instance) => <Strin
       'price': instance.price,
       'author': instance.author,
       'store_name': instance.storeName,
+      'store': instance.store,
       'image': instance.image,
     };

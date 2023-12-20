@@ -4,6 +4,7 @@ import 'package:superkauf/generic/post/model/create_post_model.dart';
 import 'package:superkauf/generic/post/model/create_post_result.dart';
 import 'package:superkauf/generic/post/model/delete_post_body.dart';
 import 'package:superkauf/generic/post/model/delete_post_result.dart';
+import 'package:superkauf/generic/post/model/get_post_detail_result.dart';
 import 'package:superkauf/generic/post/model/get_posts_result.dart';
 
 class PostsRepository {
@@ -14,13 +15,35 @@ class PostsRepository {
   });
 
   Future<GetPostsResult> getPosts() async {
-    return postApi.getFeed().then((FeedPostModel) {
-      return GetPostsResult.success(FeedPostModel);
+    return postApi.getFeed().then((posts) {
+      return GetPostsResult.success(posts);
     }).onError((error, stackTrace) {
       if (error is DioException) {
         return GetPostsResult.failure(error.message ?? 'error getting posts');
       }
       return const GetPostsResult.failure('error');
+    });
+  }
+
+  Future<GetPostsResult> getPostsByUser(int userID) async {
+    return postApi.getPostsByUser(id: userID.toString()).then((posts) {
+      return GetPostsResult.success(posts);
+    }).onError((error, stackTrace) {
+      if (error is DioException) {
+        return GetPostsResult.failure(error.message ?? 'error getting posts');
+      }
+      return const GetPostsResult.failure('error');
+    });
+  }
+
+  Future<GetPostDetailResult> getPostDetail(String postId) async {
+    return postApi.getPostById(id: postId).then((post) {
+      return GetPostDetailResult.success(post);
+    }).onError((error, stackTrace) {
+      if (error is DioException) {
+        return GetPostDetailResult.failure(error.message ?? 'error getting posts');
+      }
+      return const GetPostDetailResult.failure('error');
     });
   }
 

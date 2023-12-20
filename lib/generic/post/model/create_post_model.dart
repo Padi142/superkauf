@@ -8,6 +8,7 @@ class CreatePostModel {
   final double price;
   final String author;
   final String storeName;
+  final int store;
   final String image;
 
   const CreatePostModel({
@@ -15,6 +16,7 @@ class CreatePostModel {
     required this.price,
     required this.author,
     required this.storeName,
+    required this.store,
     required this.image,
   });
 

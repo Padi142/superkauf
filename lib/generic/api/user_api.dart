@@ -23,4 +23,9 @@ abstract class UserApi {
     @Path() required int id,
     @Body() required Map<String, dynamic> body,
   });
+
+  @POST('/user')
+  Future<UserModel> createUser({
+    @Body() required Map<String, dynamic> body,
+  });
 }

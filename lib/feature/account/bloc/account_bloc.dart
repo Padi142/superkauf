@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:superkauf/feature/account/bloc/account_state.dart';
 import 'package:superkauf/feature/account/use_case/account_navigation.dart';
-import 'package:superkauf/generic/post/use_case/update_user_body.dart';
+import 'package:superkauf/generic/user/model/update_user_body.dart';
 import 'package:superkauf/generic/user/use_case/get_user_by_uid_use_case.dart';
 import 'package:superkauf/generic/user/use_case/updat_user_use_case.dart';
 
@@ -32,7 +32,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
 
     final session = supabase.auth.currentSession;
     if (session == null) {
-      emit(const AccountState.error("No session found"));
+      emit(const AccountState.error("You are not logged in"));
       accountNavigation.goToLogin();
       return;
     }
@@ -66,8 +66,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   ) async {
     emit(const AccountState.loading());
 
-    final params = UpdateUserBody(
-        username: event.username, id: event.id, profilePicture: null);
+    final params = UpdateUserBody(username: event.username, id: event.id, profilePicture: null);
     final result = await updateUserUseCase.call(params);
     add(const GetUser());
   }

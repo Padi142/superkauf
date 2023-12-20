@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:superkauf/generic/api/user_api.dart';
-import 'package:superkauf/generic/post/use_case/update_user_body.dart';
+import 'package:superkauf/generic/user/model/create_user_body.dart';
 import 'package:superkauf/generic/user/model/get_user_result.dart';
+import 'package:superkauf/generic/user/model/update_user_body.dart';
 
 class UserRepository {
   final UserApi userApi;
@@ -38,6 +39,17 @@ class UserRepository {
     }).onError((error, stackTrace) {
       if (error is DioException) {
         return GetUserResult.failure(error.message ?? 'error updating user');
+      }
+      return const GetUserResult.failure('error');
+    });
+  }
+
+  Future<GetUserResult> createUser(CreateUserBody body) async {
+    return userApi.createUser(body: body.toJson()).then((user) {
+      return GetUserResult.success(user);
+    }).onError((error, stackTrace) {
+      if (error is DioException) {
+        return GetUserResult.failure(error.message ?? 'error create user');
       }
       return const GetUserResult.failure('error');
     });

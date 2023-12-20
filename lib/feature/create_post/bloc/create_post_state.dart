@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:superkauf/generic/post/model/post_model.dart';
 
 part 'create_post_state.freezed.dart';
 
@@ -8,6 +7,8 @@ abstract class CreatePostState with _$CreatePostState {
   const factory CreatePostState.loading() = Loading;
 
   const factory CreatePostState.initial() = Initial;
+
+  const factory CreatePostState.uploading() = Uploading;
 
   const factory CreatePostState.imageUploaded(String image) = ImageUploaded;
 

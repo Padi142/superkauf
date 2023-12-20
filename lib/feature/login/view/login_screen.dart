@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
+import 'package:superkauf/feature/my_channel/bloc/my_channel_bloc.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/widget/app_button.dart';
 import 'package:superkauf/generic/widget/app_text_field/index.dart';
@@ -35,8 +36,8 @@ class _InitScreenState extends State<LoginScreen> {
       final session = data.session;
       if (session != null) {
         _redirecting = true;
-        BlocProvider.of<NavigationBloc>(context)
-            .add(const OpenProfileScreen(shouldReplace: true));
+        BlocProvider.of<MyChannelBloc>(context).add(const GetPosts());
+        BlocProvider.of<NavigationBloc>(context).add(const OpenProfileScreen(shouldReplace: true));
       }
     });
     super.initState();
@@ -75,8 +76,7 @@ class MobileLoginBody extends StatelessWidget {
               Text(
                 'app_title'.tr(),
                 textAlign: TextAlign.center,
-                style: App.appTheme.textTheme.titleLarge!
-                    .copyWith(fontWeight: FontWeight.normal),
+                style: App.appTheme.textTheme.titleLarge!.copyWith(fontWeight: FontWeight.normal),
               ),
               const SizedBox(
                 height: 50,
@@ -113,18 +113,14 @@ class MobileLoginBody extends StatelessWidget {
                   backgroundColor: App.appTheme.colorScheme.primary,
                   radius: 6,
                   text: 'login_button_text'.tr(),
-                  textStyle: App.appTheme.textTheme.titleMedium!
-                      .copyWith(color: Colors.white),
+                  textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
                   onClick: () async {
-                    final valid = await TextEntryModel.validateFields(
-                        [emailController, passwordController]);
+                    final valid = await TextEntryModel.validateFields([emailController, passwordController]);
                     if (!valid) {
                       // setState(() {});
                       return;
                     }
-                    BlocProvider.of<LoginBloc>(context).add(EmailLogin(
-                        email: emailController.text,
-                        password: passwordController.text));
+                    BlocProvider.of<LoginBloc>(context).add(EmailLogin(email: emailController.text, password: passwordController.text));
                   },
                 ),
               ),
@@ -144,18 +140,12 @@ class MobileLoginBody extends StatelessWidget {
                 child: AppButton(
                   backgroundColor: const Color(0xFF7289DA),
                   radius: 6,
-                  imagePrefix: SvgPicture.asset(
-                      'assets/images/discord-icon.svg',
-                      width: 25,
-                      colorFilter: const ColorFilter.mode(
-                          Colors.white, BlendMode.srcIn)),
+                  imagePrefix: SvgPicture.asset('assets/images/discord-icon.svg', width: 25, colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
                   spaceTextImage: 15,
                   text: 'Discord',
-                  textStyle: App.appTheme.textTheme.titleMedium!
-                      .copyWith(color: Colors.white),
+                  textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
                   onClick: () {
-                    BlocProvider.of<LoginBloc>(context)
-                        .add(const DiscordLogin());
+                    BlocProvider.of<LoginBloc>(context).add(const DiscordLogin());
                   },
                 ),
               ),
@@ -168,18 +158,12 @@ class MobileLoginBody extends StatelessWidget {
                 child: AppButton(
                   backgroundColor: const Color(0xFF1DB954),
                   radius: 6,
-                  imagePrefix: SvgPicture.asset(
-                      'assets/images/spotify-logo.svg',
-                      width: 25,
-                      colorFilter: const ColorFilter.mode(
-                          Colors.white, BlendMode.srcIn)),
+                  imagePrefix: SvgPicture.asset('assets/images/spotify-logo.svg', width: 25, colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
                   spaceTextImage: 15,
                   text: 'Spotify',
-                  textStyle: App.appTheme.textTheme.titleMedium!
-                      .copyWith(color: Colors.white),
+                  textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
                   onClick: () {
-                    BlocProvider.of<LoginBloc>(context)
-                        .add(const SpotifyEvent());
+                    BlocProvider.of<LoginBloc>(context).add(const SpotifyEvent());
                   },
                 ),
               ),
@@ -192,14 +176,10 @@ class MobileLoginBody extends StatelessWidget {
                 child: AppButton(
                   backgroundColor: Colors.black,
                   radius: 6,
-                  imagePrefix: SvgPicture.asset('assets/images/apple-logo.svg',
-                      width: 25,
-                      colorFilter: const ColorFilter.mode(
-                          Colors.white, BlendMode.srcIn)),
+                  imagePrefix: SvgPicture.asset('assets/images/apple-logo.svg', width: 25, colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
                   spaceTextImage: 15,
                   text: 'Apple',
-                  textStyle: App.appTheme.textTheme.titleMedium!
-                      .copyWith(color: Colors.white),
+                  textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
                   onClick: () {
                     BlocProvider.of<LoginBloc>(context).add(const AppleLogin());
                   },
@@ -214,14 +194,10 @@ class MobileLoginBody extends StatelessWidget {
                 child: AppButton(
                   backgroundColor: const Color(0xFF4285F4),
                   radius: 6,
-                  imagePrefix: SvgPicture.asset('assets/images/google-logo.svg',
-                      width: 25,
-                      colorFilter: const ColorFilter.mode(
-                          Colors.white, BlendMode.srcIn)),
+                  imagePrefix: SvgPicture.asset('assets/images/google-logo.svg', width: 25, colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
                   spaceTextImage: 15,
                   text: 'Google',
-                  textStyle: App.appTheme.textTheme.titleMedium!
-                      .copyWith(color: Colors.white),
+                  textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
                   onClick: () {
                     BlocProvider.of<LoginBloc>(context).add(const AppleLogin());
                   },

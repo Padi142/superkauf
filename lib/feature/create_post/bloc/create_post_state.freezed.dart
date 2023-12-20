@@ -20,6 +20,7 @@ mixin _$CreatePostState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function() initial,
+    required TResult Function() uploading,
     required TResult Function(String image) imageUploaded,
     required TResult Function() success,
     required TResult Function(String error) error,
@@ -29,6 +30,7 @@ mixin _$CreatePostState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function()? initial,
+    TResult? Function()? uploading,
     TResult? Function(String image)? imageUploaded,
     TResult? Function()? success,
     TResult? Function(String error)? error,
@@ -38,6 +40,7 @@ mixin _$CreatePostState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function()? initial,
+    TResult Function()? uploading,
     TResult Function(String image)? imageUploaded,
     TResult Function()? success,
     TResult Function(String error)? error,
@@ -48,6 +51,7 @@ mixin _$CreatePostState {
   TResult map<TResult extends Object?>({
     required TResult Function(Loading value) loading,
     required TResult Function(Initial value) initial,
+    required TResult Function(Uploading value) uploading,
     required TResult Function(ImageUploaded value) imageUploaded,
     required TResult Function(Success value) success,
     required TResult Function(Error value) error,
@@ -57,6 +61,7 @@ mixin _$CreatePostState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Loading value)? loading,
     TResult? Function(Initial value)? initial,
+    TResult? Function(Uploading value)? uploading,
     TResult? Function(ImageUploaded value)? imageUploaded,
     TResult? Function(Success value)? success,
     TResult? Function(Error value)? error,
@@ -66,6 +71,7 @@ mixin _$CreatePostState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Loading value)? loading,
     TResult Function(Initial value)? initial,
+    TResult Function(Uploading value)? uploading,
     TResult Function(ImageUploaded value)? imageUploaded,
     TResult Function(Success value)? success,
     TResult Function(Error value)? error,
@@ -122,6 +128,7 @@ class _$LoadingImpl implements Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function() initial,
+    required TResult Function() uploading,
     required TResult Function(String image) imageUploaded,
     required TResult Function() success,
     required TResult Function(String error) error,
@@ -134,6 +141,7 @@ class _$LoadingImpl implements Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function()? initial,
+    TResult? Function()? uploading,
     TResult? Function(String image)? imageUploaded,
     TResult? Function()? success,
     TResult? Function(String error)? error,
@@ -146,6 +154,7 @@ class _$LoadingImpl implements Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function()? initial,
+    TResult Function()? uploading,
     TResult Function(String image)? imageUploaded,
     TResult Function()? success,
     TResult Function(String error)? error,
@@ -162,6 +171,7 @@ class _$LoadingImpl implements Loading {
   TResult map<TResult extends Object?>({
     required TResult Function(Loading value) loading,
     required TResult Function(Initial value) initial,
+    required TResult Function(Uploading value) uploading,
     required TResult Function(ImageUploaded value) imageUploaded,
     required TResult Function(Success value) success,
     required TResult Function(Error value) error,
@@ -174,6 +184,7 @@ class _$LoadingImpl implements Loading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Loading value)? loading,
     TResult? Function(Initial value)? initial,
+    TResult? Function(Uploading value)? uploading,
     TResult? Function(ImageUploaded value)? imageUploaded,
     TResult? Function(Success value)? success,
     TResult? Function(Error value)? error,
@@ -186,6 +197,7 @@ class _$LoadingImpl implements Loading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Loading value)? loading,
     TResult Function(Initial value)? initial,
+    TResult Function(Uploading value)? uploading,
     TResult Function(ImageUploaded value)? imageUploaded,
     TResult Function(Success value)? success,
     TResult Function(Error value)? error,
@@ -235,6 +247,7 @@ class _$InitialImpl implements Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function() initial,
+    required TResult Function() uploading,
     required TResult Function(String image) imageUploaded,
     required TResult Function() success,
     required TResult Function(String error) error,
@@ -247,6 +260,7 @@ class _$InitialImpl implements Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function()? initial,
+    TResult? Function()? uploading,
     TResult? Function(String image)? imageUploaded,
     TResult? Function()? success,
     TResult? Function(String error)? error,
@@ -259,6 +273,7 @@ class _$InitialImpl implements Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function()? initial,
+    TResult Function()? uploading,
     TResult Function(String image)? imageUploaded,
     TResult Function()? success,
     TResult Function(String error)? error,
@@ -275,6 +290,7 @@ class _$InitialImpl implements Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(Loading value) loading,
     required TResult Function(Initial value) initial,
+    required TResult Function(Uploading value) uploading,
     required TResult Function(ImageUploaded value) imageUploaded,
     required TResult Function(Success value) success,
     required TResult Function(Error value) error,
@@ -287,6 +303,7 @@ class _$InitialImpl implements Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Loading value)? loading,
     TResult? Function(Initial value)? initial,
+    TResult? Function(Uploading value)? uploading,
     TResult? Function(ImageUploaded value)? imageUploaded,
     TResult? Function(Success value)? success,
     TResult? Function(Error value)? error,
@@ -299,6 +316,7 @@ class _$InitialImpl implements Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Loading value)? loading,
     TResult Function(Initial value)? initial,
+    TResult Function(Uploading value)? uploading,
     TResult Function(ImageUploaded value)? imageUploaded,
     TResult Function(Success value)? success,
     TResult Function(Error value)? error,
@@ -313,6 +331,125 @@ class _$InitialImpl implements Initial {
 
 abstract class Initial implements CreatePostState {
   const factory Initial() = _$InitialImpl;
+}
+
+/// @nodoc
+abstract class _$$UploadingImplCopyWith<$Res> {
+  factory _$$UploadingImplCopyWith(_$UploadingImpl value, $Res Function(_$UploadingImpl) then) = __$$UploadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$UploadingImplCopyWithImpl<$Res> extends _$CreatePostStateCopyWithImpl<$Res, _$UploadingImpl> implements _$$UploadingImplCopyWith<$Res> {
+  __$$UploadingImplCopyWithImpl(_$UploadingImpl _value, $Res Function(_$UploadingImpl) _then) : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$UploadingImpl implements Uploading {
+  const _$UploadingImpl();
+
+  @override
+  String toString() {
+    return 'CreatePostState.uploading()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$UploadingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loading,
+    required TResult Function() initial,
+    required TResult Function() uploading,
+    required TResult Function(String image) imageUploaded,
+    required TResult Function() success,
+    required TResult Function(String error) error,
+  }) {
+    return uploading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loading,
+    TResult? Function()? initial,
+    TResult? Function()? uploading,
+    TResult? Function(String image)? imageUploaded,
+    TResult? Function()? success,
+    TResult? Function(String error)? error,
+  }) {
+    return uploading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loading,
+    TResult Function()? initial,
+    TResult Function()? uploading,
+    TResult Function(String image)? imageUploaded,
+    TResult Function()? success,
+    TResult Function(String error)? error,
+    required TResult orElse(),
+  }) {
+    if (uploading != null) {
+      return uploading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Loading value) loading,
+    required TResult Function(Initial value) initial,
+    required TResult Function(Uploading value) uploading,
+    required TResult Function(ImageUploaded value) imageUploaded,
+    required TResult Function(Success value) success,
+    required TResult Function(Error value) error,
+  }) {
+    return uploading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Loading value)? loading,
+    TResult? Function(Initial value)? initial,
+    TResult? Function(Uploading value)? uploading,
+    TResult? Function(ImageUploaded value)? imageUploaded,
+    TResult? Function(Success value)? success,
+    TResult? Function(Error value)? error,
+  }) {
+    return uploading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Loading value)? loading,
+    TResult Function(Initial value)? initial,
+    TResult Function(Uploading value)? uploading,
+    TResult Function(ImageUploaded value)? imageUploaded,
+    TResult Function(Success value)? success,
+    TResult Function(Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (uploading != null) {
+      return uploading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class Uploading implements CreatePostState {
+  const factory Uploading() = _$UploadingImpl;
 }
 
 /// @nodoc
@@ -371,6 +508,7 @@ class _$ImageUploadedImpl implements ImageUploaded {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function() initial,
+    required TResult Function() uploading,
     required TResult Function(String image) imageUploaded,
     required TResult Function() success,
     required TResult Function(String error) error,
@@ -383,6 +521,7 @@ class _$ImageUploadedImpl implements ImageUploaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function()? initial,
+    TResult? Function()? uploading,
     TResult? Function(String image)? imageUploaded,
     TResult? Function()? success,
     TResult? Function(String error)? error,
@@ -395,6 +534,7 @@ class _$ImageUploadedImpl implements ImageUploaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function()? initial,
+    TResult Function()? uploading,
     TResult Function(String image)? imageUploaded,
     TResult Function()? success,
     TResult Function(String error)? error,
@@ -411,6 +551,7 @@ class _$ImageUploadedImpl implements ImageUploaded {
   TResult map<TResult extends Object?>({
     required TResult Function(Loading value) loading,
     required TResult Function(Initial value) initial,
+    required TResult Function(Uploading value) uploading,
     required TResult Function(ImageUploaded value) imageUploaded,
     required TResult Function(Success value) success,
     required TResult Function(Error value) error,
@@ -423,6 +564,7 @@ class _$ImageUploadedImpl implements ImageUploaded {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Loading value)? loading,
     TResult? Function(Initial value)? initial,
+    TResult? Function(Uploading value)? uploading,
     TResult? Function(ImageUploaded value)? imageUploaded,
     TResult? Function(Success value)? success,
     TResult? Function(Error value)? error,
@@ -435,6 +577,7 @@ class _$ImageUploadedImpl implements ImageUploaded {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Loading value)? loading,
     TResult Function(Initial value)? initial,
+    TResult Function(Uploading value)? uploading,
     TResult Function(ImageUploaded value)? imageUploaded,
     TResult Function(Success value)? success,
     TResult Function(Error value)? error,
@@ -488,6 +631,7 @@ class _$SuccessImpl implements Success {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function() initial,
+    required TResult Function() uploading,
     required TResult Function(String image) imageUploaded,
     required TResult Function() success,
     required TResult Function(String error) error,
@@ -500,6 +644,7 @@ class _$SuccessImpl implements Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function()? initial,
+    TResult? Function()? uploading,
     TResult? Function(String image)? imageUploaded,
     TResult? Function()? success,
     TResult? Function(String error)? error,
@@ -512,6 +657,7 @@ class _$SuccessImpl implements Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function()? initial,
+    TResult Function()? uploading,
     TResult Function(String image)? imageUploaded,
     TResult Function()? success,
     TResult Function(String error)? error,
@@ -528,6 +674,7 @@ class _$SuccessImpl implements Success {
   TResult map<TResult extends Object?>({
     required TResult Function(Loading value) loading,
     required TResult Function(Initial value) initial,
+    required TResult Function(Uploading value) uploading,
     required TResult Function(ImageUploaded value) imageUploaded,
     required TResult Function(Success value) success,
     required TResult Function(Error value) error,
@@ -540,6 +687,7 @@ class _$SuccessImpl implements Success {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Loading value)? loading,
     TResult? Function(Initial value)? initial,
+    TResult? Function(Uploading value)? uploading,
     TResult? Function(ImageUploaded value)? imageUploaded,
     TResult? Function(Success value)? success,
     TResult? Function(Error value)? error,
@@ -552,6 +700,7 @@ class _$SuccessImpl implements Success {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Loading value)? loading,
     TResult Function(Initial value)? initial,
+    TResult Function(Uploading value)? uploading,
     TResult Function(ImageUploaded value)? imageUploaded,
     TResult Function(Success value)? success,
     TResult Function(Error value)? error,
@@ -624,6 +773,7 @@ class _$ErrorImpl implements Error {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function() initial,
+    required TResult Function() uploading,
     required TResult Function(String image) imageUploaded,
     required TResult Function() success,
     required TResult Function(String error) error,
@@ -636,6 +786,7 @@ class _$ErrorImpl implements Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function()? initial,
+    TResult? Function()? uploading,
     TResult? Function(String image)? imageUploaded,
     TResult? Function()? success,
     TResult? Function(String error)? error,
@@ -648,6 +799,7 @@ class _$ErrorImpl implements Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function()? initial,
+    TResult Function()? uploading,
     TResult Function(String image)? imageUploaded,
     TResult Function()? success,
     TResult Function(String error)? error,
@@ -664,6 +816,7 @@ class _$ErrorImpl implements Error {
   TResult map<TResult extends Object?>({
     required TResult Function(Loading value) loading,
     required TResult Function(Initial value) initial,
+    required TResult Function(Uploading value) uploading,
     required TResult Function(ImageUploaded value) imageUploaded,
     required TResult Function(Success value) success,
     required TResult Function(Error value) error,
@@ -676,6 +829,7 @@ class _$ErrorImpl implements Error {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Loading value)? loading,
     TResult? Function(Initial value)? initial,
+    TResult? Function(Uploading value)? uploading,
     TResult? Function(ImageUploaded value)? imageUploaded,
     TResult? Function(Success value)? success,
     TResult? Function(Error value)? error,
@@ -688,6 +842,7 @@ class _$ErrorImpl implements Error {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Loading value)? loading,
     TResult Function(Initial value)? initial,
+    TResult Function(Uploading value)? uploading,
     TResult Function(ImageUploaded value)? imageUploaded,
     TResult Function(Success value)? success,
     TResult Function(Error value)? error,
