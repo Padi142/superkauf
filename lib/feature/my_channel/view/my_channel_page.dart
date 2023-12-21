@@ -2,12 +2,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:superkauf/feature/feed/view/components/feed_post_container.dart';
+import 'package:superkauf/feature/feed/view/components/loading_feed_post.dart';
 import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
 import 'package:superkauf/feature/my_channel/bloc/my_channel_bloc.dart';
 import 'package:superkauf/feature/my_channel/bloc/my_channel_state.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/functions.dart';
-import 'package:superkauf/generic/widget/app_progress.dart';
 import 'package:superkauf/library/app.dart';
 
 import '../../../library/app_screen.dart';
@@ -90,7 +90,7 @@ class _MyChannelState extends State<MyChannelScreen> {
                       }, error: (error) {
                         return Center(child: Text(error.error));
                       }, orElse: () {
-                        return const Center(child: AppProgress());
+                        return const PostLoadingView();
                       });
                     },
                   ),

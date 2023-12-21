@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:superkauf/feature/feed/bloc/feed_bloc.dart';
+import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
 import 'package:superkauf/feature/post_detail/bloc/post_detail_bloc.dart';
 import 'package:superkauf/feature/post_detail/view/post_detail_screen.dart';
 import 'package:superkauf/generic/post/bloc/post_bloc.dart';
@@ -43,6 +44,9 @@ class PostDetailModule extends AppModule {
           ),
           BlocProvider<FeedBloc>.value(
             value: GetIt.I.get<FeedBloc>(),
+          ),
+          BlocProvider<NavigationBloc>.value(
+            value: GetIt.I.get<NavigationBloc>(),
           ),
         ],
         child: GetIt.I.get<PostDetailScreen>(),

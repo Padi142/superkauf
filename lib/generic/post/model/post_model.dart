@@ -11,6 +11,7 @@ class PostModel extends Equatable {
   final double price;
   final String image;
   final String storeName;
+  final int store;
   final DateTime createdAt;
 
   const PostModel({
@@ -20,6 +21,7 @@ class PostModel extends Equatable {
     required this.price,
     required this.image,
     required this.storeName,
+    required this.store,
     required this.createdAt,
   });
 

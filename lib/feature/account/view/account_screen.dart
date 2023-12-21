@@ -6,10 +6,9 @@ import 'package:superkauf/feature/account/bloc/account_bloc.dart';
 import 'package:superkauf/feature/account/bloc/account_state.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/widget/app_progress.dart';
-import 'package:superkauf/generic/widget/app_text_field/index.dart';
-import 'package:superkauf/library/app.dart';
 
 import '../../../library/app_screen.dart';
+import 'components/change_username_component.dart';
 
 class AccountScreen extends Screen {
   static const String name = ScreenPath.profileScreen;
@@ -26,6 +25,8 @@ class _FeedScreenState extends State<AccountScreen> {
     BlocProvider.of<AccountBloc>(context).add(const GetUser());
     super.initState();
   }
+
+  var changeUsername = false;
 
   @override
   Widget build(BuildContext context) {
@@ -63,13 +64,22 @@ class _FeedScreenState extends State<AccountScreen> {
                                         backgroundImage: NetworkImage(loaded.user.profilePicture),
                                       ),
                                       const SizedBox(height: 16.0),
-                                      Text(
-                                        loaded.user.username,
-                                        style: const TextStyle(
-                                          fontSize: 18.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
+                                      changeUsername
+                                          ? ChangeUsernameField(
+                                              onDone: (username) {
+                                                BlocProvider.of<AccountBloc>(context).add(ChangeUsername(username: username, id: loaded.user.id));
+                                                setState(() {
+                                                  changeUsername = false;
+                                                });
+                                              },
+                                            )
+                                          : Text(
+                                              loaded.user.username,
+                                              style: const TextStyle(
+                                                fontSize: 18.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
                                     ],
                                   ),
                                 ),
@@ -80,8 +90,8 @@ class _FeedScreenState extends State<AccountScreen> {
                                   child: IconButton(
                                       iconSize: 16.0,
                                       onPressed: () {
-                                        _showUsernamePopUp(context, loaded.user.id, (String username) {
-                                          BlocProvider.of<AccountBloc>(context).add(ChangeUsername(username: username, id: loaded.user.id));
+                                        setState(() {
+                                          changeUsername = !changeUsername;
                                         });
                                       },
                                       icon: const FaIcon(FontAwesomeIcons.pen))),
@@ -110,53 +120,6 @@ class _FeedScreenState extends State<AccountScreen> {
           ),
         );
       }),
-    );
-  }
-
-  void _showUsernamePopUp(BuildContext context, int userId, Function(String username) onDone) {
-    final usernameModel = TextEntryModel(text: '');
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return SizedBox(
-          child: AlertDialog(
-            title: const Text('Change username'),
-            content: Column(
-              children: [
-                const SizedBox(
-                  height: 50,
-                ),
-                SizedBox(
-                  width: 330,
-                  child: AppTextField(
-                    usernameModel,
-                    filled: App.appTheme.colorScheme.surface,
-                    hint: 'Username',
-                    validators: [ValidatorEmpty(), ValidatorRegex(r'^[a-zA-Z0-9_]{3,}$', 'Username can only contain letters, numbers and underscores')],
-                  ),
-                ),
-              ],
-            ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () async {
-                  final valid = await TextEntryModel.validateFields([usernameModel]);
-                  if (!valid) {
-                    setState(() {});
-                    return;
-                  }
-                  if (valid) {
-                    onDone(usernameModel.text);
-                    Navigator.of(context).pop();
-                  }
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 }

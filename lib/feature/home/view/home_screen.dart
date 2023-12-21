@@ -96,6 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               body: AppNavigation().pathContent(
                 state.screenName,
+                params: loaded.params,
               ),
             );
           default:

@@ -51,8 +51,9 @@ class OpenShoppingListScreen extends NavigationEvent {
 
 class OpenStoresScreen extends NavigationEvent {
   final int? index;
+  final int? storeId;
 
-  const OpenStoresScreen(this.index);
+  const OpenStoresScreen(this.index, {this.storeId});
 
   @override
   List<Object?> get props => [];
@@ -67,6 +68,13 @@ class GoToCreatePostScreen extends NavigationEvent {
 
 class OpenPostDetailScreen extends NavigationEvent {
   const OpenPostDetailScreen();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class OpenUserDetailScreen extends NavigationEvent {
+  const OpenUserDetailScreen();
 
   @override
   List<Object?> get props => [];

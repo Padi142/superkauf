@@ -1,8 +1,8 @@
+import 'package:card_loading/card_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:superkauf/generic/store/bloc/store_bloc.dart';
 import 'package:superkauf/generic/store/bloc/store_state.dart';
-import 'package:superkauf/generic/widget/app_progress.dart';
 import 'package:superkauf/library/app.dart';
 
 class StoreHeaders extends StatelessWidget {
@@ -63,7 +63,20 @@ class StoreHeaders extends StatelessWidget {
           error: (error) {
             return Text(error.error);
           },
-          orElse: () => const Center(child: AppProgress()),
+          orElse: () => Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(
+                      5,
+                      (index) => const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8),
+                            child: CardLoading(height: 30, width: 70, borderRadius: BorderRadius.all(Radius.circular(10))),
+                          ))),
+            ),
+          ),
         );
       },
     );

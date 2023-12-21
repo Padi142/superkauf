@@ -2,18 +2,18 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:superkauf/feature/feed/view/components/feed_post_container.dart';
+import 'package:superkauf/feature/feed/view/components/loading_feed_post.dart';
 import 'package:superkauf/feature/store_posts/bloc/store_posts_bloc.dart';
 import 'package:superkauf/feature/store_posts/bloc/store_posts_state.dart';
 import 'package:superkauf/feature/store_posts/view/components/store_headers.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/functions.dart';
 import 'package:superkauf/generic/store/bloc/store_bloc.dart';
-import 'package:superkauf/generic/widget/app_progress.dart';
 import 'package:superkauf/library/app.dart';
 
 import '../../../library/app_screen.dart';
 
-class StorePostsScreen extends Screen {
+class StorePostsScreen extends Screen<int> {
   static const String name = ScreenPath.storesScreen;
 
   StorePostsScreen({Key? key}) : super(name, key: key);
@@ -27,7 +27,11 @@ class _PostDetailScreenState extends State<StorePostsScreen> {
 
   @override
   void initState() {
-    context.read<StorePostsBloc>().add(const GetPosts(storeId: 1));
+    if (widget.params != null) {
+      _selectedStore = widget.params! - 1;
+    }
+
+    context.read<StorePostsBloc>().add(GetPosts(storeId: _selectedStore));
 
     context.read<StoreBloc>().add(const GetAllStores());
 
@@ -60,7 +64,9 @@ class _PostDetailScreenState extends State<StorePostsScreen> {
                   setState(() {
                     _selectedStore = index;
                   });
-                  context.read<StorePostsBloc>().add(GetPosts(storeId: _selectedStore + 1));
+                  context
+                      .read<StorePostsBloc>()
+                      .add(GetPosts(storeId: _selectedStore + 1));
                 },
                 selectedStore: _selectedStore,
               ),
@@ -78,7 +84,8 @@ class _PostDetailScreenState extends State<StorePostsScreen> {
                           const SizedBox(
                             height: 10,
                           ),
-                          Text('no_posts_for_store_2'.tr(), style: App.appTheme.textTheme.titleSmall),
+                          Text('no_posts_for_store_2'.tr(),
+                              style: App.appTheme.textTheme.titleSmall),
                         ],
                       ));
                     }
@@ -89,7 +96,9 @@ class _PostDetailScreenState extends State<StorePostsScreen> {
                         controller: _scrollController,
                         itemBuilder: (context, index) {
                           return Padding(
-                            padding: EdgeInsets.only(bottom: loaded.posts.length == index + 1 ? 100 : 0),
+                            padding: EdgeInsets.only(
+                                bottom:
+                                    loaded.posts.length == index + 1 ? 100 : 0),
                             child: FeedPostContainer(post: loaded.posts[index]),
                           );
                         },
@@ -98,7 +107,7 @@ class _PostDetailScreenState extends State<StorePostsScreen> {
                   }, error: (error) {
                     return Center(child: Text(error.error));
                   }, orElse: () {
-                    return const Center(child: AppProgress());
+                    return const PostLoadingView();
                   });
                 },
               ),

@@ -28,6 +28,7 @@ class PostDetailBloc extends Bloc<PostDetailEvent, PostDetailState> {
   ) async {
     author = event.user;
     emit(PostDetailState.initial(event.post, author));
+    add(GetPost(postId: event.post.id.toString()));
   }
 
   Future<void> _onGetPost(

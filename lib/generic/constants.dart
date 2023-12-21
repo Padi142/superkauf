@@ -10,6 +10,7 @@ class ScreenPath {
   static const String loginScreen = '/login';
   static const String createPostScreen = '/create_post';
   static const String postDetailScreen = '/post_detail';
+  static const String userDetailScreen = '/user_detail';
 }
 
 class Constants {

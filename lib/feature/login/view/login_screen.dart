@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
-import 'package:superkauf/feature/my_channel/bloc/my_channel_bloc.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/widget/app_button.dart';
 import 'package:superkauf/generic/widget/app_text_field/index.dart';
@@ -36,7 +35,8 @@ class _InitScreenState extends State<LoginScreen> {
       final session = data.session;
       if (session != null) {
         _redirecting = true;
-        BlocProvider.of<MyChannelBloc>(context).add(const GetPosts());
+        BlocProvider.of<LoginBloc>(context).add(const CreateUserProfile());
+        // BlocProvider.of<MyChannelBloc>(context).add(const GetPosts());
         BlocProvider.of<NavigationBloc>(context).add(const OpenProfileScreen(shouldReplace: true));
       }
     });
@@ -149,24 +149,24 @@ class MobileLoginBody extends StatelessWidget {
                   },
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                height: 50,
-                width: 330,
-                child: AppButton(
-                  backgroundColor: const Color(0xFF1DB954),
-                  radius: 6,
-                  imagePrefix: SvgPicture.asset('assets/images/spotify-logo.svg', width: 25, colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
-                  spaceTextImage: 15,
-                  text: 'Spotify',
-                  textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
-                  onClick: () {
-                    BlocProvider.of<LoginBloc>(context).add(const SpotifyEvent());
-                  },
-                ),
-              ),
+              // const SizedBox(
+              //   height: 20,
+              // ),
+              // SizedBox(
+              //   height: 50,
+              //   width: 330,
+              //   child: AppButton(
+              //     backgroundColor: const Color(0xFF1DB954),
+              //     radius: 6,
+              //     imagePrefix: SvgPicture.asset('assets/images/spotify-logo.svg', width: 25, colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
+              //     spaceTextImage: 15,
+              //     text: 'Spotify',
+              //     textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
+              //     onClick: () {
+              //       BlocProvider.of<LoginBloc>(context).add(const SpotifyEvent());
+              //     },
+              //   ),
+              // ),
               const SizedBox(
                 height: 20,
               ),
@@ -199,7 +199,7 @@ class MobileLoginBody extends StatelessWidget {
                   text: 'Google',
                   textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
                   onClick: () {
-                    BlocProvider.of<LoginBloc>(context).add(const AppleLogin());
+                    BlocProvider.of<LoginBloc>(context).add(const GoogleLogin());
                   },
                 ),
               ),

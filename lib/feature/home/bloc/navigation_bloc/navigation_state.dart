@@ -7,8 +7,9 @@ sealed class NavigationState extends Equatable {
 class NavigationStateLoaded extends NavigationState {
   final int bottomNavIndex;
   final String screenName;
+  final dynamic params;
 
-  const NavigationStateLoaded({required this.bottomNavIndex, required this.screenName});
+  const NavigationStateLoaded({required this.bottomNavIndex, required this.screenName, this.params});
 
   @override
   List<Object?> get props => [bottomNavIndex];

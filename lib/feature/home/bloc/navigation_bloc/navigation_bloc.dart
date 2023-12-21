@@ -19,6 +19,7 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     on<OpenShoppingListScreen>(_onOpenShoppingListScreen);
     on<GoToCreatePostScreen>(_onGoToCreatePostScreen);
     on<OpenPostDetailScreen>(_onOpenPostDetailScreen);
+    on<OpenUserDetailScreen>(_onOpenUserDetailScreen);
   }
 
   var bottomBarIndex = 0;
@@ -31,6 +32,7 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     emit(NavigationStateLoaded(
       bottomNavIndex: event.index != null ? event.index! : bottomBarIndex,
       screenName: ScreenPath.storesScreen,
+      params: event.storeId,
     ));
   }
 
@@ -85,5 +87,12 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     Emitter<NavigationState> emit,
   ) async {
     AppNavigation().push(ScreenPath.postDetailScreen);
+  }
+
+  Future<void> _onOpenUserDetailScreen(
+    OpenUserDetailScreen event,
+    Emitter<NavigationState> emit,
+  ) async {
+    AppNavigation().push(ScreenPath.userDetailScreen);
   }
 }

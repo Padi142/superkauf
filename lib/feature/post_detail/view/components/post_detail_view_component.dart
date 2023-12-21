@@ -52,12 +52,8 @@ class PostDetailViewComponent extends StatelessWidget {
                           case 'delete':
                             {
                               _showConfirmDeletion(context, () {
-                                BlocProvider.of<PostBloc>(context).add(
-                                    DeletePost(
-                                        postId: post.id.toString(),
-                                        author: post.author));
-                                BlocProvider.of<FeedBloc>(context)
-                                    .add(const ReloadFeed());
+                                BlocProvider.of<PostBloc>(context).add(DeletePost(postId: post.id.toString(), author: post.author));
+                                BlocProvider.of<FeedBloc>(context).add(const ReloadFeed());
                                 Navigator.of(context).pop();
                               });
 
@@ -86,24 +82,24 @@ class PostDetailViewComponent extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  showImageViewer(context, Image.network(post.image).image,
-                      onViewerDismissed: () {});
+                  showImageViewer(context, Image.network(post.image).image, onViewerDismissed: () {});
                 },
                 child: Hero(
                   tag: post.id,
-                  child: CachedNetworkImage(
-                    imageUrl: post.image,
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.fill,
-                      )),
+                  child: Container(
+                    color: App.appTheme.colorScheme.surface,
+                    child: CachedNetworkImage(
+                      imageUrl: post.image,
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.fitHeight,
+                        )),
+                      ),
+                      placeholder: (context, url) => const Center(child: AppProgress()),
+                      errorWidget: (context, url, error) => const Icon(Icons.error),
                     ),
-                    placeholder: (context, url) =>
-                        const Center(child: AppProgress()),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
                   ),
                 ),
               ),
@@ -122,8 +118,7 @@ class PostDetailViewComponent extends StatelessWidget {
                       padding: const EdgeInsets.all(10),
                       child: Text(
                         '${post.price} Kč',
-                        style: App.appTheme.textTheme.titleLarge!
-                            .copyWith(fontSize: 40),
+                        style: App.appTheme.textTheme.titleLarge!.copyWith(fontSize: 40),
                       ),
                     ),
                   ),

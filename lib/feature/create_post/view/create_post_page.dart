@@ -40,8 +40,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
       appBar: AppBar(
         title: Text(
           'create_post_title'.tr(),
-          style:
-              App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
+          style: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
         ),
       ),
       body: LayoutBuilder(builder: (context, constraints) {
@@ -58,8 +57,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                 SizedBox(
                   width: constraints.maxWidth * 0.75,
                   height: 300,
-                  child: BlocBuilder<CreatePostBloc, CreatePostState>(
-                      builder: (context, state) {
+                  child: BlocBuilder<CreatePostBloc, CreatePostState>(builder: (context, state) {
                     return state.maybeWhen(initial: () {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -69,8 +67,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                             width: constraints.maxWidth * 0.30,
                             child: GestureDetector(
                               onTap: () {
-                                BlocProvider.of<CreatePostBloc>(context)
-                                    .add(const UploadImage(isCamera: false));
+                                BlocProvider.of<CreatePostBloc>(context).add(const UploadImage(isCamera: false));
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -86,8 +83,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                             width: constraints.maxWidth * 0.30,
                             child: GestureDetector(
                               onTap: () {
-                                BlocProvider.of<CreatePostBloc>(context)
-                                    .add(const UploadImage(isCamera: true));
+                                BlocProvider.of<CreatePostBloc>(context).add(const UploadImage(isCamera: true));
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -103,8 +99,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                     }, imageUploaded: (image) {
                       return GestureDetector(
                         onTap: () {
-                          BlocProvider.of<CreatePostBloc>(context)
-                              .add(const UploadImage(isCamera: false));
+                          BlocProvider.of<CreatePostBloc>(context).add(const UploadImage(isCamera: false));
                         },
                         child: Container(
                             decoration: BoxDecoration(
@@ -141,7 +136,11 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                       te.model.error = null;
                       setState(() {});
                     },
-                    validators: [ValidatorEmpty()],
+                    validators: [
+                      ValidatorEmpty(),
+                      ValidatorRegex(r'^.{5,}$', 'Not enough characters'),
+                      ValidatorRegex(r'^.{5,250}$', 'Too many characters'),
+                    ],
                   ),
                 ),
                 const SizedBox(
@@ -172,8 +171,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                         },
                         validators: [
                           ValidatorEmpty(),
-                          ValidatorRegex(
-                              r'^\d{1,5}(?:[.,]\d{1,5})?$', 'invalid number')
+                          ValidatorRegex(r'^\d{1,5}(?:[.,]\d{1,2})?$', 'invalid number'),
                         ],
                       ),
                     ),
@@ -185,36 +183,30 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                 SizedBox(
                   height: 50,
                   width: 270,
-                  child: BlocBuilder<CreatePostBloc, CreatePostState>(
-                      builder: (context, state) {
+                  child: BlocBuilder<CreatePostBloc, CreatePostState>(builder: (context, state) {
                     return state.maybeWhen(imageUploaded: (image) {
                       return AppButton(
                         backgroundColor: App.appTheme.colorScheme.primary,
                         radius: 6,
                         text: 'button_post_create_label'.tr(),
-                        textStyle: App.appTheme.textTheme.titleMedium!
-                            .copyWith(color: Colors.white),
+                        textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
                         onClick: () async {
                           if (selectedStore == null) {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                               content: Text('No store selected'),
                             ));
                             return;
                           }
 
-                          final valid = await TextEntryModel.validateFields(
-                              [priceField, descriptionField]);
+                          final valid = await TextEntryModel.validateFields([priceField, descriptionField]);
                           if (!valid) {
                             setState(() {});
                             return;
                           }
 
-                          BlocProvider.of<CreatePostBloc>(context)
-                              .add(CreatePost(
+                          BlocProvider.of<CreatePostBloc>(context).add(CreatePost(
                             description: descriptionField.text,
-                            price: double.parse(
-                                priceField.text.replaceAll(',', '.')),
+                            price: double.parse(priceField.text.replaceAll(',', '.')),
                             store: selectedStore!,
                             image: image,
                           ));
@@ -225,8 +217,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                         backgroundColor: Colors.grey,
                         radius: 6,
                         text: 'button_post_create_label'.tr(),
-                        textStyle: App.appTheme.textTheme.titleMedium!
-                            .copyWith(color: Colors.white),
+                        textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
                         onClick: () {},
                       );
                     });

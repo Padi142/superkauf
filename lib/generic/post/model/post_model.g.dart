@@ -13,6 +13,7 @@ PostModel _$PostModelFromJson(Map<String, dynamic> json) => PostModel(
       price: (json['price'] as num).toDouble(),
       image: json['image'] as String,
       storeName: json['store_name'] as String,
+      store: json['store'] as int,
       createdAt: DateTime.parse(json['created_at'] as String),
     );
 
@@ -23,5 +24,6 @@ Map<String, dynamic> _$PostModelToJson(PostModel instance) => <String, dynamic>{
       'price': instance.price,
       'image': instance.image,
       'store_name': instance.storeName,
+      'store': instance.store,
       'created_at': instance.createdAt.toIso8601String(),
     };

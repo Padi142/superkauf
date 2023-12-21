@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -17,6 +18,8 @@ import 'package:superkauf/feature/login/login_module.dart';
 import 'package:superkauf/feature/my_channel/my_channel_module.dart';
 import 'package:superkauf/feature/post_detail/post_detail_module.dart';
 import 'package:superkauf/feature/store_posts/store_posts_module.dart';
+import 'package:superkauf/feature/user_detail/bloc/user_detail_bloc.dart';
+import 'package:superkauf/feature/user_detail/user_detail_module.dart';
 import 'package:superkauf/generic/api/post_api.dart';
 import 'package:superkauf/generic/api/store_api.dart';
 import 'package:superkauf/generic/api/user_api.dart';
@@ -104,6 +107,7 @@ List<AppModule> modules() {
     PostDetailModule(),
     StoreModule(),
     StorePostsModule(),
+    UserDetailModule(),
   ];
 }
 
@@ -173,15 +177,22 @@ class MainWidget extends StatelessWidget {
       ),
     );
 
-    return MaterialApp(
-      showSemanticsDebugger: false,
-      navigatorKey: AppNavigation().navigationKey,
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      initialRoute: ScreenPath.initScreen,
-      routes: App.routes,
-      theme: App.appTheme,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<UserDetailBloc>.value(
+          value: GetIt.I.get<UserDetailBloc>(),
+        ),
+      ],
+      child: MaterialApp(
+        showSemanticsDebugger: false,
+        navigatorKey: AppNavigation().navigationKey,
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        initialRoute: ScreenPath.initScreen,
+        routes: App.routes,
+        theme: App.appTheme,
+      ),
     );
   }
 }
