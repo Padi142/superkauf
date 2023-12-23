@@ -6,6 +6,7 @@ import 'package:superkauf/generic/post/model/delete_post_body.dart';
 import 'package:superkauf/generic/post/model/delete_post_result.dart';
 import 'package:superkauf/generic/post/model/get_post_detail_result.dart';
 import 'package:superkauf/generic/post/model/get_posts_result.dart';
+import 'package:superkauf/generic/post/model/update_post_image_body.dart';
 
 class PostsRepository {
   final PostApi postApi;
@@ -66,6 +67,17 @@ class PostsRepository {
         return DeletePostResult.failure(error.message ?? 'error deleting posts');
       }
       return DeletePostResult.failure(error.toString());
+    });
+  }
+
+  Future<GetPostDetailResult> updatePostImage(UpdatePostImageBody body) async {
+    return postApi.updatePostImage(body: body.toJson()).then((post) {
+      return GetPostDetailResult.success(post);
+    }).onError((error, stackTrace) {
+      if (error is DioException) {
+        return GetPostDetailResult.failure(error.message ?? 'error deleting posts');
+      }
+      return GetPostDetailResult.failure(error.toString());
     });
   }
 }

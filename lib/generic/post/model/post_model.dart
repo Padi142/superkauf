@@ -12,6 +12,7 @@ class PostModel extends Equatable {
   final String image;
   final String storeName;
   final int store;
+  final bool requiresStoreCard;
   final DateTime createdAt;
 
   const PostModel({
@@ -22,6 +23,7 @@ class PostModel extends Equatable {
     required this.image,
     required this.storeName,
     required this.store,
+    required this.requiresStoreCard,
     required this.createdAt,
   });
 

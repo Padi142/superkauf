@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:superkauf/feature/create_post/bloc/create_post_bloc.dart';
 import 'package:superkauf/feature/create_post/bloc/create_post_state.dart';
+import 'package:superkauf/feature/create_post/view/components/store_card_picker.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/store/model/store_model.dart';
 import 'package:superkauf/generic/widget/app_button.dart';
@@ -32,6 +33,8 @@ class _CreatePostScreen extends State<CreatePostScreen> {
   final TextEntryModel descriptionField = TextEntryModel();
   final TextEntryModel priceField = TextEntryModel();
   StoreModel? selectedStore;
+  var requiredCard = false;
+  var createButtonClicked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +70,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                             width: constraints.maxWidth * 0.30,
                             child: GestureDetector(
                               onTap: () {
-                                BlocProvider.of<CreatePostBloc>(context).add(const UploadImage(isCamera: false));
+                                BlocProvider.of<CreatePostBloc>(context).add(const PickImage(isCamera: false));
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -83,7 +86,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                             width: constraints.maxWidth * 0.30,
                             child: GestureDetector(
                               onTap: () {
-                                BlocProvider.of<CreatePostBloc>(context).add(const UploadImage(isCamera: true));
+                                BlocProvider.of<CreatePostBloc>(context).add(const PickImage(isCamera: true));
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -96,18 +99,18 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                           ),
                         ],
                       );
-                    }, imageUploaded: (image) {
+                    }, imagePicked: (image) {
                       return GestureDetector(
                         onTap: () {
-                          BlocProvider.of<CreatePostBloc>(context).add(const UploadImage(isCamera: false));
+                          BlocProvider.of<CreatePostBloc>(context).add(const PickImage(isCamera: false));
                         },
                         child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: Image.network(
+                            child: Image.file(
                               image,
-                              fit: BoxFit.cover,
+                              fit: BoxFit.fitHeight,
                             )),
                       );
                     }, loading: () {
@@ -123,7 +126,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                   }),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 SizedBox(
                   width: constraints.maxWidth * 0.85,
@@ -144,7 +147,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -178,19 +181,44 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                   ],
                 ),
                 const SizedBox(
-                  height: 50,
+                  height: 10,
+                ),
+                Column(
+                  children: [
+                    Text(
+                      'card_required_label'.tr(),
+                      style: App.appTheme.textTheme.titleMedium,
+                    ),
+                    const SizedBox(
+                      height: 4,
+                    ),
+                    StoreCardPicker(
+                      onChange: (card) {
+                        requiredCard = card;
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 30,
                 ),
                 SizedBox(
                   height: 50,
                   width: 270,
                   child: BlocBuilder<CreatePostBloc, CreatePostState>(builder: (context, state) {
-                    return state.maybeWhen(imageUploaded: (image) {
+                    return state.maybeWhen(imagePicked: (image) {
                       return AppButton(
                         backgroundColor: App.appTheme.colorScheme.primary,
                         radius: 6,
                         text: 'button_post_create_label'.tr(),
                         textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
                         onClick: () async {
+                          // Prevent multiple clicks
+                          if (createButtonClicked) {
+                            return;
+                          }
+
+                          // Prevent empty store
                           if (selectedStore == null) {
                             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                               content: Text('No store selected'),
@@ -198,16 +226,20 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                             return;
                           }
 
+                          //Validate fields
                           final valid = await TextEntryModel.validateFields([priceField, descriptionField]);
                           if (!valid) {
                             setState(() {});
                             return;
                           }
 
+                          createButtonClicked = true;
+
                           BlocProvider.of<CreatePostBloc>(context).add(CreatePost(
                             description: descriptionField.text,
                             price: double.parse(priceField.text.replaceAll(',', '.')),
                             store: selectedStore!,
+                            cardRequired: requiredCard,
                             image: image,
                           ));
                         },
@@ -222,6 +254,9 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                       );
                     });
                   }),
+                ),
+                const SizedBox(
+                  height: 50,
                 ),
               ],
             ),

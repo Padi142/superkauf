@@ -82,7 +82,7 @@ class _MyChannelState extends State<MyChannelScreen> {
                             itemBuilder: (context, index) {
                               return Padding(
                                 padding: EdgeInsets.only(bottom: loaded.posts.length == index + 1 ? 100 : 0),
-                                child: FeedPostContainer(post: loaded.posts[index]),
+                                child: FeedPostContainer(post: loaded.posts[index], originScreen: ScreenPath.myChannelScreen),
                               );
                             },
                           ),

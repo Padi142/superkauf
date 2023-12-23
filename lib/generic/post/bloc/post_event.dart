@@ -16,3 +16,19 @@ class DeletePost extends PostEvent {
     required this.author,
   });
 }
+
+class SavePost extends PostEvent {
+  final int postId;
+
+  const SavePost({
+    required this.postId,
+  });
+}
+
+class RemoveSavedPost extends PostEvent {
+  final int postId;
+
+  const RemoveSavedPost({
+    required this.postId,
+  });
+}

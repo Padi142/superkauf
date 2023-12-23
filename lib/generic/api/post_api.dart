@@ -31,4 +31,9 @@ abstract class PostApi {
   Future<List<FeedPostModel>> getPostsByUser({
     @Path() required String id,
   });
+
+  @PUT('/post/image')
+  Future<PostModel> updatePostImage({
+    @Body() required Map<String, dynamic> body,
+  });
 }

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:superkauf/feature/account/bloc/account_bloc.dart';
 import 'package:superkauf/feature/account/bloc/account_state.dart';
+import 'package:superkauf/feature/snackbar/bloc/snackbar_bloc.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/widget/app_progress.dart';
 
@@ -54,20 +55,59 @@ class _FeedScreenState extends State<AccountScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(16.0),
                                 child: SizedBox(
-                                  width: constraints.maxWidth * 0.65,
+                                  width: constraints.maxWidth * 0.8,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       const SizedBox(height: 4.0),
-                                      CircleAvatar(
-                                        radius: 50.0,
-                                        backgroundImage: NetworkImage(loaded.user.profilePicture),
+                                      Stack(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(4),
+                                            child: CircleAvatar(
+                                              radius: 50.0,
+                                              backgroundImage: NetworkImage(
+                                                  loaded.user.profilePicture),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: 0.1,
+                                            right: 0.1,
+                                            child: IconButton(
+                                                onPressed: () {
+                                                  BlocProvider.of<AccountBloc>(
+                                                          context)
+                                                      .add(ChangeProfilePic(
+                                                          user: loaded.user));
+                                                },
+                                                icon: Container(
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.grey,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            50.0),
+                                                  ),
+                                                  child: const FaIcon(
+                                                    FontAwesomeIcons
+                                                        .cameraRetro,
+                                                    color: Colors.black,
+                                                    size: 24.0,
+                                                  ),
+                                                )),
+                                          ),
+                                        ],
                                       ),
                                       const SizedBox(height: 16.0),
                                       changeUsername
                                           ? ChangeUsernameField(
                                               onDone: (username) {
-                                                BlocProvider.of<AccountBloc>(context).add(ChangeUsername(username: username, id: loaded.user.id));
+                                                BlocProvider.of<AccountBloc>(
+                                                        context)
+                                                    .add(ChangeUsername(
+                                                  username: username,
+                                                  user: loaded.user,
+                                                ));
                                                 setState(() {
                                                   changeUsername = false;
                                                 });
@@ -94,7 +134,8 @@ class _FeedScreenState extends State<AccountScreen> {
                                           changeUsername = !changeUsername;
                                         });
                                       },
-                                      icon: const FaIcon(FontAwesomeIcons.pen))),
+                                      icon:
+                                          const FaIcon(FontAwesomeIcons.pen))),
                             ],
                           ),
                         ),
@@ -110,6 +151,8 @@ class _FeedScreenState extends State<AccountScreen> {
                       ],
                     );
                   }, error: (error) {
+                    BlocProvider.of<SnackbarBloc>(context)
+                        .add(ErrorSnackbar(message: error.error));
                     return Center(child: Text(error.error));
                   }, orElse: () {
                     return const AppProgress();

@@ -15,8 +15,10 @@
   "price_post_create_label": "Price",
   "store_post_create_label": "Store",
   "button_post_create_label": "Create a post!",
+  "card_required_label": "Do you need a loyalty card?",
 
   "post_tags_label": "Tags",
+  "post_store_card_required": "Loyalty card only",
 
   "no_posts_for_store_1":"No posts for this store yet",
   "no_posts_for_store_2":"Maybe you could go out and find something!",

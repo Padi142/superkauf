@@ -12,13 +12,16 @@ class StorePostsBloc extends Bloc<StorePostsEvent, StorePostsState> {
     required this.getPostsByStoreUseCase,
   }) : super(const StorePostsState.loading()) {
     on<GetPosts>(_onGetPosts);
+    on<ReloadStorePosts>(_onReloadStorePosts);
   }
+  var storeId = -1;
 
   Future<void> _onGetPosts(
     GetPosts event,
     Emitter<StorePostsState> emit,
   ) async {
     emit(const StorePostsState.loading());
+    storeId = event.storeId;
 
     final result = await getPostsByStoreUseCase.call(event.storeId);
     result.when(
@@ -29,5 +32,16 @@ class StorePostsBloc extends Bloc<StorePostsEvent, StorePostsState> {
         emit(StorePostsState.error(message));
       },
     );
+  }
+
+  Future<void> _onReloadStorePosts(
+    ReloadStorePosts event,
+    Emitter<StorePostsState> emit,
+  ) async {
+    if (event.wait) {
+      await Future.delayed(const Duration(milliseconds: 400));
+    }
+    emit(const StorePostsState.loading());
+    add(GetPosts(storeId: storeId));
   }
 }

@@ -54,4 +54,18 @@ class UserRepository {
       return const GetUserResult.failure('error');
     });
   }
+
+  Future<GetUserResult> getUserByUsername(String username) async {
+    return userApi.getUserByUsername(username: username).then((response) {
+      if (response.error != null) {
+        return GetUserResult.failure(response.error!);
+      }
+      return GetUserResult.success(response.user!);
+    }).onError((error, stackTrace) {
+      if (error is DioException) {
+        return GetUserResult.failure(error.message ?? 'error getting user');
+      }
+      return const GetUserResult.failure('error');
+    });
+  }
 }

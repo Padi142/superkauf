@@ -63,7 +63,31 @@ class PostDetailDescription extends StatelessWidget {
                               )),
                         )),
                   ),
-                )
+                ),
+                post.requiresStoreCard
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: const Offset(0, 4),
+                                  blurRadius: 4,
+                                  color: Colors.black.withOpacity(0.25),
+                                ),
+                              ],
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text('post_store_card_required'.tr(),
+                                  style: App.appTheme.textTheme.titleMedium!.copyWith(
+                                    color: Colors.white,
+                                  )),
+                            )),
+                      )
+                    : Container(),
               ],
             ),
           ),

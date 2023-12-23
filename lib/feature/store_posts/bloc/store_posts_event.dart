@@ -14,3 +14,11 @@ class GetPosts extends StorePostsEvent {
     required this.storeId,
   });
 }
+
+class ReloadStorePosts extends StorePostsEvent {
+  final bool wait;
+
+  const ReloadStorePosts({
+    this.wait = false,
+  });
+}

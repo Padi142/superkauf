@@ -7,7 +7,11 @@ import 'package:superkauf/generic/post/use_case/delete_post_use_case.dart';
 import 'package:superkauf/generic/post/use_case/get_post_detail_use_case.dart';
 import 'package:superkauf/generic/post/use_case/get_posts_by_user.dart';
 import 'package:superkauf/generic/post/use_case/get_posts_use_case.dart';
+import 'package:superkauf/generic/post/use_case/update_post_image_use_case.dart';
 import 'package:superkauf/generic/post/use_case/upload_post_image_use_case.dart';
+import 'package:superkauf/generic/saved_posts/use_case/create_saved_post_use_case.dart';
+import 'package:superkauf/generic/saved_posts/use_case/delete_saved_post_use_case.dart';
+import 'package:superkauf/generic/user/use_case/get_current_user_use_case.dart';
 import 'package:superkauf/generic/user/use_case/get_user_by_uid_use_case.dart';
 import 'package:superkauf/library/app_module.dart';
 
@@ -30,6 +34,9 @@ class PostModule extends AppModule {
       () => PostBloc(
         deletePostUseCase: GetIt.I.get<DeletePostUseCase>(),
         getUserByUidUseCase: GetIt.I.get<GetUserByUidUseCase>(),
+        createSavedPostUseCase: GetIt.I.get<CreateSavedPostUseCase>(),
+        deleteSavedPostUseCase: GetIt.I.get<DeleteSavedPostUseCase>(),
+        getCurrentUser: GetIt.I.get<GetCurrentUserUseCase>(),
       ),
     );
   }
@@ -61,6 +68,10 @@ class PostModule extends AppModule {
 
     GetIt.I.registerFactory<GetPostsByUserUseCase>(
       () => GetPostsByUserUseCase(repository: GetIt.I.get<PostsRepository>()),
+    );
+
+    GetIt.I.registerFactory<UpdatePostImageUseCase>(
+      () => UpdatePostImageUseCase(repository: GetIt.I.get<PostsRepository>()),
     );
   }
 

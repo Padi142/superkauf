@@ -3,8 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:superkauf/feature/feed/bloc/feed_bloc.dart';
 import 'package:superkauf/feature/feed/view/feed_view.dart';
 import 'package:superkauf/generic/post/use_case/get_posts_use_case.dart';
-
-import '../../library/app_module.dart';
+import 'package:superkauf/library/app_module.dart';
 
 class FeedModule extends AppModule {
   @override

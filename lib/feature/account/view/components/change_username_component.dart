@@ -27,7 +27,7 @@ class _ChangeUsernameFieldState extends State<ChangeUsernameField> {
             filled: App.appTheme.colorScheme.surface,
             hint: 'Username',
             autofocus: true,
-            validators: [ValidatorEmpty(), ValidatorRegex(r'^[a-zA-Z0-9_]{3,15}$', 'Username can only contain letters, numbers and underscores')],
+            validators: [ValidatorEmpty(), ValidatorRegex(r'^[a-zA-Z0-9_]{3,15}$', 'Invalid username (3-15 characters')],
           ),
         ),
         const SizedBox(

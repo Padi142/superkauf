@@ -13,9 +13,14 @@ class GetUser extends AccountEvent {
 
 class ChangeUsername extends AccountEvent {
   final String username;
-  final int id;
+  final UserModel user;
 
-  const ChangeUsername({required this.username, required this.id});
+  const ChangeUsername({required this.username, required this.user});
+}
+
+class ChangeProfilePic extends AccountEvent {
+  final UserModel user;
+  const ChangeProfilePic({required this.user});
 }
 
 class LogOut extends AccountEvent {

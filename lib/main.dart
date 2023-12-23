@@ -17,15 +17,20 @@ import 'package:superkauf/feature/init/init_module.dart';
 import 'package:superkauf/feature/login/login_module.dart';
 import 'package:superkauf/feature/my_channel/my_channel_module.dart';
 import 'package:superkauf/feature/post_detail/post_detail_module.dart';
+import 'package:superkauf/feature/shopping_list/shopping_list_module.dart';
+import 'package:superkauf/feature/snackbar/bloc/snackbar_bloc.dart';
+import 'package:superkauf/feature/snackbar/snackbar_module.dart';
 import 'package:superkauf/feature/store_posts/store_posts_module.dart';
 import 'package:superkauf/feature/user_detail/bloc/user_detail_bloc.dart';
 import 'package:superkauf/feature/user_detail/user_detail_module.dart';
 import 'package:superkauf/generic/api/post_api.dart';
+import 'package:superkauf/generic/api/saved_posts_api.dart';
 import 'package:superkauf/generic/api/store_api.dart';
 import 'package:superkauf/generic/api/user_api.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/locale/locale_resource.dart';
 import 'package:superkauf/generic/post/posts_module.dart';
+import 'package:superkauf/generic/saved_posts/saved_posts_module.dart';
 import 'package:superkauf/generic/store/store_module.dart';
 import 'package:superkauf/generic/user/user_module.dart';
 import 'package:superkauf/library/app_navigation.dart';
@@ -77,6 +82,8 @@ Future<void> main() async {
       GetIt.I.registerFactory<PostApi>(() => PostApi(_dio(config.endpoint)));
       GetIt.I.registerFactory<UserApi>(() => UserApi(_dio(config.endpoint)));
       GetIt.I.registerFactory<StoreApi>(() => StoreApi(_dio(config.endpoint)));
+      GetIt.I.registerFactory<SavedPostsApi>(
+          () => SavedPostsApi(_dio(config.endpoint)));
     },
   );
 
@@ -108,6 +115,9 @@ List<AppModule> modules() {
     StoreModule(),
     StorePostsModule(),
     UserDetailModule(),
+    SavedPostsModule(),
+    ShoppingListModule(),
+    SnackbarModule(),
   ];
 }
 
@@ -181,6 +191,9 @@ class MainWidget extends StatelessWidget {
       providers: [
         BlocProvider<UserDetailBloc>.value(
           value: GetIt.I.get<UserDetailBloc>(),
+        ),
+        BlocProvider<SnackbarBloc>.value(
+          value: GetIt.I.get<SnackbarBloc>(),
         ),
       ],
       child: MaterialApp(

@@ -1,10 +1,10 @@
 import 'dart:io';
 
-class UploadPostImageParams {
+class UploadImageParams {
   final String path;
   final File file;
 
-  UploadPostImageParams({
+  UploadImageParams({
     required this.path,
     required this.file,
   });

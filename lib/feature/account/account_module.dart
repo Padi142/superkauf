@@ -3,8 +3,11 @@ import 'package:get_it/get_it.dart';
 import 'package:superkauf/feature/account/bloc/account_bloc.dart';
 import 'package:superkauf/feature/account/use_case/account_navigation.dart';
 import 'package:superkauf/feature/account/view/account_screen.dart';
+import 'package:superkauf/feature/create_post/use_case/pick_image_use_case.dart';
 import 'package:superkauf/generic/user/use_case/get_user_by_uid_use_case.dart';
+import 'package:superkauf/generic/user/use_case/get_user_by_username_use_case.dart';
 import 'package:superkauf/generic/user/use_case/updat_user_use_case.dart';
+import 'package:superkauf/generic/user/use_case/upload_user_image_use_case.dart';
 
 import '../../library/app_module.dart';
 
@@ -21,6 +24,9 @@ class AccountModule extends AppModule {
         accountNavigation: GetIt.I.get<AccountNavigation>(),
         getUserByUidUseCase: GetIt.I.get<GetUserByUidUseCase>(),
         updateUserUseCase: GetIt.I.get<UpdateUserUseCase>(),
+        getUserByUsernameUseCase: GetIt.I.get<GetUserByUsernameUseCase>(),
+        pickImageUseCase: GetIt.I.get<PickImageUseCase>(),
+        uploadUserImageUseCase: GetIt.I.get<UploadUserImageUseCase>(),
       ),
     );
   }

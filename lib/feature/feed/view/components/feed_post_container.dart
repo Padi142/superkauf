@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:superkauf/feature/feed/view/components/save_post_button.dart';
 import 'package:superkauf/feature/feed/view/components/time_ago_widget.dart';
 import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
 import 'package:superkauf/feature/post_detail/bloc/post_detail_bloc.dart';
@@ -11,8 +12,9 @@ import 'package:superkauf/library/app.dart';
 
 class FeedPostContainer extends StatelessWidget {
   final FeedPostModel post;
+  final String originScreen;
 
-  const FeedPostContainer({super.key, required this.post});
+  const FeedPostContainer({super.key, required this.post, required this.originScreen});
 
   @override
   Widget build(BuildContext context) {
@@ -111,39 +113,70 @@ class FeedPostContainer extends StatelessWidget {
                                         Positioned(
                                           right: 2,
                                           top: 4,
-                                          child: Card(
-                                            color: Colors.white,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(16.0),
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(6),
-                                              child: Text(
-                                                post.post.storeName,
-                                                style: App.appTheme.textTheme.bodyMedium,
+                                          child: Row(
+                                            children: [
+                                              Card(
+                                                color: Colors.white,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(16.0),
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(6),
+                                                  child: Text(
+                                                    post.post.storeName,
+                                                    style: App.appTheme.textTheme.bodyMedium,
+                                                  ),
+                                                ),
                                               ),
-                                            ),
+                                              post.post.requiresStoreCard
+                                                  ? Card(
+                                                      color: Colors.white,
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(50),
+                                                      ),
+                                                      child: const Padding(
+                                                        padding: EdgeInsets.all(6),
+                                                        child: Icon(
+                                                          Icons.add_card,
+                                                          color: Colors.black,
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : const SizedBox(),
+                                            ],
                                           ),
                                         ),
                                         Positioned(
                                           right: 2,
                                           bottom: 4,
-                                          child: Hero(
-                                            tag: 'price${post.post.id}',
-                                            child: Card(
-                                              elevation: 10,
-                                              color: Colors.yellowAccent,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(16.0),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              SavePostButton(
+                                                postId: post.post.id,
+                                                originScreen: originScreen,
                                               ),
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(10),
-                                                child: Text(
-                                                  '${post.post.price} Kč',
-                                                  style: App.appTheme.textTheme.titleLarge,
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              Hero(
+                                                tag: 'price${post.post.id}',
+                                                child: Card(
+                                                  elevation: 10,
+                                                  color: Colors.yellowAccent,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(16.0),
+                                                  ),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(10),
+                                                    child: Text(
+                                                      '${post.post.price} Kč',
+                                                      style: App.appTheme.textTheme.titleLarge,
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
-                                            ),
+                                            ],
                                           ),
                                         ),
                                       ],

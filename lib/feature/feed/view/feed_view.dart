@@ -52,7 +52,7 @@ class _FeedScreenState extends State<FeedScreen> {
                       child: ListView.builder(
                         itemCount: loaded.posts.length,
                         itemBuilder: (context, index) {
-                          return FeedPostContainer(post: loaded.posts[index]);
+                          return FeedPostContainer(post: loaded.posts[index], originScreen: ScreenPath.feedScreen);
                         },
                       ),
                     );

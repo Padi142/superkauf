@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:superkauf/generic/user/model/check_username_response.dart';
 import 'package:superkauf/generic/user/model/user_model.dart';
 
 part 'user_api.g.dart';
@@ -16,6 +17,11 @@ abstract class UserApi {
   @GET('/user/uid/{uid}')
   Future<UserModel> getUserByUid({
     @Path() required String uid,
+  });
+
+  @GET('/user/username/{username}')
+  Future<CheckUsernameResponse> getUserByUsername({
+    @Path() required String username,
   });
 
   @PUT('/user/id/{id}')

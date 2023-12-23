@@ -28,7 +28,7 @@ class _PostDetailScreenState extends State<StorePostsScreen> {
   @override
   void initState() {
     if (widget.params != null) {
-      _selectedStore = widget.params! - 1;
+      _selectedStore = widget.params!;
     }
 
     context.read<StorePostsBloc>().add(GetPosts(storeId: _selectedStore));
@@ -44,7 +44,7 @@ class _PostDetailScreenState extends State<StorePostsScreen> {
     scrollToRefreshListener(controller: _scrollController);
   }
 
-  var _selectedStore = 0;
+  var _selectedStore = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -53,20 +53,18 @@ class _PostDetailScreenState extends State<StorePostsScreen> {
         child: RefreshIndicator(
           onRefresh: () async {
             context.read<StorePostsBloc>().add(
-                  GetPosts(storeId: _selectedStore + 1),
+                  GetPosts(storeId: _selectedStore),
                 );
           },
           child: Column(
             children: [
               StoreHeaders(
                 constraints: constraints,
-                onStoreSelected: (index) {
+                onStoreSelected: (id) {
                   setState(() {
-                    _selectedStore = index;
+                    _selectedStore = id;
                   });
-                  context
-                      .read<StorePostsBloc>()
-                      .add(GetPosts(storeId: _selectedStore + 1));
+                  context.read<StorePostsBloc>().add(GetPosts(storeId: _selectedStore));
                 },
                 selectedStore: _selectedStore,
               ),
@@ -84,8 +82,7 @@ class _PostDetailScreenState extends State<StorePostsScreen> {
                           const SizedBox(
                             height: 10,
                           ),
-                          Text('no_posts_for_store_2'.tr(),
-                              style: App.appTheme.textTheme.titleSmall),
+                          Text('no_posts_for_store_2'.tr(), style: App.appTheme.textTheme.titleSmall),
                         ],
                       ));
                     }
@@ -96,10 +93,8 @@ class _PostDetailScreenState extends State<StorePostsScreen> {
                         controller: _scrollController,
                         itemBuilder: (context, index) {
                           return Padding(
-                            padding: EdgeInsets.only(
-                                bottom:
-                                    loaded.posts.length == index + 1 ? 100 : 0),
-                            child: FeedPostContainer(post: loaded.posts[index]),
+                            padding: EdgeInsets.only(bottom: loaded.posts.length == index + 1 ? 100 : 0),
+                            child: FeedPostContainer(post: loaded.posts[index], originScreen: ScreenPath.storesScreen),
                           );
                         },
                       ),

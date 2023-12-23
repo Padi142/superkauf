@@ -34,11 +34,11 @@ class StoreHeaders extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: GestureDetector(
                         onTap: () {
-                          onStoreSelected(index);
+                          onStoreSelected(stores.stores[index].id);
                         },
                         child: Container(
                             decoration: BoxDecoration(
-                              color: selectedStore == index ? Colors.black : Colors.white,
+                              color: selectedStore == stores.stores[index].id ? Colors.black : Colors.white,
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
@@ -52,7 +52,7 @@ class StoreHeaders extends StatelessWidget {
                               padding: const EdgeInsets.all(8.0),
                               child: Text(stores.stores[index].name,
                                   style: App.appTheme.textTheme.titleMedium!.copyWith(
-                                    color: selectedStore == index ? Colors.white : Colors.black,
+                                    color: selectedStore == stores.stores[index].id ? Colors.white : Colors.black,
                                   )),
                             )),
                       ),

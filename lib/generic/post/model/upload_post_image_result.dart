@@ -3,8 +3,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'upload_post_image_result.freezed.dart';
 
 @freezed
-class UploadPostImageResult with _$UploadPostImageResult {
-  const factory UploadPostImageResult.success(String path) = Success;
+class UploadImageResult with _$UploadImageResult {
+  const factory UploadImageResult.success(String path) = Success;
 
-  const factory UploadPostImageResult.failure(String message) = Failure;
+  const factory UploadImageResult.failure(String message) = Failure;
 }

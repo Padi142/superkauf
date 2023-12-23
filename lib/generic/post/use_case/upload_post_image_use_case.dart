@@ -3,22 +3,20 @@ import 'package:superkauf/generic/post/model/upload_post_image_params.dart';
 import 'package:superkauf/generic/post/model/upload_post_image_result.dart';
 import 'package:superkauf/library/use_case.dart';
 
-class UploadPostImageUseCase extends UseCase<UploadPostImageResult, UploadPostImageParams> {
+class UploadPostImageUseCase
+    extends UseCase<UploadImageResult, UploadImageParams> {
   UploadPostImageUseCase();
 
   @override
-  Future<UploadPostImageResult> call(params) async {
+  Future<UploadImageResult> call(params) async {
     final supabase = Supabase.instance.client;
 
-    // final session = supabase.auth.currentSession;
-    // if (session == null) {
-    //   return const UploadPostImageResult.failure('Not logged in');
-    // }
-
-    final response = await supabase.storage.from('posts').upload(params.path, params.file);
+    final response = await supabase.storage.from('posts').upload(
+        params.path, params.file,
+        fileOptions: const FileOptions(upsert: true));
     if (response == "") {
-      return const UploadPostImageResult.failure('Upload failed');
+      return const UploadImageResult.failure('Upload failed');
     }
-    return UploadPostImageResult.success(response);
+    return UploadImageResult.success(response);
   }
 }

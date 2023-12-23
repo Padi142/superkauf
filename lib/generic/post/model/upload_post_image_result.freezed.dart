@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$UploadPostImageResult {
+mixin _$UploadImageResult {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String path) success,
@@ -57,13 +57,16 @@ mixin _$UploadPostImageResult {
 }
 
 /// @nodoc
-abstract class $UploadPostImageResultCopyWith<$Res> {
-  factory $UploadPostImageResultCopyWith(UploadPostImageResult value, $Res Function(UploadPostImageResult) then) = _$UploadPostImageResultCopyWithImpl<$Res, UploadPostImageResult>;
+abstract class $UploadImageResultCopyWith<$Res> {
+  factory $UploadImageResultCopyWith(
+          UploadImageResult value, $Res Function(UploadImageResult) then) =
+      _$UploadImageResultCopyWithImpl<$Res, UploadImageResult>;
 }
 
 /// @nodoc
-class _$UploadPostImageResultCopyWithImpl<$Res, $Val extends UploadPostImageResult> implements $UploadPostImageResultCopyWith<$Res> {
-  _$UploadPostImageResultCopyWithImpl(this._value, this._then);
+class _$UploadImageResultCopyWithImpl<$Res, $Val extends UploadImageResult>
+    implements $UploadImageResultCopyWith<$Res> {
+  _$UploadImageResultCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -73,14 +76,20 @@ class _$UploadPostImageResultCopyWithImpl<$Res, $Val extends UploadPostImageResu
 
 /// @nodoc
 abstract class _$$SuccessImplCopyWith<$Res> {
-  factory _$$SuccessImplCopyWith(_$SuccessImpl value, $Res Function(_$SuccessImpl) then) = __$$SuccessImplCopyWithImpl<$Res>;
+  factory _$$SuccessImplCopyWith(
+          _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
+      __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String path});
 }
 
 /// @nodoc
-class __$$SuccessImplCopyWithImpl<$Res> extends _$UploadPostImageResultCopyWithImpl<$Res, _$SuccessImpl> implements _$$SuccessImplCopyWith<$Res> {
-  __$$SuccessImplCopyWithImpl(_$SuccessImpl _value, $Res Function(_$SuccessImpl) _then) : super(_value, _then);
+class __$$SuccessImplCopyWithImpl<$Res>
+    extends _$UploadImageResultCopyWithImpl<$Res, _$SuccessImpl>
+    implements _$$SuccessImplCopyWith<$Res> {
+  __$$SuccessImplCopyWithImpl(
+      _$SuccessImpl _value, $Res Function(_$SuccessImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -106,12 +115,15 @@ class _$SuccessImpl implements Success {
 
   @override
   String toString() {
-    return 'UploadPostImageResult.success(path: $path)';
+    return 'UploadImageResult.success(path: $path)';
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$SuccessImpl && (identical(other.path, path) || other.path == path));
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SuccessImpl &&
+            (identical(other.path, path) || other.path == path));
   }
 
   @override
@@ -120,7 +132,8 @@ class _$SuccessImpl implements Success {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith => __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+      __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -185,24 +198,31 @@ class _$SuccessImpl implements Success {
   }
 }
 
-abstract class Success implements UploadPostImageResult {
+abstract class Success implements UploadImageResult {
   const factory Success(final String path) = _$SuccessImpl;
 
   String get path;
   @JsonKey(ignore: true)
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$FailureImplCopyWith<$Res> {
-  factory _$$FailureImplCopyWith(_$FailureImpl value, $Res Function(_$FailureImpl) then) = __$$FailureImplCopyWithImpl<$Res>;
+  factory _$$FailureImplCopyWith(
+          _$FailureImpl value, $Res Function(_$FailureImpl) then) =
+      __$$FailureImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class __$$FailureImplCopyWithImpl<$Res> extends _$UploadPostImageResultCopyWithImpl<$Res, _$FailureImpl> implements _$$FailureImplCopyWith<$Res> {
-  __$$FailureImplCopyWithImpl(_$FailureImpl _value, $Res Function(_$FailureImpl) _then) : super(_value, _then);
+class __$$FailureImplCopyWithImpl<$Res>
+    extends _$UploadImageResultCopyWithImpl<$Res, _$FailureImpl>
+    implements _$$FailureImplCopyWith<$Res> {
+  __$$FailureImplCopyWithImpl(
+      _$FailureImpl _value, $Res Function(_$FailureImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -228,12 +248,15 @@ class _$FailureImpl implements Failure {
 
   @override
   String toString() {
-    return 'UploadPostImageResult.failure(message: $message)';
+    return 'UploadImageResult.failure(message: $message)';
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$FailureImpl && (identical(other.message, message) || other.message == message));
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FailureImpl &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
@@ -242,7 +265,8 @@ class _$FailureImpl implements Failure {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$FailureImplCopyWith<_$FailureImpl> get copyWith => __$$FailureImplCopyWithImpl<_$FailureImpl>(this, _$identity);
+  _$$FailureImplCopyWith<_$FailureImpl> get copyWith =>
+      __$$FailureImplCopyWithImpl<_$FailureImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -307,10 +331,11 @@ class _$FailureImpl implements Failure {
   }
 }
 
-abstract class Failure implements UploadPostImageResult {
+abstract class Failure implements UploadImageResult {
   const factory Failure(final String message) = _$FailureImpl;
 
   String get message;
   @JsonKey(ignore: true)
-  _$$FailureImplCopyWith<_$FailureImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$FailureImplCopyWith<_$FailureImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

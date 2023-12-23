@@ -9,7 +9,7 @@ class CreatePostModel {
   final String author;
   final String storeName;
   final int store;
-  final String image;
+  final bool requiresStoreCard;
 
   const CreatePostModel({
     required this.description,
@@ -17,7 +17,7 @@ class CreatePostModel {
     required this.author,
     required this.storeName,
     required this.store,
-    required this.image,
+    required this.requiresStoreCard,
   });
 
   factory CreatePostModel.fromJson(Map<String, dynamic> json) => _$CreatePostModelFromJson(json);
