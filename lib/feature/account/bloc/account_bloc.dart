@@ -86,7 +86,6 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     userResult.map(
         success: (success) {
           emit(const AccountState.error("Username already taken"));
-          emit(const AccountState.loading());
 
           shouldReturn = true;
           add(const GetUser());

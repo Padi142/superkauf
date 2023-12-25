@@ -21,20 +21,33 @@ class PostDetailScreen extends Screen {
 }
 
 class _PostDetailScreenState extends State<PostDetailScreen> {
+  final _controller = ScrollController();
+  var descriptionEdit = false;
   @override
   void initState() {
     super.initState();
   }
 
+  var postId = -1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: LayoutBuilder(builder: (context, constraints) {
         return SingleChildScrollView(
+          controller: _controller,
           child: BlocListener<PostBloc, PostState>(
             listener: (context, state) {
               state.maybeMap(
+                  success: (success) {
+                    if (postId == -1) {
+                      return;
+                    }
+                    BlocProvider.of<PostDetailBloc>(context).add(ReloadPost(
+                      postId: postId.toString(),
+                      wait: false,
+                    ));
+                  },
                   error: (error) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -55,6 +68,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                             constraints: constraints,
                             post: initial.post,
                             user: initial.user,
+                            onDescriptionEdit: () {},
                             canEdit: false,
                           ),
                           const SizedBox(
@@ -64,6 +78,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                         ],
                       ));
                 }, loaded: (loaded) {
+                  postId = loaded.post.id;
                   return SizedBox(
                       width: constraints.maxWidth,
                       child: Column(
@@ -72,6 +87,11 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                             constraints: constraints,
                             post: loaded.post,
                             user: loaded.user,
+                            onDescriptionEdit: () {
+                              setState(() {
+                                descriptionEdit = true;
+                              });
+                            },
                             canEdit: loaded.canEdit,
                           ),
                           const SizedBox(
@@ -80,6 +100,17 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                           PostDetailDescription(
                             constraints: constraints,
                             post: loaded.post,
+                            scrollController: _controller,
+                            onDone: (newDescription) {
+                              BlocProvider.of<PostBloc>(context).add(UpdatePost(
+                                postId: loaded.post.id,
+                                newDescription: newDescription,
+                              ));
+                              setState(() {
+                                descriptionEdit = false;
+                              });
+                            },
+                            startEdit: descriptionEdit,
                           ),
                         ],
                       ));

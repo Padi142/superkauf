@@ -13,7 +13,8 @@ StoreModel _$StoreModelFromJson(Map<String, dynamic> json) => StoreModel(
       createdAt: DateTime.parse(json['created_at'] as String),
     );
 
-Map<String, dynamic> _$StoreModelToJson(StoreModel instance) => <String, dynamic>{
+Map<String, dynamic> _$StoreModelToJson(StoreModel instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'image': instance.image,

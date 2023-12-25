@@ -20,11 +20,17 @@
   "post_tags_label": "Tags",
   "post_store_card_required": "Loyalty card only",
 
+  "comment_create_label": "Comment",
+  "post_comments_label": "Comments",
+  "no_comments_label": "No comments yet",
+
   "no_posts_for_store_1":"No posts for this store yet",
   "no_posts_for_store_2":"Maybe you could go out and find something!",
 
   "no_posts_for_user_1":"You haven't posted anything yet",
   "no_posts_for_user_2":"Try posting something with that big button down there!",
+
+  "user_info_registered_on_label": "Registered on",
 
   "logout_button_text": "Log out",
 

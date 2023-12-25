@@ -21,11 +21,18 @@
   "post_tags_label": "Tagy",
   "post_store_card_required": "Vyžaduje kartičku ",
 
+  "comment_create_label": "Komentář",
+  "post_comments_label": "Komentáře",
+  "no_comments_label": "Žádné komentáře",
+
+
   "no_posts_for_store_1":"Žádné slevy v tomto obchodu :/",
   "no_posts_for_store_2":"Můžeš být první kdo něco objeví!",
 
   "no_posts_for_user_1":"Zatím jsi nic nepřidal/a/o :/",
   "no_posts_for_user_2":"Zkus to tím velkým tlačítkem dole!",
+
+  "user_info_registered_on_label": "Registrován od",
 
   "logout_button_text": "Odhlásit",
 

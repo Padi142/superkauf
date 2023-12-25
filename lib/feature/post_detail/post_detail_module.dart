@@ -4,6 +4,8 @@ import 'package:superkauf/feature/feed/bloc/feed_bloc.dart';
 import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
 import 'package:superkauf/feature/post_detail/bloc/post_detail_bloc.dart';
 import 'package:superkauf/feature/post_detail/view/post_detail_screen.dart';
+import 'package:superkauf/feature/snackbar/bloc/snackbar_bloc.dart';
+import 'package:superkauf/generic/comments/bloc/comment_bloc.dart';
 import 'package:superkauf/generic/post/bloc/post_bloc.dart';
 import 'package:superkauf/generic/post/use_case/get_post_detail_use_case.dart';
 import 'package:superkauf/generic/user/use_case/get_current_user_use_case.dart';
@@ -47,6 +49,12 @@ class PostDetailModule extends AppModule {
           ),
           BlocProvider<NavigationBloc>.value(
             value: GetIt.I.get<NavigationBloc>(),
+          ),
+          BlocProvider<CommentBloc>.value(
+            value: GetIt.I.get<CommentBloc>(),
+          ),
+          BlocProvider<SnackbarBloc>.value(
+            value: GetIt.I.get<SnackbarBloc>(),
           ),
         ],
         child: GetIt.I.get<PostDetailScreen>(),

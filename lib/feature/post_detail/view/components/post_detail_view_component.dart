@@ -7,6 +7,7 @@ import 'package:superkauf/feature/feed/view/components/time_ago_widget.dart';
 import 'package:superkauf/feature/post_detail/view/components/post_author.dart';
 import 'package:superkauf/generic/post/bloc/post_bloc.dart';
 import 'package:superkauf/generic/post/model/post_model.dart';
+import 'package:superkauf/generic/post/view/components/price_widget.dart';
 import 'package:superkauf/generic/user/model/user_model.dart';
 import 'package:superkauf/generic/widget/app_progress.dart';
 import 'package:superkauf/library/app.dart';
@@ -15,6 +16,7 @@ class PostDetailViewComponent extends StatelessWidget {
   final BoxConstraints constraints;
   final PostModel post;
   final UserModel user;
+  final Function() onDescriptionEdit;
   final bool canEdit;
 
   const PostDetailViewComponent({
@@ -22,6 +24,7 @@ class PostDetailViewComponent extends StatelessWidget {
     required this.constraints,
     required this.post,
     required this.user,
+    required this.onDescriptionEdit,
     required this.canEdit,
   });
 
@@ -52,11 +55,20 @@ class PostDetailViewComponent extends StatelessWidget {
                           case 'delete':
                             {
                               _showConfirmDeletion(context, () {
-                                BlocProvider.of<PostBloc>(context).add(DeletePost(postId: post.id.toString(), author: post.author));
-                                BlocProvider.of<FeedBloc>(context).add(const ReloadFeed());
+                                BlocProvider.of<PostBloc>(context).add(
+                                    DeletePost(
+                                        postId: post.id.toString(),
+                                        author: post.author));
+                                BlocProvider.of<FeedBloc>(context)
+                                    .add(const ReloadFeed());
                                 Navigator.of(context).pop();
                               });
 
+                              break;
+                            }
+                          case 'edit':
+                            {
+                              onDescriptionEdit();
                               break;
                             }
                           default:
@@ -67,6 +79,10 @@ class PostDetailViewComponent extends StatelessWidget {
                         const PopupMenuItem<String>(
                           value: 'delete',
                           child: Text('Delete post'),
+                        ),
+                        const PopupMenuItem<String>(
+                          value: 'edit',
+                          child: Text('Edit post'),
                         ),
                       ],
                     )
@@ -82,7 +98,8 @@ class PostDetailViewComponent extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  showImageViewer(context, Image.network(post.image).image, onViewerDismissed: () {});
+                  showImageViewer(context, Image.network(post.image).image,
+                      onViewerDismissed: () {});
                 },
                 child: Hero(
                   tag: post.id,
@@ -97,8 +114,10 @@ class PostDetailViewComponent extends StatelessWidget {
                           fit: BoxFit.fitHeight,
                         )),
                       ),
-                      placeholder: (context, url) => const Center(child: AppProgress()),
-                      errorWidget: (context, url, error) => const Icon(Icons.error),
+                      placeholder: (context, url) =>
+                          const Center(child: AppProgress()),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
                     ),
                   ),
                 ),
@@ -107,22 +126,8 @@ class PostDetailViewComponent extends StatelessWidget {
                 right: 1,
                 bottom: 1,
                 child: Hero(
-                  tag: 'price${post.id}',
-                  child: Card(
-                    color: Colors.yellowAccent,
-                    elevation: 12,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Text(
-                        '${post.price} Kč',
-                        style: App.appTheme.textTheme.titleLarge!.copyWith(fontSize: 40),
-                      ),
-                    ),
-                  ),
-                ),
+                    tag: 'price${post.id}',
+                    child: PriceWidget(price: post.price)),
               ),
             ],
           ),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
+import 'package:superkauf/feature/user_detail/bloc/user_detail_bloc.dart';
 import 'package:superkauf/generic/user/model/user_model.dart';
-import 'package:superkauf/library/app.dart';
+import 'package:superkauf/generic/user/view/username_label.dart';
 
 class PostAuthor extends StatelessWidget {
   final UserModel user;
@@ -15,17 +18,22 @@ class PostAuthor extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(2),
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(user.profilePicture),
+            child: GestureDetector(
+              onTap: () {
+                BlocProvider.of<UserDetailBloc>(context)
+                    .add(InitialUserEvent(user: user));
+                BlocProvider.of<NavigationBloc>(context)
+                    .add(const OpenUserDetailScreen());
+              },
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(user.profilePicture),
+              ),
             ),
           ),
           const SizedBox(
             width: 5,
           ),
-          Text(
-            user.username,
-            style: App.appTheme.textTheme.titleSmall,
-          ),
+          UsernameLabel(user: user),
         ],
       ),
     );

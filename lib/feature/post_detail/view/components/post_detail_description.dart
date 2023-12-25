@@ -1,15 +1,27 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
+import 'package:superkauf/feature/post_detail/view/components/add_comment_field.dart';
+import 'package:superkauf/feature/post_detail/view/components/comment_section.dart';
+import 'package:superkauf/feature/post_detail/view/components/edit_description_field.dart';
+import 'package:superkauf/feature/post_detail/view/components/post_components.dart';
 import 'package:superkauf/generic/post/model/post_model.dart';
 import 'package:superkauf/library/app.dart';
 
 class PostDetailDescription extends StatelessWidget {
   final BoxConstraints constraints;
   final PostModel post;
+  final ScrollController scrollController;
+  final Function(String newDescription) onDone;
+  final bool startEdit;
 
-  const PostDetailDescription({super.key, required this.constraints, required this.post});
+  const PostDetailDescription({
+    super.key,
+    required this.constraints,
+    required this.post,
+    required this.scrollController,
+    required this.onDone,
+    required this.startEdit,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,75 +33,58 @@ class PostDetailDescription extends StatelessWidget {
           Center(
             child: Padding(
               padding: const EdgeInsets.all(2),
-              child: SelectableText(
-                post.description,
-                style: App.appTheme.textTheme.bodyLarge,
-              ),
+              child: startEdit
+                  ? EditDescriptionField(post: post, onDone: onDone)
+                  : SelectableText(
+                      post.description,
+                      style: App.appTheme.textTheme.bodyLarge,
+                    ),
             ),
           ),
           const SizedBox(
             height: 50,
           ),
-          Text('post_tags_label'.tr(), style: App.appTheme.textTheme.titleSmall),
+          AddCommentField(
+            post: post,
+            onStartEdit: () {
+              scrollController.animateTo(
+                scrollController.offset + 200,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeIn,
+              );
+            },
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+          Text('post_tags_label'.tr(),
+              style: App.appTheme.textTheme.titleSmall),
           Padding(
             padding: const EdgeInsets.all(4),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      BlocProvider.of<NavigationBloc>(context).add(OpenStoresScreen(null, storeId: post.store));
-                      Navigator.of(context).pop();
-                    },
-                    child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: const Offset(0, 4),
-                              blurRadius: 4,
-                              color: Colors.black.withOpacity(0.25),
-                            ),
-                          ],
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(post.storeName,
-                              style: App.appTheme.textTheme.titleMedium!.copyWith(
-                                color: Colors.white,
-                              )),
-                        )),
-                  ),
-                ),
+                StoreLabel(storeLabel: post.storeName, storeId: post.store),
                 post.requiresStoreCard
-                    ? Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  offset: const Offset(0, 4),
-                                  blurRadius: 4,
-                                  color: Colors.black.withOpacity(0.25),
-                                ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text('post_store_card_required'.tr(),
-                                  style: App.appTheme.textTheme.titleMedium!.copyWith(
-                                    color: Colors.white,
-                                  )),
-                            )),
-                      )
-                    : Container(),
+                    ? const CardRequired()
+                    : const SizedBox(),
               ],
             ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Text('post_comments_label'.tr(),
+              style: App.appTheme.textTheme.titleSmall),
+          const SizedBox(
+            height: 20,
+          ),
+          CommentSection(
+            post: post,
+            scrollController: scrollController,
+          ),
+          const SizedBox(
+            height: 50,
           ),
         ],
       ),

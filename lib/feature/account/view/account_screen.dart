@@ -153,7 +153,7 @@ class _FeedScreenState extends State<AccountScreen> {
                   }, error: (error) {
                     BlocProvider.of<SnackbarBloc>(context)
                         .add(ErrorSnackbar(message: error.error));
-                    return Center(child: Text(error.error));
+                    return const AppProgress();
                   }, orElse: () {
                     return const AppProgress();
                   });

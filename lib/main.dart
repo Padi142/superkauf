@@ -23,10 +23,12 @@ import 'package:superkauf/feature/snackbar/snackbar_module.dart';
 import 'package:superkauf/feature/store_posts/store_posts_module.dart';
 import 'package:superkauf/feature/user_detail/bloc/user_detail_bloc.dart';
 import 'package:superkauf/feature/user_detail/user_detail_module.dart';
+import 'package:superkauf/generic/api/comment_api.dart';
 import 'package:superkauf/generic/api/post_api.dart';
 import 'package:superkauf/generic/api/saved_posts_api.dart';
 import 'package:superkauf/generic/api/store_api.dart';
 import 'package:superkauf/generic/api/user_api.dart';
+import 'package:superkauf/generic/comments/comments_module.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/locale/locale_resource.dart';
 import 'package:superkauf/generic/post/posts_module.dart';
@@ -84,6 +86,8 @@ Future<void> main() async {
       GetIt.I.registerFactory<StoreApi>(() => StoreApi(_dio(config.endpoint)));
       GetIt.I.registerFactory<SavedPostsApi>(
           () => SavedPostsApi(_dio(config.endpoint)));
+      GetIt.I
+          .registerFactory<CommentApi>(() => CommentApi(_dio(config.endpoint)));
     },
   );
 
@@ -118,6 +122,7 @@ List<AppModule> modules() {
     SavedPostsModule(),
     ShoppingListModule(),
     SnackbarModule(),
+    CommentsModule(),
   ];
 }
 

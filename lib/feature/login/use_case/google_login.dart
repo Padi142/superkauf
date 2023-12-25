@@ -3,11 +3,11 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../library/use_case.dart';
 
-class GoogleLoginUseCase extends UnitUseCase<void> {
+class GoogleLoginUseCase extends UnitUseCase<String?> {
   GoogleLoginUseCase();
 
   @override
-  Future<void> call() async {
+  Future<String?> call() async {
     final supabase = Supabase.instance.client;
     final GoogleSignIn googleSignIn = GoogleSignIn();
     final googleUser = await googleSignIn.signIn();

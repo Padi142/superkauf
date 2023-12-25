@@ -1,216 +1,240 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:superkauf/feature/feed/view/components/post_icons.dart';
+import 'package:superkauf/feature/feed/view/components/post_image.dart';
 import 'package:superkauf/feature/feed/view/components/save_post_button.dart';
 import 'package:superkauf/feature/feed/view/components/time_ago_widget.dart';
 import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
 import 'package:superkauf/feature/post_detail/bloc/post_detail_bloc.dart';
 import 'package:superkauf/feature/user_detail/bloc/user_detail_bloc.dart';
 import 'package:superkauf/generic/post/model/get_post_response.dart';
-import 'package:superkauf/generic/widget/app_progress.dart';
+import 'package:superkauf/generic/user/view/username_label.dart';
 import 'package:superkauf/library/app.dart';
 
-class FeedPostContainer extends StatelessWidget {
+class FeedPostContainer extends StatefulWidget {
   final FeedPostModel post;
   final String originScreen;
+  const FeedPostContainer({
+    super.key,
+    required this.post,
+    required this.originScreen,
+  });
 
-  const FeedPostContainer({super.key, required this.post, required this.originScreen});
+  @override
+  State<FeedPostContainer> createState() => _FeedPostContainerState();
+}
+
+class _FeedPostContainerState extends State<FeedPostContainer> {
+  var reactions = 0;
+  final initialReactions = Random().nextInt(10);
+
+  @override
+  void initState() {
+    reactions = initialReactions;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onLongPress: () {},
-      child: Padding(
-        padding: const EdgeInsets.only(top: 20, left: 2, right: 2, bottom: 2),
-        child: SizedBox(
-            width: double.infinity,
-            child: LayoutBuilder(builder: (context, constraints) {
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: constraints.maxWidth * 0.1,
-                    child: Padding(
-                      padding: const EdgeInsets.all(2),
-                      child: GestureDetector(
-                        onTap: () {
-                          BlocProvider.of<UserDetailBloc>(context).add(GetUser(userID: post.post.author));
-                          BlocProvider.of<NavigationBloc>(context).add(const OpenUserDetailScreen());
-                        },
-                        child: Material(
-                          elevation: 6,
-                          shape: const CircleBorder(),
-                          child: CircleAvatar(
-                            backgroundImage: NetworkImage(post.user.profilePicture),
+    return Padding(
+      padding: const EdgeInsets.only(top: 20, left: 2, right: 8, bottom: 2),
+      child: SizedBox(
+          width: double.infinity,
+          child: LayoutBuilder(builder: (context, constraints) {
+            return Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    bottom: 8.0,
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: constraints.maxWidth * 0.1,
+                        child: Padding(
+                          padding: const EdgeInsets.all(2),
+                          child: GestureDetector(
+                            onTap: () {
+                              BlocProvider.of<UserDetailBloc>(context).add(
+                                  GetUser(userID: widget.post.post.author));
+                              BlocProvider.of<NavigationBloc>(context)
+                                  .add(const OpenUserDetailScreen());
+                            },
+                            child: Material(
+                              elevation: 4,
+                              shape: const CircleBorder(),
+                              child: CircleAvatar(
+                                backgroundImage: NetworkImage(
+                                    widget.post.user.profilePicture),
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: constraints.maxWidth * 0.89,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          width: constraints.maxWidth * 0.89,
-                          child: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.end, children: [
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                BlocProvider.of<UserDetailBloc>(context).add(InitialUserEvent(user: post.user));
-                                BlocProvider.of<NavigationBloc>(context).add(const OpenUserDetailScreen());
-                              },
-                              child: Text(
-                                post.user.username,
-                                style: App.appTheme.textTheme.titleSmall,
-                              ),
-                            ),
-                            const Spacer(),
-                            TimeAgoWidget(
-                              dateTime: post.post.createdAt,
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                          ]),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(post: post.post, user: post.user));
-                            BlocProvider.of<NavigationBloc>(context).add(const OpenPostDetailScreen());
-                          },
-                          child: Card(
-                            elevation: 7,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 6),
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: 280,
-                                    child: Stack(
-                                      children: [
-                                        SizedBox(
-                                          width: constraints.maxWidth,
-                                          child: Hero(
-                                            tag: post.post.id,
-                                            child: CachedNetworkImage(
-                                              imageUrl: post.post.image,
-                                              imageBuilder: (context, imageProvider) => Container(
-                                                decoration: BoxDecoration(
-                                                    image: DecorationImage(
-                                                  image: imageProvider,
-                                                  fit: BoxFit.cover,
-                                                )),
-                                              ),
-                                              placeholder: (context, url) => const Center(child: AppProgress()),
-                                              errorWidget: (context, url, error) => const Icon(Icons.error),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          right: 2,
-                                          top: 4,
-                                          child: Row(
-                                            children: [
-                                              Card(
-                                                color: Colors.white,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(16.0),
-                                                ),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(6),
-                                                  child: Text(
-                                                    post.post.storeName,
-                                                    style: App.appTheme.textTheme.bodyMedium,
-                                                  ),
-                                                ),
-                                              ),
-                                              post.post.requiresStoreCard
-                                                  ? Card(
-                                                      color: Colors.white,
-                                                      shape: RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(50),
-                                                      ),
-                                                      child: const Padding(
-                                                        padding: EdgeInsets.all(6),
-                                                        child: Icon(
-                                                          Icons.add_card,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                                    )
-                                                  : const SizedBox(),
-                                            ],
-                                          ),
-                                        ),
-                                        Positioned(
-                                          right: 2,
-                                          bottom: 4,
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.end,
-                                            children: [
-                                              SavePostButton(
-                                                postId: post.post.id,
-                                                originScreen: originScreen,
-                                              ),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              Hero(
-                                                tag: 'price${post.post.id}',
-                                                child: Card(
-                                                  elevation: 10,
-                                                  color: Colors.yellowAccent,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.circular(16.0),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(10),
-                                                    child: Text(
-                                                      '${post.post.price} Kč',
-                                                      style: App.appTheme.textTheme.titleLarge,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
+                      SizedBox(
+                        width: constraints.maxWidth * 0.89,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              width: constraints.maxWidth * 0.89,
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    const SizedBox(
+                                      width: 5,
                                     ),
-                                  ),
-                                  Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(2),
-                                            child: SizedBox(
-                                              width: constraints.maxWidth * 0.79,
-                                              child: Text(
-                                                post.post.description,
-                                                style: App.appTheme.textTheme.bodyMedium,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                    UsernameLabel(user: widget.post.user),
+                                    const Spacer(),
+                                    TimeAgoWidget(
+                                      dateTime: widget.post.post.createdAt,
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                  ]),
+                            ),
+                            PostContent(
+                              post: widget.post,
+                              constraints: constraints,
+                              originScreen: widget.originScreen,
+                              addReaction: () {
+                                if (reactions == initialReactions + 1) {
+                                  return;
+                                }
+                                setState(() {
+                                  reactions++;
+                                });
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                reactions == 0
+                    ? const SizedBox()
+                    : Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: HeartReaction(
+                          reactions: reactions,
+                          isClicked: !(reactions == initialReactions),
+                        ),
+                      ),
+              ],
+            );
+          })),
+    );
+  }
+}
+
+class PostContent extends StatelessWidget {
+  final FeedPostModel post;
+  final BoxConstraints constraints;
+  final String originScreen;
+  final Function() addReaction;
+
+  const PostContent({
+    super.key,
+    required this.post,
+    required this.constraints,
+    required this.originScreen,
+    required this.addReaction,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onDoubleTap: () {
+        addReaction();
+      },
+      onTap: () {
+        BlocProvider.of<PostDetailBloc>(context)
+            .add(InitialEvent(post: post.post, user: post.user));
+        BlocProvider.of<NavigationBloc>(context)
+            .add(const OpenPostDetailScreen());
+      },
+      child: Card(
+        elevation: 7,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 6),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 280,
+                child: Stack(
+                  children: [
+                    FeedPostImage(
+                      post: post.post,
+                      constraints: constraints,
+                    ),
+                    Positioned(
+                      right: 2,
+                      top: 4,
+                      child: Row(
+                        children: [
+                          StoreNameIcon(
+                            storeName: post.post.storeName,
+                          ),
+                          post.post.requiresStoreCard
+                              ? const RequiresStoreCard()
+                              : const SizedBox(),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      right: 2,
+                      bottom: 4,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          SavePostButton(
+                            key: GlobalKey(),
+                            postId: post.post.id,
+                            originScreen: originScreen,
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Hero(
+                            tag: 'price${post.post.id}',
+                            child: FeedContainerPrice(
+                              price: post.post.price,
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
+                  ],
+                ),
+              ),
+              Column(
+                children: [
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(2),
+                        child: SizedBox(
+                          width: constraints.maxWidth * 0.79,
+                          child: Text(
+                            post.post.description,
+                            style: App.appTheme.textTheme.bodyMedium,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
-              );
-            })),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

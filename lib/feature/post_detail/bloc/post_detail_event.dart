@@ -19,3 +19,10 @@ class GetPost extends PostDetailEvent {
 
   const GetPost({required this.postId});
 }
+
+class ReloadPost extends PostDetailEvent {
+  final bool wait;
+  final String postId;
+
+  const ReloadPost({required this.postId, this.wait = false});
+}

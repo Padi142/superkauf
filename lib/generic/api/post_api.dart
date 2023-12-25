@@ -36,4 +36,9 @@ abstract class PostApi {
   Future<PostModel> updatePostImage({
     @Body() required Map<String, dynamic> body,
   });
+
+  @PUT('/post')
+  Future<PostModel> updatePostContent({
+    @Body() required Map<String, dynamic> body,
+  });
 }

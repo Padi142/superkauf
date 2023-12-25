@@ -3,7 +3,9 @@ import 'package:equatable/equatable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:superkauf/generic/post/bloc/post_state.dart';
 import 'package:superkauf/generic/post/model/delete_post_body.dart';
+import 'package:superkauf/generic/post/model/update_post_body.dart';
 import 'package:superkauf/generic/post/use_case/delete_post_use_case.dart';
+import 'package:superkauf/generic/post/use_case/update_post_use_case.dart';
 import 'package:superkauf/generic/saved_posts/model/create_saved_post_body.dart';
 import 'package:superkauf/generic/saved_posts/model/delete_saved_post_body.dart';
 import 'package:superkauf/generic/saved_posts/use_case/create_saved_post_use_case.dart';
@@ -19,6 +21,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   final CreateSavedPostUseCase createSavedPostUseCase;
   final DeleteSavedPostUseCase deleteSavedPostUseCase;
   final GetCurrentUserUseCase getCurrentUser;
+  final UpdatePostUseCase updatePostUseCase;
 
   PostBloc({
     required this.deletePostUseCase,
@@ -26,9 +29,11 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     required this.createSavedPostUseCase,
     required this.deleteSavedPostUseCase,
     required this.getCurrentUser,
+    required this.updatePostUseCase,
   }) : super(const PostState.loading()) {
     on<DeletePost>(_onDeletePost);
     on<SavePost>(_onSavePost);
+    on<UpdatePost>(_onUpdatePost);
     on<RemoveSavedPost>(_onRemoveSavedPost);
   }
 
@@ -61,7 +66,8 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       },
     );
 
-    final params = DeletePostBody(postId: event.postId, author: userId.toString());
+    final params =
+        DeletePostBody(postId: event.postId, author: userId.toString());
 
     final result = await deletePostUseCase.call(params);
     result.when(
@@ -96,6 +102,29 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     );
   }
 
+  Future<void> _onUpdatePost(
+    UpdatePost event,
+    Emitter<PostState> emit,
+  ) async {
+    final user = await getCurrentUser.call();
+    if (user == null) {
+      emit(const PostState.error("You are not logged in"));
+      return;
+    }
+
+    final params = UpdatePostBody(
+        postId: event.postId, content: event.newDescription, user: user.id);
+    final result = await updatePostUseCase.call(params);
+    result.map(
+      success: (value) {
+        emit(const PostState.success());
+      },
+      failure: (message) {
+        emit(PostState.error(message.message));
+      },
+    );
+  }
+
   Future<void> _onRemoveSavedPost(
     RemoveSavedPost event,
     Emitter<PostState> emit,
@@ -106,7 +135,8 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       return;
     }
 
-    final params = DeleteSavedPostBody(savedPostId: event.postId, user: user.id);
+    final params =
+        DeleteSavedPostBody(savedPostId: event.postId, user: user.id);
     final result = await deleteSavedPostUseCase.call(params);
     result.map(
       success: (value) {

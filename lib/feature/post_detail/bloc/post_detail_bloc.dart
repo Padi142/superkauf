@@ -18,6 +18,7 @@ class PostDetailBloc extends Bloc<PostDetailEvent, PostDetailState> {
   }) : super(const PostDetailState.loading()) {
     on<InitialEvent>(_onInitialEvent);
     on<GetPost>(_onGetPost);
+    on<ReloadPost>(_onReloadPost);
   }
 
   late UserModel author;
@@ -51,5 +52,16 @@ class PostDetailBloc extends Bloc<PostDetailEvent, PostDetailState> {
       print(failure.message);
       emit(PostDetailState.error(failure.message));
     });
+  }
+
+  Future<void> _onReloadPost(
+    ReloadPost event,
+    Emitter<PostDetailState> emit,
+  ) async {
+    emit(const PostDetailState.loading());
+    if (event.wait) {
+      Future.delayed(const Duration(milliseconds: 600));
+    }
+    add(GetPost(postId: event.postId));
   }
 }

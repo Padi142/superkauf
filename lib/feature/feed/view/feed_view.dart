@@ -51,8 +51,11 @@ class _FeedScreenState extends State<FeedScreen> {
                       height: constraints.maxHeight,
                       child: ListView.builder(
                         itemCount: loaded.posts.length,
+                        cacheExtent: 300,
                         itemBuilder: (context, index) {
-                          return FeedPostContainer(post: loaded.posts[index], originScreen: ScreenPath.feedScreen);
+                          return FeedPostContainer(
+                              post: loaded.posts[index],
+                              originScreen: ScreenPath.feedScreen);
                         },
                       ),
                     );

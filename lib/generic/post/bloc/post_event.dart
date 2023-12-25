@@ -25,6 +25,16 @@ class SavePost extends PostEvent {
   });
 }
 
+class UpdatePost extends PostEvent {
+  final int postId;
+  final String newDescription;
+
+  const UpdatePost({
+    required this.postId,
+    required this.newDescription,
+  });
+}
+
 class RemoveSavedPost extends PostEvent {
   final int postId;
 

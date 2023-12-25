@@ -63,6 +63,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 backgroundColor: App.appTheme.colorScheme.background,
                 appBar: AppBar(
                   title: Text('app_title'.tr()),
+                  leading: IconButton(
+                    onPressed: () {
+                      BlocProvider.of<NavigationBloc>(context)
+                          .add(const GoToCreatePostScreen());
+                    },
+                    icon: const Icon(Icons.camera_alt),
+                  ),
                   actions: [
                     IconButton(
                       onPressed: () {

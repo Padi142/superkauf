@@ -16,13 +16,13 @@ class SavePostButton extends StatefulWidget {
   State<SavePostButton> createState() => _SavePostButtonState();
 }
 
-var _iconFilled = false;
+var postSaved = false;
 
 class _SavePostButtonState extends State<SavePostButton> {
   @override
   void initState() {
     if (widget.originScreen == ScreenPath.shoppingListScreen) {
-      _iconFilled = true;
+      postSaved = true;
     }
     super.initState();
   }
@@ -40,47 +40,24 @@ class _SavePostButtonState extends State<SavePostButton> {
           duration: const Duration(milliseconds: 200),
           child: IconButton(
             iconSize: 30,
-            key: ValueKey<bool>(_iconFilled),
             icon: Icon(
-              _iconFilled ? Icons.bookmark : Icons.bookmark_border,
+              postSaved ? Icons.bookmark : Icons.bookmark_border,
               color: Colors.black,
             ),
             onPressed: () {
-              setState(() {
-                _iconFilled = !_iconFilled;
-              });
-              if (_iconFilled) {
+              if (!postSaved) {
                 BlocProvider.of<PostBloc>(context).add(
                   SavePost(
                     postId: widget.postId,
                   ),
                 );
-                return;
+              } else {
+                BlocProvider.of<PostBloc>(context).add(
+                  RemoveSavedPost(
+                    postId: widget.postId,
+                  ),
+                );
               }
-
-              BlocProvider.of<PostBloc>(context).add(
-                RemoveSavedPost(
-                  postId: widget.postId,
-                ),
-              );
-              // switch (widget.originScreen) {
-              //   case ScreenPath.shoppingListScreen:
-              //     BlocProvider.of<ShoppingListBloc>(context).add(
-              //       const ReloadShoppingList(),
-              //     );
-              //     break;
-              //   case ScreenPath.feedScreen:
-              //     BlocProvider.of<FeedBloc>(context).add(
-              //       const ReloadFeed(),
-              //     );
-              //     break;
-              //   case ScreenPath.storesScreen:
-              //     BlocProvider.of<StorePostsBloc>(context).add(
-              //       const ReloadStorePosts(),
-              //     );
-              //   default:
-              //     break;
-              // }
             },
           ),
         ),

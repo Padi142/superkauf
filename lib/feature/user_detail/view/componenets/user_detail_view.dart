@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:superkauf/generic/user/model/user_model.dart';
 
@@ -5,7 +6,8 @@ class UserDetailView extends StatelessWidget {
   final BoxConstraints constraints;
   final UserModel user;
 
-  const UserDetailView({super.key, required this.user, required this.constraints});
+  const UserDetailView(
+      {super.key, required this.user, required this.constraints});
 
   @override
   Widget build(BuildContext context) {
@@ -26,14 +28,22 @@ class UserDetailView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16.0),
-            Text(
+            SelectableText(
               user.username,
               style: const TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 20),
+            Text(
+              '${'user_info_registered_on_label'.tr()}: ${DateFormat('dd/MM/yyyy').format(user.createdAt)}',
+              style: const TextStyle(
+                fontSize: 14.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 10),
             Text(
               'Karma: ${user.karma}',
               style: const TextStyle(
