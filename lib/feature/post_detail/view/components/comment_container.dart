@@ -31,13 +31,10 @@ class _CommentContainerState extends State<CommentContainer> {
     return InkWell(
       key: _widgetKey,
       onLongPress: () {
-        if (widget.currentUser == null ||
-            (widget.currentUser!.id != widget.comment.user.id &&
-                !widget.currentUser!.isAdmin)) {
+        if (widget.currentUser == null || (widget.currentUser!.id != widget.comment.user.id && !widget.currentUser!.isAdmin)) {
           return;
         }
-        final RenderBox renderBox =
-            _widgetKey.currentContext!.findRenderObject() as RenderBox;
+        final RenderBox renderBox = _widgetKey.currentContext!.findRenderObject() as RenderBox;
 
         showMenu(
           context: context,
@@ -53,8 +50,7 @@ class _CommentContainerState extends State<CommentContainer> {
                 value: 'delete',
                 child: const Text('Delete comment'),
                 onTap: () {
-                  BlocProvider.of<CommentBloc>(context).add(DeleteCommentEvent(
-                      post: widget.comment, postId: widget.postId));
+                  BlocProvider.of<CommentBloc>(context).add(DeleteCommentEvent(post: widget.comment, postId: widget.postId));
                 }),
           ],
         );
@@ -66,15 +62,12 @@ class _CommentContainerState extends State<CommentContainer> {
             children: [
               GestureDetector(
                 onTap: () {
-                  BlocProvider.of<UserDetailBloc>(context)
-                      .add(GetUser(userID: widget.comment.user.id));
-                  BlocProvider.of<NavigationBloc>(context)
-                      .add(const OpenUserDetailScreen());
+                  BlocProvider.of<UserDetailBloc>(context).add(GetUser(userID: widget.comment.user.id));
+                  BlocProvider.of<NavigationBloc>(context).add(const OpenUserDetailScreen());
                 },
                 child: CircleAvatar(
                   radius: 20,
-                  backgroundImage:
-                      NetworkImage(widget.comment.user.profilePicture),
+                  backgroundImage: NetworkImage(widget.comment.user.profilePicture),
                 ),
               ),
               const SizedBox(width: 10),

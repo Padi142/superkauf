@@ -66,8 +66,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       },
     );
 
-    final params =
-        DeletePostBody(postId: event.postId, author: userId.toString());
+    final params = DeletePostBody(postId: event.postId, author: userId.toString());
 
     final result = await deletePostUseCase.call(params);
     result.when(
@@ -112,8 +111,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       return;
     }
 
-    final params = UpdatePostBody(
-        postId: event.postId, content: event.newDescription, user: user.id);
+    final params = UpdatePostBody(postId: event.postId, content: event.newDescription, user: user.id);
     final result = await updatePostUseCase.call(params);
     result.map(
       success: (value) {
@@ -135,8 +133,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       return;
     }
 
-    final params =
-        DeleteSavedPostBody(savedPostId: event.postId, user: user.id);
+    final params = DeleteSavedPostBody(savedPostId: event.postId, user: user.id);
     final result = await deleteSavedPostUseCase.call(params);
     result.map(
       success: (value) {

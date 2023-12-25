@@ -84,10 +84,8 @@ Future<void> main() async {
       GetIt.I.registerFactory<PostApi>(() => PostApi(_dio(config.endpoint)));
       GetIt.I.registerFactory<UserApi>(() => UserApi(_dio(config.endpoint)));
       GetIt.I.registerFactory<StoreApi>(() => StoreApi(_dio(config.endpoint)));
-      GetIt.I.registerFactory<SavedPostsApi>(
-          () => SavedPostsApi(_dio(config.endpoint)));
-      GetIt.I
-          .registerFactory<CommentApi>(() => CommentApi(_dio(config.endpoint)));
+      GetIt.I.registerFactory<SavedPostsApi>(() => SavedPostsApi(_dio(config.endpoint)));
+      GetIt.I.registerFactory<CommentApi>(() => CommentApi(_dio(config.endpoint)));
     },
   );
 

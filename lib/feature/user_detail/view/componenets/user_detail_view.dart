@@ -6,8 +6,7 @@ class UserDetailView extends StatelessWidget {
   final BoxConstraints constraints;
   final UserModel user;
 
-  const UserDetailView(
-      {super.key, required this.user, required this.constraints});
+  const UserDetailView({super.key, required this.user, required this.constraints});
 
   @override
   Widget build(BuildContext context) {

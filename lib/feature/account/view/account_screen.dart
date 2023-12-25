@@ -57,8 +57,7 @@ class _FeedScreenState extends State<AccountScreen> {
                                 child: SizedBox(
                                   width: constraints.maxWidth * 0.8,
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       const SizedBox(height: 4.0),
                                       Stack(
@@ -67,8 +66,7 @@ class _FeedScreenState extends State<AccountScreen> {
                                             padding: const EdgeInsets.all(4),
                                             child: CircleAvatar(
                                               radius: 50.0,
-                                              backgroundImage: NetworkImage(
-                                                  loaded.user.profilePicture),
+                                              backgroundImage: NetworkImage(loaded.user.profilePicture),
                                             ),
                                           ),
                                           Positioned(
@@ -76,21 +74,15 @@ class _FeedScreenState extends State<AccountScreen> {
                                             right: 0.1,
                                             child: IconButton(
                                                 onPressed: () {
-                                                  BlocProvider.of<AccountBloc>(
-                                                          context)
-                                                      .add(ChangeProfilePic(
-                                                          user: loaded.user));
+                                                  BlocProvider.of<AccountBloc>(context).add(ChangeProfilePic(user: loaded.user));
                                                 },
                                                 icon: Container(
                                                   decoration: BoxDecoration(
                                                     color: Colors.grey,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50.0),
+                                                    borderRadius: BorderRadius.circular(50.0),
                                                   ),
                                                   child: const FaIcon(
-                                                    FontAwesomeIcons
-                                                        .cameraRetro,
+                                                    FontAwesomeIcons.cameraRetro,
                                                     color: Colors.black,
                                                     size: 24.0,
                                                   ),
@@ -102,9 +94,7 @@ class _FeedScreenState extends State<AccountScreen> {
                                       changeUsername
                                           ? ChangeUsernameField(
                                               onDone: (username) {
-                                                BlocProvider.of<AccountBloc>(
-                                                        context)
-                                                    .add(ChangeUsername(
+                                                BlocProvider.of<AccountBloc>(context).add(ChangeUsername(
                                                   username: username,
                                                   user: loaded.user,
                                                 ));
@@ -134,8 +124,7 @@ class _FeedScreenState extends State<AccountScreen> {
                                           changeUsername = !changeUsername;
                                         });
                                       },
-                                      icon:
-                                          const FaIcon(FontAwesomeIcons.pen))),
+                                      icon: const FaIcon(FontAwesomeIcons.pen))),
                             ],
                           ),
                         ),
@@ -151,8 +140,7 @@ class _FeedScreenState extends State<AccountScreen> {
                       ],
                     );
                   }, error: (error) {
-                    BlocProvider.of<SnackbarBloc>(context)
-                        .add(ErrorSnackbar(message: error.error));
+                    BlocProvider.of<SnackbarBloc>(context).add(ErrorSnackbar(message: error.error));
                     return const AppProgress();
                   }, orElse: () {
                     return const AppProgress();

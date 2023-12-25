@@ -89,8 +89,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     final params = UploadImageParams(file: event.image, path: "$userID/$hash");
     final result = await uploadPostImageUseCase.call(params);
 
-    final imageLink =
-        supabase.storage.from('posts').getPublicUrl("$userID/$hash");
+    final imageLink = supabase.storage.from('posts').getPublicUrl("$userID/$hash");
 
     result.map(
       success: (success) {
@@ -101,8 +100,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
       },
     );
 
-    final imageUpdateResult =
-        await updatePostImageUseCase.call(UpdatePostImageBody(
+    final imageUpdateResult = await updatePostImageUseCase.call(UpdatePostImageBody(
       postId: event.postId,
       image: imageLink,
       user: userID,

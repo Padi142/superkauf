@@ -19,25 +19,21 @@ mixin _$CommentState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(
-            List<PostCommentModel> comments, UserModel? currentUser)
-        success,
+    required TResult Function(List<PostCommentModel> comments, UserModel? currentUser) success,
     required TResult Function(String error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<PostCommentModel> comments, UserModel? currentUser)?
-        success,
+    TResult? Function(List<PostCommentModel> comments, UserModel? currentUser)? success,
     TResult? Function(String error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<PostCommentModel> comments, UserModel? currentUser)?
-        success,
+    TResult Function(List<PostCommentModel> comments, UserModel? currentUser)? success,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) =>
@@ -68,14 +64,11 @@ mixin _$CommentState {
 
 /// @nodoc
 abstract class $CommentStateCopyWith<$Res> {
-  factory $CommentStateCopyWith(
-          CommentState value, $Res Function(CommentState) then) =
-      _$CommentStateCopyWithImpl<$Res, CommentState>;
+  factory $CommentStateCopyWith(CommentState value, $Res Function(CommentState) then) = _$CommentStateCopyWithImpl<$Res, CommentState>;
 }
 
 /// @nodoc
-class _$CommentStateCopyWithImpl<$Res, $Val extends CommentState>
-    implements $CommentStateCopyWith<$Res> {
+class _$CommentStateCopyWithImpl<$Res, $Val extends CommentState> implements $CommentStateCopyWith<$Res> {
   _$CommentStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -86,18 +79,12 @@ class _$CommentStateCopyWithImpl<$Res, $Val extends CommentState>
 
 /// @nodoc
 abstract class _$$LoadingImplCopyWith<$Res> {
-  factory _$$LoadingImplCopyWith(
-          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
-      __$$LoadingImplCopyWithImpl<$Res>;
+  factory _$$LoadingImplCopyWith(_$LoadingImpl value, $Res Function(_$LoadingImpl) then) = __$$LoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$CommentStateCopyWithImpl<$Res, _$LoadingImpl>
-    implements _$$LoadingImplCopyWith<$Res> {
-  __$$LoadingImplCopyWithImpl(
-      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
-      : super(_value, _then);
+class __$$LoadingImplCopyWithImpl<$Res> extends _$CommentStateCopyWithImpl<$Res, _$LoadingImpl> implements _$$LoadingImplCopyWith<$Res> {
+  __$$LoadingImplCopyWithImpl(_$LoadingImpl _value, $Res Function(_$LoadingImpl) _then) : super(_value, _then);
 }
 
 /// @nodoc
@@ -112,8 +99,7 @@ class _$LoadingImpl implements Loading {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadingImpl);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$LoadingImpl);
   }
 
   @override
@@ -123,9 +109,7 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(
-            List<PostCommentModel> comments, UserModel? currentUser)
-        success,
+    required TResult Function(List<PostCommentModel> comments, UserModel? currentUser) success,
     required TResult Function(String error) error,
   }) {
     return loading();
@@ -135,8 +119,7 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<PostCommentModel> comments, UserModel? currentUser)?
-        success,
+    TResult? Function(List<PostCommentModel> comments, UserModel? currentUser)? success,
     TResult? Function(String error)? error,
   }) {
     return loading?.call();
@@ -146,8 +129,7 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<PostCommentModel> comments, UserModel? currentUser)?
-        success,
+    TResult Function(List<PostCommentModel> comments, UserModel? currentUser)? success,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -198,20 +180,14 @@ abstract class Loading implements CommentState {
 
 /// @nodoc
 abstract class _$$SuccessImplCopyWith<$Res> {
-  factory _$$SuccessImplCopyWith(
-          _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
-      __$$SuccessImplCopyWithImpl<$Res>;
+  factory _$$SuccessImplCopyWith(_$SuccessImpl value, $Res Function(_$SuccessImpl) then) = __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<PostCommentModel> comments, UserModel? currentUser});
 }
 
 /// @nodoc
-class __$$SuccessImplCopyWithImpl<$Res>
-    extends _$CommentStateCopyWithImpl<$Res, _$SuccessImpl>
-    implements _$$SuccessImplCopyWith<$Res> {
-  __$$SuccessImplCopyWithImpl(
-      _$SuccessImpl _value, $Res Function(_$SuccessImpl) _then)
-      : super(_value, _then);
+class __$$SuccessImplCopyWithImpl<$Res> extends _$CommentStateCopyWithImpl<$Res, _$SuccessImpl> implements _$$SuccessImplCopyWith<$Res> {
+  __$$SuccessImplCopyWithImpl(_$SuccessImpl _value, $Res Function(_$SuccessImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -235,8 +211,7 @@ class __$$SuccessImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SuccessImpl implements Success {
-  const _$SuccessImpl(final List<PostCommentModel> comments, this.currentUser)
-      : _comments = comments;
+  const _$SuccessImpl(final List<PostCommentModel> comments, this.currentUser) : _comments = comments;
 
   final List<PostCommentModel> _comments;
   @override
@@ -260,27 +235,22 @@ class _$SuccessImpl implements Success {
         (other.runtimeType == runtimeType &&
             other is _$SuccessImpl &&
             const DeepCollectionEquality().equals(other._comments, _comments) &&
-            (identical(other.currentUser, currentUser) ||
-                other.currentUser == currentUser));
+            (identical(other.currentUser, currentUser) || other.currentUser == currentUser));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_comments), currentUser);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_comments), currentUser);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
-      __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith => __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(
-            List<PostCommentModel> comments, UserModel? currentUser)
-        success,
+    required TResult Function(List<PostCommentModel> comments, UserModel? currentUser) success,
     required TResult Function(String error) error,
   }) {
     return success(comments, currentUser);
@@ -290,8 +260,7 @@ class _$SuccessImpl implements Success {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<PostCommentModel> comments, UserModel? currentUser)?
-        success,
+    TResult? Function(List<PostCommentModel> comments, UserModel? currentUser)? success,
     TResult? Function(String error)? error,
   }) {
     return success?.call(comments, currentUser);
@@ -301,8 +270,7 @@ class _$SuccessImpl implements Success {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<PostCommentModel> comments, UserModel? currentUser)?
-        success,
+    TResult Function(List<PostCommentModel> comments, UserModel? currentUser)? success,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -348,33 +316,24 @@ class _$SuccessImpl implements Success {
 }
 
 abstract class Success implements CommentState {
-  const factory Success(
-          final List<PostCommentModel> comments, final UserModel? currentUser) =
-      _$SuccessImpl;
+  const factory Success(final List<PostCommentModel> comments, final UserModel? currentUser) = _$SuccessImpl;
 
   List<PostCommentModel> get comments;
   UserModel? get currentUser;
   @JsonKey(ignore: true)
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$ErrorImplCopyWith<$Res> {
-  factory _$$ErrorImplCopyWith(
-          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
-      __$$ErrorImplCopyWithImpl<$Res>;
+  factory _$$ErrorImplCopyWith(_$ErrorImpl value, $Res Function(_$ErrorImpl) then) = __$$ErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String error});
 }
 
 /// @nodoc
-class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$CommentStateCopyWithImpl<$Res, _$ErrorImpl>
-    implements _$$ErrorImplCopyWith<$Res> {
-  __$$ErrorImplCopyWithImpl(
-      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
-      : super(_value, _then);
+class __$$ErrorImplCopyWithImpl<$Res> extends _$CommentStateCopyWithImpl<$Res, _$ErrorImpl> implements _$$ErrorImplCopyWith<$Res> {
+  __$$ErrorImplCopyWithImpl(_$ErrorImpl _value, $Res Function(_$ErrorImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -405,10 +364,7 @@ class _$ErrorImpl implements Error {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ErrorImpl &&
-            (identical(other.error, error) || other.error == error));
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$ErrorImpl && (identical(other.error, error) || other.error == error));
   }
 
   @override
@@ -417,16 +373,13 @@ class _$ErrorImpl implements Error {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
+  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith => __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(
-            List<PostCommentModel> comments, UserModel? currentUser)
-        success,
+    required TResult Function(List<PostCommentModel> comments, UserModel? currentUser) success,
     required TResult Function(String error) error,
   }) {
     return error(this.error);
@@ -436,8 +389,7 @@ class _$ErrorImpl implements Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<PostCommentModel> comments, UserModel? currentUser)?
-        success,
+    TResult? Function(List<PostCommentModel> comments, UserModel? currentUser)? success,
     TResult? Function(String error)? error,
   }) {
     return error?.call(this.error);
@@ -447,8 +399,7 @@ class _$ErrorImpl implements Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<PostCommentModel> comments, UserModel? currentUser)?
-        success,
+    TResult Function(List<PostCommentModel> comments, UserModel? currentUser)? success,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -498,6 +449,5 @@ abstract class Error implements CommentState {
 
   String get error;
   @JsonKey(ignore: true)
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith => throw _privateConstructorUsedError;
 }

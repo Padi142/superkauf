@@ -55,12 +55,8 @@ class PostDetailViewComponent extends StatelessWidget {
                           case 'delete':
                             {
                               _showConfirmDeletion(context, () {
-                                BlocProvider.of<PostBloc>(context).add(
-                                    DeletePost(
-                                        postId: post.id.toString(),
-                                        author: post.author));
-                                BlocProvider.of<FeedBloc>(context)
-                                    .add(const ReloadFeed());
+                                BlocProvider.of<PostBloc>(context).add(DeletePost(postId: post.id.toString(), author: post.author));
+                                BlocProvider.of<FeedBloc>(context).add(const ReloadFeed());
                                 Navigator.of(context).pop();
                               });
 
@@ -98,8 +94,7 @@ class PostDetailViewComponent extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  showImageViewer(context, Image.network(post.image).image,
-                      onViewerDismissed: () {});
+                  showImageViewer(context, Image.network(post.image).image, onViewerDismissed: () {});
                 },
                 child: Hero(
                   tag: post.id,
@@ -114,10 +109,8 @@ class PostDetailViewComponent extends StatelessWidget {
                           fit: BoxFit.fitHeight,
                         )),
                       ),
-                      placeholder: (context, url) =>
-                          const Center(child: AppProgress()),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
+                      placeholder: (context, url) => const Center(child: AppProgress()),
+                      errorWidget: (context, url, error) => const Icon(Icons.error),
                     ),
                   ),
                 ),
@@ -125,9 +118,7 @@ class PostDetailViewComponent extends StatelessWidget {
               Positioned(
                 right: 1,
                 bottom: 1,
-                child: Hero(
-                    tag: 'price${post.id}',
-                    child: PriceWidget(price: post.price)),
+                child: Hero(tag: 'price${post.id}', child: PriceWidget(price: post.price)),
               ),
             ],
           ),

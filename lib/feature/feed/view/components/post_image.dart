@@ -7,8 +7,7 @@ import 'package:superkauf/generic/widget/app_progress.dart';
 class FeedPostImage extends StatelessWidget {
   final BoxConstraints constraints;
   final PostModel post;
-  const FeedPostImage(
-      {super.key, required this.constraints, required this.post});
+  const FeedPostImage({super.key, required this.constraints, required this.post});
 
   @override
   Widget build(BuildContext context) {

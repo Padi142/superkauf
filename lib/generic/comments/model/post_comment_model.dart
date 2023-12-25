@@ -15,8 +15,7 @@ class PostCommentModel extends Equatable {
     required this.comment,
   });
 
-  factory PostCommentModel.fromJson(Map<String, dynamic> json) =>
-      _$PostCommentModelFromJson(json);
+  factory PostCommentModel.fromJson(Map<String, dynamic> json) => _$PostCommentModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$PostCommentModelToJson(this);
 

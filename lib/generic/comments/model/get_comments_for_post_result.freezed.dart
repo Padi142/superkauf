@@ -58,15 +58,11 @@ mixin _$GetCommentsForPostResult {
 
 /// @nodoc
 abstract class $GetCommentsForPostResultCopyWith<$Res> {
-  factory $GetCommentsForPostResultCopyWith(GetCommentsForPostResult value,
-          $Res Function(GetCommentsForPostResult) then) =
-      _$GetCommentsForPostResultCopyWithImpl<$Res, GetCommentsForPostResult>;
+  factory $GetCommentsForPostResultCopyWith(GetCommentsForPostResult value, $Res Function(GetCommentsForPostResult) then) = _$GetCommentsForPostResultCopyWithImpl<$Res, GetCommentsForPostResult>;
 }
 
 /// @nodoc
-class _$GetCommentsForPostResultCopyWithImpl<$Res,
-        $Val extends GetCommentsForPostResult>
-    implements $GetCommentsForPostResultCopyWith<$Res> {
+class _$GetCommentsForPostResultCopyWithImpl<$Res, $Val extends GetCommentsForPostResult> implements $GetCommentsForPostResultCopyWith<$Res> {
   _$GetCommentsForPostResultCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -77,20 +73,14 @@ class _$GetCommentsForPostResultCopyWithImpl<$Res,
 
 /// @nodoc
 abstract class _$$SuccessImplCopyWith<$Res> {
-  factory _$$SuccessImplCopyWith(
-          _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
-      __$$SuccessImplCopyWithImpl<$Res>;
+  factory _$$SuccessImplCopyWith(_$SuccessImpl value, $Res Function(_$SuccessImpl) then) = __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<PostCommentModel> comments});
 }
 
 /// @nodoc
-class __$$SuccessImplCopyWithImpl<$Res>
-    extends _$GetCommentsForPostResultCopyWithImpl<$Res, _$SuccessImpl>
-    implements _$$SuccessImplCopyWith<$Res> {
-  __$$SuccessImplCopyWithImpl(
-      _$SuccessImpl _value, $Res Function(_$SuccessImpl) _then)
-      : super(_value, _then);
+class __$$SuccessImplCopyWithImpl<$Res> extends _$GetCommentsForPostResultCopyWithImpl<$Res, _$SuccessImpl> implements _$$SuccessImplCopyWith<$Res> {
+  __$$SuccessImplCopyWithImpl(_$SuccessImpl _value, $Res Function(_$SuccessImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -109,8 +99,7 @@ class __$$SuccessImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SuccessImpl implements Success {
-  const _$SuccessImpl(final List<PostCommentModel> comments)
-      : _comments = comments;
+  const _$SuccessImpl(final List<PostCommentModel> comments) : _comments = comments;
 
   final List<PostCommentModel> _comments;
   @override
@@ -127,21 +116,16 @@ class _$SuccessImpl implements Success {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$SuccessImpl &&
-            const DeepCollectionEquality().equals(other._comments, _comments));
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$SuccessImpl && const DeepCollectionEquality().equals(other._comments, _comments));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_comments));
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_comments));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
-      __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith => __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -211,26 +195,19 @@ abstract class Success implements GetCommentsForPostResult {
 
   List<PostCommentModel> get comments;
   @JsonKey(ignore: true)
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$FailureImplCopyWith<$Res> {
-  factory _$$FailureImplCopyWith(
-          _$FailureImpl value, $Res Function(_$FailureImpl) then) =
-      __$$FailureImplCopyWithImpl<$Res>;
+  factory _$$FailureImplCopyWith(_$FailureImpl value, $Res Function(_$FailureImpl) then) = __$$FailureImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class __$$FailureImplCopyWithImpl<$Res>
-    extends _$GetCommentsForPostResultCopyWithImpl<$Res, _$FailureImpl>
-    implements _$$FailureImplCopyWith<$Res> {
-  __$$FailureImplCopyWithImpl(
-      _$FailureImpl _value, $Res Function(_$FailureImpl) _then)
-      : super(_value, _then);
+class __$$FailureImplCopyWithImpl<$Res> extends _$GetCommentsForPostResultCopyWithImpl<$Res, _$FailureImpl> implements _$$FailureImplCopyWith<$Res> {
+  __$$FailureImplCopyWithImpl(_$FailureImpl _value, $Res Function(_$FailureImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -261,10 +238,7 @@ class _$FailureImpl implements Failure {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$FailureImpl &&
-            (identical(other.message, message) || other.message == message));
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$FailureImpl && (identical(other.message, message) || other.message == message));
   }
 
   @override
@@ -273,8 +247,7 @@ class _$FailureImpl implements Failure {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$FailureImplCopyWith<_$FailureImpl> get copyWith =>
-      __$$FailureImplCopyWithImpl<_$FailureImpl>(this, _$identity);
+  _$$FailureImplCopyWith<_$FailureImpl> get copyWith => __$$FailureImplCopyWithImpl<_$FailureImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -344,6 +317,5 @@ abstract class Failure implements GetCommentsForPostResult {
 
   String get message;
   @JsonKey(ignore: true)
-  _$$FailureImplCopyWith<_$FailureImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$FailureImplCopyWith<_$FailureImpl> get copyWith => throw _privateConstructorUsedError;
 }

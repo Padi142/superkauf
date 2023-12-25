@@ -14,8 +14,7 @@ class UpdatePostImageBody {
     required this.image,
   });
 
-  factory UpdatePostImageBody.fromJson(Map<String, dynamic> json) =>
-      _$UpdatePostImageBodyFromJson(json);
+  factory UpdatePostImageBody.fromJson(Map<String, dynamic> json) => _$UpdatePostImageBodyFromJson(json);
 
   Map<String, dynamic> toJson() => _$UpdatePostImageBodyToJson(this);
 }

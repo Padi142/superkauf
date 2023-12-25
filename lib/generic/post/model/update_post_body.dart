@@ -14,8 +14,7 @@ class UpdatePostBody {
     required this.content,
   });
 
-  factory UpdatePostBody.fromJson(Map<String, dynamic> json) =>
-      _$UpdatePostBodyFromJson(json);
+  factory UpdatePostBody.fromJson(Map<String, dynamic> json) => _$UpdatePostBodyFromJson(json);
 
   Map<String, dynamic> toJson() => _$UpdatePostBodyToJson(this);
 }

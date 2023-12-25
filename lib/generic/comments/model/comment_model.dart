@@ -19,8 +19,7 @@ class CommentModel extends Equatable {
     required this.createdAt,
   });
 
-  factory CommentModel.fromJson(Map<String, dynamic> json) =>
-      _$CommentModelFromJson(json);
+  factory CommentModel.fromJson(Map<String, dynamic> json) => _$CommentModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$CommentModelToJson(this);
 

@@ -13,8 +13,7 @@ class CheckUsernameResponse {
     required this.error,
   });
 
-  factory CheckUsernameResponse.fromJson(Map<String, dynamic> json) =>
-      _$CheckUsernameResponseFromJson(json);
+  factory CheckUsernameResponse.fromJson(Map<String, dynamic> json) => _$CheckUsernameResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$CheckUsernameResponseToJson(this);
 }

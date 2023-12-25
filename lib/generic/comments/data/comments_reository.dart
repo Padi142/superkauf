@@ -17,8 +17,7 @@ class CommentsRepository {
       return GetCommentsResult.success([comment]);
     }).onError((error, stackTrace) {
       if (error is DioException) {
-        return GetCommentsResult.failure(
-            error.message ?? 'error deleting comment');
+        return GetCommentsResult.failure(error.message ?? 'error deleting comment');
       }
       return const GetCommentsResult.failure('error');
     });
@@ -29,8 +28,7 @@ class CommentsRepository {
       return GetCommentsResult.success([comment]);
     }).onError((error, stackTrace) {
       if (error is DioException) {
-        return GetCommentsResult.failure(
-            error.message ?? 'error creating comment');
+        return GetCommentsResult.failure(error.message ?? 'error creating comment');
       }
       return const GetCommentsResult.failure('error');
     });
@@ -41,8 +39,7 @@ class CommentsRepository {
       return GetCommentsForPostResult.success(comments);
     }).onError((error, stackTrace) {
       if (error is DioException) {
-        return GetCommentsForPostResult.failure(
-            error.message ?? 'error getting deleting comment');
+        return GetCommentsForPostResult.failure(error.message ?? 'error getting deleting comment');
       }
       return const GetCommentsForPostResult.failure('error');
     });

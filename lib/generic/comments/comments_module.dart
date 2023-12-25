@@ -51,8 +51,7 @@ class CommentsModule extends AppModule {
     );
 
     GetIt.I.registerFactory<GetCommentsForPostUseCase>(
-      () => GetCommentsForPostUseCase(
-          repository: GetIt.I.get<CommentsRepository>()),
+      () => GetCommentsForPostUseCase(repository: GetIt.I.get<CommentsRepository>()),
     );
   }
 

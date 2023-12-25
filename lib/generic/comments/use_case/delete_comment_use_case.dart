@@ -3,8 +3,7 @@ import 'package:superkauf/generic/comments/model/delete_comment_body.dart';
 import 'package:superkauf/generic/comments/model/get_comments_result.dart';
 import 'package:superkauf/library/use_case.dart';
 
-class DeleteCommentUseCase
-    extends UseCase<GetCommentsResult, DeleteCommentBody> {
+class DeleteCommentUseCase extends UseCase<GetCommentsResult, DeleteCommentBody> {
   CommentsRepository repository;
 
   DeleteCommentUseCase({

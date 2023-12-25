@@ -59,17 +59,14 @@ class _FeedPostContainerState extends State<FeedPostContainer> {
                           padding: const EdgeInsets.all(2),
                           child: GestureDetector(
                             onTap: () {
-                              BlocProvider.of<UserDetailBloc>(context).add(
-                                  GetUser(userID: widget.post.post.author));
-                              BlocProvider.of<NavigationBloc>(context)
-                                  .add(const OpenUserDetailScreen());
+                              BlocProvider.of<UserDetailBloc>(context).add(GetUser(userID: widget.post.post.author));
+                              BlocProvider.of<NavigationBloc>(context).add(const OpenUserDetailScreen());
                             },
                             child: Material(
                               elevation: 4,
                               shape: const CircleBorder(),
                               child: CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                    widget.post.user.profilePicture),
+                                backgroundImage: NetworkImage(widget.post.user.profilePicture),
                               ),
                             ),
                           ),
@@ -81,22 +78,19 @@ class _FeedPostContainerState extends State<FeedPostContainer> {
                           children: [
                             SizedBox(
                               width: constraints.maxWidth * 0.89,
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    UsernameLabel(user: widget.post.user),
-                                    const Spacer(),
-                                    TimeAgoWidget(
-                                      dateTime: widget.post.post.createdAt,
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                  ]),
+                              child: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.end, children: [
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                UsernameLabel(user: widget.post.user),
+                                const Spacer(),
+                                TimeAgoWidget(
+                                  dateTime: widget.post.post.createdAt,
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                              ]),
                             ),
                             PostContent(
                               post: widget.post,
@@ -155,10 +149,8 @@ class PostContent extends StatelessWidget {
         addReaction();
       },
       onTap: () {
-        BlocProvider.of<PostDetailBloc>(context)
-            .add(InitialEvent(post: post.post, user: post.user));
-        BlocProvider.of<NavigationBloc>(context)
-            .add(const OpenPostDetailScreen());
+        BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(post: post.post, user: post.user));
+        BlocProvider.of<NavigationBloc>(context).add(const OpenPostDetailScreen());
       },
       child: Card(
         elevation: 7,
@@ -182,9 +174,7 @@ class PostContent extends StatelessWidget {
                           StoreNameIcon(
                             storeName: post.post.storeName,
                           ),
-                          post.post.requiresStoreCard
-                              ? const RequiresStoreCard()
-                              : const SizedBox(),
+                          post.post.requiresStoreCard ? const RequiresStoreCard() : const SizedBox(),
                         ],
                       ),
                     ),

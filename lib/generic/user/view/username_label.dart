@@ -16,10 +16,8 @@ class UsernameLabel extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            BlocProvider.of<UserDetailBloc>(context)
-                .add(InitialUserEvent(user: user));
-            BlocProvider.of<NavigationBloc>(context)
-                .add(const OpenUserDetailScreen());
+            BlocProvider.of<UserDetailBloc>(context).add(InitialUserEvent(user: user));
+            BlocProvider.of<NavigationBloc>(context).add(const OpenUserDetailScreen());
           },
           child: Text(
             user.username,

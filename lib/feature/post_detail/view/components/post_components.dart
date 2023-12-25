@@ -7,8 +7,7 @@ import 'package:superkauf/library/app.dart';
 class StoreLabel extends StatelessWidget {
   final String storeLabel;
   final int storeId;
-  const StoreLabel(
-      {super.key, required this.storeLabel, required this.storeId});
+  const StoreLabel({super.key, required this.storeLabel, required this.storeId});
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +15,7 @@ class StoreLabel extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: () {
-          BlocProvider.of<NavigationBloc>(context)
-              .add(OpenStoresScreen(null, storeId: storeId));
+          BlocProvider.of<NavigationBloc>(context).add(OpenStoresScreen(null, storeId: storeId));
           Navigator.of(context).pop();
         },
         child: Container(

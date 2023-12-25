@@ -6,8 +6,7 @@ part of 'create_post_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CreatePostModel _$CreatePostModelFromJson(Map<String, dynamic> json) =>
-    CreatePostModel(
+CreatePostModel _$CreatePostModelFromJson(Map<String, dynamic> json) => CreatePostModel(
       description: json['description'] as String,
       price: (json['price'] as num).toDouble(),
       author: json['author'] as String,
@@ -16,8 +15,7 @@ CreatePostModel _$CreatePostModelFromJson(Map<String, dynamic> json) =>
       requiresStoreCard: json['requires_store_card'] as bool,
     );
 
-Map<String, dynamic> _$CreatePostModelToJson(CreatePostModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$CreatePostModelToJson(CreatePostModel instance) => <String, dynamic>{
       'description': instance.description,
       'price': instance.price,
       'author': instance.author,

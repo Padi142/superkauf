@@ -12,8 +12,7 @@ import 'package:superkauf/library/app.dart';
 class CommentSection extends StatefulWidget {
   final PostModel post;
   final ScrollController scrollController;
-  const CommentSection(
-      {super.key, required this.post, required this.scrollController});
+  const CommentSection({super.key, required this.post, required this.scrollController});
 
   @override
   State<CommentSection> createState() => _CommentSectionState();
@@ -22,8 +21,7 @@ class CommentSection extends StatefulWidget {
 class _CommentSectionState extends State<CommentSection> {
   @override
   void initState() {
-    BlocProvider.of<CommentBloc>(context)
-        .add(GetCommentsForPost(postId: widget.post.id));
+    BlocProvider.of<CommentBloc>(context).add(GetCommentsForPost(postId: widget.post.id));
     super.initState();
   }
 
@@ -33,8 +31,7 @@ class _CommentSectionState extends State<CommentSection> {
       return state.maybeMap(success: (success) {
         if (success.comments.isEmpty) {
           return Center(
-            child: Text('no_comments_label'.tr(),
-                style: App.appTheme.textTheme.titleMedium),
+            child: Text('no_comments_label'.tr(), style: App.appTheme.textTheme.titleMedium),
           );
         }
         return ListView.builder(
@@ -50,8 +47,7 @@ class _CommentSectionState extends State<CommentSection> {
           },
         );
       }, error: (error) {
-        BlocProvider.of<SnackbarBloc>(context)
-            .add(ErrorSnackbar(message: error.error));
+        BlocProvider.of<SnackbarBloc>(context).add(ErrorSnackbar(message: error.error));
         return const SizedBox();
       }, orElse: () {
         return const Center(child: AppProgress());

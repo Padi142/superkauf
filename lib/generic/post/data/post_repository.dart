@@ -43,8 +43,7 @@ class PostsRepository {
       return GetPostDetailResult.success(post);
     }).onError((error, stackTrace) {
       if (error is DioException) {
-        return GetPostDetailResult.failure(
-            error.message ?? 'error getting posts');
+        return GetPostDetailResult.failure(error.message ?? 'error getting posts');
       }
       return const GetPostDetailResult.failure('error');
     });
@@ -55,8 +54,7 @@ class PostsRepository {
       return CreatePostResult.success(post);
     }).onError((error, stackTrace) {
       if (error is DioException) {
-        return CreatePostResult.failure(
-            error.message ?? 'error creating posts');
+        return CreatePostResult.failure(error.message ?? 'error creating posts');
       }
       return CreatePostResult.failure(error.toString());
     });
@@ -67,8 +65,7 @@ class PostsRepository {
       return const DeletePostResult.success();
     }).onError((error, stackTrace) {
       if (error is DioException) {
-        return DeletePostResult.failure(
-            error.message ?? 'error deleting posts');
+        return DeletePostResult.failure(error.message ?? 'error deleting posts');
       }
       return DeletePostResult.failure(error.toString());
     });
@@ -79,8 +76,7 @@ class PostsRepository {
       return GetPostDetailResult.success(post);
     }).onError((error, stackTrace) {
       if (error is DioException) {
-        return GetPostDetailResult.failure(
-            error.message ?? 'error deleting posts');
+        return GetPostDetailResult.failure(error.message ?? 'error deleting posts');
       }
       return GetPostDetailResult.failure(error.toString());
     });
@@ -91,8 +87,7 @@ class PostsRepository {
       return GetPostDetailResult.success(post);
     }).onError((error, stackTrace) {
       if (error is DioException) {
-        return GetPostDetailResult.failure(
-            error.message ?? 'error updating post');
+        return GetPostDetailResult.failure(error.message ?? 'error updating post');
       }
       return GetPostDetailResult.failure(error.toString());
     });

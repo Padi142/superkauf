@@ -88,14 +88,11 @@ mixin _$CreatePostState {
 
 /// @nodoc
 abstract class $CreatePostStateCopyWith<$Res> {
-  factory $CreatePostStateCopyWith(
-          CreatePostState value, $Res Function(CreatePostState) then) =
-      _$CreatePostStateCopyWithImpl<$Res, CreatePostState>;
+  factory $CreatePostStateCopyWith(CreatePostState value, $Res Function(CreatePostState) then) = _$CreatePostStateCopyWithImpl<$Res, CreatePostState>;
 }
 
 /// @nodoc
-class _$CreatePostStateCopyWithImpl<$Res, $Val extends CreatePostState>
-    implements $CreatePostStateCopyWith<$Res> {
+class _$CreatePostStateCopyWithImpl<$Res, $Val extends CreatePostState> implements $CreatePostStateCopyWith<$Res> {
   _$CreatePostStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -106,18 +103,12 @@ class _$CreatePostStateCopyWithImpl<$Res, $Val extends CreatePostState>
 
 /// @nodoc
 abstract class _$$LoadingImplCopyWith<$Res> {
-  factory _$$LoadingImplCopyWith(
-          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
-      __$$LoadingImplCopyWithImpl<$Res>;
+  factory _$$LoadingImplCopyWith(_$LoadingImpl value, $Res Function(_$LoadingImpl) then) = __$$LoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$CreatePostStateCopyWithImpl<$Res, _$LoadingImpl>
-    implements _$$LoadingImplCopyWith<$Res> {
-  __$$LoadingImplCopyWithImpl(
-      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
-      : super(_value, _then);
+class __$$LoadingImplCopyWithImpl<$Res> extends _$CreatePostStateCopyWithImpl<$Res, _$LoadingImpl> implements _$$LoadingImplCopyWith<$Res> {
+  __$$LoadingImplCopyWithImpl(_$LoadingImpl _value, $Res Function(_$LoadingImpl) _then) : super(_value, _then);
 }
 
 /// @nodoc
@@ -132,8 +123,7 @@ class _$LoadingImpl implements Loading {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadingImpl);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$LoadingImpl);
   }
 
   @override
@@ -238,18 +228,12 @@ abstract class Loading implements CreatePostState {
 
 /// @nodoc
 abstract class _$$InitialImplCopyWith<$Res> {
-  factory _$$InitialImplCopyWith(
-          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
-      __$$InitialImplCopyWithImpl<$Res>;
+  factory _$$InitialImplCopyWith(_$InitialImpl value, $Res Function(_$InitialImpl) then) = __$$InitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$InitialImplCopyWithImpl<$Res>
-    extends _$CreatePostStateCopyWithImpl<$Res, _$InitialImpl>
-    implements _$$InitialImplCopyWith<$Res> {
-  __$$InitialImplCopyWithImpl(
-      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
-      : super(_value, _then);
+class __$$InitialImplCopyWithImpl<$Res> extends _$CreatePostStateCopyWithImpl<$Res, _$InitialImpl> implements _$$InitialImplCopyWith<$Res> {
+  __$$InitialImplCopyWithImpl(_$InitialImpl _value, $Res Function(_$InitialImpl) _then) : super(_value, _then);
 }
 
 /// @nodoc
@@ -264,8 +248,7 @@ class _$InitialImpl implements Initial {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$InitialImpl);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$InitialImpl);
   }
 
   @override
@@ -370,20 +353,14 @@ abstract class Initial implements CreatePostState {
 
 /// @nodoc
 abstract class _$$ImagePickedImplCopyWith<$Res> {
-  factory _$$ImagePickedImplCopyWith(
-          _$ImagePickedImpl value, $Res Function(_$ImagePickedImpl) then) =
-      __$$ImagePickedImplCopyWithImpl<$Res>;
+  factory _$$ImagePickedImplCopyWith(_$ImagePickedImpl value, $Res Function(_$ImagePickedImpl) then) = __$$ImagePickedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({File image});
 }
 
 /// @nodoc
-class __$$ImagePickedImplCopyWithImpl<$Res>
-    extends _$CreatePostStateCopyWithImpl<$Res, _$ImagePickedImpl>
-    implements _$$ImagePickedImplCopyWith<$Res> {
-  __$$ImagePickedImplCopyWithImpl(
-      _$ImagePickedImpl _value, $Res Function(_$ImagePickedImpl) _then)
-      : super(_value, _then);
+class __$$ImagePickedImplCopyWithImpl<$Res> extends _$CreatePostStateCopyWithImpl<$Res, _$ImagePickedImpl> implements _$$ImagePickedImplCopyWith<$Res> {
+  __$$ImagePickedImplCopyWithImpl(_$ImagePickedImpl _value, $Res Function(_$ImagePickedImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -414,10 +391,7 @@ class _$ImagePickedImpl implements ImagePicked {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ImagePickedImpl &&
-            (identical(other.image, image) || other.image == image));
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$ImagePickedImpl && (identical(other.image, image) || other.image == image));
   }
 
   @override
@@ -426,8 +400,7 @@ class _$ImagePickedImpl implements ImagePicked {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ImagePickedImplCopyWith<_$ImagePickedImpl> get copyWith =>
-      __$$ImagePickedImplCopyWithImpl<_$ImagePickedImpl>(this, _$identity);
+  _$$ImagePickedImplCopyWith<_$ImagePickedImpl> get copyWith => __$$ImagePickedImplCopyWithImpl<_$ImagePickedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -527,24 +500,17 @@ abstract class ImagePicked implements CreatePostState {
 
   File get image;
   @JsonKey(ignore: true)
-  _$$ImagePickedImplCopyWith<_$ImagePickedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$ImagePickedImplCopyWith<_$ImagePickedImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$UploadingImplCopyWith<$Res> {
-  factory _$$UploadingImplCopyWith(
-          _$UploadingImpl value, $Res Function(_$UploadingImpl) then) =
-      __$$UploadingImplCopyWithImpl<$Res>;
+  factory _$$UploadingImplCopyWith(_$UploadingImpl value, $Res Function(_$UploadingImpl) then) = __$$UploadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$UploadingImplCopyWithImpl<$Res>
-    extends _$CreatePostStateCopyWithImpl<$Res, _$UploadingImpl>
-    implements _$$UploadingImplCopyWith<$Res> {
-  __$$UploadingImplCopyWithImpl(
-      _$UploadingImpl _value, $Res Function(_$UploadingImpl) _then)
-      : super(_value, _then);
+class __$$UploadingImplCopyWithImpl<$Res> extends _$CreatePostStateCopyWithImpl<$Res, _$UploadingImpl> implements _$$UploadingImplCopyWith<$Res> {
+  __$$UploadingImplCopyWithImpl(_$UploadingImpl _value, $Res Function(_$UploadingImpl) _then) : super(_value, _then);
 }
 
 /// @nodoc
@@ -559,8 +525,7 @@ class _$UploadingImpl implements Uploading {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$UploadingImpl);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$UploadingImpl);
   }
 
   @override
@@ -665,20 +630,14 @@ abstract class Uploading implements CreatePostState {
 
 /// @nodoc
 abstract class _$$ImageUploadedImplCopyWith<$Res> {
-  factory _$$ImageUploadedImplCopyWith(
-          _$ImageUploadedImpl value, $Res Function(_$ImageUploadedImpl) then) =
-      __$$ImageUploadedImplCopyWithImpl<$Res>;
+  factory _$$ImageUploadedImplCopyWith(_$ImageUploadedImpl value, $Res Function(_$ImageUploadedImpl) then) = __$$ImageUploadedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String image});
 }
 
 /// @nodoc
-class __$$ImageUploadedImplCopyWithImpl<$Res>
-    extends _$CreatePostStateCopyWithImpl<$Res, _$ImageUploadedImpl>
-    implements _$$ImageUploadedImplCopyWith<$Res> {
-  __$$ImageUploadedImplCopyWithImpl(
-      _$ImageUploadedImpl _value, $Res Function(_$ImageUploadedImpl) _then)
-      : super(_value, _then);
+class __$$ImageUploadedImplCopyWithImpl<$Res> extends _$CreatePostStateCopyWithImpl<$Res, _$ImageUploadedImpl> implements _$$ImageUploadedImplCopyWith<$Res> {
+  __$$ImageUploadedImplCopyWithImpl(_$ImageUploadedImpl _value, $Res Function(_$ImageUploadedImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -709,10 +668,7 @@ class _$ImageUploadedImpl implements ImageUploaded {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ImageUploadedImpl &&
-            (identical(other.image, image) || other.image == image));
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$ImageUploadedImpl && (identical(other.image, image) || other.image == image));
   }
 
   @override
@@ -721,8 +677,7 @@ class _$ImageUploadedImpl implements ImageUploaded {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ImageUploadedImplCopyWith<_$ImageUploadedImpl> get copyWith =>
-      __$$ImageUploadedImplCopyWithImpl<_$ImageUploadedImpl>(this, _$identity);
+  _$$ImageUploadedImplCopyWith<_$ImageUploadedImpl> get copyWith => __$$ImageUploadedImplCopyWithImpl<_$ImageUploadedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -822,24 +777,17 @@ abstract class ImageUploaded implements CreatePostState {
 
   String get image;
   @JsonKey(ignore: true)
-  _$$ImageUploadedImplCopyWith<_$ImageUploadedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$ImageUploadedImplCopyWith<_$ImageUploadedImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$SuccessImplCopyWith<$Res> {
-  factory _$$SuccessImplCopyWith(
-          _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
-      __$$SuccessImplCopyWithImpl<$Res>;
+  factory _$$SuccessImplCopyWith(_$SuccessImpl value, $Res Function(_$SuccessImpl) then) = __$$SuccessImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$SuccessImplCopyWithImpl<$Res>
-    extends _$CreatePostStateCopyWithImpl<$Res, _$SuccessImpl>
-    implements _$$SuccessImplCopyWith<$Res> {
-  __$$SuccessImplCopyWithImpl(
-      _$SuccessImpl _value, $Res Function(_$SuccessImpl) _then)
-      : super(_value, _then);
+class __$$SuccessImplCopyWithImpl<$Res> extends _$CreatePostStateCopyWithImpl<$Res, _$SuccessImpl> implements _$$SuccessImplCopyWith<$Res> {
+  __$$SuccessImplCopyWithImpl(_$SuccessImpl _value, $Res Function(_$SuccessImpl) _then) : super(_value, _then);
 }
 
 /// @nodoc
@@ -854,8 +802,7 @@ class _$SuccessImpl implements Success {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SuccessImpl);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$SuccessImpl);
   }
 
   @override
@@ -960,20 +907,14 @@ abstract class Success implements CreatePostState {
 
 /// @nodoc
 abstract class _$$ErrorImplCopyWith<$Res> {
-  factory _$$ErrorImplCopyWith(
-          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
-      __$$ErrorImplCopyWithImpl<$Res>;
+  factory _$$ErrorImplCopyWith(_$ErrorImpl value, $Res Function(_$ErrorImpl) then) = __$$ErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String error});
 }
 
 /// @nodoc
-class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$CreatePostStateCopyWithImpl<$Res, _$ErrorImpl>
-    implements _$$ErrorImplCopyWith<$Res> {
-  __$$ErrorImplCopyWithImpl(
-      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
-      : super(_value, _then);
+class __$$ErrorImplCopyWithImpl<$Res> extends _$CreatePostStateCopyWithImpl<$Res, _$ErrorImpl> implements _$$ErrorImplCopyWith<$Res> {
+  __$$ErrorImplCopyWithImpl(_$ErrorImpl _value, $Res Function(_$ErrorImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -1004,10 +945,7 @@ class _$ErrorImpl implements Error {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ErrorImpl &&
-            (identical(other.error, error) || other.error == error));
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$ErrorImpl && (identical(other.error, error) || other.error == error));
   }
 
   @override
@@ -1016,8 +954,7 @@ class _$ErrorImpl implements Error {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
+  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith => __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1117,6 +1054,5 @@ abstract class Error implements CreatePostState {
 
   String get error;
   @JsonKey(ignore: true)
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith => throw _privateConstructorUsedError;
 }

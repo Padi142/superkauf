@@ -5,8 +5,7 @@ part 'get_comments_result.freezed.dart';
 
 @freezed
 class GetCommentsResult with _$GetCommentsResult {
-  const factory GetCommentsResult.success(List<CommentModel> comments) =
-      Success;
+  const factory GetCommentsResult.success(List<CommentModel> comments) = Success;
 
   const factory GetCommentsResult.failure(String message) = Failure;
 }

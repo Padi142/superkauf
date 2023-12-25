@@ -12,8 +12,7 @@ import 'package:superkauf/library/app.dart';
 class AddCommentField extends StatefulWidget {
   final PostModel post;
   final Function() onStartEdit;
-  const AddCommentField(
-      {super.key, required this.post, required this.onStartEdit});
+  const AddCommentField({super.key, required this.post, required this.onStartEdit});
 
   @override
   State<AddCommentField> createState() => _AddCommentFieldState();
@@ -61,10 +60,7 @@ class _AddCommentFieldState extends State<AddCommentField> {
                     lines = 1;
                   });
                 },
-                validators: [
-                  ValidatorEmpty(),
-                  ValidatorRegex(r'^.{0,250}$', 'Comment is too long')
-                ],
+                validators: [ValidatorEmpty(), ValidatorRegex(r'^.{0,250}$', 'Comment is too long')],
               ),
             ),
             const SizedBox(width: 5),
@@ -75,8 +71,7 @@ class _AddCommentFieldState extends State<AddCommentField> {
                   }
 
                   commentModel.controller.text.trim();
-                  final valid =
-                      await TextEntryModel.validateFields([commentModel]);
+                  final valid = await TextEntryModel.validateFields([commentModel]);
                   if (!valid) {
                     setState(() {});
                     return;

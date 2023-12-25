@@ -57,25 +57,21 @@ class PostDetailDescription extends StatelessWidget {
           const SizedBox(
             height: 40,
           ),
-          Text('post_tags_label'.tr(),
-              style: App.appTheme.textTheme.titleSmall),
+          Text('post_tags_label'.tr(), style: App.appTheme.textTheme.titleSmall),
           Padding(
             padding: const EdgeInsets.all(4),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 StoreLabel(storeLabel: post.storeName, storeId: post.store),
-                post.requiresStoreCard
-                    ? const CardRequired()
-                    : const SizedBox(),
+                post.requiresStoreCard ? const CardRequired() : const SizedBox(),
               ],
             ),
           ),
           const SizedBox(
             height: 20,
           ),
-          Text('post_comments_label'.tr(),
-              style: App.appTheme.textTheme.titleSmall),
+          Text('post_comments_label'.tr(), style: App.appTheme.textTheme.titleSmall),
           const SizedBox(
             height: 20,
           ),

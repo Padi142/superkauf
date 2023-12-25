@@ -13,8 +13,7 @@ class DeleteCommentBody extends Equatable {
     required this.user,
   });
 
-  factory DeleteCommentBody.fromJson(Map<String, dynamic> json) =>
-      _$DeleteCommentBodyFromJson(json);
+  factory DeleteCommentBody.fromJson(Map<String, dynamic> json) => _$DeleteCommentBodyFromJson(json);
 
   Map<String, dynamic> toJson() => _$DeleteCommentBodyToJson(this);
 

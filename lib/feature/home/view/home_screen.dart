@@ -55,8 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           }
         },
-        child: BlocBuilder<NavigationBloc, NavigationState>(
-            builder: (context, state) {
+        child: BlocBuilder<NavigationBloc, NavigationState>(builder: (context, state) {
           switch (state) {
             case final NavigationStateLoaded loaded:
               return Scaffold(
@@ -65,16 +64,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   title: Text('app_title'.tr()),
                   leading: IconButton(
                     onPressed: () {
-                      BlocProvider.of<NavigationBloc>(context)
-                          .add(const GoToCreatePostScreen());
+                      BlocProvider.of<NavigationBloc>(context).add(const GoToCreatePostScreen());
                     },
                     icon: const Icon(Icons.camera_alt),
                   ),
                   actions: [
                     IconButton(
                       onPressed: () {
-                        BlocProvider.of<NavigationBloc>(context)
-                            .add(const OpenProfileScreen());
+                        BlocProvider.of<NavigationBloc>(context).add(const OpenProfileScreen());
                       },
                       icon: const Icon(Icons.person),
                     ),
@@ -84,24 +81,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   onDestinationSelected: (index) {
                     switch (index) {
                       case 0:
-                        BlocProvider.of<NavigationBloc>(context)
-                            .add(OpenFeedScreen(index));
+                        BlocProvider.of<NavigationBloc>(context).add(OpenFeedScreen(index));
                         break;
                       case 1:
-                        BlocProvider.of<NavigationBloc>(context)
-                            .add(OpenStoresScreen(index));
+                        BlocProvider.of<NavigationBloc>(context).add(OpenStoresScreen(index));
                         break;
                       case 2:
-                        BlocProvider.of<NavigationBloc>(context)
-                            .add(OpenDiscoverScreen(index));
+                        BlocProvider.of<NavigationBloc>(context).add(OpenDiscoverScreen(index));
                         break;
                       case 3:
-                        BlocProvider.of<NavigationBloc>(context)
-                            .add(OpenMyChannelScreen(index));
+                        BlocProvider.of<NavigationBloc>(context).add(OpenMyChannelScreen(index));
                         break;
                       case 4:
-                        BlocProvider.of<NavigationBloc>(context)
-                            .add(OpenShoppingListScreen(index));
+                        BlocProvider.of<NavigationBloc>(context).add(OpenShoppingListScreen(index));
                         break;
                       default:
                         break;

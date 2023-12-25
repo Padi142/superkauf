@@ -41,9 +41,7 @@ class StoreHeaders extends StatelessWidget {
                         },
                         child: Container(
                             decoration: BoxDecoration(
-                              color: selectedStore == stores.stores[index].id
-                                  ? Colors.black
-                                  : Colors.white,
+                              color: selectedStore == stores.stores[index].id ? Colors.black : Colors.white,
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
@@ -56,12 +54,8 @@ class StoreHeaders extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(stores.stores[index].name,
-                                  style: App.appTheme.textTheme.titleMedium!
-                                      .copyWith(
-                                    color:
-                                        selectedStore == stores.stores[index].id
-                                            ? Colors.white
-                                            : Colors.black,
+                                  style: App.appTheme.textTheme.titleMedium!.copyWith(
+                                    color: selectedStore == stores.stores[index].id ? Colors.white : Colors.black,
                                   )),
                             )),
                       ),
@@ -82,11 +76,7 @@ class StoreHeaders extends StatelessWidget {
                       5,
                       (index) => const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8),
-                            child: CardLoading(
-                                height: 30,
-                                width: 70,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
+                            child: CardLoading(height: 30, width: 70, borderRadius: BorderRadius.all(Radius.circular(10))),
                           ))),
             ),
           ),

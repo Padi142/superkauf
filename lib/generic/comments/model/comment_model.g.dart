@@ -14,8 +14,7 @@ CommentModel _$CommentModelFromJson(Map<String, dynamic> json) => CommentModel(
       createdAt: DateTime.parse(json['created_at'] as String),
     );
 
-Map<String, dynamic> _$CommentModelToJson(CommentModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$CommentModelToJson(CommentModel instance) => <String, dynamic>{
       'id': instance.id,
       'comment': instance.comment,
       'user': instance.user,

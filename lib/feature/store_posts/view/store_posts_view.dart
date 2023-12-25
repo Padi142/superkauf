@@ -104,8 +104,7 @@ class _PostDetailScreenState extends State<StorePostsScreen> {
                         const SizedBox(
                           height: 10,
                         ),
-                        Text('no_posts_for_store_2'.tr(),
-                            style: App.appTheme.textTheme.titleSmall),
+                        Text('no_posts_for_store_2'.tr(), style: App.appTheme.textTheme.titleSmall),
                       ],
                     ));
                   }
@@ -117,9 +116,7 @@ class _PostDetailScreenState extends State<StorePostsScreen> {
                           setState(() {
                             _selectedStore = id;
                           });
-                          context
-                              .read<StorePostsBloc>()
-                              .add(GetPosts(storeId: _selectedStore));
+                          context.read<StorePostsBloc>().add(GetPosts(storeId: _selectedStore));
                         },
                         onStoresLoaded: (length) {
                           _storesLength = length;
@@ -133,13 +130,8 @@ class _PostDetailScreenState extends State<StorePostsScreen> {
                           controller: _scrollController,
                           itemBuilder: (context, index) {
                             return Padding(
-                              padding: EdgeInsets.only(
-                                  bottom: loaded.posts.length == index + 1
-                                      ? 100
-                                      : 0),
-                              child: FeedPostContainer(
-                                  post: loaded.posts[index],
-                                  originScreen: ScreenPath.storesScreen),
+                              padding: EdgeInsets.only(bottom: loaded.posts.length == index + 1 ? 100 : 0),
+                              child: FeedPostContainer(post: loaded.posts[index], originScreen: ScreenPath.storesScreen),
                             );
                           },
                         ),

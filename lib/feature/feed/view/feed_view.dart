@@ -53,9 +53,7 @@ class _FeedScreenState extends State<FeedScreen> {
                         itemCount: loaded.posts.length,
                         cacheExtent: 300,
                         itemBuilder: (context, index) {
-                          return FeedPostContainer(
-                              post: loaded.posts[index],
-                              originScreen: ScreenPath.feedScreen);
+                          return FeedPostContainer(post: loaded.posts[index], originScreen: ScreenPath.feedScreen);
                         },
                       ),
                     );

@@ -80,8 +80,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
 
     var shouldReturn = false;
 
-    final userResult =
-        await getUserByUsernameUseCase.call(event.username.toLowerCase());
+    final userResult = await getUserByUsernameUseCase.call(event.username.toLowerCase());
 
     userResult.map(
         success: (success) {

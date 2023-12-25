@@ -52,8 +52,7 @@ class StoreNameIcon extends StatelessWidget {
 class HeartReaction extends StatelessWidget {
   final int reactions;
   final bool isClicked;
-  const HeartReaction(
-      {super.key, required this.reactions, required this.isClicked});
+  const HeartReaction({super.key, required this.reactions, required this.isClicked});
 
   @override
   Widget build(BuildContext context) {

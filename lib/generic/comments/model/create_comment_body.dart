@@ -15,8 +15,7 @@ class CreateCommentBody extends Equatable {
     required this.post,
   });
 
-  factory CreateCommentBody.fromJson(Map<String, dynamic> json) =>
-      _$CreateCommentBodyFromJson(json);
+  factory CreateCommentBody.fromJson(Map<String, dynamic> json) => _$CreateCommentBodyFromJson(json);
 
   Map<String, dynamic> toJson() => _$CreateCommentBodyToJson(this);
 
