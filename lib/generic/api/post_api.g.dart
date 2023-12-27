@@ -19,13 +19,14 @@ class _PostApi implements PostApi {
   String? baseUrl;
 
   @override
-  Future<List<FeedPostModel>> getFeed() async {
+  Future<GetPostsResponseModel> getFeed({required Map<String, dynamic> body}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<List<dynamic>>(_setStreamType<List<FeedPostModel>>(Options(
-      method: 'GET',
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<GetPostsResponseModel>(Options(
+      method: 'POST',
       headers: _headers,
       extra: _extra,
     )
@@ -40,7 +41,37 @@ class _PostApi implements PostApi {
           _dio.options.baseUrl,
           baseUrl,
         ))));
-    var value = _result.data!.map((dynamic i) => FeedPostModel.fromJson(i as Map<String, dynamic>)).toList();
+    final value = GetPostsResponseModel.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<GetPersonalFeedResponseModel> getPersonalFeed({
+    required Map<String, dynamic> body,
+    required int id,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<GetPersonalFeedResponseModel>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/feed/${id}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    final value = GetPersonalFeedResponseModel.fromJson(_result.data!);
     return value;
   }
 
@@ -201,6 +232,66 @@ class _PostApi implements PostApi {
           baseUrl,
         ))));
     final value = PostModel.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ReactionModel> addReaction({
+    required String id,
+    required Map<String, dynamic> body,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<ReactionModel>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/post/${id}/add_reaction',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    final value = ReactionModel.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ReactionModel> removeReaction({
+    required String id,
+    required Map<String, dynamic> body,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<ReactionModel>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/post/${id}/remove_reaction',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    final value = ReactionModel.fromJson(_result.data!);
     return value;
   }
 

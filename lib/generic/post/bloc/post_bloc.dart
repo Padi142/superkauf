@@ -3,8 +3,11 @@ import 'package:equatable/equatable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:superkauf/generic/post/bloc/post_state.dart';
 import 'package:superkauf/generic/post/model/delete_post_body.dart';
+import 'package:superkauf/generic/post/model/models/add_reaction_model.dart';
 import 'package:superkauf/generic/post/model/update_post_body.dart';
+import 'package:superkauf/generic/post/use_case/add_reaction_use_case.dart';
 import 'package:superkauf/generic/post/use_case/delete_post_use_case.dart';
+import 'package:superkauf/generic/post/use_case/remove_reaction_use_case.dart';
 import 'package:superkauf/generic/post/use_case/update_post_use_case.dart';
 import 'package:superkauf/generic/saved_posts/model/create_saved_post_body.dart';
 import 'package:superkauf/generic/saved_posts/model/delete_saved_post_body.dart';
@@ -22,6 +25,8 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   final DeleteSavedPostUseCase deleteSavedPostUseCase;
   final GetCurrentUserUseCase getCurrentUser;
   final UpdatePostUseCase updatePostUseCase;
+  final AddReactionUseCase addReactionUseCase;
+  final RemoveReactionUseCase removeReactionUseCase;
 
   PostBloc({
     required this.deletePostUseCase,
@@ -30,11 +35,15 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     required this.deleteSavedPostUseCase,
     required this.getCurrentUser,
     required this.updatePostUseCase,
+    required this.addReactionUseCase,
+    required this.removeReactionUseCase,
   }) : super(const PostState.loading()) {
     on<DeletePost>(_onDeletePost);
     on<SavePost>(_onSavePost);
     on<UpdatePost>(_onUpdatePost);
     on<RemoveSavedPost>(_onRemoveSavedPost);
+    on<AddReaction>(_onAddReaction);
+    on<RemoveReaction>(_onRemoveReaction);
   }
 
   Future<void> _onDeletePost(
@@ -135,6 +144,50 @@ class PostBloc extends Bloc<PostEvent, PostState> {
 
     final params = DeleteSavedPostBody(savedPostId: event.postId, user: user.id);
     final result = await deleteSavedPostUseCase.call(params);
+    result.map(
+      success: (value) {
+        emit(const PostState.success());
+      },
+      failure: (message) {
+        emit(PostState.error(message.message));
+      },
+    );
+  }
+
+  Future<void> _onAddReaction(
+    AddReaction event,
+    Emitter<PostState> emit,
+  ) async {
+    final user = await getCurrentUser.call();
+    if (user == null) {
+      emit(const PostState.error("You are not logged in"));
+      return;
+    }
+
+    final params = AddReactionModel(post: event.postId, user: user.id, type: 'like');
+    final result = await addReactionUseCase.call(params);
+    result.map(
+      success: (value) {
+        emit(const PostState.success());
+      },
+      failure: (message) {
+        emit(PostState.error(message.message));
+      },
+    );
+  }
+
+  Future<void> _onRemoveReaction(
+    RemoveReaction event,
+    Emitter<PostState> emit,
+  ) async {
+    final user = await getCurrentUser.call();
+    if (user == null) {
+      emit(const PostState.error("You are not logged in"));
+      return;
+    }
+
+    final params = RemoveReactionModel(post: event.postId, user: user.id, type: 'like');
+    final result = await removeReactionUseCase.call(params);
     result.map(
       success: (value) {
         emit(const PostState.success());

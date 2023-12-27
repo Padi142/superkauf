@@ -208,6 +208,8 @@ class MainWidget extends StatelessWidget {
         initialRoute: ScreenPath.initScreen,
         routes: App.routes,
         theme: App.appTheme,
+        darkTheme: App.appThemeDark,
+        themeMode: ThemeMode.light,
       ),
     );
   }

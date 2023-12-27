@@ -46,6 +46,7 @@ class _InitScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: App.appTheme.colorScheme.background,
         appBar: AppBar(
           title: Text('login_page_title'.tr()),
         ),

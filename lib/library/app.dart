@@ -30,8 +30,10 @@ class App {
   static Map<String, WidgetBuilder> get routes => I._routes;
 
   static ThemeData get appTheme => I._appTheme;
+  static ThemeData get appThemeDark => I._appThemeDark;
 
   late final ThemeData _appTheme;
+  late final ThemeData _appThemeDark;
 
   Future<void> init({
     required AppConfig config,
@@ -64,45 +66,88 @@ class App {
         systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       textTheme: const TextTheme(
-        displayLarge: TextStyle(fontSize: 57, fontWeight: FontWeight.bold),
-        displayMedium: TextStyle(fontSize: 45, fontWeight: FontWeight.bold),
-        displaySmall: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
-        headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-        headlineMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-        headlineSmall: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        titleLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-        titleMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        titleSmall: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-        bodyLarge: TextStyle(fontSize: 16),
-        bodyMedium: TextStyle(fontSize: 14),
-        bodySmall: TextStyle(fontSize: 12),
-        labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-        labelMedium: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-        labelSmall: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+        displayLarge: TextStyle(fontSize: 57, fontWeight: FontWeight.bold, color: Color(0xFF171116)),
+        displayMedium: TextStyle(fontSize: 45, fontWeight: FontWeight.bold, color: Color(0xFF171116)),
+        displaySmall: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Color(0xFF171116)),
+        headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Color(0xFF171116)),
+        headlineMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Color(0xFF171116)),
+        headlineSmall: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF171116)),
+        titleLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF171116)),
+        titleMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF171116)),
+        titleSmall: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF171116)),
+        bodyLarge: TextStyle(fontSize: 16, color: Color(0xFF171116)),
+        bodyMedium: TextStyle(fontSize: 14, color: Color(0xFF171116)),
+        bodySmall: TextStyle(fontSize: 12, color: Color(0xFF171116)),
+        labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF171116)),
+        labelMedium: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF171116)),
+        labelSmall: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF171116)),
       ),
       colorScheme: const ColorScheme.light(
         primary: Color(0xFF7286D3),
         secondary: Color(0xFF8EA7E9),
         surface: Color(0xFFE5E0FF),
-        background: Color(0xFFFFF2F2),
+        background: Color(0xFFfaf5f9),
+        tertiary: Color(0xFF171116),
         error: Color(0xFFB00020),
-        onPrimary: Color(0xFFFFFFFF),
-        onSecondary: Color(0xFFFFFFFF),
-        onSurface: Color(0xFF000000),
-        onBackground: Color(0xFF000000),
-        onError: Color(0xFFFFFFFF),
       ),
-      primarySwatch: const MaterialColor(0xFF7286D3, <int, Color>{
-        50: Color(0xFFFFF2F2),
-        100: Color(0xFFE5E0FF),
-        200: Color(0xFFE5E0FF),
-        300: Color(0xFF8EA7E9),
-        400: Color(0xFF8EA7E9),
-        500: Color(0xFF7286D3), // primary color
-        600: Color(0xFF7286D3), // primary color
-        700: Color(0xFF7286D3), // primary color
-        800: Color(0xFF7286D3), // primary color
-      }),
+
+      // primarySwatch: const MaterialColor(0xFF7286D3, <int, Color>{
+      //   50: Color(0xFFFFF2F2),
+      //   100: Color(0xFFE5E0FF),
+      //   200: Color(0xFFE5E0FF),
+      //   300: Color(0xFF8EA7E9),
+      //   400: Color(0xFF8EA7E9),
+      //   500: Color(0xFF7286D3), // primary color
+      //   600: Color(0xFF7286D3), // primary color
+      //   700: Color(0xFF7286D3), // primary color
+      //   800: Color(0xFF7286D3), // primary color
+      // }),
+    );
+
+    _appThemeDark = ThemeData(
+      useMaterial3: false,
+      appBarTheme: const AppBarTheme(
+        foregroundColor: Colors.black12,
+        centerTitle: true,
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+      ),
+      textTheme: const TextTheme(
+        displayLarge: TextStyle(fontSize: 57, fontWeight: FontWeight.bold, color: Color(0xFFeee8ed)),
+        displayMedium: TextStyle(fontSize: 45, fontWeight: FontWeight.bold, color: Color(0xFFeee8ed)),
+        displaySmall: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Color(0xFFeee8ed)),
+        headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Color(0xFFeee8ed)),
+        headlineMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Color(0xFFeee8ed)),
+        headlineSmall: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFFeee8ed)),
+        titleLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFFeee8ed)),
+        titleMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFFeee8ed)),
+        titleSmall: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFFeee8ed)),
+        bodyLarge: TextStyle(fontSize: 16, color: Color(0xFFeee8ed)),
+        bodyMedium: TextStyle(fontSize: 14, color: Color(0xFFeee8ed)),
+        bodySmall: TextStyle(fontSize: 12, color: Color(0xFFeee8ed)),
+        labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFFeee8ed)),
+        labelMedium: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFFeee8ed)),
+        labelSmall: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFFeee8ed)),
+      ),
+      colorScheme: const ColorScheme.dark(
+        primary: Color(0xFFaf4b9b),
+        secondary: Color(0xFF621e55),
+        surface: Color(0xFFa9238c),
+        background: Color(0xFF0a0509),
+        tertiary: Color(0xFFeee8ed),
+        error: Color(0xFFB00020),
+      ),
+
+      // primarySwatch: const MaterialColor(0xFF7286D3, <int, Color>{
+      //   50: Color(0xFFFFF2F2),
+      //   100: Color(0xFFE5E0FF),
+      //   200: Color(0xFFE5E0FF),
+      //   300: Color(0xFF8EA7E9),
+      //   400: Color(0xFF8EA7E9),
+      //   500: Color(0xFF7286D3), // primary color
+      //   600: Color(0xFF7286D3), // primary color
+      //   700: Color(0xFF7286D3), // primary color
+      //   800: Color(0xFF7286D3), // primary color
+      // }),
     );
   }
 

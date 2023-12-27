@@ -4,7 +4,6 @@ import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/library/app_scaffold.dart';
 
 import '../../../generic/widget/app_progress.dart';
-import '../../../library/app.dart';
 import '../../../library/app_screen.dart';
 import '../bloc/init_bloc.dart';
 
@@ -26,8 +25,7 @@ class _InitScreenState extends State<InitScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(color: App.appTheme.colorScheme.background),
+    return Card(
       child: const AppScaffold(
         desktopLayout: MobileInitBody(),
         mobileLayout: MobileInitBody(),

@@ -16,3 +16,7 @@ class ReloadFeed extends FeedEvent {
 
   const ReloadFeed({this.wait = false});
 }
+
+class LoadMore extends FeedEvent {
+  const LoadMore();
+}

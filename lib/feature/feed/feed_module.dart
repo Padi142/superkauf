@@ -2,7 +2,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:superkauf/feature/feed/bloc/feed_bloc.dart';
 import 'package:superkauf/feature/feed/view/feed_view.dart';
+import 'package:superkauf/generic/post/use_case/get_personal_feed_use_case.dart';
 import 'package:superkauf/generic/post/use_case/get_posts_use_case.dart';
+import 'package:superkauf/generic/user/use_case/get_current_user_use_case.dart';
 import 'package:superkauf/library/app_module.dart';
 
 class FeedModule extends AppModule {
@@ -14,7 +16,11 @@ class FeedModule extends AppModule {
   @override
   void registerBloc() {
     GetIt.I.registerFactory<FeedBloc>(
-      () => FeedBloc(getPostsUseCase: GetIt.I.get<GetPostsUseCase>()),
+      () => FeedBloc(
+        getPostsUseCase: GetIt.I.get<GetPostsUseCase>(),
+        getCurrentUserUseCase: GetIt.I.get<GetCurrentUserUseCase>(),
+        getPersonalFeedUseCase: GetIt.I.get<GetPersonalFeedUseCase>(),
+      ),
     );
   }
 

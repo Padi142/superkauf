@@ -14,3 +14,10 @@ class NavigationStateLoaded extends NavigationState {
   @override
   List<Object?> get props => [bottomNavIndex];
 }
+
+class NavigationLoading extends NavigationState {
+  const NavigationLoading();
+
+  @override
+  List<Object?> get props => [];
+}

@@ -48,7 +48,7 @@ class MyChannelBloc extends Bloc<MyChannelEvent, MyChannelState> {
     final result = await getPostsByUserUseCase.call(userId);
     result.when(
       success: (success) {
-        emit(MyChannelState.loaded(success));
+        emit(MyChannelState.loaded(success.posts));
       },
       failure: (message) {
         emit(MyChannelState.error(message));

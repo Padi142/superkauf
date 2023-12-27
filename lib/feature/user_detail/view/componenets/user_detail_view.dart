@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:superkauf/generic/user/model/user_model.dart';
 
 class UserDetailView extends StatelessWidget {
@@ -27,12 +28,39 @@ class UserDetailView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16.0),
-            SelectableText(
-              user.username,
-              style: const TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SelectableText(
+                  user.username,
+                  style: const TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                user.isAdmin
+                    ? const Tooltip(
+                        triggerMode: TooltipTriggerMode.tap,
+                        message: 'Krejzac.cz',
+                        child: FaIcon(
+                          FontAwesomeIcons.shield,
+                          color: Colors.amber,
+                          size: 18,
+                        ),
+                      )
+                    : const SizedBox(),
+                user.karma >= 100 && !user.isAdmin
+                    ? const Tooltip(
+                        triggerMode: TooltipTriggerMode.tap,
+                        message: 'This user has over 100 karma!',
+                        child: Icon(
+                          Icons.verified,
+                          color: Colors.blueAccent,
+                          size: 18,
+                        ),
+                      )
+                    : const SizedBox()
+              ],
             ),
             const SizedBox(height: 20),
             Text(

@@ -42,3 +42,19 @@ class RemoveSavedPost extends PostEvent {
     required this.postId,
   });
 }
+
+class AddReaction extends PostEvent {
+  final int postId;
+
+  const AddReaction({
+    required this.postId,
+  });
+}
+
+class RemoveReaction extends PostEvent {
+  final int postId;
+
+  const RemoveReaction({
+    required this.postId,
+  });
+}

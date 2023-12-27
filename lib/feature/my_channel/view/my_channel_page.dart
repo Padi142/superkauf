@@ -41,6 +41,7 @@ class _MyChannelState extends State<MyChannelScreen> {
     return Scaffold(
         backgroundColor: App.appTheme.colorScheme.background,
         floatingActionButton: FloatingActionButton(
+          backgroundColor: App.appTheme.colorScheme.primary,
           onPressed: () {
             BlocProvider.of<NavigationBloc>(context).add(const GoToCreatePostScreen());
           },
@@ -82,7 +83,11 @@ class _MyChannelState extends State<MyChannelScreen> {
                             itemBuilder: (context, index) {
                               return Padding(
                                 padding: EdgeInsets.only(bottom: loaded.posts.length == index + 1 ? 100 : 0),
-                                child: FeedPostContainer(post: loaded.posts[index], originScreen: ScreenPath.myChannelScreen),
+                                child: FeedPostContainer(
+                                  post: loaded.posts[index],
+                                  originScreen: ScreenPath.myChannelScreen,
+                                  isPersonal: false,
+                                ),
                               );
                             },
                           ),

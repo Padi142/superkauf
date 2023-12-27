@@ -55,6 +55,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
                           return FeedPostContainer(
                             post: loaded.posts[index],
                             originScreen: ScreenPath.shoppingListScreen,
+                            isPersonal: false,
                           );
                         },
                       ),

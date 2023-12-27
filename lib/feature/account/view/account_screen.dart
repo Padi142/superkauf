@@ -7,6 +7,7 @@ import 'package:superkauf/feature/account/bloc/account_state.dart';
 import 'package:superkauf/feature/snackbar/bloc/snackbar_bloc.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/widget/app_progress.dart';
+import 'package:superkauf/library/app.dart';
 
 import '../../../library/app_screen.dart';
 import 'components/change_username_component.dart';
@@ -32,6 +33,7 @@ class _FeedScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: App.appTheme.colorScheme.background,
       appBar: AppBar(
         title: Text('profile_page_title'.tr()),
       ),
@@ -103,12 +105,39 @@ class _FeedScreenState extends State<AccountScreen> {
                                                 });
                                               },
                                             )
-                                          : Text(
-                                              loaded.user.username,
-                                              style: const TextStyle(
-                                                fontSize: 18.0,
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                          : Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  loaded.user.username,
+                                                  style: const TextStyle(
+                                                    fontSize: 18.0,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                loaded.user.isAdmin
+                                                    ? const Tooltip(
+                                                        triggerMode: TooltipTriggerMode.tap,
+                                                        message: 'Krejzac.cz',
+                                                        child: FaIcon(
+                                                          FontAwesomeIcons.shield,
+                                                          color: Colors.amber,
+                                                          size: 18,
+                                                        ),
+                                                      )
+                                                    : const SizedBox(),
+                                                loaded.user.karma >= 100 && !loaded.user.isAdmin
+                                                    ? const Tooltip(
+                                                        triggerMode: TooltipTriggerMode.tap,
+                                                        message: 'This user has over 100 karma!',
+                                                        child: Icon(
+                                                          Icons.verified,
+                                                          color: Colors.blueAccent,
+                                                          size: 18,
+                                                        ),
+                                                      )
+                                                    : const SizedBox()
+                                              ],
                                             ),
                                     ],
                                   ),

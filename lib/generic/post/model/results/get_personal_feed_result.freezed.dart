@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'get_posts_result.dart';
+part of 'get_personal_feed_result.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,22 +15,22 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$GetPostsResult {
+mixin _$GetPersonalFeedResult {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(GetPostsResponseModel response) success,
+    required TResult Function(GetPersonalFeedResponseModel response) success,
     required TResult Function(String message) failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(GetPostsResponseModel response)? success,
+    TResult? Function(GetPersonalFeedResponseModel response)? success,
     TResult? Function(String message)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(GetPostsResponseModel response)? success,
+    TResult Function(GetPersonalFeedResponseModel response)? success,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) =>
@@ -57,13 +57,13 @@ mixin _$GetPostsResult {
 }
 
 /// @nodoc
-abstract class $GetPostsResultCopyWith<$Res> {
-  factory $GetPostsResultCopyWith(GetPostsResult value, $Res Function(GetPostsResult) then) = _$GetPostsResultCopyWithImpl<$Res, GetPostsResult>;
+abstract class $GetPersonalFeedResultCopyWith<$Res> {
+  factory $GetPersonalFeedResultCopyWith(GetPersonalFeedResult value, $Res Function(GetPersonalFeedResult) then) = _$GetPersonalFeedResultCopyWithImpl<$Res, GetPersonalFeedResult>;
 }
 
 /// @nodoc
-class _$GetPostsResultCopyWithImpl<$Res, $Val extends GetPostsResult> implements $GetPostsResultCopyWith<$Res> {
-  _$GetPostsResultCopyWithImpl(this._value, this._then);
+class _$GetPersonalFeedResultCopyWithImpl<$Res, $Val extends GetPersonalFeedResult> implements $GetPersonalFeedResultCopyWith<$Res> {
+  _$GetPersonalFeedResultCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -75,11 +75,11 @@ class _$GetPostsResultCopyWithImpl<$Res, $Val extends GetPostsResult> implements
 abstract class _$$SuccessImplCopyWith<$Res> {
   factory _$$SuccessImplCopyWith(_$SuccessImpl value, $Res Function(_$SuccessImpl) then) = __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({GetPostsResponseModel response});
+  $Res call({GetPersonalFeedResponseModel response});
 }
 
 /// @nodoc
-class __$$SuccessImplCopyWithImpl<$Res> extends _$GetPostsResultCopyWithImpl<$Res, _$SuccessImpl> implements _$$SuccessImplCopyWith<$Res> {
+class __$$SuccessImplCopyWithImpl<$Res> extends _$GetPersonalFeedResultCopyWithImpl<$Res, _$SuccessImpl> implements _$$SuccessImplCopyWith<$Res> {
   __$$SuccessImplCopyWithImpl(_$SuccessImpl _value, $Res Function(_$SuccessImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -91,7 +91,7 @@ class __$$SuccessImplCopyWithImpl<$Res> extends _$GetPostsResultCopyWithImpl<$Re
       null == response
           ? _value.response
           : response // ignore: cast_nullable_to_non_nullable
-              as GetPostsResponseModel,
+              as GetPersonalFeedResponseModel,
     ));
   }
 }
@@ -102,11 +102,11 @@ class _$SuccessImpl implements Success {
   const _$SuccessImpl(this.response);
 
   @override
-  final GetPostsResponseModel response;
+  final GetPersonalFeedResponseModel response;
 
   @override
   String toString() {
-    return 'GetPostsResult.success(response: $response)';
+    return 'GetPersonalFeedResult.success(response: $response)';
   }
 
   @override
@@ -125,7 +125,7 @@ class _$SuccessImpl implements Success {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(GetPostsResponseModel response) success,
+    required TResult Function(GetPersonalFeedResponseModel response) success,
     required TResult Function(String message) failure,
   }) {
     return success(response);
@@ -134,7 +134,7 @@ class _$SuccessImpl implements Success {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(GetPostsResponseModel response)? success,
+    TResult? Function(GetPersonalFeedResponseModel response)? success,
     TResult? Function(String message)? failure,
   }) {
     return success?.call(response);
@@ -143,7 +143,7 @@ class _$SuccessImpl implements Success {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(GetPostsResponseModel response)? success,
+    TResult Function(GetPersonalFeedResponseModel response)? success,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) {
@@ -185,10 +185,10 @@ class _$SuccessImpl implements Success {
   }
 }
 
-abstract class Success implements GetPostsResult {
-  const factory Success(final GetPostsResponseModel response) = _$SuccessImpl;
+abstract class Success implements GetPersonalFeedResult {
+  const factory Success(final GetPersonalFeedResponseModel response) = _$SuccessImpl;
 
-  GetPostsResponseModel get response;
+  GetPersonalFeedResponseModel get response;
   @JsonKey(ignore: true)
   _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith => throw _privateConstructorUsedError;
 }
@@ -201,7 +201,7 @@ abstract class _$$FailureImplCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$FailureImplCopyWithImpl<$Res> extends _$GetPostsResultCopyWithImpl<$Res, _$FailureImpl> implements _$$FailureImplCopyWith<$Res> {
+class __$$FailureImplCopyWithImpl<$Res> extends _$GetPersonalFeedResultCopyWithImpl<$Res, _$FailureImpl> implements _$$FailureImplCopyWith<$Res> {
   __$$FailureImplCopyWithImpl(_$FailureImpl _value, $Res Function(_$FailureImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -228,7 +228,7 @@ class _$FailureImpl implements Failure {
 
   @override
   String toString() {
-    return 'GetPostsResult.failure(message: $message)';
+    return 'GetPersonalFeedResult.failure(message: $message)';
   }
 
   @override
@@ -247,7 +247,7 @@ class _$FailureImpl implements Failure {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(GetPostsResponseModel response) success,
+    required TResult Function(GetPersonalFeedResponseModel response) success,
     required TResult Function(String message) failure,
   }) {
     return failure(message);
@@ -256,7 +256,7 @@ class _$FailureImpl implements Failure {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(GetPostsResponseModel response)? success,
+    TResult? Function(GetPersonalFeedResponseModel response)? success,
     TResult? Function(String message)? failure,
   }) {
     return failure?.call(message);
@@ -265,7 +265,7 @@ class _$FailureImpl implements Failure {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(GetPostsResponseModel response)? success,
+    TResult Function(GetPersonalFeedResponseModel response)? success,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) {
@@ -307,7 +307,7 @@ class _$FailureImpl implements Failure {
   }
 }
 
-abstract class Failure implements GetPostsResult {
+abstract class Failure implements GetPersonalFeedResult {
   const factory Failure(final String message) = _$FailureImpl;
 
   String get message;

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'get_posts_result.dart';
+part of 'reactions_result.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,22 +15,22 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$GetPostsResult {
+mixin _$ReactionsResult {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(GetPostsResponseModel response) success,
+    required TResult Function(ReactionModel reaction) success,
     required TResult Function(String message) failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(GetPostsResponseModel response)? success,
+    TResult? Function(ReactionModel reaction)? success,
     TResult? Function(String message)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(GetPostsResponseModel response)? success,
+    TResult Function(ReactionModel reaction)? success,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) =>
@@ -57,13 +57,13 @@ mixin _$GetPostsResult {
 }
 
 /// @nodoc
-abstract class $GetPostsResultCopyWith<$Res> {
-  factory $GetPostsResultCopyWith(GetPostsResult value, $Res Function(GetPostsResult) then) = _$GetPostsResultCopyWithImpl<$Res, GetPostsResult>;
+abstract class $ReactionsResultCopyWith<$Res> {
+  factory $ReactionsResultCopyWith(ReactionsResult value, $Res Function(ReactionsResult) then) = _$ReactionsResultCopyWithImpl<$Res, ReactionsResult>;
 }
 
 /// @nodoc
-class _$GetPostsResultCopyWithImpl<$Res, $Val extends GetPostsResult> implements $GetPostsResultCopyWith<$Res> {
-  _$GetPostsResultCopyWithImpl(this._value, this._then);
+class _$ReactionsResultCopyWithImpl<$Res, $Val extends ReactionsResult> implements $ReactionsResultCopyWith<$Res> {
+  _$ReactionsResultCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -75,23 +75,23 @@ class _$GetPostsResultCopyWithImpl<$Res, $Val extends GetPostsResult> implements
 abstract class _$$SuccessImplCopyWith<$Res> {
   factory _$$SuccessImplCopyWith(_$SuccessImpl value, $Res Function(_$SuccessImpl) then) = __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({GetPostsResponseModel response});
+  $Res call({ReactionModel reaction});
 }
 
 /// @nodoc
-class __$$SuccessImplCopyWithImpl<$Res> extends _$GetPostsResultCopyWithImpl<$Res, _$SuccessImpl> implements _$$SuccessImplCopyWith<$Res> {
+class __$$SuccessImplCopyWithImpl<$Res> extends _$ReactionsResultCopyWithImpl<$Res, _$SuccessImpl> implements _$$SuccessImplCopyWith<$Res> {
   __$$SuccessImplCopyWithImpl(_$SuccessImpl _value, $Res Function(_$SuccessImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? response = null,
+    Object? reaction = null,
   }) {
     return _then(_$SuccessImpl(
-      null == response
-          ? _value.response
-          : response // ignore: cast_nullable_to_non_nullable
-              as GetPostsResponseModel,
+      null == reaction
+          ? _value.reaction
+          : reaction // ignore: cast_nullable_to_non_nullable
+              as ReactionModel,
     ));
   }
 }
@@ -99,23 +99,23 @@ class __$$SuccessImplCopyWithImpl<$Res> extends _$GetPostsResultCopyWithImpl<$Re
 /// @nodoc
 
 class _$SuccessImpl implements Success {
-  const _$SuccessImpl(this.response);
+  const _$SuccessImpl(this.reaction);
 
   @override
-  final GetPostsResponseModel response;
+  final ReactionModel reaction;
 
   @override
   String toString() {
-    return 'GetPostsResult.success(response: $response)';
+    return 'ReactionsResult.success(reaction: $reaction)';
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$SuccessImpl && (identical(other.response, response) || other.response == response));
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$SuccessImpl && (identical(other.reaction, reaction) || other.reaction == reaction));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, response);
+  int get hashCode => Object.hash(runtimeType, reaction);
 
   @JsonKey(ignore: true)
   @override
@@ -125,30 +125,30 @@ class _$SuccessImpl implements Success {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(GetPostsResponseModel response) success,
+    required TResult Function(ReactionModel reaction) success,
     required TResult Function(String message) failure,
   }) {
-    return success(response);
+    return success(reaction);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(GetPostsResponseModel response)? success,
+    TResult? Function(ReactionModel reaction)? success,
     TResult? Function(String message)? failure,
   }) {
-    return success?.call(response);
+    return success?.call(reaction);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(GetPostsResponseModel response)? success,
+    TResult Function(ReactionModel reaction)? success,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(response);
+      return success(reaction);
     }
     return orElse();
   }
@@ -185,10 +185,10 @@ class _$SuccessImpl implements Success {
   }
 }
 
-abstract class Success implements GetPostsResult {
-  const factory Success(final GetPostsResponseModel response) = _$SuccessImpl;
+abstract class Success implements ReactionsResult {
+  const factory Success(final ReactionModel reaction) = _$SuccessImpl;
 
-  GetPostsResponseModel get response;
+  ReactionModel get reaction;
   @JsonKey(ignore: true)
   _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith => throw _privateConstructorUsedError;
 }
@@ -201,7 +201,7 @@ abstract class _$$FailureImplCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$FailureImplCopyWithImpl<$Res> extends _$GetPostsResultCopyWithImpl<$Res, _$FailureImpl> implements _$$FailureImplCopyWith<$Res> {
+class __$$FailureImplCopyWithImpl<$Res> extends _$ReactionsResultCopyWithImpl<$Res, _$FailureImpl> implements _$$FailureImplCopyWith<$Res> {
   __$$FailureImplCopyWithImpl(_$FailureImpl _value, $Res Function(_$FailureImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -228,7 +228,7 @@ class _$FailureImpl implements Failure {
 
   @override
   String toString() {
-    return 'GetPostsResult.failure(message: $message)';
+    return 'ReactionsResult.failure(message: $message)';
   }
 
   @override
@@ -247,7 +247,7 @@ class _$FailureImpl implements Failure {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(GetPostsResponseModel response) success,
+    required TResult Function(ReactionModel reaction) success,
     required TResult Function(String message) failure,
   }) {
     return failure(message);
@@ -256,7 +256,7 @@ class _$FailureImpl implements Failure {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(GetPostsResponseModel response)? success,
+    TResult? Function(ReactionModel reaction)? success,
     TResult? Function(String message)? failure,
   }) {
     return failure?.call(message);
@@ -265,7 +265,7 @@ class _$FailureImpl implements Failure {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(GetPostsResponseModel response)? success,
+    TResult Function(ReactionModel reaction)? success,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) {
@@ -307,7 +307,7 @@ class _$FailureImpl implements Failure {
   }
 }
 
-abstract class Failure implements GetPostsResult {
+abstract class Failure implements ReactionsResult {
   const factory Failure(final String message) = _$FailureImpl;
 
   String get message;

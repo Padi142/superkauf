@@ -131,7 +131,11 @@ class _PostDetailScreenState extends State<StorePostsScreen> {
                           itemBuilder: (context, index) {
                             return Padding(
                               padding: EdgeInsets.only(bottom: loaded.posts.length == index + 1 ? 100 : 0),
-                              child: FeedPostContainer(post: loaded.posts[index], originScreen: ScreenPath.storesScreen),
+                              child: FeedPostContainer(
+                                post: loaded.posts[index],
+                                originScreen: ScreenPath.storesScreen,
+                                isPersonal: false,
+                              ),
                             );
                           },
                         ),

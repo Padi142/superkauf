@@ -59,7 +59,6 @@ class _HomeScreenState extends State<HomeScreen> {
           switch (state) {
             case final NavigationStateLoaded loaded:
               return Scaffold(
-                backgroundColor: App.appTheme.colorScheme.background,
                 appBar: AppBar(
                   title: Text('app_title'.tr()),
                   leading: IconButton(
@@ -78,6 +77,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 bottomNavigationBar: NavigationBar(
+                  backgroundColor: App.appTheme.colorScheme.secondary,
+                  indicatorColor: App.appTheme.colorScheme.surface,
                   onDestinationSelected: (index) {
                     switch (index) {
                       case 0:

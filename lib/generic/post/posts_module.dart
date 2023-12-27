@@ -2,11 +2,14 @@ import 'package:get_it/get_it.dart';
 import 'package:superkauf/generic/api/post_api.dart';
 import 'package:superkauf/generic/post/bloc/post_bloc.dart';
 import 'package:superkauf/generic/post/data/post_repository.dart';
+import 'package:superkauf/generic/post/use_case/add_reaction_use_case.dart';
 import 'package:superkauf/generic/post/use_case/create_post_use_case.dart';
 import 'package:superkauf/generic/post/use_case/delete_post_use_case.dart';
+import 'package:superkauf/generic/post/use_case/get_personal_feed_use_case.dart';
 import 'package:superkauf/generic/post/use_case/get_post_detail_use_case.dart';
 import 'package:superkauf/generic/post/use_case/get_posts_by_user.dart';
 import 'package:superkauf/generic/post/use_case/get_posts_use_case.dart';
+import 'package:superkauf/generic/post/use_case/remove_reaction_use_case.dart';
 import 'package:superkauf/generic/post/use_case/update_post_image_use_case.dart';
 import 'package:superkauf/generic/post/use_case/update_post_use_case.dart';
 import 'package:superkauf/generic/post/use_case/upload_post_image_use_case.dart';
@@ -39,6 +42,8 @@ class PostModule extends AppModule {
         deleteSavedPostUseCase: GetIt.I.get<DeleteSavedPostUseCase>(),
         getCurrentUser: GetIt.I.get<GetCurrentUserUseCase>(),
         updatePostUseCase: GetIt.I.get<UpdatePostUseCase>(),
+        addReactionUseCase: GetIt.I.get<AddReactionUseCase>(),
+        removeReactionUseCase: GetIt.I.get<RemoveReactionUseCase>(),
       ),
     );
   }
@@ -78,6 +83,18 @@ class PostModule extends AppModule {
 
     GetIt.I.registerFactory<UpdatePostUseCase>(
       () => UpdatePostUseCase(repository: GetIt.I.get<PostsRepository>()),
+    );
+
+    GetIt.I.registerFactory<AddReactionUseCase>(
+      () => AddReactionUseCase(repository: GetIt.I.get<PostsRepository>()),
+    );
+
+    GetIt.I.registerFactory<RemoveReactionUseCase>(
+      () => RemoveReactionUseCase(repository: GetIt.I.get<PostsRepository>()),
+    );
+
+    GetIt.I.registerFactory<GetPersonalFeedUseCase>(
+      () => GetPersonalFeedUseCase(repository: GetIt.I.get<PostsRepository>()),
     );
   }
 

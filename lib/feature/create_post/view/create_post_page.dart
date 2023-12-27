@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:superkauf/feature/create_post/bloc/create_post_bloc.dart';
 import 'package:superkauf/feature/create_post/bloc/create_post_state.dart';
 import 'package:superkauf/feature/create_post/view/components/store_card_picker.dart';
+import 'package:superkauf/feature/snackbar/bloc/snackbar_bloc.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/store/model/store_model.dart';
 import 'package:superkauf/generic/widget/app_button.dart';
@@ -139,11 +140,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                       te.model.error = null;
                       setState(() {});
                     },
-                    validators: [
-                      ValidatorEmpty(),
-                      ValidatorRegex(r'^.{5,}$', 'Not enough characters'),
-                      ValidatorRegex(r'^.{,250}$', 'Too many characters'),
-                    ],
+                    validators: [ValidatorEmpty(), ValidatorRegex(r'^.{5,250}$', 'Post can be 5-250 chars long')],
                   ),
                 ),
                 const SizedBox(
@@ -220,12 +217,10 @@ class _CreatePostScreen extends State<CreatePostScreen> {
 
                           // Prevent empty store
                           if (selectedStore == null) {
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                              content: Text('No store selected'),
-                            ));
+                            BlocProvider.of<SnackbarBloc>(context).add(const ErrorSnackbar(message: 'No store selected'));
                             return;
                           }
-
+                          descriptionField.controller.text.trim();
                           //Validate fields
                           final valid = await TextEntryModel.validateFields([priceField, descriptionField]);
                           if (!valid) {

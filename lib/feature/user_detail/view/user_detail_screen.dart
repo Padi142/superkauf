@@ -5,6 +5,7 @@ import 'package:superkauf/feature/user_detail/bloc/user_detail_state.dart';
 import 'package:superkauf/feature/user_detail/view/componenets/user_detail_view_preview.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/widget/app_progress.dart';
+import 'package:superkauf/library/app.dart';
 
 import '../../../library/app_screen.dart';
 import 'componenets/user_detail_view.dart';
@@ -27,6 +28,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: App.appTheme.colorScheme.background,
       appBar: AppBar(),
       body: LayoutBuilder(builder: (context, constraints) {
         return SingleChildScrollView(

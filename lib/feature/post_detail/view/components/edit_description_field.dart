@@ -44,11 +44,7 @@ class _EditDescriptionFieldState extends State<EditDescriptionField> {
                 te.model.error = null;
                 setState(() {});
               },
-              validators: [
-                ValidatorEmpty(),
-                ValidatorRegex(r'^.{5,}$', 'Not enough characters'),
-                ValidatorRegex(r'^.{5,250}$', 'Too many characters'),
-              ],
+              validators: [ValidatorEmpty(), ValidatorRegex(r'^.{5,250}$', 'Post can be 5-250 chars long')],
             ),
           ),
           const SizedBox(

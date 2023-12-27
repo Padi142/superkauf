@@ -12,6 +12,7 @@ class PostModel extends Equatable {
   final String image;
   final String storeName;
   final int store;
+  final int likes;
   final bool requiresStoreCard;
   final DateTime createdAt;
 
@@ -23,6 +24,7 @@ class PostModel extends Equatable {
     required this.image,
     required this.storeName,
     required this.store,
+    required this.likes,
     required this.requiresStoreCard,
     required this.createdAt,
   });
@@ -37,6 +39,7 @@ class PostModel extends Equatable {
         description,
         author,
         image,
+        likes,
         storeName,
         createdAt,
       ];

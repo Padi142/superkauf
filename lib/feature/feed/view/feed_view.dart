@@ -25,11 +25,25 @@ class _FeedScreenState extends State<FeedScreen> {
   void initState() {
     BlocProvider.of<FeedBloc>(context).add(const GetFeed());
     _scrollController.addListener(_listener);
+    _scrollController.addListener(_loadMoreListener);
     super.initState();
   }
 
   void _listener() {
     scrollToRefreshListener(controller: _scrollController);
+  }
+
+  void _loadMoreListener() {
+    scrollToRefreshListener(controller: _scrollController);
+    if (_scrollController.position.pixels > _scrollController.position.maxScrollExtent - 300) {
+      if ((context.read<FeedBloc>().state is Loaded) && ((context.read<FeedBloc>().state as Loaded).isLoading || (context.read<FeedBloc>().state as Loaded).canLoadMore == false)) {
+        return;
+      }
+      print('loading more');
+      context.read<FeedBloc>().add(
+            const LoadMore(),
+          );
+    }
   }
 
   @override
@@ -50,10 +64,31 @@ class _FeedScreenState extends State<FeedScreen> {
                     return SizedBox(
                       height: constraints.maxHeight,
                       child: ListView.builder(
-                        itemCount: loaded.posts.length,
+                        controller: _scrollController,
+                        itemCount: loaded.isPersonal
+                            ? loaded.isLoading
+                                ? loaded.personalPosts.length + 1
+                                : loaded.personalPosts.length
+                            : loaded.isLoading
+                                ? loaded.posts.length + 1
+                                : loaded.posts.length,
                         cacheExtent: 300,
                         itemBuilder: (context, index) {
-                          return FeedPostContainer(post: loaded.posts[index], originScreen: ScreenPath.feedScreen);
+                          // If loading , show loading indicator
+                          if (loaded.isPersonal) {
+                            if (index == loaded.personalPosts.length) {
+                              return const PostLoadingView();
+                            }
+                          } else {
+                            if (index == loaded.posts.length) {
+                              return const PostLoadingView();
+                            }
+                          }
+                          // If not loading , show posts
+                          if (loaded.isPersonal) {
+                            return PersonalFeedPostContainer(post: loaded.personalPosts[index], isPersonal: loaded.isPersonal, originScreen: ScreenPath.feedScreen);
+                          }
+                          return FeedPostContainer(post: loaded.posts[index], isPersonal: loaded.isPersonal, originScreen: ScreenPath.feedScreen);
                         },
                       ),
                     );
@@ -74,6 +109,7 @@ class _FeedScreenState extends State<FeedScreen> {
   @override
   void dispose() {
     _scrollController.removeListener(_listener);
+    _scrollController.removeListener(_loadMoreListener);
     _scrollController.dispose();
     super.dispose();
   }
