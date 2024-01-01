@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:superkauf/feature/create_post/bloc/create_post_bloc.dart';
 import 'package:superkauf/feature/create_post/bloc/create_post_state.dart';
 import 'package:superkauf/feature/create_post/view/components/store_card_picker.dart';
+import 'package:superkauf/feature/create_post/view/components/valid_until_picker.dart';
 import 'package:superkauf/feature/snackbar/bloc/snackbar_bloc.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/store/model/store_model.dart';
@@ -36,6 +37,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
   StoreModel? selectedStore;
   var requiredCard = false;
   var createButtonClicked = false;
+  DateTime? saleEnds;
 
   @override
   Widget build(BuildContext context) {
@@ -146,36 +148,39 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                 const SizedBox(
                   height: 10,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    StorePicker(
-                      constraints: constraints,
-                      onSelectStore: (store) {
-                        selectedStore = store;
-                      },
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    SizedBox(
-                      width: constraints.maxWidth * 0.30,
-                      child: AppTextField(
-                        priceField,
-                        filled: App.appTheme.colorScheme.surface,
-                        keyboardType: TextInputType.number,
-                        hint: 'price_post_create_label'.tr(),
-                        beginEdit: (te) {
-                          te.model.error = null;
-                          setState(() {});
+                SizedBox(
+                  height: 60,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      StorePicker(
+                        constraints: constraints,
+                        onSelectStore: (store) {
+                          selectedStore = store;
                         },
-                        validators: [
-                          ValidatorEmpty(),
-                          ValidatorRegex(r'^\d{1,5}(?:[.,]\d{1,2})?$', 'invalid number'),
-                        ],
                       ),
-                    ),
-                  ],
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      SizedBox(
+                        width: constraints.maxWidth * 0.30,
+                        child: AppTextField(
+                          priceField,
+                          filled: App.appTheme.colorScheme.surface,
+                          keyboardType: TextInputType.number,
+                          hint: 'price_post_create_label'.tr(),
+                          beginEdit: (te) {
+                            te.model.error = null;
+                            setState(() {});
+                          },
+                          validators: [
+                            ValidatorEmpty(),
+                            ValidatorRegex(r'^\d{1,5}(?:[.,]\d{1,2})?$', 'invalid number'),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
@@ -189,10 +194,35 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                     const SizedBox(
                       height: 4,
                     ),
-                    StoreCardPicker(
-                      onChange: (card) {
-                        requiredCard = card;
-                      },
+                    SizedBox(
+                      child: StoreCardPicker(
+                        onChange: (card) {
+                          requiredCard = card;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Column(
+                  children: [
+                    Text(
+                      '${'sale_ends_in_label'.tr()}*',
+                      style: App.appTheme.textTheme.titleMedium,
+                    ),
+                    const SizedBox(
+                      height: 4,
+                    ),
+                    SizedBox(
+                      height: 60,
+                      child: ValidUntilPicker(
+                        validUntilPicked: (date) {
+                          saleEnds = date;
+                        },
+                        constraints: constraints,
+                      ),
                     ),
                   ],
                 ),
@@ -236,6 +266,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                             store: selectedStore!,
                             cardRequired: requiredCard,
                             image: image,
+                            validUntil: saleEnds,
                           ));
                         },
                       );
@@ -249,6 +280,13 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                       );
                     });
                   }),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  '* ${'field_not_mandatory_label'.tr()}',
+                  style: App.appTheme.textTheme.bodyMedium,
                 ),
                 const SizedBox(
                   height: 50,

@@ -9,6 +9,7 @@ class CreatePostModel {
   final String author;
   final String storeName;
   final int store;
+  final DateTime? validUntil;
   final bool requiresStoreCard;
 
   const CreatePostModel({
@@ -17,6 +18,7 @@ class CreatePostModel {
     required this.author,
     required this.storeName,
     required this.store,
+    required this.validUntil,
     required this.requiresStoreCard,
   });
 

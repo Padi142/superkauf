@@ -16,6 +16,7 @@ PostModel _$PostModelFromJson(Map<String, dynamic> json) => PostModel(
       store: json['store'] as int,
       likes: json['likes'] as int,
       requiresStoreCard: json['requires_store_card'] as bool,
+      validUntil: json['valid_until'] == null ? null : DateTime.parse(json['valid_until'] as String),
       createdAt: DateTime.parse(json['created_at'] as String),
     );
 
@@ -29,5 +30,6 @@ Map<String, dynamic> _$PostModelToJson(PostModel instance) => <String, dynamic>{
       'store': instance.store,
       'likes': instance.likes,
       'requires_store_card': instance.requiresStoreCard,
+      'valid_until': instance.validUntil?.toIso8601String(),
       'created_at': instance.createdAt.toIso8601String(),
     };

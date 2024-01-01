@@ -63,11 +63,11 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                       ));
                     },
                     error: (error) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(error.error),
-                        ),
-                      );
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //   SnackBar(
+                      //     content: Text(error.error),
+                      //   ),
+                      // );
                     },
                     orElse: () {});
               },

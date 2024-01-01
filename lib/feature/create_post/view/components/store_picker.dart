@@ -5,12 +5,17 @@ import 'package:superkauf/generic/store/bloc/store_bloc.dart';
 import 'package:superkauf/generic/store/bloc/store_state.dart';
 import 'package:superkauf/generic/store/model/store_model.dart';
 import 'package:superkauf/generic/widget/app_button.dart';
+import 'package:superkauf/library/app.dart';
 
 class StorePicker extends StatefulWidget {
   final BoxConstraints constraints;
   final Function(StoreModel store) onSelectStore;
 
-  const StorePicker({super.key, required this.constraints, required this.onSelectStore});
+  const StorePicker({
+    super.key,
+    required this.constraints,
+    required this.onSelectStore,
+  });
 
   @override
   State<StorePicker> createState() => _StorePickerState();
@@ -33,6 +38,8 @@ class _StorePickerState extends State<StorePicker> {
         return state.maybeMap(success: (success) {
           return AppButton(
             text: label == '' ? 'store_post_create_label'.tr() : label,
+            borderColor: App.appTheme.colorScheme.primary,
+            radius: 8,
             imagePrefix: label == ''
                 ? const SizedBox()
                 : SizedBox(

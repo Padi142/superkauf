@@ -14,6 +14,7 @@ class PostModel extends Equatable {
   final int store;
   final int likes;
   final bool requiresStoreCard;
+  final DateTime? validUntil;
   final DateTime createdAt;
 
   const PostModel({
@@ -26,6 +27,7 @@ class PostModel extends Equatable {
     required this.store,
     required this.likes,
     required this.requiresStoreCard,
+    required this.validUntil,
     required this.createdAt,
   });
 
@@ -41,6 +43,9 @@ class PostModel extends Equatable {
         image,
         likes,
         storeName,
+        store,
+        requiresStoreCard,
+        validUntil,
         createdAt,
       ];
 }

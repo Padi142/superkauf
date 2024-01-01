@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
@@ -24,7 +25,7 @@ class PostAuthor extends StatelessWidget {
                 BlocProvider.of<NavigationBloc>(context).add(const OpenUserDetailScreen());
               },
               child: CircleAvatar(
-                backgroundImage: NetworkImage(user.profilePicture),
+                backgroundImage: CachedNetworkImageProvider(user.profilePicture),
               ),
             ),
           ),

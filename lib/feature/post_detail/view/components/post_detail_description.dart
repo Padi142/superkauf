@@ -29,6 +29,7 @@ class PostDetailDescription extends StatelessWidget {
       width: constraints.maxWidth * 0.95,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Center(
             child: Padding(
@@ -41,8 +42,9 @@ class PostDetailDescription extends StatelessWidget {
                     ),
             ),
           ),
+          const Divider(),
           const SizedBox(
-            height: 50,
+            height: 10,
           ),
           AddCommentField(
             post: post,

@@ -35,6 +35,7 @@ class CreatePost extends CreatePostEvent {
   final StoreModel store;
   final bool cardRequired;
   final File image;
+  final DateTime? validUntil;
 
   const CreatePost({
     required this.description,
@@ -42,5 +43,6 @@ class CreatePost extends CreatePostEvent {
     required this.store,
     required this.cardRequired,
     required this.image,
+    required this.validUntil,
   });
 }

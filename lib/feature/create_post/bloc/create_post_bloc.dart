@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:crypto/crypto.dart';
 import 'package:equatable/equatable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:superkauf/feature/create_post/bloc/create_post_state.dart';
@@ -84,15 +83,15 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
 
     emit(const CreatePostState.loading());
 
-    final hash = md5.convert(await event.image.readAsBytes());
-
-    final params = UploadImageParams(file: event.image, path: "$userID/$hash");
+    final params = UploadImageParams(file: event.image, path: userID.toString());
     final result = await uploadPostImageUseCase.call(params);
 
-    final imageLink = supabase.storage.from('posts').getPublicUrl("$userID/$hash");
-
+    var imageLink = '';
     result.map(
       success: (success) {
+        imageLink = supabase.storage.from('posts').getPublicUrl(
+              success.path,
+            );
         emit(CreatePostState.imageUploaded(imageLink));
       },
       failure: (error) {
@@ -136,6 +135,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
       store: event.store.id,
       requiresStoreCard: event.cardRequired,
       author: userID.toString(),
+      validUntil: event.validUntil,
     );
 
     final result = await createPostUseCase.call(params);

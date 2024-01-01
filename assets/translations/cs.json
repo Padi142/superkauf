@@ -17,6 +17,7 @@
   "button_post_create_label": "Vytvořit!",
   "card_required_label": "Je potřeba kartička?",
 
+  "post_saved_successfully": "Uloženo!",
 
   "post_tags_label": "Tagy",
   "post_store_card_required": "Vyžaduje kartičku ",
@@ -25,6 +26,15 @@
   "post_comments_label": "Komentáře",
   "no_comments_label": "Žádné komentáře",
 
+  "today_label": "dneska",
+  "tomorrow_label": "zítra",
+  "ends_in_multiple_days_label": "dní",
+  "ends_in_days_label": "dny",
+  "ends_in_label": "Končí za",
+  "sale_ends_in_label": "Sleva končí",
+  "sale_ends_in_not_picked_label": "Vybrat",
+
+  "field_not_mandatory_label": "Není povinné",
 
   "no_posts_for_store_1":"Žádné slevy v tomto obchodu :/",
   "no_posts_for_store_2":"Můžeš být první kdo něco objeví!",

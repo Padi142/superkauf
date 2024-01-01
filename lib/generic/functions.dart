@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 bool _ignorePositionChange = false;
@@ -13,5 +14,23 @@ Future<void> scrollToRefreshListener({required ScrollController controller}) asy
       curve: Curves.easeOut,
       duration: const Duration(milliseconds: 300),
     );
+  }
+}
+
+String getDaysUntilString(DateTime futureDate) {
+  final now = DateTime.now();
+  final nowDate = DateTime(now.year, now.month, now.day);
+  final difference = futureDate.difference(nowDate).inDays;
+
+  if (difference == 0) {
+    return 'today_label'.tr();
+  } else if (difference == 1) {
+    return 'today_label'.tr();
+  } else if (difference > 1 && difference <= 4) {
+    return '${'ends_in_label'.tr()} $difference ${'ends_in_multiple_days_label'.tr()}';
+  } else if (difference > 4) {
+    return '${'ends_in_label'.tr()} $difference ${'ends_in_days_label'.tr()}';
+  } else {
+    return 'Invalid date'; // The provided date is in the past
   }
 }

@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:superkauf/generic/post/model/post_model.dart';
-import 'package:superkauf/generic/widget/app_progress.dart';
 
 class FeedPostImage extends StatelessWidget {
   final BoxConstraints constraints;
@@ -30,7 +29,7 @@ class FeedPostImage extends StatelessWidget {
               stalePeriod: const Duration(days: 7),
             ),
           ),
-          placeholder: (context, url) => const Center(child: AppProgress()),
+          progressIndicatorBuilder: (context, url, downloadProgress) => Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
           errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
       ),

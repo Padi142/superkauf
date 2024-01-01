@@ -10,7 +10,7 @@ class PickImageCameraUseCase extends UnitUseCase<File?> {
   @override
   Future<File?> call() async {
     final ImagePicker picker = ImagePicker();
-    final xfile = await picker.pickImage(source: ImageSource.camera, imageQuality: 70);
+    final xfile = await picker.pickImage(source: ImageSource.camera, imageQuality: 60);
     if (xfile == null) {
       return null;
     }

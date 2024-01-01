@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:superkauf/feature/feed/view/components/post_icons.dart';
@@ -68,7 +69,7 @@ class _FeedPostContainerState extends State<FeedPostContainer> {
                               elevation: 4,
                               shape: const CircleBorder(),
                               child: CircleAvatar(
-                                backgroundImage: NetworkImage(widget.post.user.profilePicture),
+                                backgroundImage: CachedNetworkImageProvider('${widget.post.user.profilePicture}?'),
                               ),
                             ),
                           ),
@@ -182,7 +183,7 @@ class _PersonalFeedPostContainerState extends State<PersonalFeedPostContainer> {
                               elevation: 4,
                               shape: const CircleBorder(),
                               child: CircleAvatar(
-                                backgroundImage: NetworkImage(widget.post.user.profilePicture),
+                                backgroundImage: CachedNetworkImageProvider('${widget.post.user.profilePicture}?'),
                               ),
                             ),
                           ),
@@ -364,6 +365,15 @@ class PostContent extends StatelessWidget {
                         ],
                       ),
                     ),
+                    post.post.validUntil != null
+                        ? Positioned(
+                            top: 1,
+                            left: 1,
+                            child: FeedPostValidUntilLabel(
+                              validUntil: post.post.validUntil!,
+                            ),
+                          )
+                        : const SizedBox(),
                   ],
                 ),
               ),

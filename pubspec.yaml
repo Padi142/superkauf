@@ -35,6 +35,8 @@ dependencies:
   google_sign_in: ^6.2.1
   card_loading: ^0.3.0
   flutter_cache_manager: ^3.3.1
+  flutter_image_compress: ^2.1.0
+  path_provider: ^2.1.1
 
 
 dev_dependencies:

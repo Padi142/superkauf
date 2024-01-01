@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:superkauf/generic/functions.dart';
 import 'package:superkauf/library/app.dart';
 
 class RequiresStoreCard extends StatelessWidget {
@@ -124,6 +125,33 @@ class FeedContainerPrice extends StatelessWidget {
         child: Text(
           '${(price % 1 == 0) ? price.toInt().toString() : price.toStringAsFixed(2)} Kč',
           style: App.appTheme.textTheme.titleLarge,
+        ),
+      ),
+    );
+  }
+}
+
+class FeedPostValidUntilLabel extends StatelessWidget {
+  final DateTime validUntil;
+  const FeedPostValidUntilLabel({super.key, required this.validUntil});
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+      message: 'sale_ends_in_label'.tr(),
+      triggerMode: TooltipTriggerMode.tap,
+      child: Card(
+        elevation: 4,
+        color: validUntil.difference(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)).inDays > 3 ? Colors.white : Colors.redAccent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(6),
+          child: Text(
+            getDaysUntilString(validUntil),
+            style: App.appTheme.textTheme.bodyMedium,
+          ),
         ),
       ),
     );

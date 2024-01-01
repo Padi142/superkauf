@@ -72,7 +72,7 @@ class _FeedScreenState extends State<FeedScreen> {
                             : loaded.isLoading
                                 ? loaded.posts.length + 1
                                 : loaded.posts.length,
-                        cacheExtent: 300,
+                        cacheExtent: 800,
                         itemBuilder: (context, index) {
                           // If loading , show loading indicator
                           if (loaded.isPersonal) {
