@@ -19,21 +19,21 @@ mixin _$FeedState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<FeedPostModel> posts, List<FeedPersonalPostModel> personalPosts, bool isPersonal, bool isLoading, bool canLoadMore) loaded,
+    required TResult Function(List<FullContextPostModel> posts, bool isLoading, bool canLoadMore) loaded,
     required TResult Function(String error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<FeedPostModel> posts, List<FeedPersonalPostModel> personalPosts, bool isPersonal, bool isLoading, bool canLoadMore)? loaded,
+    TResult? Function(List<FullContextPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
     TResult? Function(String error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<FeedPostModel> posts, List<FeedPersonalPostModel> personalPosts, bool isPersonal, bool isLoading, bool canLoadMore)? loaded,
+    TResult Function(List<FullContextPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) =>
@@ -109,7 +109,7 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<FeedPostModel> posts, List<FeedPersonalPostModel> personalPosts, bool isPersonal, bool isLoading, bool canLoadMore) loaded,
+    required TResult Function(List<FullContextPostModel> posts, bool isLoading, bool canLoadMore) loaded,
     required TResult Function(String error) error,
   }) {
     return loading();
@@ -119,7 +119,7 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<FeedPostModel> posts, List<FeedPersonalPostModel> personalPosts, bool isPersonal, bool isLoading, bool canLoadMore)? loaded,
+    TResult? Function(List<FullContextPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
     TResult? Function(String error)? error,
   }) {
     return loading?.call();
@@ -129,7 +129,7 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<FeedPostModel> posts, List<FeedPersonalPostModel> personalPosts, bool isPersonal, bool isLoading, bool canLoadMore)? loaded,
+    TResult Function(List<FullContextPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -182,7 +182,7 @@ abstract class Loading implements FeedState {
 abstract class _$$LoadedImplCopyWith<$Res> {
   factory _$$LoadedImplCopyWith(_$LoadedImpl value, $Res Function(_$LoadedImpl) then) = __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<FeedPostModel> posts, List<FeedPersonalPostModel> personalPosts, bool isPersonal, bool isLoading, bool canLoadMore});
+  $Res call({List<FullContextPostModel> posts, bool isLoading, bool canLoadMore});
 }
 
 /// @nodoc
@@ -193,8 +193,6 @@ class __$$LoadedImplCopyWithImpl<$Res> extends _$FeedStateCopyWithImpl<$Res, _$L
   @override
   $Res call({
     Object? posts = null,
-    Object? personalPosts = null,
-    Object? isPersonal = null,
     Object? isLoading = null,
     Object? canLoadMore = null,
   }) {
@@ -202,15 +200,7 @@ class __$$LoadedImplCopyWithImpl<$Res> extends _$FeedStateCopyWithImpl<$Res, _$L
       null == posts
           ? _value._posts
           : posts // ignore: cast_nullable_to_non_nullable
-              as List<FeedPostModel>,
-      null == personalPosts
-          ? _value._personalPosts
-          : personalPosts // ignore: cast_nullable_to_non_nullable
-              as List<FeedPersonalPostModel>,
-      null == isPersonal
-          ? _value.isPersonal
-          : isPersonal // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as List<FullContextPostModel>,
       null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -226,28 +216,16 @@ class __$$LoadedImplCopyWithImpl<$Res> extends _$FeedStateCopyWithImpl<$Res, _$L
 /// @nodoc
 
 class _$LoadedImpl implements Loaded {
-  const _$LoadedImpl(final List<FeedPostModel> posts, final List<FeedPersonalPostModel> personalPosts, this.isPersonal, this.isLoading, this.canLoadMore)
-      : _posts = posts,
-        _personalPosts = personalPosts;
+  const _$LoadedImpl(final List<FullContextPostModel> posts, this.isLoading, this.canLoadMore) : _posts = posts;
 
-  final List<FeedPostModel> _posts;
+  final List<FullContextPostModel> _posts;
   @override
-  List<FeedPostModel> get posts {
+  List<FullContextPostModel> get posts {
     if (_posts is EqualUnmodifiableListView) return _posts;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_posts);
   }
 
-  final List<FeedPersonalPostModel> _personalPosts;
-  @override
-  List<FeedPersonalPostModel> get personalPosts {
-    if (_personalPosts is EqualUnmodifiableListView) return _personalPosts;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_personalPosts);
-  }
-
-  @override
-  final bool isPersonal;
   @override
   final bool isLoading;
   @override
@@ -255,7 +233,7 @@ class _$LoadedImpl implements Loaded {
 
   @override
   String toString() {
-    return 'FeedState.loaded(posts: $posts, personalPosts: $personalPosts, isPersonal: $isPersonal, isLoading: $isLoading, canLoadMore: $canLoadMore)';
+    return 'FeedState.loaded(posts: $posts, isLoading: $isLoading, canLoadMore: $canLoadMore)';
   }
 
   @override
@@ -264,14 +242,12 @@ class _$LoadedImpl implements Loaded {
         (other.runtimeType == runtimeType &&
             other is _$LoadedImpl &&
             const DeepCollectionEquality().equals(other._posts, _posts) &&
-            const DeepCollectionEquality().equals(other._personalPosts, _personalPosts) &&
-            (identical(other.isPersonal, isPersonal) || other.isPersonal == isPersonal) &&
             (identical(other.isLoading, isLoading) || other.isLoading == isLoading) &&
             (identical(other.canLoadMore, canLoadMore) || other.canLoadMore == canLoadMore));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_posts), const DeepCollectionEquality().hash(_personalPosts), isPersonal, isLoading, canLoadMore);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_posts), isLoading, canLoadMore);
 
   @JsonKey(ignore: true)
   @override
@@ -282,32 +258,32 @@ class _$LoadedImpl implements Loaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<FeedPostModel> posts, List<FeedPersonalPostModel> personalPosts, bool isPersonal, bool isLoading, bool canLoadMore) loaded,
+    required TResult Function(List<FullContextPostModel> posts, bool isLoading, bool canLoadMore) loaded,
     required TResult Function(String error) error,
   }) {
-    return loaded(posts, personalPosts, isPersonal, isLoading, canLoadMore);
+    return loaded(posts, isLoading, canLoadMore);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<FeedPostModel> posts, List<FeedPersonalPostModel> personalPosts, bool isPersonal, bool isLoading, bool canLoadMore)? loaded,
+    TResult? Function(List<FullContextPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
     TResult? Function(String error)? error,
   }) {
-    return loaded?.call(posts, personalPosts, isPersonal, isLoading, canLoadMore);
+    return loaded?.call(posts, isLoading, canLoadMore);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<FeedPostModel> posts, List<FeedPersonalPostModel> personalPosts, bool isPersonal, bool isLoading, bool canLoadMore)? loaded,
+    TResult Function(List<FullContextPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(posts, personalPosts, isPersonal, isLoading, canLoadMore);
+      return loaded(posts, isLoading, canLoadMore);
     }
     return orElse();
   }
@@ -348,11 +324,9 @@ class _$LoadedImpl implements Loaded {
 }
 
 abstract class Loaded implements FeedState {
-  const factory Loaded(final List<FeedPostModel> posts, final List<FeedPersonalPostModel> personalPosts, final bool isPersonal, final bool isLoading, final bool canLoadMore) = _$LoadedImpl;
+  const factory Loaded(final List<FullContextPostModel> posts, final bool isLoading, final bool canLoadMore) = _$LoadedImpl;
 
-  List<FeedPostModel> get posts;
-  List<FeedPersonalPostModel> get personalPosts;
-  bool get isPersonal;
+  List<FullContextPostModel> get posts;
   bool get isLoading;
   bool get canLoadMore;
   @JsonKey(ignore: true)
@@ -414,7 +388,7 @@ class _$ErrorImpl implements Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<FeedPostModel> posts, List<FeedPersonalPostModel> personalPosts, bool isPersonal, bool isLoading, bool canLoadMore) loaded,
+    required TResult Function(List<FullContextPostModel> posts, bool isLoading, bool canLoadMore) loaded,
     required TResult Function(String error) error,
   }) {
     return error(this.error);
@@ -424,7 +398,7 @@ class _$ErrorImpl implements Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<FeedPostModel> posts, List<FeedPersonalPostModel> personalPosts, bool isPersonal, bool isLoading, bool canLoadMore)? loaded,
+    TResult? Function(List<FullContextPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
     TResult? Function(String error)? error,
   }) {
     return error?.call(this.error);
@@ -434,7 +408,7 @@ class _$ErrorImpl implements Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<FeedPostModel> posts, List<FeedPersonalPostModel> personalPosts, bool isPersonal, bool isLoading, bool canLoadMore)? loaded,
+    TResult Function(List<FullContextPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {

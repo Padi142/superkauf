@@ -9,7 +9,7 @@ import 'package:superkauf/generic/post/model/get_post_response.dart';
 import 'package:superkauf/generic/post/model/get_posts_result.dart';
 import 'package:superkauf/generic/post/model/models/add_reaction_model.dart';
 import 'package:superkauf/generic/post/model/pagination_model.dart';
-import 'package:superkauf/generic/post/model/results/get_personal_feed_result.dart';
+import 'package:superkauf/generic/post/model/results/get_paginated_feed_result.dart';
 import 'package:superkauf/generic/post/model/results/reactions_result.dart';
 import 'package:superkauf/generic/post/model/update_post_body.dart';
 import 'package:superkauf/generic/post/model/update_post_image_body.dart';

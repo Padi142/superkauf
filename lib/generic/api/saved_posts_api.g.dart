@@ -19,19 +19,23 @@ class _SavedPostsApi implements SavedPostsApi {
   String? baseUrl;
 
   @override
-  Future<List<FeedPostModel>> getUserSavedPosts({required int id}) async {
+  Future<GetPaginatedPostsResponseModel> getUserSavedPosts({
+    required int id,
+    required int perPage,
+    required int offset,
+  }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<List<dynamic>>(_setStreamType<List<FeedPostModel>>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<GetPaginatedPostsResponseModel>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          '/saved_posts/${id}',
+          '/saved_posts/${id}?per_page=${perPage}&offset=${offset}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -40,7 +44,7 @@ class _SavedPostsApi implements SavedPostsApi {
           _dio.options.baseUrl,
           baseUrl,
         ))));
-    var value = _result.data!.map((dynamic i) => FeedPostModel.fromJson(i as Map<String, dynamic>)).toList();
+    final value = GetPaginatedPostsResponseModel.fromJson(_result.data!);
     return value;
   }
 

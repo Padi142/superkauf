@@ -22,3 +22,11 @@ class ReloadStorePosts extends StorePostsEvent {
     this.wait = false,
   });
 }
+
+class LoadMore extends StorePostsEvent {
+  final int storeId;
+
+  const LoadMore({
+    required this.storeId,
+  });
+}

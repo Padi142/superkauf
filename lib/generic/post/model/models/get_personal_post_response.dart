@@ -9,18 +9,18 @@ import 'package:superkauf/generic/user/model/user_model.dart';
 part 'get_personal_post_response.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class GetPersonalFeedResponseModel extends Equatable {
-  final List<FeedPersonalPostModel> posts;
+class GetPaginatedPostsResponseModel extends Equatable {
+  final List<FullContextPostModel> posts;
   final PaginationModel pagination;
 
-  const GetPersonalFeedResponseModel({
+  const GetPaginatedPostsResponseModel({
     required this.posts,
     required this.pagination,
   });
 
-  factory GetPersonalFeedResponseModel.fromJson(Map<String, dynamic> json) => _$GetPersonalFeedResponseModelFromJson(json);
+  factory GetPaginatedPostsResponseModel.fromJson(Map<String, dynamic> json) => _$GetPaginatedPostsResponseModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$GetPersonalFeedResponseModelToJson(this);
+  Map<String, dynamic> toJson() => _$GetPaginatedPostsResponseModelToJson(this);
 
   @override
   List<Object?> get props => [
@@ -30,22 +30,22 @@ class GetPersonalFeedResponseModel extends Equatable {
 }
 
 @JsonSerializable(explicitToJson: true)
-class FeedPersonalPostModel extends Equatable {
+class FullContextPostModel extends Equatable {
   final PostModel post;
   final UserModel user;
   final ReactionModel? reaction;
   final SavedPostModel? saved;
 
-  const FeedPersonalPostModel({
+  const FullContextPostModel({
     required this.post,
     required this.user,
     required this.reaction,
     required this.saved,
   });
 
-  factory FeedPersonalPostModel.fromJson(Map<String, dynamic> json) => _$FeedPersonalPostModelFromJson(json);
+  factory FullContextPostModel.fromJson(Map<String, dynamic> json) => _$FullContextPostModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$FeedPersonalPostModelToJson(this);
+  Map<String, dynamic> toJson() => _$FullContextPostModelToJson(this);
 
   @override
   List<Object?> get props => [

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:superkauf/generic/api/store_api.dart';
+import 'package:superkauf/generic/store/model/get_post_by_store_params.dart';
 import 'package:superkauf/generic/store/model/get_posts_by_store_result.dart';
 import 'package:superkauf/generic/store/model/get_stores_result.dart';
 
@@ -21,8 +22,15 @@ class StoresRepository {
     });
   }
 
-  Future<GetPostsByStoreResult> getPostsByStore(int storeID) async {
-    return storeApi.getPostsByStore(id: storeID).then((stores) {
+  Future<GetPostsByStoreResult> getPostsByStore(GetStorePostsParams params) async {
+    return storeApi
+        .getPostsByStore(
+      id: params.storeId,
+      userId: params.userId,
+      offset: params.pagination.offset,
+      perPage: params.pagination.perPage,
+    )
+        .then((stores) {
       return GetPostsByStoreResult.success(stores);
     }).onError((error, stackTrace) {
       if (error is DioException) {

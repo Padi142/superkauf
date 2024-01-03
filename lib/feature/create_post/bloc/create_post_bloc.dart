@@ -50,6 +50,11 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     InitialEvent event,
     Emitter<CreatePostState> emit,
   ) async {
+    final user = await getCurrentUserUseCase.call();
+    if (user == null) {
+      emit(const CreatePostState.error('User not found, are you logged in?'));
+      return;
+    }
     emit(const CreatePostState.initial());
   }
 

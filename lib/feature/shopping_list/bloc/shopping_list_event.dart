@@ -16,3 +16,7 @@ class ReloadShoppingList extends ShoppingListEvent {
 
   const ReloadShoppingList({this.wait = false});
 }
+
+class LoadMore extends ShoppingListEvent {
+  const LoadMore();
+}

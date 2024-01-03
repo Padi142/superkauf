@@ -1,8 +1,9 @@
 import 'package:superkauf/generic/store/data/stores_repository.dart';
+import 'package:superkauf/generic/store/model/get_post_by_store_params.dart';
 import 'package:superkauf/generic/store/model/get_posts_by_store_result.dart';
 import 'package:superkauf/library/use_case.dart';
 
-class GetPostsByStoreUseCase extends UseCase<GetPostsByStoreResult, int> {
+class GetPostsByStoreUseCase extends UseCase<GetPostsByStoreResult, GetStorePostsParams> {
   StoresRepository repository;
 
   GetPostsByStoreUseCase({

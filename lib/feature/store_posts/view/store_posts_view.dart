@@ -36,12 +36,26 @@ class _PostDetailScreenState extends State<StorePostsScreen> {
     context.read<StoreBloc>().add(const GetAllStores());
 
     _scrollController.addListener(_listener);
+    _scrollController.addListener(_loadMoreListener);
 
     super.initState();
   }
 
   void _listener() {
     scrollToRefreshListener(controller: _scrollController);
+  }
+
+  void _loadMoreListener() {
+    scrollToRefreshListener(controller: _scrollController);
+    if (_scrollController.position.pixels > _scrollController.position.maxScrollExtent - 300) {
+      if ((context.read<StorePostsBloc>().state is Loaded) && ((context.read<StorePostsBloc>().state as Loaded).isLoading || (context.read<StorePostsBloc>().state as Loaded).canLoadMore == false)) {
+        return;
+      }
+      print('loading more');
+      context.read<StorePostsBloc>().add(
+            LoadMore(storeId: _selectedStore),
+          );
+    }
   }
 
   var _selectedStore = 1;
@@ -131,10 +145,9 @@ class _PostDetailScreenState extends State<StorePostsScreen> {
                           itemBuilder: (context, index) {
                             return Padding(
                               padding: EdgeInsets.only(bottom: loaded.posts.length == index + 1 ? 100 : 0),
-                              child: FeedPostContainer(
+                              child: PersonalFeedPostContainer(
                                 post: loaded.posts[index],
                                 originScreen: ScreenPath.storesScreen,
-                                isPersonal: false,
                               ),
                             );
                           },
@@ -158,6 +171,7 @@ class _PostDetailScreenState extends State<StorePostsScreen> {
   @override
   void dispose() {
     _scrollController.removeListener(_listener);
+    _scrollController.removeListener(_loadMoreListener);
     _scrollController.dispose();
     super.dispose();
   }

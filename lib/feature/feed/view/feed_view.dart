@@ -65,30 +65,20 @@ class _FeedScreenState extends State<FeedScreen> {
                       height: constraints.maxHeight,
                       child: ListView.builder(
                         controller: _scrollController,
-                        itemCount: loaded.isPersonal
-                            ? loaded.isLoading
-                                ? loaded.personalPosts.length + 1
-                                : loaded.personalPosts.length
-                            : loaded.isLoading
-                                ? loaded.posts.length + 1
-                                : loaded.posts.length,
+                        itemCount: loaded.isLoading ? loaded.posts.length + 1 : loaded.posts.length,
                         cacheExtent: 800,
                         itemBuilder: (context, index) {
                           // If loading , show loading indicator
-                          if (loaded.isPersonal) {
-                            if (index == loaded.personalPosts.length) {
-                              return const PostLoadingView();
-                            }
-                          } else {
-                            if (index == loaded.posts.length) {
-                              return const PostLoadingView();
-                            }
+
+                          if (index == loaded.posts.length) {
+                            return const PostLoadingView();
                           }
+
                           // If not loading , show posts
-                          if (loaded.isPersonal) {
-                            return PersonalFeedPostContainer(post: loaded.personalPosts[index], isPersonal: loaded.isPersonal, originScreen: ScreenPath.feedScreen);
-                          }
-                          return FeedPostContainer(post: loaded.posts[index], isPersonal: loaded.isPersonal, originScreen: ScreenPath.feedScreen);
+                          return PersonalFeedPostContainer(
+                            post: loaded.posts[index],
+                            originScreen: ScreenPath.feedScreen,
+                          );
                         },
                       ),
                     );

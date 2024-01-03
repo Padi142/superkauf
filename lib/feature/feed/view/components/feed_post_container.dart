@@ -19,6 +19,7 @@ class FeedPostContainer extends StatefulWidget {
   final FeedPostModel post;
   final bool isPersonal;
   final String originScreen;
+
   const FeedPostContainer({
     super.key,
     required this.post,
@@ -100,8 +101,9 @@ class _FeedPostContainerState extends State<FeedPostContainer> {
                               constraints: constraints,
                               originScreen: widget.originScreen,
                               savedPost: null,
-                              isPersonal: widget.isPersonal,
                               addReaction: () {},
+                              isSaved: false,
+                              onSave: (isSaved) {},
                             )
                           ],
                         ),
@@ -129,13 +131,12 @@ class _FeedPostContainerState extends State<FeedPostContainer> {
 enum LikedState { initial, liked, unliked }
 
 class PersonalFeedPostContainer extends StatefulWidget {
-  final FeedPersonalPostModel post;
-  final bool isPersonal;
+  final FullContextPostModel post;
   final String originScreen;
+
   const PersonalFeedPostContainer({
     super.key,
     required this.post,
-    required this.isPersonal,
     required this.originScreen,
   });
 
@@ -146,11 +147,13 @@ class PersonalFeedPostContainer extends StatefulWidget {
 class _PersonalFeedPostContainerState extends State<PersonalFeedPostContainer> {
   var reactions = 0;
   var likeState = LikedState.initial;
+  var isSaved = false;
 
   @override
   void initState() {
     super.initState();
     reactions = widget.post.post.likes;
+    isSaved = widget.post.saved != null;
   }
 
   @override
@@ -214,10 +217,15 @@ class _PersonalFeedPostContainerState extends State<PersonalFeedPostContainer> {
                                 post: widget.post.post,
                                 user: widget.post.user,
                               ),
+                              onSave: (isSaved) {
+                                setState(() {
+                                  this.isSaved = isSaved;
+                                });
+                              },
+                              isSaved: isSaved,
                               constraints: constraints,
                               savedPost: widget.post.saved,
                               originScreen: widget.originScreen,
-                              isPersonal: widget.isPersonal,
                               addReaction: () {
                                 if (likeState != LikedState.initial
                                     ? likeState == LikedState.liked
@@ -289,18 +297,20 @@ class PostContent extends StatelessWidget {
   final FeedPostModel post;
   final BoxConstraints constraints;
   final String originScreen;
-  final bool isPersonal;
   final SavedPostModel? savedPost;
   final Function() addReaction;
+  final Function(bool) onSave;
+  final bool isSaved;
 
   const PostContent({
     super.key,
     required this.post,
     required this.constraints,
     required this.originScreen,
-    required this.isPersonal,
     required this.savedPost,
     required this.addReaction,
+    required this.onSave,
+    required this.isSaved,
   });
 
   @override
@@ -345,14 +355,12 @@ class PostContent extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          isPersonal
-                              ? SavePostButton(
-                                  key: GlobalKey(),
-                                  postId: post.post.id,
-                                  savedPost: savedPost,
-                                  originScreen: originScreen,
-                                )
-                              : const SizedBox(),
+                          SavePostButton(
+                            postId: post.post.id,
+                            isSaved: isSaved || savedPost != null,
+                            originScreen: originScreen,
+                            onPressed: onSave,
+                          ),
                           const SizedBox(
                             height: 5,
                           ),

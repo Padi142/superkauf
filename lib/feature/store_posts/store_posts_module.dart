@@ -4,6 +4,7 @@ import 'package:superkauf/feature/store_posts/bloc/store_posts_bloc.dart';
 import 'package:superkauf/feature/store_posts/view/store_posts_view.dart';
 import 'package:superkauf/generic/store/bloc/store_bloc.dart';
 import 'package:superkauf/generic/store/use_case/get_posts_by_store_use_case.dart';
+import 'package:superkauf/generic/user/use_case/get_current_user_use_case.dart';
 
 import '../../library/app_module.dart';
 
@@ -18,6 +19,7 @@ class StorePostsModule extends AppModule {
     GetIt.I.registerFactory<StorePostsBloc>(
       () => StorePostsBloc(
         getPostsByStoreUseCase: GetIt.I.get<GetPostsByStoreUseCase>(),
+        getCurrentUserUseCase: GetIt.I.get<GetCurrentUserUseCase>(),
       ),
     );
   }

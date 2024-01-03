@@ -46,7 +46,7 @@ class _PostApi implements PostApi {
   }
 
   @override
-  Future<GetPersonalFeedResponseModel> getPersonalFeed({
+  Future<GetPaginatedPostsResponseModel> getPersonalFeed({
     required Map<String, dynamic> body,
     required int id,
   }) async {
@@ -55,7 +55,7 @@ class _PostApi implements PostApi {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body);
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<GetPersonalFeedResponseModel>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<GetPaginatedPostsResponseModel>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -71,7 +71,7 @@ class _PostApi implements PostApi {
           _dio.options.baseUrl,
           baseUrl,
         ))));
-    final value = GetPersonalFeedResponseModel.fromJson(_result.data!);
+    final value = GetPaginatedPostsResponseModel.fromJson(_result.data!);
     return value;
   }
 

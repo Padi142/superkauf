@@ -45,19 +45,25 @@ class _StoreApi implements StoreApi {
   }
 
   @override
-  Future<List<FeedPostModel>> getPostsByStore({required int id}) async {
+  Future<GetPaginatedPostsResponseModel> getPostsByStore({
+    required int id,
+    required int perPage,
+    required int offset,
+    int? userId,
+  }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<List<dynamic>>(_setStreamType<List<FeedPostModel>>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<GetPaginatedPostsResponseModel>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          '/store/posts/${id}',
+          '/store/posts/${id}?per_page=${perPage}&offset=${offset}&userId=${userId}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -66,7 +72,7 @@ class _StoreApi implements StoreApi {
           _dio.options.baseUrl,
           baseUrl,
         ))));
-    var value = _result.data!.map((dynamic i) => FeedPostModel.fromJson(i as Map<String, dynamic>)).toList();
+    final value = GetPaginatedPostsResponseModel.fromJson(_result.data!);
     return value;
   }
 

@@ -25,11 +25,26 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
   void initState() {
     BlocProvider.of<ShoppingListBloc>(context).add(const GetShoppingList());
     _scrollController.addListener(_listener);
+    _scrollController.addListener(_loadMoreListener);
     super.initState();
   }
 
   void _listener() {
     scrollToRefreshListener(controller: _scrollController);
+  }
+
+  void _loadMoreListener() {
+    scrollToRefreshListener(controller: _scrollController);
+    if (_scrollController.position.pixels > _scrollController.position.maxScrollExtent - 300) {
+      if ((context.read<ShoppingListBloc>().state is Loaded) &&
+          ((context.read<ShoppingListBloc>().state as Loaded).isLoading || (context.read<ShoppingListBloc>().state as Loaded).canLoadMore == false)) {
+        return;
+      }
+      print('loading more');
+      context.read<ShoppingListBloc>().add(
+            const LoadMore(),
+          );
+    }
   }
 
   @override
@@ -50,12 +65,12 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
                     return SizedBox(
                       height: constraints.maxHeight,
                       child: ListView.builder(
+                        controller: _scrollController,
                         itemCount: loaded.posts.length,
                         itemBuilder: (context, index) {
-                          return FeedPostContainer(
+                          return PersonalFeedPostContainer(
                             post: loaded.posts[index],
                             originScreen: ScreenPath.shoppingListScreen,
-                            isPersonal: false,
                           );
                         },
                       ),
@@ -77,6 +92,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
   @override
   void dispose() {
     _scrollController.removeListener(_listener);
+    _scrollController.removeListener(_loadMoreListener);
     _scrollController.dispose();
     super.dispose();
   }

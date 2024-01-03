@@ -30,6 +30,8 @@ String getDaysUntilString(DateTime futureDate) {
     return '${'ends_in_label'.tr()} $difference ${'ends_in_multiple_days_label'.tr()}';
   } else if (difference > 4) {
     return '${'ends_in_label'.tr()} $difference ${'ends_in_days_label'.tr()}';
+  } else if (difference < 0) {
+    return 'sale_expired'.tr();
   } else {
     return 'Invalid date'; // The provided date is in the past
   }

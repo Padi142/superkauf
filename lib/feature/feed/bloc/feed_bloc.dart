@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:superkauf/feature/feed/bloc/feed_state.dart';
-import 'package:superkauf/generic/post/model/get_post_response.dart';
 import 'package:superkauf/generic/post/model/models/get_personal_post_response.dart';
 import 'package:superkauf/generic/post/model/pagination_model.dart';
 import 'package:superkauf/generic/post/use_case/get_personal_feed_use_case.dart';
@@ -24,9 +23,11 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     on<ReloadFeed>(_onReloadFeed);
     on<LoadMore>(_onLoadMore);
   }
+
   var page = 0;
   var loading = false;
   static const perPage = 5;
+
   Future<void> _onGetFeed(
     GetFeed event,
     Emitter<FeedState> emit,
@@ -35,8 +36,7 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
 
     final params = GetPostsPaginationModel(perPage: perPage, offset: page * perPage);
 
-    final List<FeedPostModel> newPosts = [];
-    final List<FeedPersonalPostModel> newPersonalPosts = [];
+    final List<FullContextPostModel> newPosts = [];
     var canLoadMore = false;
 
     //Load feed for not-logged user
@@ -44,7 +44,12 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
       final result = await getPostsUseCase.call(params);
 
       result.map(success: (success) {
-        newPosts.addAll(success.response.posts);
+        newPosts.addAll(success.response.posts.map((element) => FullContextPostModel(
+              post: element.post,
+              user: element.user,
+              reaction: null,
+              saved: null,
+            )));
         canLoadMore = success.response.pagination.count % perPage == 0;
       }, failure: (failure) {
         emit(FeedState.error(failure.message));
@@ -53,7 +58,7 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
       final result = await getPersonalFeedUseCase.call(GetPersonalFeedParams(pagination: params, userId: user.id));
 
       result.map(success: (success) {
-        newPersonalPosts.addAll(success.response.posts);
+        newPosts.addAll(success.response.posts);
         canLoadMore = success.response.pagination.count % perPage == 0;
       }, failure: (failure) {
         emit(FeedState.error(failure.message));
@@ -63,17 +68,15 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     state.maybeMap(
         loaded: (loaded) {
           final posts = loaded.posts.toList();
-          final personalPosts = loaded.personalPosts.toList();
           posts.addAll(newPosts);
-          personalPosts.addAll(newPersonalPosts);
 
           emit(
-            FeedState.loaded(posts, personalPosts, user != null, false, canLoadMore),
+            FeedState.loaded(posts, false, canLoadMore),
           );
         },
         loading: (loading) {
           emit(
-            FeedState.loaded(newPosts, newPersonalPosts, user != null, false, canLoadMore),
+            FeedState.loaded(newPosts, false, canLoadMore),
           );
         },
         orElse: () {});

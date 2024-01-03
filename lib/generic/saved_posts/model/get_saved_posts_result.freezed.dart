@@ -18,19 +18,19 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$GetSavedPostsResult {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<FeedPostModel> posts) success,
+    required TResult Function(GetPaginatedPostsResponseModel response) success,
     required TResult Function(String message) failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<FeedPostModel> posts)? success,
+    TResult? Function(GetPaginatedPostsResponseModel response)? success,
     TResult? Function(String message)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<FeedPostModel> posts)? success,
+    TResult Function(GetPaginatedPostsResponseModel response)? success,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) =>
@@ -75,7 +75,7 @@ class _$GetSavedPostsResultCopyWithImpl<$Res, $Val extends GetSavedPostsResult> 
 abstract class _$$SuccessImplCopyWith<$Res> {
   factory _$$SuccessImplCopyWith(_$SuccessImpl value, $Res Function(_$SuccessImpl) then) = __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<FeedPostModel> posts});
+  $Res call({GetPaginatedPostsResponseModel response});
 }
 
 /// @nodoc
@@ -85,13 +85,13 @@ class __$$SuccessImplCopyWithImpl<$Res> extends _$GetSavedPostsResultCopyWithImp
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? posts = null,
+    Object? response = null,
   }) {
     return _then(_$SuccessImpl(
-      null == posts
-          ? _value._posts
-          : posts // ignore: cast_nullable_to_non_nullable
-              as List<FeedPostModel>,
+      null == response
+          ? _value.response
+          : response // ignore: cast_nullable_to_non_nullable
+              as GetPaginatedPostsResponseModel,
     ));
   }
 }
@@ -99,28 +99,23 @@ class __$$SuccessImplCopyWithImpl<$Res> extends _$GetSavedPostsResultCopyWithImp
 /// @nodoc
 
 class _$SuccessImpl implements Success {
-  const _$SuccessImpl(final List<FeedPostModel> posts) : _posts = posts;
+  const _$SuccessImpl(this.response);
 
-  final List<FeedPostModel> _posts;
   @override
-  List<FeedPostModel> get posts {
-    if (_posts is EqualUnmodifiableListView) return _posts;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_posts);
-  }
+  final GetPaginatedPostsResponseModel response;
 
   @override
   String toString() {
-    return 'GetSavedPostsResult.success(posts: $posts)';
+    return 'GetSavedPostsResult.success(response: $response)';
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$SuccessImpl && const DeepCollectionEquality().equals(other._posts, _posts));
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$SuccessImpl && (identical(other.response, response) || other.response == response));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_posts));
+  int get hashCode => Object.hash(runtimeType, response);
 
   @JsonKey(ignore: true)
   @override
@@ -130,30 +125,30 @@ class _$SuccessImpl implements Success {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<FeedPostModel> posts) success,
+    required TResult Function(GetPaginatedPostsResponseModel response) success,
     required TResult Function(String message) failure,
   }) {
-    return success(posts);
+    return success(response);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<FeedPostModel> posts)? success,
+    TResult? Function(GetPaginatedPostsResponseModel response)? success,
     TResult? Function(String message)? failure,
   }) {
-    return success?.call(posts);
+    return success?.call(response);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<FeedPostModel> posts)? success,
+    TResult Function(GetPaginatedPostsResponseModel response)? success,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(posts);
+      return success(response);
     }
     return orElse();
   }
@@ -191,9 +186,9 @@ class _$SuccessImpl implements Success {
 }
 
 abstract class Success implements GetSavedPostsResult {
-  const factory Success(final List<FeedPostModel> posts) = _$SuccessImpl;
+  const factory Success(final GetPaginatedPostsResponseModel response) = _$SuccessImpl;
 
-  List<FeedPostModel> get posts;
+  GetPaginatedPostsResponseModel get response;
   @JsonKey(ignore: true)
   _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith => throw _privateConstructorUsedError;
 }
@@ -252,7 +247,7 @@ class _$FailureImpl implements Failure {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<FeedPostModel> posts) success,
+    required TResult Function(GetPaginatedPostsResponseModel response) success,
     required TResult Function(String message) failure,
   }) {
     return failure(message);
@@ -261,7 +256,7 @@ class _$FailureImpl implements Failure {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<FeedPostModel> posts)? success,
+    TResult? Function(GetPaginatedPostsResponseModel response)? success,
     TResult? Function(String message)? failure,
   }) {
     return failure?.call(message);
@@ -270,7 +265,7 @@ class _$FailureImpl implements Failure {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<FeedPostModel> posts)? success,
+    TResult Function(GetPaginatedPostsResponseModel response)? success,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) {

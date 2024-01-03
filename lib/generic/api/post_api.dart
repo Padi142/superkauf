@@ -17,7 +17,7 @@ abstract class PostApi {
   });
 
   @POST('/feed/{id}')
-  Future<GetPersonalFeedResponseModel> getPersonalFeed({
+  Future<GetPaginatedPostsResponseModel> getPersonalFeed({
     @Body() required Map<String, dynamic> body,
     @Path() required int id,
   });

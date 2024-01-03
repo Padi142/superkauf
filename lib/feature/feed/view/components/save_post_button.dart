@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/post/bloc/post_bloc.dart';
-import 'package:superkauf/generic/saved_posts/model/saved_post_model.dart';
 
 class SavePostButton extends StatelessWidget {
   final int postId;
   final String originScreen;
-  final SavedPostModel? savedPost;
+  final bool isSaved;
+  final Function(bool) onPressed;
 
   const SavePostButton({
     super.key,
     required this.postId,
     required this.originScreen,
-    required this.savedPost,
+    required this.isSaved,
+    required this.onPressed,
   });
 
   @override
@@ -30,22 +31,24 @@ class SavePostButton extends StatelessWidget {
           child: IconButton(
             iconSize: 30,
             icon: Icon(
-              originScreen == ScreenPath.shoppingListScreen || savedPost != null ? Icons.bookmark : Icons.bookmark_border,
+              originScreen == ScreenPath.shoppingListScreen || isSaved ? Icons.bookmark : Icons.bookmark_border,
               color: Colors.black,
             ),
             onPressed: () {
-              if (originScreen == ScreenPath.shoppingListScreen || savedPost != null) {
+              if (originScreen == ScreenPath.shoppingListScreen || isSaved) {
                 BlocProvider.of<PostBloc>(context).add(
                   RemoveSavedPost(
                     postId: postId,
                   ),
                 );
+                onPressed(false);
               } else {
                 BlocProvider.of<PostBloc>(context).add(
                   SavePost(
                     postId: postId,
                   ),
                 );
+                onPressed(true);
               }
             },
           ),

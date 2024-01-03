@@ -18,19 +18,19 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$GetPostsByStoreResult {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<FeedPostModel> stores) success,
+    required TResult Function(GetPaginatedPostsResponseModel response) success,
     required TResult Function(String message) failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<FeedPostModel> stores)? success,
+    TResult? Function(GetPaginatedPostsResponseModel response)? success,
     TResult? Function(String message)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<FeedPostModel> stores)? success,
+    TResult Function(GetPaginatedPostsResponseModel response)? success,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) =>
@@ -75,7 +75,7 @@ class _$GetPostsByStoreResultCopyWithImpl<$Res, $Val extends GetPostsByStoreResu
 abstract class _$$SuccessImplCopyWith<$Res> {
   factory _$$SuccessImplCopyWith(_$SuccessImpl value, $Res Function(_$SuccessImpl) then) = __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<FeedPostModel> stores});
+  $Res call({GetPaginatedPostsResponseModel response});
 }
 
 /// @nodoc
@@ -85,13 +85,13 @@ class __$$SuccessImplCopyWithImpl<$Res> extends _$GetPostsByStoreResultCopyWithI
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? stores = null,
+    Object? response = null,
   }) {
     return _then(_$SuccessImpl(
-      null == stores
-          ? _value._stores
-          : stores // ignore: cast_nullable_to_non_nullable
-              as List<FeedPostModel>,
+      null == response
+          ? _value.response
+          : response // ignore: cast_nullable_to_non_nullable
+              as GetPaginatedPostsResponseModel,
     ));
   }
 }
@@ -99,28 +99,23 @@ class __$$SuccessImplCopyWithImpl<$Res> extends _$GetPostsByStoreResultCopyWithI
 /// @nodoc
 
 class _$SuccessImpl implements Success {
-  const _$SuccessImpl(final List<FeedPostModel> stores) : _stores = stores;
+  const _$SuccessImpl(this.response);
 
-  final List<FeedPostModel> _stores;
   @override
-  List<FeedPostModel> get stores {
-    if (_stores is EqualUnmodifiableListView) return _stores;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_stores);
-  }
+  final GetPaginatedPostsResponseModel response;
 
   @override
   String toString() {
-    return 'GetPostsByStoreResult.success(stores: $stores)';
+    return 'GetPostsByStoreResult.success(response: $response)';
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$SuccessImpl && const DeepCollectionEquality().equals(other._stores, _stores));
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$SuccessImpl && (identical(other.response, response) || other.response == response));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_stores));
+  int get hashCode => Object.hash(runtimeType, response);
 
   @JsonKey(ignore: true)
   @override
@@ -130,30 +125,30 @@ class _$SuccessImpl implements Success {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<FeedPostModel> stores) success,
+    required TResult Function(GetPaginatedPostsResponseModel response) success,
     required TResult Function(String message) failure,
   }) {
-    return success(stores);
+    return success(response);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<FeedPostModel> stores)? success,
+    TResult? Function(GetPaginatedPostsResponseModel response)? success,
     TResult? Function(String message)? failure,
   }) {
-    return success?.call(stores);
+    return success?.call(response);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<FeedPostModel> stores)? success,
+    TResult Function(GetPaginatedPostsResponseModel response)? success,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(stores);
+      return success(response);
     }
     return orElse();
   }
@@ -191,9 +186,9 @@ class _$SuccessImpl implements Success {
 }
 
 abstract class Success implements GetPostsByStoreResult {
-  const factory Success(final List<FeedPostModel> stores) = _$SuccessImpl;
+  const factory Success(final GetPaginatedPostsResponseModel response) = _$SuccessImpl;
 
-  List<FeedPostModel> get stores;
+  GetPaginatedPostsResponseModel get response;
   @JsonKey(ignore: true)
   _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith => throw _privateConstructorUsedError;
 }
@@ -252,7 +247,7 @@ class _$FailureImpl implements Failure {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<FeedPostModel> stores) success,
+    required TResult Function(GetPaginatedPostsResponseModel response) success,
     required TResult Function(String message) failure,
   }) {
     return failure(message);
@@ -261,7 +256,7 @@ class _$FailureImpl implements Failure {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<FeedPostModel> stores)? success,
+    TResult? Function(GetPaginatedPostsResponseModel response)? success,
     TResult? Function(String message)? failure,
   }) {
     return failure?.call(message);
@@ -270,7 +265,7 @@ class _$FailureImpl implements Failure {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<FeedPostModel> stores)? success,
+    TResult Function(GetPaginatedPostsResponseModel response)? success,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) {

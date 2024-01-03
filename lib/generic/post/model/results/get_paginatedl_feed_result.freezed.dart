@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'get_personal_feed_result.dart';
+part of 'get_paginated_feed_result.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -18,19 +18,19 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$GetPersonalFeedResult {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(GetPersonalFeedResponseModel response) success,
+    required TResult Function(GetPaginatedPostsResponseModel response) success,
     required TResult Function(String message) failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(GetPersonalFeedResponseModel response)? success,
+    TResult? Function(GetPaginatedPostsResponseModel response)? success,
     TResult? Function(String message)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(GetPersonalFeedResponseModel response)? success,
+    TResult Function(GetPaginatedPostsResponseModel response)? success,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) =>
@@ -75,7 +75,7 @@ class _$GetPersonalFeedResultCopyWithImpl<$Res, $Val extends GetPersonalFeedResu
 abstract class _$$SuccessImplCopyWith<$Res> {
   factory _$$SuccessImplCopyWith(_$SuccessImpl value, $Res Function(_$SuccessImpl) then) = __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({GetPersonalFeedResponseModel response});
+  $Res call({GetPaginatedPostsResponseModel response});
 }
 
 /// @nodoc
@@ -91,7 +91,7 @@ class __$$SuccessImplCopyWithImpl<$Res> extends _$GetPersonalFeedResultCopyWithI
       null == response
           ? _value.response
           : response // ignore: cast_nullable_to_non_nullable
-              as GetPersonalFeedResponseModel,
+              as GetPaginatedPostsResponseModel,
     ));
   }
 }
@@ -102,7 +102,7 @@ class _$SuccessImpl implements Success {
   const _$SuccessImpl(this.response);
 
   @override
-  final GetPersonalFeedResponseModel response;
+  final GetPaginatedPostsResponseModel response;
 
   @override
   String toString() {
@@ -125,7 +125,7 @@ class _$SuccessImpl implements Success {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(GetPersonalFeedResponseModel response) success,
+    required TResult Function(GetPaginatedPostsResponseModel response) success,
     required TResult Function(String message) failure,
   }) {
     return success(response);
@@ -134,7 +134,7 @@ class _$SuccessImpl implements Success {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(GetPersonalFeedResponseModel response)? success,
+    TResult? Function(GetPaginatedPostsResponseModel response)? success,
     TResult? Function(String message)? failure,
   }) {
     return success?.call(response);
@@ -143,7 +143,7 @@ class _$SuccessImpl implements Success {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(GetPersonalFeedResponseModel response)? success,
+    TResult Function(GetPaginatedPostsResponseModel response)? success,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) {
@@ -186,9 +186,9 @@ class _$SuccessImpl implements Success {
 }
 
 abstract class Success implements GetPersonalFeedResult {
-  const factory Success(final GetPersonalFeedResponseModel response) = _$SuccessImpl;
+  const factory Success(final GetPaginatedPostsResponseModel response) = _$SuccessImpl;
 
-  GetPersonalFeedResponseModel get response;
+  GetPaginatedPostsResponseModel get response;
   @JsonKey(ignore: true)
   _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith => throw _privateConstructorUsedError;
 }
@@ -247,7 +247,7 @@ class _$FailureImpl implements Failure {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(GetPersonalFeedResponseModel response) success,
+    required TResult Function(GetPaginatedPostsResponseModel response) success,
     required TResult Function(String message) failure,
   }) {
     return failure(message);
@@ -256,7 +256,7 @@ class _$FailureImpl implements Failure {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(GetPersonalFeedResponseModel response)? success,
+    TResult? Function(GetPaginatedPostsResponseModel response)? success,
     TResult? Function(String message)? failure,
   }) {
     return failure?.call(message);
@@ -265,7 +265,7 @@ class _$FailureImpl implements Failure {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(GetPersonalFeedResponseModel response)? success,
+    TResult Function(GetPaginatedPostsResponseModel response)? success,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) {

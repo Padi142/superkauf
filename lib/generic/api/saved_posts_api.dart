@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:superkauf/generic/post/model/get_post_response.dart';
-import 'package:superkauf/generic/post/model/post_model.dart';
+import 'package:superkauf/generic/post/model/models/get_personal_post_response.dart';
 import 'package:superkauf/generic/saved_posts/model/saved_post_model.dart';
 
 part 'saved_posts_api.g.dart';
@@ -10,9 +9,11 @@ part 'saved_posts_api.g.dart';
 abstract class SavedPostsApi {
   factory SavedPostsApi(Dio dio) = _SavedPostsApi;
 
-  @GET('/saved_posts/{id}')
-  Future<List<FeedPostModel>> getUserSavedPosts({
+  @GET('/saved_posts/{id}?per_page={perPage}&offset={offset}')
+  Future<GetPaginatedPostsResponseModel> getUserSavedPosts({
     @Path() required int id,
+    @Path() required int perPage,
+    @Path() required int offset,
   });
 
   @POST('/saved_posts')

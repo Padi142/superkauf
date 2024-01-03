@@ -6,24 +6,24 @@ part of 'get_personal_post_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-GetPersonalFeedResponseModel _$GetPersonalFeedResponseModelFromJson(Map<String, dynamic> json) => GetPersonalFeedResponseModel(
-      posts: (json['posts'] as List<dynamic>).map((e) => FeedPersonalPostModel.fromJson(e as Map<String, dynamic>)).toList(),
+GetPaginatedPostsResponseModel _$GetPaginatedPostsResponseModelFromJson(Map<String, dynamic> json) => GetPaginatedPostsResponseModel(
+      posts: (json['posts'] as List<dynamic>).map((e) => FullContextPostModel.fromJson(e as Map<String, dynamic>)).toList(),
       pagination: PaginationModel.fromJson(json['pagination'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$GetPersonalFeedResponseModelToJson(GetPersonalFeedResponseModel instance) => <String, dynamic>{
+Map<String, dynamic> _$GetPaginatedPostsResponseModelToJson(GetPaginatedPostsResponseModel instance) => <String, dynamic>{
       'posts': instance.posts.map((e) => e.toJson()).toList(),
       'pagination': instance.pagination.toJson(),
     };
 
-FeedPersonalPostModel _$FeedPersonalPostModelFromJson(Map<String, dynamic> json) => FeedPersonalPostModel(
+FullContextPostModel _$FullContextPostModelFromJson(Map<String, dynamic> json) => FullContextPostModel(
       post: PostModel.fromJson(json['post'] as Map<String, dynamic>),
       user: UserModel.fromJson(json['user'] as Map<String, dynamic>),
       reaction: json['reaction'] == null ? null : ReactionModel.fromJson(json['reaction'] as Map<String, dynamic>),
       saved: json['saved'] == null ? null : SavedPostModel.fromJson(json['saved'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$FeedPersonalPostModelToJson(FeedPersonalPostModel instance) => <String, dynamic>{
+Map<String, dynamic> _$FullContextPostModelToJson(FullContextPostModel instance) => <String, dynamic>{
       'post': instance.post.toJson(),
       'user': instance.user.toJson(),
       'reaction': instance.reaction?.toJson(),

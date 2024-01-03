@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:superkauf/feature/account/bloc/account_state.dart';
 import 'package:superkauf/feature/account/use_case/account_navigation.dart';
@@ -68,7 +69,11 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
 
     final supabase = Supabase.instance.client;
 
-    supabase.auth.signOut();
+    await supabase.auth.signOut();
+
+    final box = await Hive.openBox('user');
+    await box.clear();
+
     add(const GetUser());
   }
 

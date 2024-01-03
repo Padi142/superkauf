@@ -4,6 +4,7 @@ import 'package:superkauf/generic/saved_posts/model/create_saved_post_body.dart'
 import 'package:superkauf/generic/saved_posts/model/create_saved_post_result.dart';
 import 'package:superkauf/generic/saved_posts/model/delete_saved_post_body.dart';
 import 'package:superkauf/generic/saved_posts/model/delete_saved_post_model.dart';
+import 'package:superkauf/generic/saved_posts/model/get_saved_post_params.dart';
 import 'package:superkauf/generic/saved_posts/model/get_saved_posts_result.dart';
 
 class SavedPostsRepository {
@@ -13,8 +14,14 @@ class SavedPostsRepository {
     required this.savedPostsApi,
   });
 
-  Future<GetSavedPostsResult> getSavedPosts(int userId) async {
-    return savedPostsApi.getUserSavedPosts(id: userId).then((posts) {
+  Future<GetSavedPostsResult> getSavedPosts(GetSavedPostsParams params) async {
+    return savedPostsApi
+        .getUserSavedPosts(
+      id: params.userId,
+      offset: params.pagination.offset,
+      perPage: params.pagination.perPage,
+    )
+        .then((posts) {
       return GetSavedPostsResult.success(posts);
     }).onError((error, stackTrace) {
       if (error is DioException) {
