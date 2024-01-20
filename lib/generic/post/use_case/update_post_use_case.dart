@@ -15,3 +15,16 @@ class UpdatePostUseCase extends UseCase<GetPostDetailResult, UpdatePostBody> {
     return await repository.updatePostContent(params);
   }
 }
+
+class UpdatePostValidUntilUseCase extends UseCase<GetPostDetailResult, UpdatePostValidUntilBody> {
+  PostsRepository repository;
+
+  UpdatePostValidUntilUseCase({
+    required this.repository,
+  });
+
+  @override
+  Future<GetPostDetailResult> call(params) async {
+    return await repository.updatePostValidUntil(params);
+  }
+}

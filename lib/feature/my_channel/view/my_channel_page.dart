@@ -39,7 +39,7 @@ class _MyChannelState extends State<MyChannelScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: App.appTheme.colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.background,
         floatingActionButton: FloatingActionButton(
           backgroundColor: App.appTheme.colorScheme.primary,
           onPressed: () {
@@ -66,12 +66,12 @@ class _MyChannelState extends State<MyChannelScreen> {
                             children: [
                               Text(
                                 'no_posts_for_user_1'.tr(),
-                                style: App.appTheme.textTheme.titleMedium,
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
                               const SizedBox(
                                 height: 10,
                               ),
-                              Text('no_posts_for_user_2'.tr(), style: App.appTheme.textTheme.titleSmall),
+                              Text('no_posts_for_user_2'.tr(), style: Theme.of(context).textTheme.titleSmall),
                             ],
                           ));
                         }

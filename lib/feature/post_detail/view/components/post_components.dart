@@ -5,11 +5,11 @@ import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart
 import 'package:superkauf/generic/functions.dart';
 import 'package:superkauf/generic/post/bloc/post_bloc.dart';
 import 'package:superkauf/generic/post/model/post_model.dart';
-import 'package:superkauf/library/app.dart';
 
 class StoreLabel extends StatelessWidget {
   final String storeLabel;
   final int storeId;
+
   const StoreLabel({
     super.key,
     required this.storeLabel,
@@ -40,9 +40,9 @@ class StoreLabel extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(storeLabel,
-                  style: App.appTheme.textTheme.titleMedium!.copyWith(
-                    color: Colors.white,
-                  )),
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: Colors.white,
+                      )),
             )),
       ),
     );
@@ -71,9 +71,9 @@ class CardRequired extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text('post_store_card_required'.tr(),
-                style: App.appTheme.textTheme.titleMedium!.copyWith(
-                  color: Colors.white,
-                )),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: Colors.white,
+                    )),
           )),
     );
   }
@@ -81,6 +81,7 @@ class CardRequired extends StatelessWidget {
 
 class FeedPostValidUntilLabel extends StatelessWidget {
   final DateTime validUntil;
+
   const FeedPostValidUntilLabel({super.key, required this.validUntil});
 
   @override
@@ -98,7 +99,7 @@ class FeedPostValidUntilLabel extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           child: Text(
             getDaysUntilString(validUntil),
-            style: App.appTheme.textTheme.titleMedium,
+            style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
       ),
@@ -108,6 +109,7 @@ class FeedPostValidUntilLabel extends StatelessWidget {
 
 class PostDetailLike extends StatefulWidget {
   final PostModel post;
+
   const PostDetailLike({super.key, required this.post});
 
   @override
@@ -149,7 +151,7 @@ class _PostDetailLikeState extends State<PostDetailLike> {
                     ),
                     Text(
                       widget.post.likes.toString(),
-                      style: App.appTheme.textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ],
                 )),

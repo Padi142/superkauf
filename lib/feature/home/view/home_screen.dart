@@ -5,6 +5,8 @@ import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart
 import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_state.dart';
 import 'package:superkauf/feature/snackbar/bloc/snackbar_bloc.dart';
 import 'package:superkauf/generic/constants.dart';
+import 'package:superkauf/generic/notifications/presentation/check_notifications_bloc.dart';
+import 'package:superkauf/generic/notifications/presentation/check_notifications_state.dart';
 import 'package:superkauf/library/app.dart';
 import 'package:superkauf/library/app_navigation.dart';
 
@@ -22,6 +24,7 @@ class HomeScreen extends Screen {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
+    BlocProvider.of<CheckNotificationBloc>(context).add(const CheckNotifications());
     super.initState();
   }
 
@@ -29,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: BlocListener<SnackbarBloc, SnackbarState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is ErrorSnackbarState) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -59,13 +62,44 @@ class _HomeScreenState extends State<HomeScreen> {
           switch (state) {
             case final NavigationStateLoaded loaded:
               return Scaffold(
+                backgroundColor: Theme.of(context).colorScheme.background,
                 appBar: AppBar(
                   title: Text('app_title'.tr()),
-                  leading: IconButton(
-                    onPressed: () {
-                      BlocProvider.of<NavigationBloc>(context).add(const GoToCreatePostScreen());
+                  leading: BlocBuilder<CheckNotificationBloc, CheckNotificationsState>(
+                    builder: (context, state) {
+                      return state.maybeMap(success: (success) {
+                        if (success.notifications.newNotifications) {
+                          return IconButton(
+                            onPressed: () {
+                              BlocProvider.of<NavigationBloc>(context).add(const OpenMyNotificationsScreen());
+                              BlocProvider.of<CheckNotificationBloc>(context).add(const ClearNotifications());
+                            },
+                            icon: Badge(
+                                alignment: Alignment.topRight,
+                                label: Text(
+                                  success.notifications.notificationCount.toString(),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                child: const Icon(Icons.notifications)),
+                          );
+                        }
+                        return IconButton(
+                          onPressed: () {
+                            BlocProvider.of<NavigationBloc>(context).add(const OpenMyNotificationsScreen());
+                          },
+                          icon: const Icon(Icons.notifications),
+                        );
+                      }, orElse: () {
+                        return IconButton(
+                          onPressed: () {
+                            BlocProvider.of<NavigationBloc>(context).add(const OpenMyNotificationsScreen());
+                          },
+                          icon: const Icon(Icons.notifications),
+                        );
+                      });
                     },
-                    icon: const Icon(Icons.camera_alt),
                   ),
                   actions: [
                     IconButton(

@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:superkauf/feature/account/bloc/account_state.dart';
 import 'package:superkauf/feature/account/use_case/account_navigation.dart';
@@ -54,6 +56,10 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     final result = await getUserByUidUseCase.call(supabaseUser.id);
 
     result.map(success: (success) {
+      Posthog().identify(userId: session.user.id.toString(), properties: {
+        "supabase_uid": session.user.id,
+        "username": success.user.username,
+      });
       emit(AccountState.loaded(success.user));
     }, failure: (failure) {
       print(failure);
@@ -73,6 +79,10 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
 
     final box = await Hive.openBox('user');
     await box.clear();
+
+    Posthog().reset();
+
+    OneSignal.logout();
 
     add(const GetUser());
   }
@@ -106,6 +116,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
       profilePicture: event.user.profilePicture,
     );
     final result = await updateUserUseCase.call(params);
+
     add(const GetUser());
   }
 

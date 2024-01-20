@@ -32,6 +32,12 @@
                 <data android:scheme="io.padisoft.superkauf" android:host="login-callback"/>
             </intent-filter>
         </activity>
+        <!--        Analytics!-->
+        <meta-data android:name="com.posthog.posthog.API_KEY" android:value="phc_aTaH3y24JShs1v74nwsBudvHNfeFfCJkvuXX3xjWgEP"/>
+        <meta-data android:name="com.posthog.posthog.POSTHOG_HOST" android:value="https://eu.posthog.com"/>
+        <meta-data android:name="com.posthog.posthog.TRACK_APPLICATION_LIFECYCLE_EVENTS" android:value="true"/>
+        <meta-data android:name="com.posthog.posthog.DEBUG" android:value="false"/>
+
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data

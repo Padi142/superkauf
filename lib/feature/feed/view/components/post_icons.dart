@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:superkauf/generic/functions.dart';
-import 'package:superkauf/library/app.dart';
 
 class RequiresStoreCard extends StatelessWidget {
   const RequiresStoreCard({super.key});
@@ -12,7 +11,6 @@ class RequiresStoreCard extends StatelessWidget {
       triggerMode: TooltipTriggerMode.tap,
       message: 'post_store_card_required'.tr(),
       child: Card(
-        color: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(50),
         ),
@@ -30,12 +28,12 @@ class RequiresStoreCard extends StatelessWidget {
 
 class StoreNameIcon extends StatelessWidget {
   final String storeName;
+
   const StoreNameIcon({super.key, required this.storeName});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
       ),
@@ -43,7 +41,7 @@ class StoreNameIcon extends StatelessWidget {
         padding: const EdgeInsets.all(6),
         child: Text(
           storeName,
-          style: App.appTheme.textTheme.bodyMedium,
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
       ),
     );
@@ -53,6 +51,7 @@ class StoreNameIcon extends StatelessWidget {
 class HeartReaction extends StatelessWidget {
   final int reactions;
   final bool isClicked;
+
   const HeartReaction({super.key, required this.reactions, required this.isClicked});
 
   @override
@@ -97,9 +96,9 @@ class HeartReaction extends StatelessWidget {
             ),
             Text(
               reactions.toString(),
-              style: App.appTheme.textTheme.titleSmall!.copyWith(
-                color: Colors.white,
-              ),
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                    color: Colors.white,
+                  ),
             ),
           ],
         ),
@@ -110,6 +109,7 @@ class HeartReaction extends StatelessWidget {
 
 class FeedContainerPrice extends StatelessWidget {
   final double price;
+
   const FeedContainerPrice({super.key, required this.price});
 
   @override
@@ -124,7 +124,7 @@ class FeedContainerPrice extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: Text(
           '${(price % 1 == 0) ? price.toInt().toString() : price.toStringAsFixed(2)} Kč',
-          style: App.appTheme.textTheme.titleLarge,
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.black),
         ),
       ),
     );
@@ -133,6 +133,7 @@ class FeedContainerPrice extends StatelessWidget {
 
 class FeedPostValidUntilLabel extends StatelessWidget {
   final DateTime validUntil;
+
   const FeedPostValidUntilLabel({super.key, required this.validUntil});
 
   @override
@@ -142,7 +143,7 @@ class FeedPostValidUntilLabel extends StatelessWidget {
       triggerMode: TooltipTriggerMode.tap,
       child: Card(
         elevation: 4,
-        color: validUntil.difference(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)).inDays > 3 ? Colors.white : Colors.redAccent,
+        color: validUntil.difference(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)).inDays > 3 ? Theme.of(context).colorScheme.background : Colors.redAccent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
         ),
@@ -150,7 +151,7 @@ class FeedPostValidUntilLabel extends StatelessWidget {
           padding: const EdgeInsets.all(6),
           child: Text(
             getDaysUntilString(validUntil),
-            style: App.appTheme.textTheme.bodyMedium,
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
       ),

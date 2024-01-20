@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:superkauf/generic/post/bloc/post_state.dart';
 import 'package:superkauf/generic/post/model/delete_post_body.dart';
@@ -9,6 +10,8 @@ import 'package:superkauf/generic/post/use_case/add_reaction_use_case.dart';
 import 'package:superkauf/generic/post/use_case/delete_post_use_case.dart';
 import 'package:superkauf/generic/post/use_case/remove_reaction_use_case.dart';
 import 'package:superkauf/generic/post/use_case/update_post_use_case.dart';
+import 'package:superkauf/generic/report/model/create_report_body.dart';
+import 'package:superkauf/generic/report/user_case/create_report_use_case.dart';
 import 'package:superkauf/generic/saved_posts/model/create_saved_post_body.dart';
 import 'package:superkauf/generic/saved_posts/model/delete_saved_post_body.dart';
 import 'package:superkauf/generic/saved_posts/use_case/create_saved_post_use_case.dart';
@@ -25,8 +28,10 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   final DeleteSavedPostUseCase deleteSavedPostUseCase;
   final GetCurrentUserUseCase getCurrentUser;
   final UpdatePostUseCase updatePostUseCase;
+  final UpdatePostValidUntilUseCase updatePostValidUntilUseCase;
   final AddReactionUseCase addReactionUseCase;
   final RemoveReactionUseCase removeReactionUseCase;
+  final CreateReportUseCase createReportUseCase;
 
   PostBloc({
     required this.deletePostUseCase,
@@ -35,15 +40,19 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     required this.deleteSavedPostUseCase,
     required this.getCurrentUser,
     required this.updatePostUseCase,
+    required this.updatePostValidUntilUseCase,
     required this.addReactionUseCase,
     required this.removeReactionUseCase,
+    required this.createReportUseCase,
   }) : super(const PostState.loading()) {
     on<DeletePost>(_onDeletePost);
     on<SavePost>(_onSavePost);
     on<UpdatePost>(_onUpdatePost);
+    on<UpdatePostValidUntilEvent>(_onUpdatePostValidUntilEvent);
     on<RemoveSavedPost>(_onRemoveSavedPost);
     on<AddReaction>(_onAddReaction);
     on<RemoveReaction>(_onRemoveReaction);
+    on<ReportPost>(_onReportPost);
   }
 
   Future<void> _onDeletePost(
@@ -80,6 +89,10 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     final result = await deletePostUseCase.call(params);
     result.when(
       success: () {
+        Posthog().capture(eventName: 'post_deleted', properties: {
+          'post_id': params.postId,
+        });
+
         emit(const PostState.success());
       },
       failure: (message) {
@@ -101,10 +114,14 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     final params = CreateSavedPostBody(post: event.postId, user: user.id);
     final result = await createSavedPostUseCase.call(params);
     result.map(
-      success: (value) {
+      success: (value) async {
+        Posthog().capture(eventName: 'post_saved', properties: {
+          'post_id': params.post,
+        });
+
         emit(const PostState.success());
       },
-      failure: (message) {
+      failure: (message) async {
         emit(PostState.error(message.message));
       },
     );
@@ -123,10 +140,40 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     final params = UpdatePostBody(postId: event.postId, content: event.newDescription, user: user.id);
     final result = await updatePostUseCase.call(params);
     result.map(
-      success: (value) {
+      success: (value) async {
+        Posthog().capture(eventName: 'post_updated', properties: {
+          'post_id': params.postId,
+        });
+
         emit(const PostState.success());
       },
-      failure: (message) {
+      failure: (message) async {
+        emit(PostState.error(message.message));
+      },
+    );
+  }
+
+  Future<void> _onUpdatePostValidUntilEvent(
+    UpdatePostValidUntilEvent event,
+    Emitter<PostState> emit,
+  ) async {
+    final user = await getCurrentUser.call();
+    if (user == null) {
+      emit(const PostState.error("You are not logged in"));
+      return;
+    }
+
+    final params = UpdatePostValidUntilBody(postId: event.postId, validUntil: event.newValidUntil, user: user.id);
+    final result = await updatePostValidUntilUseCase.call(params);
+    result.map(
+      success: (value) async {
+        Posthog().capture(eventName: 'post_sale_end_updated', properties: {
+          'post_id': params.postId,
+        });
+
+        emit(const PostState.success());
+      },
+      failure: (message) async {
         emit(PostState.error(message.message));
       },
     );
@@ -146,6 +193,10 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     final result = await deleteSavedPostUseCase.call(params);
     result.map(
       success: (value) {
+        Posthog().capture(eventName: 'post_unsaved', properties: {
+          'post_id': event.postId,
+        });
+
         emit(const PostState.success());
       },
       failure: (message) {
@@ -167,7 +218,11 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     final params = AddReactionModel(post: event.postId, user: user.id, type: 'like');
     final result = await addReactionUseCase.call(params);
     result.map(
-      success: (value) {
+      success: (value) async {
+        Posthog().capture(eventName: 'post_liked', properties: {
+          'post_id': params.post,
+        });
+
         emit(const PostState.success());
       },
       failure: (message) {
@@ -190,6 +245,36 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     final result = await removeReactionUseCase.call(params);
     result.map(
       success: (value) {
+        Posthog().capture(eventName: 'post_unliked', properties: {
+          'post_id': params.post,
+        });
+
+        emit(const PostState.success());
+      },
+      failure: (message) {
+        emit(PostState.error(message.message));
+      },
+    );
+  }
+
+  Future<void> _onReportPost(
+    ReportPost event,
+    Emitter<PostState> emit,
+  ) async {
+    final user = await getCurrentUser.call();
+    if (user == null) {
+      emit(const PostState.error("You are not logged in"));
+      return;
+    }
+
+    final params = CreateReportBody(reportedPost: event.postId, reportedBy: user.id, type: 'post');
+    final result = await createReportUseCase.call(params);
+    result.map(
+      success: (value) {
+        Posthog().capture(eventName: 'post_reported', properties: {
+          'post_id': params.reportedPost,
+        });
+
         emit(const PostState.success());
       },
       failure: (message) {

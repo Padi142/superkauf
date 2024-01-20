@@ -18,7 +18,11 @@ class GetCurrentUserUseCase extends UnitUseCase<UserModel?> {
     final box = await Hive.openBox('user');
 
     if (box.isNotEmpty) {
-      return UserModel.fromJson(json.decode(await box.get('user')) as Map<String, dynamic>);
+      try {
+        return UserModel.fromJson(json.decode(await box.get('user')) as Map<String, dynamic>);
+      } catch (e) {
+        print(e);
+      }
     }
 
     UserModel? returnUser;

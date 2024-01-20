@@ -8,6 +8,7 @@ class AppTextField extends StatelessWidget {
   final List<Validator> validators;
   final TextEntryModel model;
   final TextField _textField;
+  final BuildContext context;
   final Function(AppTextField)? beginEdit;
   final Function(AppTextField)? endEdit;
   final ValueChanged<String>? onChanged;
@@ -20,6 +21,7 @@ class AppTextField extends StatelessWidget {
     String hint = '',
     String? label,
     bool secure = false,
+    required this.context,
     int lines = 1,
     this.onChanged,
     this.beginEdit,
@@ -34,6 +36,7 @@ class AppTextField extends StatelessWidget {
     double radius = 4.0,
   })  : _textField = TextField(
           obscureText: secure,
+          textInputAction: TextInputAction.go,
           focusNode: model.focusNode,
           autocorrect: false,
           keyboardType: keyboardType,
@@ -45,7 +48,7 @@ class AppTextField extends StatelessWidget {
             onChanged?.call(text);
           },
           autofocus: autofocus,
-          style: App.appTheme.textTheme.titleMedium,
+          style: Theme.of(context).textTheme.titleMedium,
           cursorColor: cursorColor ?? App.appTheme.primaryColor,
           cursorWidth: 1,
           decoration: InputDecoration(
@@ -71,9 +74,9 @@ class AppTextField extends StatelessWidget {
               borderRadius: BorderRadius.circular(radius),
             ),
             hintText: hint,
-            hintStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: App.appTheme.colorScheme.onSecondary),
+            hintStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: App.appTheme.colorScheme.onSecondary),
             labelText: label,
-            labelStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: App.appTheme.colorScheme.onSecondary),
+            labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: App.appTheme.colorScheme.onSecondary),
           ),
         ),
         super(key: key) {

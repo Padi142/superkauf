@@ -57,5 +57,11 @@
           </array>
         </dict>
       </array>
+	<key>com.posthog.posthog.API_KEY</key>
+	<string>phc_aTaH3y24JShs1v74nwsBudvHNfeFfCJkvuXX3xjWgEP</string>
+	<key>com.posthog.posthog.POSTHOG_HOST</key>
+	<string>https://eu.posthog.com</string>
+	<key>com.posthog.posthog.CAPTURE_APPLICATION_LIFECYCLE_EVENTS</key>
+	<true/>
 </dict>
 </plist>

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:superkauf/generic/store/bloc/store_bloc.dart';
 import 'package:superkauf/generic/store/bloc/store_state.dart';
-import 'package:superkauf/library/app.dart';
 
 class StoreHeaders extends StatelessWidget {
   final BoxConstraints constraints;
@@ -54,9 +53,9 @@ class StoreHeaders extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(stores.stores[index].name,
-                                  style: App.appTheme.textTheme.titleMedium!.copyWith(
-                                    color: selectedStore == stores.stores[index].id ? Colors.white : Colors.black,
-                                  )),
+                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                        color: selectedStore == stores.stores[index].id ? Colors.white : Colors.black,
+                                      )),
                             )),
                       ),
                     );

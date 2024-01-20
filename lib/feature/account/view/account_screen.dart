@@ -7,7 +7,6 @@ import 'package:superkauf/feature/account/bloc/account_state.dart';
 import 'package:superkauf/feature/snackbar/bloc/snackbar_bloc.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/widget/app_progress.dart';
-import 'package:superkauf/library/app.dart';
 
 import '../../../library/app_screen.dart';
 import 'components/change_username_component.dart';
@@ -33,7 +32,7 @@ class _FeedScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: App.appTheme.colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         title: Text('profile_page_title'.tr()),
       ),

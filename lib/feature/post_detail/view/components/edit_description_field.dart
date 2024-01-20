@@ -7,6 +7,7 @@ import 'package:superkauf/library/app.dart';
 class EditDescriptionField extends StatefulWidget {
   final PostModel post;
   final Function(String newDescription) onDone;
+
   const EditDescriptionField({
     super.key,
     required this.post,
@@ -36,6 +37,7 @@ class _EditDescriptionFieldState extends State<EditDescriptionField> {
             width: constraints.maxWidth * 0.8,
             child: AppTextField(
               postModel,
+              context: context,
               filled: App.appTheme.colorScheme.surface,
               lines: 10,
               autofocus: true,

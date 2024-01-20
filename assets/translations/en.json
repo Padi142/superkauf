@@ -44,6 +44,9 @@
   "no_posts_for_user_1":"You haven't posted anything yet",
   "no_posts_for_user_2":"Try posting something with that big button down there!",
 
+  "no_notifications_for_user_1":"Ay fam, you have no notifications yet",
+  "no_notifications_for_user_2":"Try posting a 'ting or two, you know wah I'm sayin'",
+
   "user_info_registered_on_label": "Registered on",
 
   "logout_button_text": "Log out",

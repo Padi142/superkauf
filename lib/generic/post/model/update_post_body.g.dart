@@ -17,3 +17,15 @@ Map<String, dynamic> _$UpdatePostBodyToJson(UpdatePostBody instance) => <String,
       'user': instance.user,
       'content': instance.content,
     };
+
+UpdatePostValidUntilBody _$UpdatePostValidUntilBodyFromJson(Map<String, dynamic> json) => UpdatePostValidUntilBody(
+      postId: json['post_id'] as int,
+      user: json['user'] as int,
+      validUntil: DateTime.parse(json['valid_until'] as String),
+    );
+
+Map<String, dynamic> _$UpdatePostValidUntilBodyToJson(UpdatePostValidUntilBody instance) => <String, dynamic>{
+      'post_id': instance.postId,
+      'user': instance.user,
+      'valid_until': instance.validUntil.toIso8601String(),
+    };

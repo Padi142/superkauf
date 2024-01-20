@@ -13,6 +13,7 @@ import 'package:superkauf/generic/post/use_case/remove_reaction_use_case.dart';
 import 'package:superkauf/generic/post/use_case/update_post_image_use_case.dart';
 import 'package:superkauf/generic/post/use_case/update_post_use_case.dart';
 import 'package:superkauf/generic/post/use_case/upload_post_image_use_case.dart';
+import 'package:superkauf/generic/report/user_case/create_report_use_case.dart';
 import 'package:superkauf/generic/saved_posts/use_case/create_saved_post_use_case.dart';
 import 'package:superkauf/generic/saved_posts/use_case/delete_saved_post_use_case.dart';
 import 'package:superkauf/generic/user/use_case/get_current_user_use_case.dart';
@@ -42,8 +43,10 @@ class PostModule extends AppModule {
         deleteSavedPostUseCase: GetIt.I.get<DeleteSavedPostUseCase>(),
         getCurrentUser: GetIt.I.get<GetCurrentUserUseCase>(),
         updatePostUseCase: GetIt.I.get<UpdatePostUseCase>(),
+        updatePostValidUntilUseCase: GetIt.I.get<UpdatePostValidUntilUseCase>(),
         addReactionUseCase: GetIt.I.get<AddReactionUseCase>(),
         removeReactionUseCase: GetIt.I.get<RemoveReactionUseCase>(),
+        createReportUseCase: GetIt.I.get<CreateReportUseCase>(),
       ),
     );
   }
@@ -95,6 +98,10 @@ class PostModule extends AppModule {
 
     GetIt.I.registerFactory<GetPersonalFeedUseCase>(
       () => GetPersonalFeedUseCase(repository: GetIt.I.get<PostsRepository>()),
+    );
+
+    GetIt.I.registerFactory<UpdatePostValidUntilUseCase>(
+      () => UpdatePostValidUntilUseCase(repository: GetIt.I.get<PostsRepository>()),
     );
   }
 

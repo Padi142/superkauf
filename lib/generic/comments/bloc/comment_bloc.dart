@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:superkauf/generic/comments/bloc/comment_state.dart';
 import 'package:superkauf/generic/comments/model/create_comment_body.dart';
 import 'package:superkauf/generic/comments/model/delete_comment_body.dart';
@@ -75,6 +76,10 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       },
     );
 
+    Posthog().capture(eventName: 'comment_created', properties: {
+      'post_id': params.post,
+    });
+
     add(GetCommentsForPost(postId: event.postId));
   }
 
@@ -99,6 +104,9 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     final result = await deleteCommentUseCase.call(params);
     result.when(
       success: (success) {
+        Posthog().capture(eventName: 'comment_deleted', properties: {
+          'post_id': event.postId,
+        });
         add(GetCommentsForPost(postId: event.postId));
       },
       failure: (message) {

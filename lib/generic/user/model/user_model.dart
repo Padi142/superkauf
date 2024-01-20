@@ -12,6 +12,7 @@ class UserModel extends Equatable {
   final DateTime lastLoggedIn;
   final String profilePicture;
   final int karma;
+  final String supabaseUid;
 
   const UserModel({
     required this.id,
@@ -21,6 +22,7 @@ class UserModel extends Equatable {
     required this.lastLoggedIn,
     required this.profilePicture,
     required this.karma,
+    required this.supabaseUid,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);

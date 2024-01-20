@@ -12,6 +12,7 @@ import 'package:superkauf/library/app.dart';
 class AddCommentField extends StatefulWidget {
   final PostModel post;
   final Function() onStartEdit;
+
   const AddCommentField({super.key, required this.post, required this.onStartEdit});
 
   @override
@@ -22,6 +23,7 @@ class _AddCommentFieldState extends State<AddCommentField> {
   TextEntryModel commentModel = TextEntryModel();
   var lines = 1;
   var sendButtonClicked = false;
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<CommentBloc, CommentState>(
@@ -45,6 +47,7 @@ class _AddCommentFieldState extends State<AddCommentField> {
               width: constrains.maxWidth * 0.75,
               child: AppTextField(
                 commentModel,
+                context: context,
                 hint: 'comment_create_label'.tr(),
                 filled: App.appTheme.colorScheme.surface,
                 radius: 16,

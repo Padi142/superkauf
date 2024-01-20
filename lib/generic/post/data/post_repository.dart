@@ -99,7 +99,18 @@ class PostsRepository {
   }
 
   Future<GetPostDetailResult> updatePostContent(UpdatePostBody body) async {
-    return postApi.updatePostContent(body: body.toJson()).then((post) {
+    return postApi.updatePostContent(body: body.toJson(), field: 'description').then((post) {
+      return GetPostDetailResult.success(post);
+    }).onError((error, stackTrace) {
+      if (error is DioException) {
+        return GetPostDetailResult.failure(error.message ?? 'error updating post');
+      }
+      return GetPostDetailResult.failure(error.toString());
+    });
+  }
+
+  Future<GetPostDetailResult> updatePostValidUntil(UpdatePostValidUntilBody body) async {
+    return postApi.updatePostContent(body: body.toJson(), field: 'valid_until').then((post) {
       return GetPostDetailResult.success(post);
     }).onError((error, stackTrace) {
       if (error is DioException) {

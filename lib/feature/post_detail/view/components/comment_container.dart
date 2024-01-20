@@ -8,12 +8,12 @@ import 'package:superkauf/generic/comments/bloc/comment_bloc.dart';
 import 'package:superkauf/generic/comments/model/post_comment_model.dart';
 import 'package:superkauf/generic/user/model/user_model.dart';
 import 'package:superkauf/generic/user/view/username_label.dart';
-import 'package:superkauf/library/app.dart';
 
 class CommentContainer extends StatefulWidget {
   final PostCommentModel comment;
   final int postId;
   final UserModel? currentUser;
+
   const CommentContainer({
     super.key,
     required this.comment,
@@ -27,6 +27,7 @@ class CommentContainer extends StatefulWidget {
 
 class _CommentContainerState extends State<CommentContainer> {
   final GlobalKey _widgetKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -89,7 +90,7 @@ class _CommentContainerState extends State<CommentContainer> {
               //:sob:
               widget.comment.comment.comment,
               textAlign: TextAlign.start,
-              style: App.appTheme.textTheme.bodyLarge,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
         ],

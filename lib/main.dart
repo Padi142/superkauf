@@ -7,15 +7,19 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:superkauf/feature/account/account_module.dart';
 import 'package:superkauf/feature/create_post/create_post_module.dart';
 import 'package:superkauf/feature/feed/feed_module.dart';
+import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
 import 'package:superkauf/feature/home/home_module.dart';
 import 'package:superkauf/feature/init/init_module.dart';
 import 'package:superkauf/feature/login/login_module.dart';
 import 'package:superkauf/feature/my_channel/my_channel_module.dart';
+import 'package:superkauf/feature/notification_page/notifications_page_module.dart';
+import 'package:superkauf/feature/post_detail/bloc/post_detail_bloc.dart';
 import 'package:superkauf/feature/post_detail/post_detail_module.dart';
 import 'package:superkauf/feature/shopping_list/shopping_list_module.dart';
 import 'package:superkauf/feature/snackbar/bloc/snackbar_bloc.dart';
@@ -24,14 +28,18 @@ import 'package:superkauf/feature/store_posts/store_posts_module.dart';
 import 'package:superkauf/feature/user_detail/bloc/user_detail_bloc.dart';
 import 'package:superkauf/feature/user_detail/user_detail_module.dart';
 import 'package:superkauf/generic/api/comment_api.dart';
+import 'package:superkauf/generic/api/notification_api.dart';
 import 'package:superkauf/generic/api/post_api.dart';
+import 'package:superkauf/generic/api/report_api.dart';
 import 'package:superkauf/generic/api/saved_posts_api.dart';
 import 'package:superkauf/generic/api/store_api.dart';
 import 'package:superkauf/generic/api/user_api.dart';
 import 'package:superkauf/generic/comments/comments_module.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/locale/locale_resource.dart';
+import 'package:superkauf/generic/notifications/notification_module.dart';
 import 'package:superkauf/generic/post/posts_module.dart';
+import 'package:superkauf/generic/report/report_module.dart';
 import 'package:superkauf/generic/saved_posts/saved_posts_module.dart';
 import 'package:superkauf/generic/store/store_module.dart';
 import 'package:superkauf/generic/user/user_module.dart';
@@ -54,6 +62,9 @@ Future<void> main() async {
       authOptions: const FlutterAuthClientOptions(
         authFlowType: AuthFlowType.pkce,
       ));
+  //Push notification service
+  OneSignal.initialize(dotenv.env['ONESIGNAL_KEY'] ?? '');
+  OneSignal.Notifications.requestPermission(true);
 
   final AppConfig config = appConfig();
 
@@ -84,8 +95,14 @@ Future<void> main() async {
       GetIt.I.registerFactory<PostApi>(() => PostApi(_dio(config.endpoint)));
       GetIt.I.registerFactory<UserApi>(() => UserApi(_dio(config.endpoint)));
       GetIt.I.registerFactory<StoreApi>(() => StoreApi(_dio(config.endpoint)));
-      GetIt.I.registerFactory<SavedPostsApi>(() => SavedPostsApi(_dio(config.endpoint)));
-      GetIt.I.registerFactory<CommentApi>(() => CommentApi(_dio(config.endpoint)));
+      GetIt.I.registerFactory<SavedPostsApi>(
+          () => SavedPostsApi(_dio(config.endpoint)));
+      GetIt.I
+          .registerFactory<CommentApi>(() => CommentApi(_dio(config.endpoint)));
+      GetIt.I
+          .registerFactory<ReportApi>(() => ReportApi(_dio(config.endpoint)));
+      GetIt.I.registerFactory<NotificationApi>(
+          () => NotificationApi(_dio(config.endpoint)));
     },
   );
 
@@ -121,6 +138,9 @@ List<AppModule> modules() {
     ShoppingListModule(),
     SnackbarModule(),
     CommentsModule(),
+    ReportModule(),
+    NotificationModule(),
+    MyNotificationsModule(),
   ];
 }
 
@@ -194,6 +214,12 @@ class MainWidget extends StatelessWidget {
       providers: [
         BlocProvider<UserDetailBloc>.value(
           value: GetIt.I.get<UserDetailBloc>(),
+        ),
+        BlocProvider<PostDetailBloc>.value(
+          value: GetIt.I.get<PostDetailBloc>(),
+        ),
+        BlocProvider<NavigationBloc>.value(
+          value: GetIt.I.get<NavigationBloc>(),
         ),
         BlocProvider<SnackbarBloc>.value(
           value: GetIt.I.get<SnackbarBloc>(),

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../library/app.dart';
-
 class AppGradientButton extends StatelessWidget {
   final String buttonText;
   final double width;
@@ -53,7 +51,7 @@ class AppGradientButton extends StatelessWidget {
               top: 10,
               bottom: 10,
             ),
-            child: Text(buttonText, style: App.appTheme.textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
+            child: Text(buttonText, style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
           ),
         ),
       ),

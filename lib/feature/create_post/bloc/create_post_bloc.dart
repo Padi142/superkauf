@@ -99,7 +99,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
             );
         emit(CreatePostState.imageUploaded(imageLink));
       },
-      failure: (error) {
+      failure: (error) async {
         emit(CreatePostState.error(error.message));
       },
     );
@@ -111,11 +111,12 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     ));
 
     imageUpdateResult.map(
-      success: (success) {
+      success: (success) async {
         emit(const CreatePostState.success());
+
         createPostNavigation.goBack();
       },
-      failure: (error) {
+      failure: (error) async {
         emit(CreatePostState.error(error.message));
       },
     );
@@ -151,7 +152,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
         post = success.post;
         // createPostNavigation.goBack();
       },
-      failure: (error) {
+      failure: (error) async {
         emit(CreatePostState.error(error.message));
         return;
       },

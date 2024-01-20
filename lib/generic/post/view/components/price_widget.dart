@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:superkauf/library/app.dart';
 
 class PriceWidget extends StatelessWidget {
   final double price;
+
   const PriceWidget({super.key, required this.price});
 
   @override
@@ -17,7 +17,7 @@ class PriceWidget extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: Text(
           '${(price % 1 == 0) ? price.toInt().toString() : price.toStringAsFixed(2)} Kč',
-          style: App.appTheme.textTheme.titleLarge!.copyWith(fontSize: 40),
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 40, color: Colors.black),
         ),
       ),
     );

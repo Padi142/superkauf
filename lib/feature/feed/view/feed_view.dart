@@ -6,6 +6,7 @@ import 'package:superkauf/feature/feed/view/components/feed_post_container.dart'
 import 'package:superkauf/feature/feed/view/components/loading_feed_post.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/functions.dart';
+import 'package:superkauf/generic/notifications/presentation/check_notifications_bloc.dart';
 
 import '../../../library/app_screen.dart';
 
@@ -55,6 +56,7 @@ class _FeedScreenState extends State<FeedScreen> {
             context.read<FeedBloc>().add(
                   const ReloadFeed(),
                 );
+            BlocProvider.of<CheckNotificationBloc>(context).add(const CheckNotifications());
           },
           child: Column(
             children: [

@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:superkauf/feature/account/use_case/account_navigation.dart';
-import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
 import 'package:superkauf/feature/login/use_case/apple_login.dart';
 import 'package:superkauf/feature/login/use_case/discord_login.dart';
 import 'package:superkauf/feature/login/use_case/email_login_use_case.dart';
@@ -67,9 +66,6 @@ class LoginModule extends AppModule {
           ),
           BlocProvider<MyChannelBloc>.value(
             value: GetIt.I.get<MyChannelBloc>(),
-          ),
-          BlocProvider<NavigationBloc>.value(
-            value: GetIt.I.get<NavigationBloc>(),
           ),
         ],
         child: GetIt.I.get<LoginScreen>(),

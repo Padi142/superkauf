@@ -68,6 +68,24 @@ class PostDetailViewComponent extends StatelessWidget {
                         onDescriptionEdit();
                         break;
                       }
+                    case 'edit_valid_until':
+                      {
+                        final DateTime? picked = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime.now().subtract(const Duration(days: 1)),
+                          lastDate: DateTime.now().add(const Duration(days: 365)),
+                        );
+                        if (picked != null) {
+                          BlocProvider.of<PostBloc>(context).add(
+                            UpdatePostValidUntilEvent(
+                              postId: post.id,
+                              newValidUntil: picked,
+                            ),
+                          );
+                        }
+                        break;
+                      }
                     case 'save':
                       {
                         BlocProvider.of<PostBloc>(context).add(
@@ -126,7 +144,27 @@ class PostDetailViewComponent extends StatelessWidget {
                         ),
                       ),
                     );
+
+                    list.add(
+                      const PopupMenuItem<String>(
+                        value: 'edit_valid_until',
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.edit,
+                              color: Colors.black,
+                              size: 20,
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Text('Edit sale end'),
+                          ],
+                        ),
+                      ),
+                    );
                   }
+
                   list.add(const PopupMenuItem<String>(
                     value: 'save',
                     child: Row(

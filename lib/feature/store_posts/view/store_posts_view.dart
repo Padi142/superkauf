@@ -9,7 +9,6 @@ import 'package:superkauf/feature/store_posts/view/components/store_headers.dart
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/functions.dart';
 import 'package:superkauf/generic/store/bloc/store_bloc.dart';
-import 'package:superkauf/library/app.dart';
 
 import '../../../library/app_screen.dart';
 
@@ -113,12 +112,12 @@ class _PostDetailScreenState extends State<StorePostsScreen> {
                       children: [
                         Text(
                           'no_posts_for_store_1'.tr(),
-                          style: App.appTheme.textTheme.titleMedium,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                         const SizedBox(
                           height: 10,
                         ),
-                        Text('no_posts_for_store_2'.tr(), style: App.appTheme.textTheme.titleSmall),
+                        Text('no_posts_for_store_2'.tr(), style: Theme.of(context).textTheme.titleSmall),
                       ],
                     ));
                   }

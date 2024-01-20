@@ -9,7 +9,6 @@ import 'package:superkauf/generic/functions.dart';
 import 'package:superkauf/generic/post/bloc/post_bloc.dart';
 import 'package:superkauf/generic/post/bloc/post_state.dart';
 import 'package:superkauf/generic/widget/app_progress.dart';
-import 'package:superkauf/library/app.dart';
 
 import '../../../library/app_screen.dart';
 
@@ -25,6 +24,7 @@ class PostDetailScreen extends Screen {
 class _PostDetailScreenState extends State<PostDetailScreen> {
   final _scrollController = ScrollController();
   var descriptionEdit = false;
+
   @override
   void initState() {
     _scrollController.addListener(_listener);
@@ -36,10 +36,11 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
   }
 
   var postId = -1;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: App.appTheme.colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(),
       body: LayoutBuilder(builder: (context, constraints) {
         return RefreshIndicator(

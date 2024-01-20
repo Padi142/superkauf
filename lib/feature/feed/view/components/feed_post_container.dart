@@ -13,7 +13,6 @@ import 'package:superkauf/generic/post/model/get_post_response.dart';
 import 'package:superkauf/generic/post/model/models/get_personal_post_response.dart';
 import 'package:superkauf/generic/saved_posts/model/saved_post_model.dart';
 import 'package:superkauf/generic/user/view/username_label.dart';
-import 'package:superkauf/library/app.dart';
 
 class FeedPostContainer extends StatefulWidget {
   final FeedPostModel post;
@@ -395,7 +394,7 @@ class PostContent extends StatelessWidget {
                           width: constraints.maxWidth * 0.79,
                           child: Text(
                             post.post.description,
-                            style: App.appTheme.textTheme.bodyMedium,
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
                       ),
@@ -439,7 +438,7 @@ class PostContent extends StatelessWidget {
 //                         ),
 //                         Text(
 //                           post.user.name,
-//                           style: App.appTheme.textTheme.titleSmall,
+//                           style: Theme.of(context).textTheme.titleSmall,
 //                         ),
 //                         const Spacer(),
 //                         TimeAgoWidget(
@@ -465,7 +464,7 @@ class PostContent extends StatelessWidget {
 //                             width: constraints.maxWidth * 0.9,
 //                             child: Text(
 //                               post.post.description,
-//                               style: App.appTheme.textTheme.bodyMedium,
+//                               style: Theme.of(context).textTheme.bodyMedium,
 //                             ),
 //                           ),
 //                         ),

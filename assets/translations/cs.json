@@ -43,6 +43,10 @@
   "no_posts_for_user_1":"Zatím jsi nic nepřidal/a/o :/",
   "no_posts_for_user_2":"Zkus to tím velkým tlačítkem dole!",
 
+  "no_notifications_for_user_1":"Zatím nemáš žádná upozornění :/",
+  "no_notifications_for_user_2":"Zkus přidat pár postů!",
+
+
   "user_info_registered_on_label": "Registrován od",
 
   "logout_button_text": "Odhlásit",

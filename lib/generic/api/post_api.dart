@@ -47,9 +47,10 @@ abstract class PostApi {
     @Body() required Map<String, dynamic> body,
   });
 
-  @PUT('/post')
+  @PUT('/post?field={field}')
   Future<PostModel> updatePostContent({
     @Body() required Map<String, dynamic> body,
+    @Path() required String field,
   });
 
   @POST('/post/{id}/add_reaction')

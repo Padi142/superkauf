@@ -4,10 +4,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
 import 'package:superkauf/feature/user_detail/bloc/user_detail_bloc.dart';
 import 'package:superkauf/generic/user/model/user_model.dart';
-import 'package:superkauf/library/app.dart';
 
 class UsernameLabel extends StatelessWidget {
   final UserModel user;
+
   const UsernameLabel({super.key, required this.user});
 
   @override
@@ -21,7 +21,7 @@ class UsernameLabel extends StatelessWidget {
           },
           child: Text(
             user.username,
-            style: App.appTheme.textTheme.titleSmall,
+            style: Theme.of(context).textTheme.titleSmall,
           ),
         ),
         const SizedBox(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:superkauf/library/app.dart';
 
 class TimeAgoWidget extends StatelessWidget {
   final DateTime dateTime;
@@ -10,7 +9,7 @@ class TimeAgoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       getTimeAgo(dateTime),
-      style: App.appTheme.textTheme.bodySmall,
+      style: Theme.of(context).textTheme.bodySmall,
     );
   }
 

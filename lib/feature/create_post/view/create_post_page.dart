@@ -42,11 +42,11 @@ class _CreatePostScreen extends State<CreatePostScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: App.appTheme.colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         title: Text(
           'create_post_title'.tr(),
-          style: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
+          style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
         ),
       ),
       body: LayoutBuilder(builder: (context, constraints) {
@@ -121,7 +121,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                     }, error: (error) {
                       return Text(
                         error,
-                        style: App.appTheme.textTheme.bodyMedium,
+                        style: Theme.of(context).textTheme.bodyMedium,
                       );
                     }, orElse: () {
                       return const Center(child: AppProgress());
@@ -135,6 +135,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                   width: constraints.maxWidth * 0.85,
                   child: AppTextField(
                     descriptionField,
+                    context: context,
                     filled: App.appTheme.colorScheme.surface,
                     lines: 6,
                     hint: 'description_post_create_label'.tr(),
@@ -166,6 +167,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                         width: constraints.maxWidth * 0.30,
                         child: AppTextField(
                           priceField,
+                          context: context,
                           filled: App.appTheme.colorScheme.surface,
                           keyboardType: TextInputType.number,
                           hint: 'price_post_create_label'.tr(),
@@ -189,7 +191,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                   children: [
                     Text(
                       'card_required_label'.tr(),
-                      style: App.appTheme.textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const SizedBox(
                       height: 4,
@@ -210,7 +212,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                   children: [
                     Text(
                       '${'sale_ends_in_label'.tr()}*',
-                      style: App.appTheme.textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const SizedBox(
                       height: 4,
@@ -238,7 +240,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                         backgroundColor: App.appTheme.colorScheme.primary,
                         radius: 6,
                         text: 'button_post_create_label'.tr(),
-                        textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
+                        textStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
                         onClick: () async {
                           // Prevent multiple clicks
                           if (createButtonClicked) {
@@ -248,6 +250,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                           // Prevent empty store
                           if (selectedStore == null) {
                             BlocProvider.of<SnackbarBloc>(context).add(const ErrorSnackbar(message: 'No store selected'));
+
                             return;
                           }
                           descriptionField.controller.text.trim();
@@ -255,6 +258,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                           final valid = await TextEntryModel.validateFields([priceField, descriptionField]);
                           if (!valid) {
                             setState(() {});
+
                             return;
                           }
 
@@ -275,7 +279,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                         backgroundColor: Colors.grey,
                         radius: 6,
                         text: 'button_post_create_label'.tr(),
-                        textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
+                        textStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
                         onClick: () {},
                       );
                     });
@@ -286,7 +290,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                 ),
                 Text(
                   '* ${'field_not_mandatory_label'.tr()}',
-                  style: App.appTheme.textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 const SizedBox(
                   height: 50,

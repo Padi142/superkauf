@@ -24,6 +24,7 @@ class _ChangeUsernameFieldState extends State<ChangeUsernameField> {
           width: 180,
           child: AppTextField(
             usernameModel,
+            context: context,
             filled: App.appTheme.colorScheme.surface,
             hint: 'Username',
             autofocus: true,

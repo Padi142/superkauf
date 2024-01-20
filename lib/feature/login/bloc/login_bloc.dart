@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:superkauf/feature/account/use_case/account_navigation.dart';
 import 'package:superkauf/feature/login/model/login_params.dart';
@@ -51,6 +52,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       loginNavigation.goToLogin();
       return;
     }
+
+    Posthog().capture(eventName: 'user_logged_in', properties: {
+      'login_type': 'email',
+    });
+
     loginNavigation.goToAccount();
   }
 
@@ -59,6 +65,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Emitter<LoginState> emit,
   ) async {
     await discordLoginUseCase.call();
+
+    Posthog().capture(eventName: 'user_logged_in', properties: {
+      'login_type': 'discord',
+    });
   }
 
   Future<void> _onGoogleLogin(
@@ -66,6 +76,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Emitter<LoginState> emit,
   ) async {
     await googleLoginUseCase.call();
+
+    Posthog().capture(eventName: 'user_logged_in', properties: {
+      'login_type': 'google',
+    });
   }
 
   Future<void> _onAppleLogin(
@@ -73,6 +87,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Emitter<LoginState> emit,
   ) async {
     await appleLoginUseCase.call();
+
+    Posthog().capture(eventName: 'user_logged_in', properties: {
+      'login_type': 'apple',
+    });
   }
 
   Future<void> _onSpotifyEvent(
@@ -96,6 +114,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     final result = await createUserUseCase.call(params);
 
     result.map(success: (success) {
+      Posthog().identify(userId: success.user.id.toString(), properties: {
+        "supabase_uid": session.user.id,
+      });
+
+      Posthog().capture(eventName: 'user_signed_up', properties: {
+        'login_type': 'email',
+      });
+
       loginNavigation.goToAccount();
     }, failure: (failure) {
       print(failure);

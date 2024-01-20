@@ -5,7 +5,6 @@ import 'package:superkauf/feature/post_detail/view/components/comment_section.da
 import 'package:superkauf/feature/post_detail/view/components/edit_description_field.dart';
 import 'package:superkauf/feature/post_detail/view/components/post_components.dart';
 import 'package:superkauf/generic/post/model/post_model.dart';
-import 'package:superkauf/library/app.dart';
 
 class PostDetailDescription extends StatelessWidget {
   final BoxConstraints constraints;
@@ -38,7 +37,7 @@ class PostDetailDescription extends StatelessWidget {
                   ? EditDescriptionField(post: post, onDone: onDone)
                   : SelectableText(
                       post.description,
-                      style: App.appTheme.textTheme.bodyLarge,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
             ),
           ),
@@ -59,7 +58,7 @@ class PostDetailDescription extends StatelessWidget {
           const SizedBox(
             height: 40,
           ),
-          Text('post_tags_label'.tr(), style: App.appTheme.textTheme.titleSmall),
+          Text('post_tags_label'.tr(), style: Theme.of(context).textTheme.titleSmall),
           Padding(
             padding: const EdgeInsets.all(4),
             child: Row(
@@ -73,7 +72,7 @@ class PostDetailDescription extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          Text('post_comments_label'.tr(), style: App.appTheme.textTheme.titleSmall),
+          Text('post_comments_label'.tr(), style: Theme.of(context).textTheme.titleSmall),
           const SizedBox(
             height: 20,
           ),

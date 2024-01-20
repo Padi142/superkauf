@@ -7,11 +7,11 @@ import 'package:superkauf/generic/comments/bloc/comment_bloc.dart';
 import 'package:superkauf/generic/comments/bloc/comment_state.dart';
 import 'package:superkauf/generic/post/model/post_model.dart';
 import 'package:superkauf/generic/widget/app_progress.dart';
-import 'package:superkauf/library/app.dart';
 
 class CommentSection extends StatefulWidget {
   final PostModel post;
   final ScrollController scrollController;
+
   const CommentSection({super.key, required this.post, required this.scrollController});
 
   @override
@@ -31,7 +31,7 @@ class _CommentSectionState extends State<CommentSection> {
       return state.maybeMap(success: (success) {
         if (success.comments.isEmpty) {
           return Center(
-            child: Text('no_comments_label'.tr(), style: App.appTheme.textTheme.titleMedium),
+            child: Text('no_comments_label'.tr(), style: Theme.of(context).textTheme.titleMedium),
           );
         }
         return ListView.builder(

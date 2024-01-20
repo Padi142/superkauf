@@ -20,6 +20,11 @@ Future<void> scrollToRefreshListener({required ScrollController controller}) asy
 String getDaysUntilString(DateTime futureDate) {
   final now = DateTime.now();
   final nowDate = DateTime(now.year, now.month, now.day);
+
+  if (futureDate.isBefore(nowDate)) {
+    return 'sale_expired'.tr();
+  }
+
   final difference = futureDate.difference(nowDate).inDays;
 
   if (difference == 0) {

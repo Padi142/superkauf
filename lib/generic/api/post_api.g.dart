@@ -209,7 +209,10 @@ class _PostApi implements PostApi {
   }
 
   @override
-  Future<PostModel> updatePostContent({required Map<String, dynamic> body}) async {
+  Future<PostModel> updatePostContent({
+    required Map<String, dynamic> body,
+    required String field,
+  }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -222,7 +225,7 @@ class _PostApi implements PostApi {
     )
         .compose(
           _dio.options,
-          '/post',
+          '/post?field=${field}',
           queryParameters: queryParameters,
           data: _data,
         )

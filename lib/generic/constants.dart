@@ -11,6 +11,7 @@ class ScreenPath {
   static const String createPostScreen = '/create_post';
   static const String postDetailScreen = '/post_detail';
   static const String userDetailScreen = '/user_detail';
+  static const String myNotificationsScreen = '/my_notifications_screen';
 }
 
 class Constants {

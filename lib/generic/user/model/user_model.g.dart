@@ -14,6 +14,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       lastLoggedIn: DateTime.parse(json['last_logged_in'] as String),
       profilePicture: json['profile_picture'] as String,
       karma: json['karma'] as int,
+      supabaseUid: json['supabase_uid'] as String,
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -24,4 +25,5 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'last_logged_in': instance.lastLoggedIn.toIso8601String(),
       'profile_picture': instance.profilePicture,
       'karma': instance.karma,
+      'supabase_uid': instance.supabaseUid,
     };

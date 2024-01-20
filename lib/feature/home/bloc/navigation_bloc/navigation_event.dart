@@ -79,3 +79,10 @@ class OpenUserDetailScreen extends NavigationEvent {
   @override
   List<Object?> get props => [];
 }
+
+class OpenMyNotificationsScreen extends NavigationEvent {
+  const OpenMyNotificationsScreen();
+
+  @override
+  List<Object?> get props => [];
+}

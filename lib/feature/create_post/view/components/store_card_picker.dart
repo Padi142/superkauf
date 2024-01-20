@@ -4,6 +4,7 @@ import 'package:superkauf/library/app.dart';
 
 class StoreCardPicker extends StatefulWidget {
   final Function(bool) onChange;
+
   const StoreCardPicker({super.key, required this.onChange});
 
   @override
@@ -12,6 +13,7 @@ class StoreCardPicker extends StatefulWidget {
 
 class _StoreCardPickerState extends State<StoreCardPicker> {
   var cardRequired = false;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -27,7 +29,7 @@ class _StoreCardPickerState extends State<StoreCardPicker> {
             AppButton(
                 backgroundColor: cardRequired ? App.appTheme.colorScheme.surface : App.appTheme.colorScheme.primary,
                 text: 'No',
-                textStyle: App.appTheme.textTheme.titleMedium,
+                textStyle: Theme.of(context).textTheme.titleMedium,
                 radius: 8,
                 onClick: () {
                   setState(() {
@@ -41,7 +43,7 @@ class _StoreCardPickerState extends State<StoreCardPicker> {
             AppButton(
                 backgroundColor: cardRequired ? App.appTheme.colorScheme.primary : App.appTheme.colorScheme.surface,
                 text: 'Yes',
-                textStyle: App.appTheme.textTheme.titleMedium,
+                textStyle: Theme.of(context).textTheme.titleMedium,
                 radius: 8,
                 onClick: () {
                   setState(() {

@@ -35,6 +35,16 @@ class UpdatePost extends PostEvent {
   });
 }
 
+class UpdatePostValidUntilEvent extends PostEvent {
+  final int postId;
+  final DateTime newValidUntil;
+
+  const UpdatePostValidUntilEvent({
+    required this.postId,
+    required this.newValidUntil,
+  });
+}
+
 class RemoveSavedPost extends PostEvent {
   final int postId;
 
@@ -55,6 +65,14 @@ class RemoveReaction extends PostEvent {
   final int postId;
 
   const RemoveReaction({
+    required this.postId,
+  });
+}
+
+class ReportPost extends PostEvent {
+  final int postId;
+
+  const ReportPost({
     required this.postId,
   });
 }
