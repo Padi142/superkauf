@@ -18,6 +18,8 @@ PostModel _$PostModelFromJson(Map<String, dynamic> json) => PostModel(
       requiresStoreCard: json['requires_store_card'] as bool,
       validUntil: json['valid_until'] == null ? null : DateTime.parse(json['valid_until'] as String),
       createdAt: DateTime.parse(json['created_at'] as String),
+      isChecked: json['is_checked'] as bool,
+      isQuarantined: json['is_quarantined'] as bool,
     );
 
 Map<String, dynamic> _$PostModelToJson(PostModel instance) => <String, dynamic>{
@@ -32,4 +34,6 @@ Map<String, dynamic> _$PostModelToJson(PostModel instance) => <String, dynamic>{
       'requires_store_card': instance.requiresStoreCard,
       'valid_until': instance.validUntil?.toIso8601String(),
       'created_at': instance.createdAt.toIso8601String(),
+      'is_checked': instance.isChecked,
+      'is_quarantined': instance.isQuarantined,
     };

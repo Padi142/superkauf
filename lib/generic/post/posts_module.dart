@@ -9,6 +9,7 @@ import 'package:superkauf/generic/post/use_case/get_personal_feed_use_case.dart'
 import 'package:superkauf/generic/post/use_case/get_post_detail_use_case.dart';
 import 'package:superkauf/generic/post/use_case/get_posts_by_user.dart';
 import 'package:superkauf/generic/post/use_case/get_posts_use_case.dart';
+import 'package:superkauf/generic/post/use_case/get_top_posts_use_case.dart';
 import 'package:superkauf/generic/post/use_case/remove_reaction_use_case.dart';
 import 'package:superkauf/generic/post/use_case/update_post_image_use_case.dart';
 import 'package:superkauf/generic/post/use_case/update_post_use_case.dart';
@@ -102,6 +103,10 @@ class PostModule extends AppModule {
 
     GetIt.I.registerFactory<UpdatePostValidUntilUseCase>(
       () => UpdatePostValidUntilUseCase(repository: GetIt.I.get<PostsRepository>()),
+    );
+
+    GetIt.I.registerFactory<GetTopPostsUseCase>(
+      () => GetTopPostsUseCase(repository: GetIt.I.get<PostsRepository>()),
     );
   }
 

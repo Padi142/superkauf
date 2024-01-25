@@ -16,6 +16,8 @@ class PostModel extends Equatable {
   final bool requiresStoreCard;
   final DateTime? validUntil;
   final DateTime createdAt;
+  final bool isChecked;
+  final bool isQuarantined;
 
   const PostModel({
     required this.id,
@@ -29,6 +31,8 @@ class PostModel extends Equatable {
     required this.requiresStoreCard,
     required this.validUntil,
     required this.createdAt,
+    required this.isChecked,
+    required this.isQuarantined,
   });
 
   factory PostModel.fromJson(Map<String, dynamic> json) => _$PostModelFromJson(json);

@@ -12,6 +12,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:superkauf/feature/account/account_module.dart';
 import 'package:superkauf/feature/create_post/create_post_module.dart';
+import 'package:superkauf/feature/discover/discover_module.dart';
 import 'package:superkauf/feature/feed/feed_module.dart';
 import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
 import 'package:superkauf/feature/home/home_module.dart';
@@ -95,14 +96,10 @@ Future<void> main() async {
       GetIt.I.registerFactory<PostApi>(() => PostApi(_dio(config.endpoint)));
       GetIt.I.registerFactory<UserApi>(() => UserApi(_dio(config.endpoint)));
       GetIt.I.registerFactory<StoreApi>(() => StoreApi(_dio(config.endpoint)));
-      GetIt.I.registerFactory<SavedPostsApi>(
-          () => SavedPostsApi(_dio(config.endpoint)));
-      GetIt.I
-          .registerFactory<CommentApi>(() => CommentApi(_dio(config.endpoint)));
-      GetIt.I
-          .registerFactory<ReportApi>(() => ReportApi(_dio(config.endpoint)));
-      GetIt.I.registerFactory<NotificationApi>(
-          () => NotificationApi(_dio(config.endpoint)));
+      GetIt.I.registerFactory<SavedPostsApi>(() => SavedPostsApi(_dio(config.endpoint)));
+      GetIt.I.registerFactory<CommentApi>(() => CommentApi(_dio(config.endpoint)));
+      GetIt.I.registerFactory<ReportApi>(() => ReportApi(_dio(config.endpoint)));
+      GetIt.I.registerFactory<NotificationApi>(() => NotificationApi(_dio(config.endpoint)));
     },
   );
 
@@ -141,6 +138,7 @@ List<AppModule> modules() {
     ReportModule(),
     NotificationModule(),
     MyNotificationsModule(),
+    DiscoverModule(),
   ];
 }
 

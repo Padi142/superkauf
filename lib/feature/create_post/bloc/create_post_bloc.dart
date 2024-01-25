@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:superkauf/feature/create_post/bloc/create_post_state.dart';
 import 'package:superkauf/feature/create_post/use_case/create_post_navigation.dart';
@@ -158,6 +159,9 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
       },
     );
     if (post != null) {
+      Posthog().capture(eventName: 'post_created', properties: {
+        'post_id': post!.id.toString(),
+      });
       add(UploadImage(image: event.image, postId: post!.id));
     }
   }

@@ -141,4 +141,15 @@ class PostsRepository {
       return ReactionsResult.failure(error.toString());
     });
   }
+
+  Future<GetPersonalFeedResult> getTopPosts(GetPostsPaginationModel body, int userID) async {
+    return postApi.getTopPosts(per_page: body.perPage, offset: body.offset, userId: userID).then((posts) {
+      return GetPersonalFeedResult.success(posts);
+    }).onError((error, stackTrace) {
+      if (error is DioException) {
+        return GetPersonalFeedResult.failure(error.message ?? 'error getting posts');
+      }
+      return const GetPersonalFeedResult.failure('error');
+    });
+  }
 }
