@@ -116,6 +116,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     result.map(success: (success) {
       Posthog().identify(userId: success.user.id.toString(), properties: {
         "supabase_uid": session.user.id,
+        "username": success.user.username,
       });
 
       Posthog().capture(eventName: 'user_signed_up', properties: {

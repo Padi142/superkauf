@@ -105,7 +105,7 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     GoToCreatePostScreen event,
     Emitter<NavigationState> emit,
   ) async {
-    AppNavigation().push(ScreenPath.createPostScreen);
+    emit(NavigationStateLoaded(bottomNavIndex: event.index != null ? event.index! : bottomBarIndex, screenName: ScreenPath.createPostScreen));
 
     Posthog().screen(
       screenName: ScreenPath.createPostScreen,

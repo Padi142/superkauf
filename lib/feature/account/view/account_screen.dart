@@ -1,15 +1,18 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:superkauf/feature/account/bloc/account_bloc.dart';
 import 'package:superkauf/feature/account/bloc/account_state.dart';
+import 'package:superkauf/feature/account/view/components/user_info.dart';
+import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
+import 'package:superkauf/feature/post_detail/bloc/post_detail_bloc.dart';
 import 'package:superkauf/feature/snackbar/bloc/snackbar_bloc.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/widget/app_progress.dart';
 
 import '../../../library/app_screen.dart';
-import 'components/change_username_component.dart';
 
 class AccountScreen extends Screen {
   static const String name = ScreenPath.profileScreen;
@@ -39,143 +42,80 @@ class _FeedScreenState extends State<AccountScreen> {
       body: LayoutBuilder(builder: (context, constraints) {
         return SizedBox(
           width: constraints.maxWidth,
-          child: Column(
-            children: [
-              BlocBuilder<AccountBloc, AccountState>(
-                builder: (context, state) {
-                  return state.maybeMap(loaded: (loaded) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Card(
-                          elevation: 3.0,
-                          margin: const EdgeInsets.all(16.0),
-                          child: Stack(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: SizedBox(
-                                  width: constraints.maxWidth * 0.8,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      const SizedBox(height: 4.0),
-                                      Stack(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(4),
-                                            child: CircleAvatar(
-                                              radius: 50.0,
-                                              backgroundImage: NetworkImage(loaded.user.profilePicture),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            top: 0.1,
-                                            right: 0.1,
-                                            child: IconButton(
-                                                onPressed: () {
-                                                  BlocProvider.of<AccountBloc>(context).add(ChangeProfilePic(user: loaded.user));
-                                                },
-                                                icon: Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.grey,
-                                                    borderRadius: BorderRadius.circular(50.0),
-                                                  ),
-                                                  child: const FaIcon(
-                                                    FontAwesomeIcons.cameraRetro,
-                                                    color: Colors.black,
-                                                    size: 24.0,
-                                                  ),
-                                                )),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 16.0),
-                                      changeUsername
-                                          ? ChangeUsernameField(
-                                              onDone: (username) {
-                                                BlocProvider.of<AccountBloc>(context).add(ChangeUsername(
-                                                  username: username,
-                                                  user: loaded.user,
-                                                ));
-                                                setState(() {
-                                                  changeUsername = false;
-                                                });
-                                              },
-                                            )
-                                          : Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  loaded.user.username,
-                                                  style: const TextStyle(
-                                                    fontSize: 18.0,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                                loaded.user.isAdmin
-                                                    ? const Tooltip(
-                                                        triggerMode: TooltipTriggerMode.tap,
-                                                        message: 'Krejzac.cz',
-                                                        child: FaIcon(
-                                                          FontAwesomeIcons.shield,
-                                                          color: Colors.amber,
-                                                          size: 18,
-                                                        ),
-                                                      )
-                                                    : const SizedBox(),
-                                                loaded.user.karma >= 100 && !loaded.user.isAdmin
-                                                    ? const Tooltip(
-                                                        triggerMode: TooltipTriggerMode.tap,
-                                                        message: 'This user has over 100 karma!',
-                                                        child: Icon(
-                                                          Icons.verified,
-                                                          color: Colors.blueAccent,
-                                                          size: 18,
-                                                        ),
-                                                      )
-                                                    : const SizedBox()
-                                              ],
-                                            ),
-                                    ],
-                                  ),
+          child: BlocBuilder<AccountBloc, AccountState>(
+            builder: (context, state) {
+              return state.maybeMap(loaded: (loaded) {
+                return CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: AccountInfoWidget(
+                        user: loaded.user,
+                        onUsernameChange: () {
+                          setState(() {
+                            changeUsername = !changeUsername;
+                          });
+                        },
+                        onUsernameChaneDone: () {
+                          setState(() {
+                            changeUsername = false;
+                          });
+                        },
+                        changeUsername: changeUsername,
+                        constraints: constraints,
+                      ),
+                    ),
+                    // const SizedBox(
+                    //   height: 10,
+                    // ),
+                    SliverGrid.builder(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        mainAxisSpacing: 8.0,
+                        crossAxisSpacing: 8.0,
+                      ),
+                      itemCount: loaded.posts.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          child: GestureDetector(
+                            onTap: () {
+                              BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(
+                                post: loaded.posts[index].post,
+                                user: loaded.posts[index].user,
+                              ));
+
+                              BlocProvider.of<NavigationBloc>(context).add(const OpenPostDetailScreen());
+                            },
+                            child: CachedNetworkImage(
+                              imageUrl: loaded.posts[index].post.image,
+                              imageBuilder: (context, imageProvider) => Container(
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.cover,
+                                )),
+                              ),
+                              cacheManager: CacheManager(
+                                Config(
+                                  'post_image',
+                                  stalePeriod: const Duration(days: 7),
                                 ),
                               ),
-                              Positioned(
-                                  right: 2,
-                                  top: 1,
-                                  child: IconButton(
-                                      iconSize: 16.0,
-                                      onPressed: () {
-                                        setState(() {
-                                          changeUsername = !changeUsername;
-                                        });
-                                      },
-                                      icon: const FaIcon(FontAwesomeIcons.pen))),
-                            ],
+                              progressIndicatorBuilder: (context, url, downloadProgress) => Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
+                              errorWidget: (context, url, error) => const Icon(Icons.error),
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 50.0),
-                        ElevatedButton(
-                          onPressed: () {
-                            BlocProvider.of<AccountBloc>(context).add(
-                              const LogOut(),
-                            );
-                          },
-                          child: Text('logout_button_text'.tr()),
-                        ),
-                      ],
-                    );
-                  }, error: (error) {
-                    BlocProvider.of<SnackbarBloc>(context).add(ErrorSnackbar(message: error.error));
-                    return const AppProgress();
-                  }, orElse: () {
-                    return const AppProgress();
-                  });
-                },
-              ),
-            ],
+                        );
+                      },
+                    ),
+                  ],
+                );
+              }, error: (error) {
+                BlocProvider.of<SnackbarBloc>(context).add(ErrorSnackbar(message: error.error));
+                return const AppProgress();
+              }, orElse: () {
+                return const AppProgress();
+              });
+            },
           ),
         );
       }),

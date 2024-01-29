@@ -8,9 +8,10 @@ import 'package:superkauf/feature/account/bloc/account_state.dart';
 import 'package:superkauf/feature/account/use_case/account_navigation.dart';
 import 'package:superkauf/feature/create_post/use_case/pick_image_use_case.dart';
 import 'package:superkauf/generic/post/model/upload_post_image_params.dart';
+import 'package:superkauf/generic/post/use_case/get_posts_by_user.dart';
 import 'package:superkauf/generic/user/model/update_user_body.dart';
 import 'package:superkauf/generic/user/model/user_model.dart';
-import 'package:superkauf/generic/user/use_case/get_user_by_uid_use_case.dart';
+import 'package:superkauf/generic/user/use_case/get_current_user_use_case.dart';
 import 'package:superkauf/generic/user/use_case/get_user_by_username_use_case.dart';
 import 'package:superkauf/generic/user/use_case/updat_user_use_case.dart';
 import 'package:superkauf/generic/user/use_case/upload_user_image_use_case.dart';
@@ -19,19 +20,21 @@ part 'account_event.dart';
 
 class AccountBloc extends Bloc<AccountEvent, AccountState> {
   final AccountNavigation accountNavigation;
-  final GetUserByUidUseCase getUserByUidUseCase;
+  final GetCurrentUserUseCase getCurrentUSeUseCase;
   final UpdateUserUseCase updateUserUseCase;
   final GetUserByUsernameUseCase getUserByUsernameUseCase;
   final PickImageUseCase pickImageUseCase;
   final UploadUserImageUseCase uploadUserImageUseCase;
+  final GetPostsByUserUseCase getPostsByUserUseCase;
 
   AccountBloc({
     required this.accountNavigation,
-    required this.getUserByUidUseCase,
+    required this.getCurrentUSeUseCase,
     required this.updateUserUseCase,
     required this.getUserByUsernameUseCase,
     required this.pickImageUseCase,
     required this.uploadUserImageUseCase,
+    required this.getPostsByUserUseCase,
   }) : super(const AccountState.loading()) {
     on<GetUser>(_onGetUser);
     on<LogOut>(_onLogOut);
@@ -43,27 +46,25 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     GetUser event,
     Emitter<AccountState> emit,
   ) async {
-    final supabase = Supabase.instance.client;
+    final user = await getCurrentUSeUseCase.call();
 
-    final session = supabase.auth.currentSession;
-    if (session == null) {
-      emit(const AccountState.error("You are not logged in"));
+    if (user == null) {
+      emit(const AccountState.error('You are not logged in'));
       accountNavigation.goToLogin();
       return;
     }
 
-    final supabaseUser = session.user;
-    final result = await getUserByUidUseCase.call(supabaseUser.id);
+    Posthog().identify(userId: user!.id.toString(), properties: {
+      "supabase_uid": user.id,
+      "username": user.username,
+    });
 
-    result.map(success: (success) {
-      Posthog().identify(userId: session.user.id.toString(), properties: {
-        "supabase_uid": session.user.id,
-        "username": success.user.username,
-      });
-      emit(AccountState.loaded(success.user));
+    final postsResult = await getPostsByUserUseCase.call(user.id);
+
+    postsResult.map(success: (success) {
+      emit(AccountState.loaded(user, success.response.posts));
     }, failure: (failure) {
-      print(failure);
-      emit(const AccountState.error("You probably dont exist :/// "));
+      emit(AccountState.loaded(user, []));
     });
   }
 
@@ -116,6 +117,10 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
       profilePicture: event.user.profilePicture,
     );
     final result = await updateUserUseCase.call(params);
+
+    Posthog().identify(userId: params.id.toString(), properties: {
+      "username": params.username,
+    });
 
     add(const GetUser());
   }

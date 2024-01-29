@@ -122,11 +122,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         BlocProvider.of<NavigationBloc>(context).add(OpenStoresScreen(index));
                         break;
                       case 2:
-                        BlocProvider.of<NavigationBloc>(context).add(OpenDiscoverScreen(index));
+                        BlocProvider.of<NavigationBloc>(context).add(GoToCreatePostScreen(index));
                         break;
                       case 3:
-                        BlocProvider.of<NavigationBloc>(context).add(OpenMyChannelScreen(index));
+                        BlocProvider.of<NavigationBloc>(context).add(OpenDiscoverScreen(index));
                         break;
+
                       case 4:
                         BlocProvider.of<NavigationBloc>(context).add(OpenShoppingListScreen(index));
                         break;
@@ -146,14 +147,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       label: 'Stores',
                     ),
                     NavigationDestination(
+                      selectedIcon: Icon(Icons.add),
+                      icon: Icon(Icons.add),
+                      label: 'Create',
+                    ),
+                    NavigationDestination(
                       selectedIcon: Icon(Icons.list),
                       icon: Icon(Icons.list_outlined),
                       label: 'Discover',
-                    ),
-                    NavigationDestination(
-                      selectedIcon: Icon(Icons.forum),
-                      icon: Icon(Icons.forum_outlined),
-                      label: 'My Channel',
                     ),
                     NavigationDestination(
                       selectedIcon: Icon(Icons.shopping_basket),

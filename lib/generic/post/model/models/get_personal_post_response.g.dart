@@ -39,3 +39,17 @@ Map<String, dynamic> _$GetPersonalFeedParamsToJson(GetPersonalFeedParams instanc
       'pagination': instance.pagination.toJson(),
       'user_id': instance.userId,
     };
+
+GetTopPostsParams _$GetTopPostsParamsFromJson(Map<String, dynamic> json) => GetTopPostsParams(
+      pagination: GetPostsPaginationModel.fromJson(json['pagination'] as Map<String, dynamic>),
+      userId: json['user_id'] as int,
+      timeRange: json['time_range'] as String,
+      sortBy: json['sort_by'] as String,
+    );
+
+Map<String, dynamic> _$GetTopPostsParamsToJson(GetTopPostsParams instance) => <String, dynamic>{
+      'pagination': instance.pagination.toJson(),
+      'user_id': instance.userId,
+      'time_range': instance.timeRange,
+      'sort_by': instance.sortBy,
+    };

@@ -47,9 +47,13 @@
   "no_notifications_for_user_1":"Ay fam, you have no notifications yet",
   "no_notifications_for_user_2":"Try posting a 'ting or two, you know wah I'm sayin'",
 
+  "no_posts_for_timerange_1":"No posts for these filters :/",
+  "no_posts_for_timerange_2":"Try changing them!",
+
   "user_info_registered_on_label": "Registered on",
 
   "logout_button_text": "Log out",
+  "change_username_button_text": "Change username",
 
   "login_button_text": "Log in"
 }

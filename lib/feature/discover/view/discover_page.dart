@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:superkauf/feature/discover/bloc/discover_bloc.dart';
 import 'package:superkauf/feature/discover/bloc/discover_state.dart';
+import 'package:superkauf/feature/discover/view/components/sorting_buttons.dart';
 import 'package:superkauf/feature/feed/view/components/feed_post_container.dart';
 import 'package:superkauf/feature/feed/view/components/loading_feed_post.dart';
 import 'package:superkauf/generic/constants.dart';
@@ -36,12 +38,8 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
 
   void _loadMoreListener() {
     scrollToRefreshListener(controller: _scrollController);
-    if (_scrollController.position.pixels >
-        _scrollController.position.maxScrollExtent - 300) {
-      if ((context.read<DiscoverBloc>().state is Loaded) &&
-          ((context.read<DiscoverBloc>().state as Loaded).isLoading ||
-              (context.read<DiscoverBloc>().state as Loaded).canLoadMore ==
-                  false)) {
+    if (_scrollController.position.pixels > _scrollController.position.maxScrollExtent - 300) {
+      if ((context.read<DiscoverBloc>().state is Loaded) && ((context.read<DiscoverBloc>().state as Loaded).isLoading || (context.read<DiscoverBloc>().state as Loaded).canLoadMore == false)) {
         return;
       }
       print('loading more');
@@ -63,22 +61,52 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                       const ReloadPosts(),
                     );
               },
-              child: Column(
-                children: [
-                  BlocBuilder<DiscoverBloc, DiscoverState>(
-                    builder: (context, state) {
-                      return state.maybeMap(loaded: (loaded) {
-                        return SizedBox(
+              child: BlocBuilder<DiscoverBloc, DiscoverState>(
+                builder: (context, state) {
+                  return state.maybeMap(loaded: (loaded) {
+                    if (loaded.posts.isEmpty) {
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(4),
+                            child: SortingButtons(
+                              sortType: loaded.sortType,
+                              timeRange: loaded.timeRange,
+                            ),
+                          ),
+                          Center(
+                              child: Column(
+                            children: [
+                              Text(
+                                'no_posts_for_timerange_1'.tr(),
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text('no_posts_for_timerange_2'.tr(), style: Theme.of(context).textTheme.titleSmall),
+                            ],
+                          ))
+                        ],
+                      );
+                    }
+                    return Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: SortingButtons(
+                            sortType: loaded.sortType,
+                            timeRange: loaded.timeRange,
+                          ),
+                        ),
+                        SizedBox(
                           height: constraints.maxHeight,
                           child: ListView.builder(
                             itemCount: loaded.posts.length,
                             controller: _scrollController,
                             itemBuilder: (context, index) {
                               return Padding(
-                                padding: EdgeInsets.only(
-                                    bottom: loaded.posts.length == index + 1
-                                        ? 100
-                                        : 0),
+                                padding: EdgeInsets.only(bottom: loaded.posts.length == index + 1 ? 100 : 0),
                                 child: PersonalFeedPostContainer(
                                   post: loaded.posts[index],
                                   originScreen: ScreenPath.discoverScreen,
@@ -86,15 +114,15 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                               );
                             },
                           ),
-                        );
-                      }, error: (error) {
-                        return Center(child: Text(error.error));
-                      }, orElse: () {
-                        return const PostLoadingView();
-                      });
-                    },
-                  ),
-                ],
+                        ),
+                      ],
+                    );
+                  }, error: (error) {
+                    return Center(child: Text(error.error));
+                  }, orElse: () {
+                    return const PostLoadingView();
+                  });
+                },
               ),
             ),
           );

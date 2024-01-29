@@ -32,6 +32,8 @@ class InitBloc extends Bloc<InitEvent, InitState> {
     if (user != null) {
       Posthog().identify(userId: user.id.toString(), properties: {"username": user.username, "supabase_uid": user.supabaseUid});
       OneSignal.login(user.supabaseUid);
+    } else {
+      Posthog().capture(eventName: 'anonymous_session');
     }
   }
 }

@@ -41,6 +41,7 @@ dependencies:
   hive: ^2.2.3
   posthog_flutter: ^3.3.0
   onesignal_flutter: ^5.0.4
+  sliding_up_panel: ^2.0.0+1
 
 
 dev_dependencies:

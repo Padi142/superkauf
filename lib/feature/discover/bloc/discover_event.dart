@@ -15,6 +15,11 @@ class LoadMore extends DiscoverEvent {
   const LoadMore();
 }
 
+class ChangeTimeRange extends DiscoverEvent {
+  final TimeRange timeRange;
+  const ChangeTimeRange({required this.timeRange});
+}
+
 class ReloadPosts extends DiscoverEvent {
   const ReloadPosts();
 }

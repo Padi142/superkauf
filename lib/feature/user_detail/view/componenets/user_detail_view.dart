@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:superkauf/generic/user/model/user_model.dart';
+import 'package:superkauf/library/app.dart';
 
 class UserDetailView extends StatelessWidget {
   final BoxConstraints constraints;
@@ -63,20 +64,14 @@ class UserDetailView extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
-            Text(
+            SelectableText(
               '${'user_info_registered_on_label'.tr()}: ${DateFormat('dd/MM/yyyy').format(user.createdAt)}',
-              style: const TextStyle(
-                fontSize: 14.0,
-                fontWeight: FontWeight.bold,
-              ),
+              style: App.appTheme.textTheme.titleMedium,
             ),
             const SizedBox(height: 10),
-            Text(
+            SelectableText(
               'Karma: ${user.karma}',
-              style: const TextStyle(
-                fontSize: 14.0,
-                fontWeight: FontWeight.bold,
-              ),
+              style: App.appTheme.textTheme.titleMedium,
             ),
           ],
         ),

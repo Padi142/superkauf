@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:superkauf/feature/feed/view/components/feed_post_container.dart';
 import 'package:superkauf/feature/feed/view/components/loading_feed_post.dart';
-import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
 import 'package:superkauf/feature/my_channel/bloc/my_channel_bloc.dart';
 import 'package:superkauf/feature/my_channel/bloc/my_channel_state.dart';
 import 'package:superkauf/generic/constants.dart';
@@ -43,7 +42,7 @@ class _MyChannelState extends State<MyChannelScreen> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: App.appTheme.colorScheme.primary,
           onPressed: () {
-            BlocProvider.of<NavigationBloc>(context).add(const GoToCreatePostScreen());
+            // BlocProvider.of<NavigationBloc>(context).add(const GoToCreatePostScreen());
           },
           child: const Icon(Icons.add),
         ),

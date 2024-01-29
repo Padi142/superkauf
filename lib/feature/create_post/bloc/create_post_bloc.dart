@@ -160,7 +160,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     );
     if (post != null) {
       Posthog().capture(eventName: 'post_created', properties: {
-        'post_id': post!.id.toString(),
+        'post_id': post!.id,
       });
       add(UploadImage(image: event.image, postId: post!.id));
     }

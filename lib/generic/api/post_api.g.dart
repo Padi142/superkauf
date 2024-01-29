@@ -303,6 +303,7 @@ class _PostApi implements PostApi {
     required int per_page,
     required int offset,
     required int userId,
+    required String timeRange,
   }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -315,7 +316,7 @@ class _PostApi implements PostApi {
     )
         .compose(
           _dio.options,
-          '/feed/top?offset=${offset}&per_page=${per_page}&userId=${userId}',
+          '/feed/top?offset=${offset}&per_page=${per_page}&userId=${userId}&timeRange=${timeRange}',
           queryParameters: queryParameters,
           data: _data,
         )

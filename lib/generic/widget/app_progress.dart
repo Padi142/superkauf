@@ -8,10 +8,12 @@ class AppProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CircularProgressIndicator(
-      strokeWidth: size,
-      backgroundColor: Colors.transparent,
-      valueColor: AlwaysStoppedAnimation<Color>(App.appTheme.secondaryColor),
+    return Center(
+      child: CircularProgressIndicator(
+        strokeWidth: size,
+        backgroundColor: Colors.transparent,
+        valueColor: AlwaysStoppedAnimation<Color>(App.appTheme.secondaryColor),
+      ),
     );
   }
 }

@@ -3,7 +3,7 @@ import 'package:superkauf/generic/post/model/models/get_personal_post_response.d
 import 'package:superkauf/generic/post/model/results/get_paginated_feed_result.dart';
 import 'package:superkauf/library/use_case.dart';
 
-class GetTopPostsUseCase extends UseCase<GetPersonalFeedResult, GetPersonalFeedParams> {
+class GetTopPostsUseCase extends UseCase<GetPersonalFeedResult, GetTopPostsParams> {
   PostsRepository repository;
 
   GetTopPostsUseCase({
@@ -12,6 +12,6 @@ class GetTopPostsUseCase extends UseCase<GetPersonalFeedResult, GetPersonalFeedP
 
   @override
   Future<GetPersonalFeedResult> call(params) async {
-    return await repository.getTopPosts(params.pagination, params.userId);
+    return await repository.getTopPosts(params.pagination, params.userId, params.timeRange);
   }
 }

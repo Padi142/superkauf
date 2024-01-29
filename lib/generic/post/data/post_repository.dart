@@ -142,8 +142,8 @@ class PostsRepository {
     });
   }
 
-  Future<GetPersonalFeedResult> getTopPosts(GetPostsPaginationModel body, int userID) async {
-    return postApi.getTopPosts(per_page: body.perPage, offset: body.offset, userId: userID).then((posts) {
+  Future<GetPersonalFeedResult> getTopPosts(GetPostsPaginationModel body, int userID, String timeRange) async {
+    return postApi.getTopPosts(per_page: body.perPage, offset: body.offset, userId: userID, timeRange: timeRange).then((posts) {
       return GetPersonalFeedResult.success(posts);
     }).onError((error, stackTrace) {
       if (error is DioException) {

@@ -74,3 +74,28 @@ class GetPersonalFeedParams extends Equatable {
         userId,
       ];
 }
+
+@JsonSerializable(explicitToJson: true, fieldRename: FieldRename.snake)
+class GetTopPostsParams extends Equatable {
+  final GetPostsPaginationModel pagination;
+  final int userId;
+  final String timeRange;
+  final String sortBy;
+
+  const GetTopPostsParams({
+    required this.pagination,
+    required this.userId,
+    required this.timeRange,
+    required this.sortBy,
+  });
+
+  factory GetTopPostsParams.fromJson(Map<String, dynamic> json) => _$GetTopPostsParamsFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GetTopPostsParamsToJson(this);
+
+  @override
+  List<Object?> get props => [
+        pagination,
+        userId,
+      ];
+}

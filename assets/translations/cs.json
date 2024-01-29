@@ -46,10 +46,14 @@
   "no_notifications_for_user_1":"Zatím nemáš žádná upozornění :/",
   "no_notifications_for_user_2":"Zkus přidat pár postů!",
 
+  "no_posts_for_timerange_1":"Žádne příspěvky pro tyto filtry :/",
+  "no_posts_for_timerange_2":"Zkus vybrat jiné",
+
 
   "user_info_registered_on_label": "Registrován od",
 
   "logout_button_text": "Odhlásit",
+  "change_username_button_text": "Změnit jméno",
 
   "login_button_text": "Přihlásit "
 }

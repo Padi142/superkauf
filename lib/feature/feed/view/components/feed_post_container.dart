@@ -68,9 +68,7 @@ class _FeedPostContainerState extends State<FeedPostContainer> {
                             child: Material(
                               elevation: 4,
                               shape: const CircleBorder(),
-                              child: CircleAvatar(
-                                backgroundImage: CachedNetworkImageProvider('${widget.post.user.profilePicture}?'),
-                              ),
+                              child: CircleAvatar(),
                             ),
                           ),
                         ),

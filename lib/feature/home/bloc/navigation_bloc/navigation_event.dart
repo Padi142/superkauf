@@ -60,7 +60,11 @@ class OpenStoresScreen extends NavigationEvent {
 }
 
 class GoToCreatePostScreen extends NavigationEvent {
-  const GoToCreatePostScreen();
+  final int? index;
+
+  const GoToCreatePostScreen(
+    this.index,
+  );
 
   @override
   List<Object?> get props => [];
