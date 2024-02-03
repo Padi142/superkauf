@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:superkauf/generic/widget/app_button.dart';
 import 'package:superkauf/library/app.dart';
@@ -16,43 +17,56 @@ class _StoreCardPickerState extends State<StoreCardPicker> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 150,
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: App.appTheme.colorScheme.primary),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AppButton(
-                backgroundColor: cardRequired ? App.appTheme.colorScheme.surface : App.appTheme.colorScheme.primary,
-                text: 'No',
-                textStyle: Theme.of(context).textTheme.titleMedium,
-                radius: 8,
-                onClick: () {
-                  setState(() {
-                    cardRequired = false;
-                  });
-                  widget.onChange(false);
-                }),
-            const SizedBox(
-              width: 5,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'card_required_label'.tr(),
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          const Spacer(),
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: App.appTheme.colorScheme.primary),
+              borderRadius: BorderRadius.circular(10),
             ),
-            AppButton(
-                backgroundColor: cardRequired ? App.appTheme.colorScheme.primary : App.appTheme.colorScheme.surface,
-                text: 'Yes',
-                textStyle: Theme.of(context).textTheme.titleMedium,
-                radius: 8,
-                onClick: () {
-                  setState(() {
-                    cardRequired = true;
-                  });
-                  widget.onChange(true);
-                }),
-          ],
-        ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AppButton(
+                      backgroundColor: cardRequired ? App.appTheme.colorScheme.surface : App.appTheme.colorScheme.primary,
+                      text: 'No',
+                      textStyle: Theme.of(context).textTheme.bodyMedium,
+                      radius: 8,
+                      onClick: () {
+                        setState(() {
+                          cardRequired = false;
+                        });
+                        widget.onChange(false);
+                      }),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  AppButton(
+                      backgroundColor: cardRequired ? App.appTheme.colorScheme.primary : App.appTheme.colorScheme.surface,
+                      text: 'Yes',
+                      textStyle: Theme.of(context).textTheme.bodyMedium,
+                      radius: 8,
+                      onClick: () {
+                        setState(() {
+                          cardRequired = true;
+                        });
+                        widget.onChange(true);
+                      }),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

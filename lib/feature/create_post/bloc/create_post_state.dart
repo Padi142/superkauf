@@ -9,9 +9,12 @@ abstract class CreatePostState with _$CreatePostState {
   const factory CreatePostState.loading() = Loading;
 
   const factory CreatePostState.initial() = Initial;
+
   const factory CreatePostState.imagePicked(File image) = ImagePicked;
 
   const factory CreatePostState.uploading() = Uploading;
+
+  const factory CreatePostState.creating() = Creating;
 
   const factory CreatePostState.imageUploaded(String image) = ImageUploaded;
 

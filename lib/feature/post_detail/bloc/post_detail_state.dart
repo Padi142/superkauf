@@ -10,7 +10,12 @@ abstract class PostDetailState with _$PostDetailState {
 
   const factory PostDetailState.initial(PostModel post, UserModel user) = Initial;
 
-  const factory PostDetailState.loaded(PostModel post, UserModel user, bool canEdit) = Loaded;
+  const factory PostDetailState.loaded(
+    PostModel post,
+    bool isLiked,
+    UserModel user,
+    bool canEdit,
+  ) = Loaded;
 
   const factory PostDetailState.error(String error) = Error;
 }

@@ -130,6 +130,12 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
     }
     page++;
     add(const GetTopPosts());
+    //
+    // final pepici = ['Jarda', 'Stanislav', 'Ondřej', 'František'];
+    //
+    // for (final pepa in pepici) {
+    //   print("$pepa je pepa :---DDD");
+    // }
   }
 }
 

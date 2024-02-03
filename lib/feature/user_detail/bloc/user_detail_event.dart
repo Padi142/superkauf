@@ -18,3 +18,11 @@ class GetUser extends UserDetailEvent {
 
   const GetUser({required this.userID});
 }
+
+class LoadMore extends UserDetailEvent {
+  const LoadMore();
+}
+
+class ReloadUser extends UserDetailEvent {
+  const ReloadUser();
+}

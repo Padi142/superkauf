@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:superkauf/generic/post/model/models/get_personal_post_response.dart';
+import 'package:superkauf/generic/post/model/pagination_model.dart';
 import 'package:superkauf/generic/post/use_case/get_posts_by_user.dart';
 import 'package:superkauf/generic/user/use_case/get_user_by_uid_use_case.dart';
 
@@ -45,7 +47,15 @@ class MyChannelBloc extends Bloc<MyChannelEvent, MyChannelState> {
       },
     );
 
-    final result = await getPostsByUserUseCase.call(userId);
+    final params = GetPersonalFeedParams(
+      pagination: const GetPostsPaginationModel(
+        perPage: 15,
+        offset: 0,
+      ),
+      userId: userId,
+    );
+
+    final result = await getPostsByUserUseCase.call(params);
     result.when(
       success: (success) {
         emit(MyChannelState.loaded(success.posts));

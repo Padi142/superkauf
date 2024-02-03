@@ -55,5 +55,8 @@
   "logout_button_text": "Odhlásit",
   "change_username_button_text": "Změnit jméno",
 
-  "login_button_text": "Přihlásit "
+  "login_button_text": "Přihlásit",
+  "register_button_text": "Registrovat",
+  "confirm_email_text": "Prosím potvrďte svůj email kliknutím na odkaz, který jsme vám poslali",
+  "open_email_button_text": "Otevřít email"
 }

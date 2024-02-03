@@ -36,12 +36,17 @@ dependencies:
   card_loading: ^0.3.0
   flutter_cache_manager: ^3.3.1
   flutter_image_compress: ^2.1.0
-  path_provider: ^2.1.1
+  path_provider: ^2.1.2
   isar_flutter_libs: ^3.1.0+1
   hive: ^2.2.3
   posthog_flutter: ^3.3.0
   onesignal_flutter: ^5.0.4
   sliding_up_panel: ^2.0.0+1
+  lottie: ^3.0.0
+  flutter_carousel_widget: ^2.2.0
+  path_drawing: ^1.0.1
+  url_launcher: ^6.2.4
+  open_mail_app: ^0.4.5
 
 
 dev_dependencies:
@@ -74,4 +79,6 @@ flutter:
   assets:
     - assets/translations/
     - assets/images/
+    - assets/blobs/
+    - assets/lottie/
     - .env

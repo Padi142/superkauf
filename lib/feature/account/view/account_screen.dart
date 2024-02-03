@@ -8,7 +8,6 @@ import 'package:superkauf/feature/account/bloc/account_state.dart';
 import 'package:superkauf/feature/account/view/components/user_info.dart';
 import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
 import 'package:superkauf/feature/post_detail/bloc/post_detail_bloc.dart';
-import 'package:superkauf/feature/snackbar/bloc/snackbar_bloc.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/widget/app_progress.dart';
 
@@ -75,7 +74,8 @@ class _FeedScreenState extends State<AccountScreen> {
                       ),
                       itemCount: loaded.posts.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return Container(
+                        return Hero(
+                          tag: loaded.posts[index].post.id,
                           child: GestureDetector(
                             onTap: () {
                               BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(
@@ -110,7 +110,7 @@ class _FeedScreenState extends State<AccountScreen> {
                   ],
                 );
               }, error: (error) {
-                BlocProvider.of<SnackbarBloc>(context).add(ErrorSnackbar(message: error.error));
+                // BlocProvider.of<SnackbarBloc>(context).add(ErrorSnackbar(message: error.error));
                 return const AppProgress();
               }, orElse: () {
                 return const AppProgress();

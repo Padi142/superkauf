@@ -55,5 +55,10 @@
   "logout_button_text": "Log out",
   "change_username_button_text": "Change username",
 
-  "login_button_text": "Log in"
+  "login_button_text": "Log in",
+  "register_button_text": "Register",
+
+  "confirm_email_text": "Please confirm your email address by clicking the link in the email we sent you",
+  "open_email_button_text": "Open email"
+
 }

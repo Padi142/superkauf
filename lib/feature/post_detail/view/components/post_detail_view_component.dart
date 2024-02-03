@@ -8,6 +8,7 @@ import 'package:superkauf/feature/post_detail/view/components/post_components.da
 import 'package:superkauf/generic/post/model/post_model.dart';
 import 'package:superkauf/generic/post/view/components/price_widget.dart';
 import 'package:superkauf/generic/user/model/user_model.dart';
+import 'package:superkauf/generic/widget/app_progress.dart';
 import 'package:superkauf/library/app.dart';
 
 class PostDetailViewComponent extends StatelessWidget {
@@ -15,6 +16,7 @@ class PostDetailViewComponent extends StatelessWidget {
   final PostModel post;
   final UserModel user;
   final Function() onDescriptionEdit;
+  final bool isLiked;
   final bool canEdit;
 
   const PostDetailViewComponent({
@@ -23,6 +25,7 @@ class PostDetailViewComponent extends StatelessWidget {
     required this.post,
     required this.user,
     required this.onDescriptionEdit,
+    required this.isLiked,
     required this.canEdit,
   });
 
@@ -56,7 +59,8 @@ class PostDetailViewComponent extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  showImageViewer(context, Image.network(post.image).image, onViewerDismissed: () {});
+                  showImageViewer(context, Image.network(post.image).image,
+                      onViewerDismissed: () {});
                 },
                 child: Hero(
                   tag: post.id,
@@ -71,8 +75,10 @@ class PostDetailViewComponent extends StatelessWidget {
                           fit: BoxFit.fitHeight,
                         )),
                       ),
-                      placeholder: (context, url) => const Center(child: Center(child: CircularProgressIndicator())),
-                      errorWidget: (context, url, error) => const Icon(Icons.error),
+                      placeholder: (context, url) => const Center(
+                          child: Center(child: CircularProgressIndicator())),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
                     ),
                   ),
                 ),
@@ -80,7 +86,9 @@ class PostDetailViewComponent extends StatelessWidget {
               Positioned(
                 right: 1,
                 bottom: 1,
-                child: Hero(tag: 'price${post.id}', child: PriceWidget(price: post.price)),
+                child: Hero(
+                    tag: 'price${post.id}',
+                    child: PriceWidget(price: post.price)),
               ),
               post.validUntil != null
                   ? Positioned(
@@ -96,7 +104,98 @@ class PostDetailViewComponent extends StatelessWidget {
                 bottom: 2,
                 child: PostDetailLike(
                   post: post,
+                  isLiked: isLiked,
                 ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class InitialPostDetailViewComponent extends StatelessWidget {
+  final BoxConstraints constraints;
+  final PostModel post;
+  final UserModel user;
+
+  const InitialPostDetailViewComponent({
+    super.key,
+    required this.constraints,
+    required this.post,
+    required this.user,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SizedBox(
+          width: constraints.maxWidth * 95,
+          child: Row(
+            children: [
+              PostAuthor(
+                user: user,
+              ),
+              const Spacer(),
+              TimeAgoWidget(
+                dateTime: post.createdAt,
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: constraints.maxHeight * 0.55,
+          child: Stack(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  showImageViewer(context, Image.network(post.image).image,
+                      onViewerDismissed: () {});
+                },
+                child: Hero(
+                  tag: post.id,
+                  child: Container(
+                    color: App.appTheme.colorScheme.surface,
+                    child: CachedNetworkImage(
+                      imageUrl: post.image,
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.fitHeight,
+                        )),
+                      ),
+                      placeholder: (context, url) => const Center(
+                          child: Center(child: CircularProgressIndicator())),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                right: 1,
+                bottom: 1,
+                child: Hero(
+                    tag: 'price${post.id}',
+                    child: PriceWidget(price: post.price)),
+              ),
+              post.validUntil != null
+                  ? Positioned(
+                      left: 2,
+                      top: 2,
+                      child: FeedPostValidUntilLabel(
+                        validUntil: post.validUntil!,
+                      ),
+                    )
+                  : const SizedBox(),
+              const Positioned(
+                left: 2,
+                bottom: 2,
+                child: AppProgress(),
               ),
             ],
           ),

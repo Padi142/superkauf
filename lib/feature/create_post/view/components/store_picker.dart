@@ -1,70 +1,78 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:superkauf/generic/store/bloc/store_bloc.dart';
-import 'package:superkauf/generic/store/bloc/store_state.dart';
+import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:superkauf/generic/store/model/store_model.dart';
-import 'package:superkauf/generic/widget/app_button.dart';
 import 'package:superkauf/library/app.dart';
 
-class StorePicker extends StatefulWidget {
-  final BoxConstraints constraints;
-  final Function(StoreModel store) onSelectStore;
+class StoreCarousel extends StatefulWidget {
+  final List<StoreModel> stores;
+  final Function(StoreModel) onStoreSelected;
+  final double height;
 
-  const StorePicker({
-    super.key,
-    required this.constraints,
-    required this.onSelectStore,
-  });
+  const StoreCarousel({
+    Key? key,
+    required this.stores,
+    required this.onStoreSelected,
+    required this.height,
+  }) : super(key: key);
 
   @override
-  State<StorePicker> createState() => _StorePickerState();
+  State<StoreCarousel> createState() => _StoreCarouselState();
 }
 
-class _StorePickerState extends State<StorePicker> {
-  @override
-  void initState() {
-    BlocProvider.of<StoreBloc>(context).add(const GetAllStores());
-    super.initState();
-  }
-
-  var label = '';
+class _StoreCarouselState extends State<StoreCarousel> {
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: widget.constraints.maxWidth * 0.30,
-      child: BlocBuilder<StoreBloc, StoreState>(builder: (context, state) {
-        return state.maybeMap(success: (success) {
-          return AppButton(
-            text: label == '' ? 'store_post_create_label'.tr() : label,
-            borderColor: App.appTheme.colorScheme.primary,
-            radius: 8,
-            imagePrefix: label == ''
-                ? const SizedBox()
-                : SizedBox(
-                    width: 40,
-                    height: 30,
-                    child: Image.network(
-                      success.stores.firstWhere((element) => element.name == label).image,
-                    ),
-                  ),
-            popupMenu: success.stores
-                .map((element) => PopupOption(
-                      title: element.name,
-                      value: element,
-                    ))
-                .toList(),
-            onSelectPopup: (value) {
-              widget.onSelectStore(value.value);
-              label = value.title;
-              setState(() {});
-            },
-          );
-        }, orElse: () {
-          return const SizedBox();
-        });
-      }),
+    return FlutterCarousel(
+      options: CarouselOptions(
+        height: widget.height,
+        viewportFraction: 0.6,
+        showIndicator: true,
+        enlargeCenterPage: true,
+        slideIndicator: CircularSlideIndicator(),
+      ),
+      items: widget.stores.map((store) => _buildStoreCard(store)).toList(),
+    );
+  }
+
+  Widget _buildStoreCard(StoreModel store) {
+    return GestureDetector(
+      onTap: () => widget.onStoreSelected(store),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 10.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 1.0,
+              blurRadius: 3.0,
+              offset: const Offset(0.0, 2.0),
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                store.name,
+                style: App.appTheme.textTheme.titleLarge,
+              ),
+              const SizedBox(height: 5.0),
+              Center(
+                  child: Image.network(
+                store.image,
+                height: widget.height * 0.6,
+                fit: BoxFit.contain,
+              )),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
