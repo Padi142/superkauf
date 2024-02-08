@@ -3,6 +3,8 @@ import 'package:get_it/get_it.dart';
 import 'package:superkauf/feature/shopping_list/bloc/shopping_list_bloc.dart';
 import 'package:superkauf/feature/shopping_list/view/shopping_list_screen.dart';
 import 'package:superkauf/generic/saved_posts/use_case/get_saved_posts_by_user_use_case.dart';
+import 'package:superkauf/generic/saved_posts/use_case/update_saved_post_use_case.dart';
+import 'package:superkauf/generic/store/use_case/get_stores_use_case.dart';
 import 'package:superkauf/generic/user/use_case/get_current_user_use_case.dart';
 import 'package:superkauf/library/app_module.dart';
 
@@ -18,6 +20,8 @@ class ShoppingListModule extends AppModule {
       () => ShoppingListBloc(
         getCurrentUserUseCase: GetIt.I.get<GetCurrentUserUseCase>(),
         getSavedPostsByUserUseCase: GetIt.I.get<GetSavedPostsByUserUseCase>(),
+        getStoresUseCase: GetIt.I.get<GetStoresUseCase>(),
+        updateSavedPostUseCase: GetIt.I.get<UpdateSavedPostUseCase>(),
       ),
     );
   }

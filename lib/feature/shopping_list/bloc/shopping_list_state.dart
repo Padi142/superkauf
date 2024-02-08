@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:superkauf/generic/post/model/get_post_response.dart';
 import 'package:superkauf/generic/post/model/models/get_personal_post_response.dart';
+import 'package:superkauf/generic/store/model/store_model.dart';
 
 part 'shopping_list_state.freezed.dart';
 
@@ -10,6 +10,7 @@ abstract class ShoppingListState with _$ShoppingListState {
 
   const factory ShoppingListState.loaded(
     List<FullContextPostModel> posts,
+    List<StoreModel> stores,
     bool isLoading,
     bool canLoadMore,
   ) = Loaded;

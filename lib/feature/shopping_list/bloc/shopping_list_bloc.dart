@@ -4,7 +4,11 @@ import 'package:superkauf/feature/shopping_list/bloc/shopping_list_state.dart';
 import 'package:superkauf/generic/post/model/models/get_personal_post_response.dart';
 import 'package:superkauf/generic/post/model/pagination_model.dart';
 import 'package:superkauf/generic/saved_posts/model/get_saved_post_params.dart';
+import 'package:superkauf/generic/saved_posts/model/update_saved_post_body.dart';
 import 'package:superkauf/generic/saved_posts/use_case/get_saved_posts_by_user_use_case.dart';
+import 'package:superkauf/generic/saved_posts/use_case/update_saved_post_use_case.dart';
+import 'package:superkauf/generic/store/model/store_model.dart';
+import 'package:superkauf/generic/store/use_case/get_stores_use_case.dart';
 import 'package:superkauf/generic/user/use_case/get_current_user_use_case.dart';
 
 part 'shopping_list_event.dart';
@@ -13,18 +17,24 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
   final GetCurrentUserUseCase getCurrentUserUseCase;
   final GetSavedPostsByUserUseCase getSavedPostsByUserUseCase;
 
+  final UpdateSavedPostUseCase updateSavedPostUseCase;
+  final GetStoresUseCase getStoresUseCase;
+
   ShoppingListBloc({
     required this.getCurrentUserUseCase,
     required this.getSavedPostsByUserUseCase,
+    required this.updateSavedPostUseCase,
+    required this.getStoresUseCase,
   }) : super(const ShoppingListState.loading()) {
     on<GetShoppingList>(_onGetShoppingList);
     on<ReloadShoppingList>(_onReloadShoppingList);
     on<LoadMore>(_onLoadMore);
+    on<UpdateSavedPostEvent>(_onUpdateSavedPostEvent);
   }
 
   var page = 0;
   var loading = false;
-  static const perPage = 5;
+  static const perPage = 999;
 
   Future<void> _onGetShoppingList(
     GetShoppingList event,
@@ -35,7 +45,17 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
       emit(const ShoppingListState.error("You are not logged in"));
       return;
     }
+    List<StoreModel> stores = [];
+    //Load stores only on initial load
+    if (page == 0) {
+      final storeResult = await getStoresUseCase.call();
 
+      storeResult.map(
+          success: (success) {
+            stores.addAll(success.stores);
+          },
+          failure: (failure) {});
+    }
     final params = GetSavedPostsParams(
       userId: userResult.id,
       pagination: GetPostsPaginationModel(
@@ -57,19 +77,22 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
 
     state.maybeMap(
         loaded: (loaded) {
-          final posts = loaded.posts.toList();
-          posts.addAll(newPosts);
+          final posts = newPosts;
+          stores.addAll(loaded.stores);
+          if (page > 0) {
+            posts.addAll(loaded.posts.toList());
+          }
           final canLoadMore = posts.length % perPage == 0;
 
           emit(
-            ShoppingListState.loaded(posts, false, canLoadMore),
+            ShoppingListState.loaded(posts, stores, false, canLoadMore),
           );
         },
         loading: (loading) {
           final canLoadMore = newPosts.length % perPage == 0;
 
           emit(
-            ShoppingListState.loaded(newPosts, false, canLoadMore),
+            ShoppingListState.loaded(newPosts, stores, false, canLoadMore),
           );
         },
         orElse: () {});
@@ -114,6 +137,20 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
       return;
     }
     page++;
+    add(const GetShoppingList());
+  }
+
+  Future<void> _onUpdateSavedPostEvent(
+    UpdateSavedPostEvent event,
+    Emitter<ShoppingListState> emit,
+  ) async {
+    final result = await updateSavedPostUseCase.call(
+      UpdateSavedPostBody(
+        savedPostId: event.postId,
+        isCompleted: event.isCompleted,
+      ),
+    );
+
     add(const GetShoppingList());
   }
 }

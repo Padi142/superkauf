@@ -4,6 +4,7 @@ import 'package:superkauf/generic/saved_posts/data/saved_posts_repository.dart';
 import 'package:superkauf/generic/saved_posts/use_case/create_saved_post_use_case.dart';
 import 'package:superkauf/generic/saved_posts/use_case/delete_saved_post_use_case.dart';
 import 'package:superkauf/generic/saved_posts/use_case/get_saved_posts_by_user_use_case.dart';
+import 'package:superkauf/generic/saved_posts/use_case/update_saved_post_use_case.dart';
 import 'package:superkauf/library/app_module.dart';
 
 class SavedPostsModule extends AppModule {
@@ -28,15 +29,23 @@ class SavedPostsModule extends AppModule {
   @override
   void registerUseCase() {
     GetIt.I.registerFactory<CreateSavedPostUseCase>(
-      () => CreateSavedPostUseCase(repository: GetIt.I.get<SavedPostsRepository>()),
+      () => CreateSavedPostUseCase(
+          repository: GetIt.I.get<SavedPostsRepository>()),
     );
 
     GetIt.I.registerFactory<DeleteSavedPostUseCase>(
-      () => DeleteSavedPostUseCase(repository: GetIt.I.get<SavedPostsRepository>()),
+      () => DeleteSavedPostUseCase(
+          repository: GetIt.I.get<SavedPostsRepository>()),
     );
 
     GetIt.I.registerFactory<GetSavedPostsByUserUseCase>(
-      () => GetSavedPostsByUserUseCase(repository: GetIt.I.get<SavedPostsRepository>()),
+      () => GetSavedPostsByUserUseCase(
+          repository: GetIt.I.get<SavedPostsRepository>()),
+    );
+
+    GetIt.I.registerFactory<UpdateSavedPostUseCase>(
+      () => UpdateSavedPostUseCase(
+          repository: GetIt.I.get<SavedPostsRepository>()),
     );
   }
 

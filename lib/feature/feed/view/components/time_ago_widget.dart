@@ -16,7 +16,7 @@ class TimeAgoWidget extends StatelessWidget {
   String getTimeAgo(DateTime dateTime) {
     final difference = DateTime.now().difference(dateTime);
     if (difference.inDays > 30) {
-      return '${(difference.inDays / 30).round()} ${(difference.inDays / 30).floor() == 1 ? 'month' : 'month'} ago';
+      return '${(difference.inDays / 30).round()} ${(difference.inDays / 30).floor() == 1 ? 'month' : 'months'} ago';
     } else if (difference.inDays > 7) {
       return '${(difference.inDays / 7).floor()} ${(difference.inDays / 7).floor() == 1 ? 'week' : 'weeks'} ago';
     } else if (difference.inDays > 0) {

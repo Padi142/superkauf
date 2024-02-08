@@ -37,8 +37,7 @@ class PostDetailBloc extends Bloc<PostDetailEvent, PostDetailState> {
     var canEdit = false;
     final userResult = await getCurrentUserUseCase.call();
 
-    final params =
-        GetPostDetailParams(postId: event.postId, userId: userResult?.id ?? 0);
+    final params = GetPostDetailParams(postId: event.postId, userId: userResult?.id ?? 0);
 
     final result = await getPostDetailUseCase.call(params);
 
@@ -50,8 +49,7 @@ class PostDetailBloc extends Bloc<PostDetailEvent, PostDetailState> {
       }
 
       emit(const PostDetailState.loading());
-      emit(PostDetailState.loaded(success.post.post,
-          success.post.reaction != null, success.post.user, canEdit));
+      emit(PostDetailState.loaded(success.post.post, success.post.reaction != null, success.post.user, canEdit));
     }, failure: (failure) {
       print(failure.message);
       emit(PostDetailState.error(failure.message));

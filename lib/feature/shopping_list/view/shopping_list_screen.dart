@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:superkauf/feature/feed/view/components/feed_post_container.dart';
 import 'package:superkauf/feature/feed/view/components/loading_feed_post.dart';
 import 'package:superkauf/feature/shopping_list/bloc/shopping_list_bloc.dart';
 import 'package:superkauf/feature/shopping_list/bloc/shopping_list_state.dart';
+import 'package:superkauf/feature/shopping_list/view/components/shopping_list_view.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/functions.dart';
 
@@ -20,6 +20,8 @@ class ShoppingListScreen extends Screen {
 
 class _ShoppingListScreenState extends State<ShoppingListScreen> {
   final ScrollController _scrollController = ScrollController();
+  final PageController controller = PageController();
+  var selectedStore = 0;
 
   @override
   void initState() {
@@ -57,32 +59,75 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
                   const ReloadShoppingList(),
                 );
           },
-          child: Column(
-            children: [
-              BlocBuilder<ShoppingListBloc, ShoppingListState>(
-                builder: (context, state) {
-                  return state.maybeMap(loaded: (loaded) {
-                    return SizedBox(
-                      height: constraints.maxHeight,
+          child: BlocBuilder<ShoppingListBloc, ShoppingListState>(
+            builder: (context, state) {
+              return state.maybeMap(loaded: (loaded) {
+                final stores = loaded.posts.map((post) => post.post.store).toSet().toList();
+                return Column(
+                  children: [
+                    SizedBox(
+                      height: 50,
+                      width: constraints.maxWidth,
                       child: ListView.builder(
-                        controller: _scrollController,
-                        itemCount: loaded.posts.length,
-                        itemBuilder: (context, index) {
-                          return PersonalFeedPostContainer(
-                            post: loaded.posts[index],
-                            originScreen: ScreenPath.shoppingListScreen,
-                          );
-                        },
-                      ),
-                    );
-                  }, error: (error) {
-                    return Center(child: Text(error.error));
-                  }, orElse: () {
-                    return const PostLoadingView();
-                  });
-                },
-              ),
-            ],
+                          scrollDirection: Axis.horizontal,
+                          itemCount: stores.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    selectedStore = index;
+                                  });
+                                  controller.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.bounceIn);
+                                },
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                      color: selectedStore == index ? Colors.black : Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          offset: const Offset(0, 4),
+                                          blurRadius: 4,
+                                          color: Colors.black.withOpacity(0.25),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(loaded.stores.firstWhere((element) => element.id == stores[index]).name,
+                                          style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                                color: selectedStore == index ? Colors.white : Colors.black,
+                                              )),
+                                    )),
+                              ),
+                            );
+                          }),
+                    ),
+                    SizedBox(
+                      height: constraints.maxHeight * 0.9,
+                      child: PageView(
+                          controller: controller,
+                          onPageChanged: (index) {
+                            setState(() {
+                              selectedStore = index;
+                            });
+                          },
+                          children: stores
+                              .map((store) => ShoppingListView(
+                                    posts: loaded.posts.where((post) => post.post.store == store).toList(),
+                                    scrollController: _scrollController,
+                                  ))
+                              .toList()),
+                    ),
+                  ],
+                );
+              }, error: (error) {
+                return Center(child: Text(error.error));
+              }, orElse: () {
+                return const PostLoadingView();
+              });
+            },
           ),
         ),
       );

@@ -22,8 +22,7 @@ class StoreLabel extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: () {
-          BlocProvider.of<NavigationBloc>(context)
-              .add(OpenStoresScreen(null, storeId: storeId));
+          BlocProvider.of<NavigationBloc>(context).add(OpenStoresScreen(null, storeId: storeId));
           Navigator.of(context).pop();
         },
         child: Container(
@@ -92,13 +91,7 @@ class FeedPostValidUntilLabel extends StatelessWidget {
       triggerMode: TooltipTriggerMode.tap,
       child: Card(
         elevation: 4,
-        color: validUntil
-                    .difference(DateTime(DateTime.now().year,
-                        DateTime.now().month, DateTime.now().day))
-                    .inDays >
-                3
-            ? Colors.white
-            : Colors.redAccent,
+        color: validUntil.difference(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)).inDays > 3 ? Colors.white : Colors.redAccent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
         ),
@@ -144,14 +137,12 @@ class _PostDetailLikeState extends State<PostDetailLike> {
       child: GestureDetector(
           onTap: () {
             if (isLiked) {
-              BlocProvider.of<PostBloc>(context)
-                  .add(RemoveReaction(postId: widget.post.id));
+              BlocProvider.of<PostBloc>(context).add(RemoveReaction(postId: widget.post.id));
               setState(() {
                 isLiked = false;
               });
             } else {
-              BlocProvider.of<PostBloc>(context)
-                  .add(AddReaction(postId: widget.post.id));
+              BlocProvider.of<PostBloc>(context).add(AddReaction(postId: widget.post.id));
               setState(() {
                 isLiked = true;
               });
@@ -187,10 +178,7 @@ class _PostDetailLikeState extends State<PostDetailLike> {
                             ),
                             Text(
                               widget.post.likes.toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(color: Colors.white),
+                              style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
                             ),
                           ],
                         )),

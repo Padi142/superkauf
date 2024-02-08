@@ -59,8 +59,7 @@ class PostDetailViewComponent extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  showImageViewer(context, Image.network(post.image).image,
-                      onViewerDismissed: () {});
+                  showImageViewer(context, Image.network(post.image).image, onViewerDismissed: () {});
                 },
                 child: Hero(
                   tag: post.id,
@@ -75,10 +74,8 @@ class PostDetailViewComponent extends StatelessWidget {
                           fit: BoxFit.fitHeight,
                         )),
                       ),
-                      placeholder: (context, url) => const Center(
-                          child: Center(child: CircularProgressIndicator())),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
+                      placeholder: (context, url) => const Center(child: Center(child: CircularProgressIndicator())),
+                      errorWidget: (context, url, error) => const Icon(Icons.error),
                     ),
                   ),
                 ),
@@ -86,9 +83,7 @@ class PostDetailViewComponent extends StatelessWidget {
               Positioned(
                 right: 1,
                 bottom: 1,
-                child: Hero(
-                    tag: 'price${post.id}',
-                    child: PriceWidget(price: post.price)),
+                child: Hero(tag: 'price${post.id}', child: PriceWidget(price: post.price)),
               ),
               post.validUntil != null
                   ? Positioned(
@@ -152,8 +147,7 @@ class InitialPostDetailViewComponent extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  showImageViewer(context, Image.network(post.image).image,
-                      onViewerDismissed: () {});
+                  showImageViewer(context, Image.network(post.image).image, onViewerDismissed: () {});
                 },
                 child: Hero(
                   tag: post.id,
@@ -168,10 +162,8 @@ class InitialPostDetailViewComponent extends StatelessWidget {
                           fit: BoxFit.fitHeight,
                         )),
                       ),
-                      placeholder: (context, url) => const Center(
-                          child: Center(child: CircularProgressIndicator())),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
+                      placeholder: (context, url) => const Center(child: Center(child: CircularProgressIndicator())),
+                      errorWidget: (context, url, error) => const Icon(Icons.error),
                     ),
                   ),
                 ),
@@ -179,9 +171,7 @@ class InitialPostDetailViewComponent extends StatelessWidget {
               Positioned(
                 right: 1,
                 bottom: 1,
-                child: Hero(
-                    tag: 'price${post.id}',
-                    child: PriceWidget(price: post.price)),
+                child: Hero(tag: 'price${post.id}', child: PriceWidget(price: post.price)),
               ),
               post.validUntil != null
                   ? Positioned(

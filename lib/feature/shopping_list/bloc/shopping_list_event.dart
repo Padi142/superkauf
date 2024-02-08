@@ -20,3 +20,13 @@ class ReloadShoppingList extends ShoppingListEvent {
 class LoadMore extends ShoppingListEvent {
   const LoadMore();
 }
+
+class UpdateSavedPostEvent extends ShoppingListEvent {
+  final int postId;
+  final bool isCompleted;
+
+  const UpdateSavedPostEvent({
+    required this.postId,
+    required this.isCompleted,
+  });
+}

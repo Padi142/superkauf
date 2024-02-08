@@ -3,8 +3,7 @@ import 'package:superkauf/generic/post/model/get_fullcontext_post_detail_result.
 import 'package:superkauf/generic/post/model/results/get_post_detail_params.dart';
 import 'package:superkauf/library/use_case.dart';
 
-class GetPostDetailUseCase
-    extends UseCase<GetFullContextPostDetailResult, GetPostDetailParams> {
+class GetPostDetailUseCase extends UseCase<GetFullContextPostDetailResult, GetPostDetailParams> {
   PostsRepository repository;
 
   GetPostDetailUseCase({

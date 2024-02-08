@@ -8,12 +8,14 @@ class SavedPostModel extends Equatable {
   final int id;
   final int post;
   final int user;
+  final bool isCompleted;
   final DateTime createdAt;
 
   const SavedPostModel({
     required this.id,
     required this.post,
     required this.user,
+    required this.isCompleted,
     required this.createdAt,
   });
 

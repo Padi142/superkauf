@@ -19,21 +19,21 @@ mixin _$ShoppingListState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<FullContextPostModel> posts, bool isLoading, bool canLoadMore) loaded,
+    required TResult Function(List<FullContextPostModel> posts, List<StoreModel> stores, bool isLoading, bool canLoadMore) loaded,
     required TResult Function(String error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<FullContextPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
+    TResult? Function(List<FullContextPostModel> posts, List<StoreModel> stores, bool isLoading, bool canLoadMore)? loaded,
     TResult? Function(String error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<FullContextPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
+    TResult Function(List<FullContextPostModel> posts, List<StoreModel> stores, bool isLoading, bool canLoadMore)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) =>
@@ -109,7 +109,7 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<FullContextPostModel> posts, bool isLoading, bool canLoadMore) loaded,
+    required TResult Function(List<FullContextPostModel> posts, List<StoreModel> stores, bool isLoading, bool canLoadMore) loaded,
     required TResult Function(String error) error,
   }) {
     return loading();
@@ -119,7 +119,7 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<FullContextPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
+    TResult? Function(List<FullContextPostModel> posts, List<StoreModel> stores, bool isLoading, bool canLoadMore)? loaded,
     TResult? Function(String error)? error,
   }) {
     return loading?.call();
@@ -129,7 +129,7 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<FullContextPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
+    TResult Function(List<FullContextPostModel> posts, List<StoreModel> stores, bool isLoading, bool canLoadMore)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -182,7 +182,7 @@ abstract class Loading implements ShoppingListState {
 abstract class _$$LoadedImplCopyWith<$Res> {
   factory _$$LoadedImplCopyWith(_$LoadedImpl value, $Res Function(_$LoadedImpl) then) = __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<FullContextPostModel> posts, bool isLoading, bool canLoadMore});
+  $Res call({List<FullContextPostModel> posts, List<StoreModel> stores, bool isLoading, bool canLoadMore});
 }
 
 /// @nodoc
@@ -193,6 +193,7 @@ class __$$LoadedImplCopyWithImpl<$Res> extends _$ShoppingListStateCopyWithImpl<$
   @override
   $Res call({
     Object? posts = null,
+    Object? stores = null,
     Object? isLoading = null,
     Object? canLoadMore = null,
   }) {
@@ -201,6 +202,10 @@ class __$$LoadedImplCopyWithImpl<$Res> extends _$ShoppingListStateCopyWithImpl<$
           ? _value._posts
           : posts // ignore: cast_nullable_to_non_nullable
               as List<FullContextPostModel>,
+      null == stores
+          ? _value._stores
+          : stores // ignore: cast_nullable_to_non_nullable
+              as List<StoreModel>,
       null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -216,7 +221,9 @@ class __$$LoadedImplCopyWithImpl<$Res> extends _$ShoppingListStateCopyWithImpl<$
 /// @nodoc
 
 class _$LoadedImpl implements Loaded {
-  const _$LoadedImpl(final List<FullContextPostModel> posts, this.isLoading, this.canLoadMore) : _posts = posts;
+  const _$LoadedImpl(final List<FullContextPostModel> posts, final List<StoreModel> stores, this.isLoading, this.canLoadMore)
+      : _posts = posts,
+        _stores = stores;
 
   final List<FullContextPostModel> _posts;
   @override
@@ -226,6 +233,14 @@ class _$LoadedImpl implements Loaded {
     return EqualUnmodifiableListView(_posts);
   }
 
+  final List<StoreModel> _stores;
+  @override
+  List<StoreModel> get stores {
+    if (_stores is EqualUnmodifiableListView) return _stores;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_stores);
+  }
+
   @override
   final bool isLoading;
   @override
@@ -233,7 +248,7 @@ class _$LoadedImpl implements Loaded {
 
   @override
   String toString() {
-    return 'ShoppingListState.loaded(posts: $posts, isLoading: $isLoading, canLoadMore: $canLoadMore)';
+    return 'ShoppingListState.loaded(posts: $posts, stores: $stores, isLoading: $isLoading, canLoadMore: $canLoadMore)';
   }
 
   @override
@@ -242,12 +257,13 @@ class _$LoadedImpl implements Loaded {
         (other.runtimeType == runtimeType &&
             other is _$LoadedImpl &&
             const DeepCollectionEquality().equals(other._posts, _posts) &&
+            const DeepCollectionEquality().equals(other._stores, _stores) &&
             (identical(other.isLoading, isLoading) || other.isLoading == isLoading) &&
             (identical(other.canLoadMore, canLoadMore) || other.canLoadMore == canLoadMore));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_posts), isLoading, canLoadMore);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_posts), const DeepCollectionEquality().hash(_stores), isLoading, canLoadMore);
 
   @JsonKey(ignore: true)
   @override
@@ -258,32 +274,32 @@ class _$LoadedImpl implements Loaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<FullContextPostModel> posts, bool isLoading, bool canLoadMore) loaded,
+    required TResult Function(List<FullContextPostModel> posts, List<StoreModel> stores, bool isLoading, bool canLoadMore) loaded,
     required TResult Function(String error) error,
   }) {
-    return loaded(posts, isLoading, canLoadMore);
+    return loaded(posts, stores, isLoading, canLoadMore);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<FullContextPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
+    TResult? Function(List<FullContextPostModel> posts, List<StoreModel> stores, bool isLoading, bool canLoadMore)? loaded,
     TResult? Function(String error)? error,
   }) {
-    return loaded?.call(posts, isLoading, canLoadMore);
+    return loaded?.call(posts, stores, isLoading, canLoadMore);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<FullContextPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
+    TResult Function(List<FullContextPostModel> posts, List<StoreModel> stores, bool isLoading, bool canLoadMore)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(posts, isLoading, canLoadMore);
+      return loaded(posts, stores, isLoading, canLoadMore);
     }
     return orElse();
   }
@@ -324,9 +340,10 @@ class _$LoadedImpl implements Loaded {
 }
 
 abstract class Loaded implements ShoppingListState {
-  const factory Loaded(final List<FullContextPostModel> posts, final bool isLoading, final bool canLoadMore) = _$LoadedImpl;
+  const factory Loaded(final List<FullContextPostModel> posts, final List<StoreModel> stores, final bool isLoading, final bool canLoadMore) = _$LoadedImpl;
 
   List<FullContextPostModel> get posts;
+  List<StoreModel> get stores;
   bool get isLoading;
   bool get canLoadMore;
   @JsonKey(ignore: true)
@@ -388,7 +405,7 @@ class _$ErrorImpl implements Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<FullContextPostModel> posts, bool isLoading, bool canLoadMore) loaded,
+    required TResult Function(List<FullContextPostModel> posts, List<StoreModel> stores, bool isLoading, bool canLoadMore) loaded,
     required TResult Function(String error) error,
   }) {
     return error(this.error);
@@ -398,7 +415,7 @@ class _$ErrorImpl implements Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<FullContextPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
+    TResult? Function(List<FullContextPostModel> posts, List<StoreModel> stores, bool isLoading, bool canLoadMore)? loaded,
     TResult? Function(String error)? error,
   }) {
     return error?.call(this.error);
@@ -408,7 +425,7 @@ class _$ErrorImpl implements Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<FullContextPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
+    TResult Function(List<FullContextPostModel> posts, List<StoreModel> stores, bool isLoading, bool canLoadMore)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
