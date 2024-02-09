@@ -9,6 +9,7 @@ class AppTextField extends StatelessWidget {
   final TextEntryModel model;
   final TextField _textField;
   final BuildContext context;
+  final OutlineInputBorder? border;
   final Function(AppTextField)? beginEdit;
   final Function(AppTextField)? endEdit;
   final ValueChanged<String>? onChanged;
@@ -31,6 +32,7 @@ class AppTextField extends StatelessWidget {
     bool enabled = true,
     bool editable = true,
     bool autofocus = false,
+    this.border,
     Color? cursorColor,
     Color? filled,
     double radius = 4.0,
@@ -61,18 +63,21 @@ class AppTextField extends StatelessWidget {
             isDense: false,
             errorText: model.error?.tr(),
             fillColor: filled ?? App.appTheme.colorScheme.background,
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: App.appTheme.primaryColor, width: 1),
-              borderRadius: BorderRadius.circular(radius),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: App.appTheme.primaryColor, width: 1),
-              borderRadius: BorderRadius.circular(radius),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: App.appTheme.primaryColor, width: 1),
-              borderRadius: BorderRadius.circular(radius),
-            ),
+            border: border ??
+                OutlineInputBorder(
+                  borderSide: BorderSide(color: App.appTheme.primaryColor, width: 1),
+                  borderRadius: BorderRadius.circular(radius),
+                ),
+            focusedBorder: border ??
+                OutlineInputBorder(
+                  borderSide: BorderSide(color: App.appTheme.primaryColor, width: 1),
+                  borderRadius: BorderRadius.circular(radius),
+                ),
+            enabledBorder: border ??
+                OutlineInputBorder(
+                  borderSide: BorderSide(color: App.appTheme.primaryColor, width: 1),
+                  borderRadius: BorderRadius.circular(radius),
+                ),
             hintText: hint,
             hintStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: App.appTheme.colorScheme.onSecondary),
             labelText: label,

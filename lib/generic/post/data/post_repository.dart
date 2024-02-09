@@ -4,6 +4,7 @@ import 'package:superkauf/generic/post/model/create_post_model.dart';
 import 'package:superkauf/generic/post/model/create_post_result.dart';
 import 'package:superkauf/generic/post/model/delete_post_body.dart';
 import 'package:superkauf/generic/post/model/delete_post_result.dart';
+import 'package:superkauf/generic/post/model/get_fullcontext_post_detail_result.dart';
 import 'package:superkauf/generic/post/model/get_post_detail_result.dart';
 import 'package:superkauf/generic/post/model/get_post_response.dart';
 import 'package:superkauf/generic/post/model/get_posts_result.dart';
@@ -43,8 +44,8 @@ class PostsRepository {
     });
   }
 
-  Future<GetPostsResult> getPostsByUser(int userID) async {
-    return postApi.getPostsByUser(id: userID.toString()).then((posts) {
+  Future<GetPostsResult> getPostsByUser(GetPostsPaginationModel body, int userID) async {
+    return postApi.getPostsByUser(id: userID.toString(), per_page: body.perPage, offset: body.offset).then((posts) {
       return GetPostsResult.success(GetPostsResponseModel(posts: posts, pagination: const PaginationModel(count: 1, perPage: 1)));
     }).onError((error, stackTrace) {
       if (error is DioException) {
@@ -54,14 +55,14 @@ class PostsRepository {
     });
   }
 
-  Future<GetPostDetailResult> getPostDetail(String postId) async {
-    return postApi.getPostById(id: postId).then((post) {
-      return GetPostDetailResult.success(post);
+  Future<GetFullContextPostDetailResult> getPostDetail(String postId, int userId) async {
+    return postApi.getPostById(id: postId, userId: userId).then((post) {
+      return GetFullContextPostDetailResult.success(post);
     }).onError((error, stackTrace) {
       if (error is DioException) {
-        return GetPostDetailResult.failure(error.message ?? 'error getting posts');
+        return GetFullContextPostDetailResult.failure(error.message ?? 'error getting posts');
       }
-      return const GetPostDetailResult.failure('error');
+      return const GetFullContextPostDetailResult.failure('error');
     });
   }
 

@@ -5,6 +5,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:superkauf/feature/account/use_case/account_navigation.dart';
 import 'package:superkauf/feature/login/model/login_params.dart';
 import 'package:superkauf/feature/login/use_case/email_login_use_case.dart';
+import 'package:superkauf/feature/login/use_case/email_register_use_case.dart';
+import 'package:superkauf/feature/login/use_case/login_navigation.dart';
 import 'package:superkauf/generic/user/model/create_user_body.dart';
 import 'package:superkauf/generic/user/use_case/create_user_use_case.dart';
 
@@ -22,8 +24,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final GoogleLoginUseCase googleLoginUseCase;
   final SpotifyLoginUseCase spotifyLoginUseCase;
   final EmailLoginUseCase emailLoginUseCase;
-  final AccountNavigation loginNavigation;
+  final AccountNavigation accountNavigation;
   final CreateUserUseCase createUserUseCase;
+  final LoginNavigation loginNavigation;
+  final EmailRegisterUseCase emailRegisterUseCase;
 
   LoginBloc({
     required this.discordLoginUseCase,
@@ -33,23 +37,30 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     required this.emailLoginUseCase,
     required this.loginNavigation,
     required this.createUserUseCase,
+    required this.accountNavigation,
+    required this.emailRegisterUseCase,
   }) : super(const LoginState.loading()) {
     on<DiscordLogin>(_onDiscordLogin);
-    on<EmailLogin>(_onEmailLogin);
+    on<EmailLoginEvent>(_onEmailLoginEvent);
+    on<EmailRegisterEvent>(_onEmailRegisterEvent);
     on<GoogleLogin>(_onGoogleLogin);
     on<AppleLogin>(_onAppleLogin);
     on<SpotifyEvent>(_onSpotifyEvent);
     on<CreateUserProfile>(_onCreateUserProfile);
+    on<GoBack>(_onGoBack);
   }
 
-  Future<void> _onEmailLogin(
-    EmailLogin event,
+  Future<void> _onEmailLoginEvent(
+    EmailLoginEvent event,
     Emitter<LoginState> emit,
   ) async {
+    emit(const LoginState.loginInProgress());
+
     final params = LoginParams(email: event.email, password: event.password);
     final response = await emailLoginUseCase.call(params);
     if (response == null || response.session == null) {
-      loginNavigation.goToLogin();
+      emit(const LoginState.error('There was an error logging in. Please try again.'));
+      emit(const LoginState.loading());
       return;
     }
 
@@ -57,7 +68,28 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       'login_type': 'email',
     });
 
-    loginNavigation.goToAccount();
+    accountNavigation.goToAccount();
+  }
+
+  Future<void> _onEmailRegisterEvent(
+    EmailRegisterEvent event,
+    Emitter<LoginState> emit,
+  ) async {
+    emit(const LoginState.loginInProgress());
+
+    final params = LoginParams(email: event.email, password: event.password);
+    final response = await emailRegisterUseCase.call(params);
+    if (response == null) {
+      emit(const LoginState.error('There was an error registering you. Please try again.'));
+      emit(const LoginState.loading());
+      return;
+    }
+
+    Posthog().capture(eventName: 'user_registered', properties: {
+      'login_type': 'email',
+    });
+
+    emit(const LoginState.confirmEmail());
   }
 
   Future<void> _onDiscordLogin(
@@ -75,11 +107,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     GoogleLogin event,
     Emitter<LoginState> emit,
   ) async {
-    await googleLoginUseCase.call();
+    try {
+      await googleLoginUseCase.call();
+    } catch (e) {
+      print(e);
+      emit(const LoginState.error('There was an error logging you in with google. Please try another provider.'));
+    }
 
     Posthog().capture(eventName: 'user_logged_in', properties: {
       'login_type': 'google',
     });
+    emit(const LoginState.loading());
   }
 
   Future<void> _onAppleLogin(
@@ -123,9 +161,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         'login_type': 'email',
       });
 
-      loginNavigation.goToAccount();
+      accountNavigation.goToAccount();
     }, failure: (failure) {
       print(failure);
     });
+  }
+
+  Future<void> _onGoBack(
+    GoBack event,
+    Emitter<LoginState> emit,
+  ) async {
+    loginNavigation.goBack(event.path);
   }
 }

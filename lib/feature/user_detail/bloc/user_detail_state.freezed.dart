@@ -20,7 +20,7 @@ mixin _$UserDetailState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(UserModel user) initial,
-    required TResult Function(UserModel user, List<FeedPostModel> posts) loaded,
+    required TResult Function(UserModel user, List<FeedPostModel> posts, bool isLoading, bool canLoadMore) loaded,
     required TResult Function(String error) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +28,7 @@ mixin _$UserDetailState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(UserModel user)? initial,
-    TResult? Function(UserModel user, List<FeedPostModel> posts)? loaded,
+    TResult? Function(UserModel user, List<FeedPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
     TResult? Function(String error)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ mixin _$UserDetailState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(UserModel user)? initial,
-    TResult Function(UserModel user, List<FeedPostModel> posts)? loaded,
+    TResult Function(UserModel user, List<FeedPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) =>
@@ -116,7 +116,7 @@ class _$LoadingImpl implements Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(UserModel user) initial,
-    required TResult Function(UserModel user, List<FeedPostModel> posts) loaded,
+    required TResult Function(UserModel user, List<FeedPostModel> posts, bool isLoading, bool canLoadMore) loaded,
     required TResult Function(String error) error,
   }) {
     return loading();
@@ -127,7 +127,7 @@ class _$LoadingImpl implements Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(UserModel user)? initial,
-    TResult? Function(UserModel user, List<FeedPostModel> posts)? loaded,
+    TResult? Function(UserModel user, List<FeedPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
     TResult? Function(String error)? error,
   }) {
     return loading?.call();
@@ -138,7 +138,7 @@ class _$LoadingImpl implements Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(UserModel user)? initial,
-    TResult Function(UserModel user, List<FeedPostModel> posts)? loaded,
+    TResult Function(UserModel user, List<FeedPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -246,7 +246,7 @@ class _$InitialImpl implements Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(UserModel user) initial,
-    required TResult Function(UserModel user, List<FeedPostModel> posts) loaded,
+    required TResult Function(UserModel user, List<FeedPostModel> posts, bool isLoading, bool canLoadMore) loaded,
     required TResult Function(String error) error,
   }) {
     return initial(user);
@@ -257,7 +257,7 @@ class _$InitialImpl implements Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(UserModel user)? initial,
-    TResult? Function(UserModel user, List<FeedPostModel> posts)? loaded,
+    TResult? Function(UserModel user, List<FeedPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
     TResult? Function(String error)? error,
   }) {
     return initial?.call(user);
@@ -268,7 +268,7 @@ class _$InitialImpl implements Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(UserModel user)? initial,
-    TResult Function(UserModel user, List<FeedPostModel> posts)? loaded,
+    TResult Function(UserModel user, List<FeedPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -328,7 +328,7 @@ abstract class Initial implements UserDetailState {
 abstract class _$$LoadedImplCopyWith<$Res> {
   factory _$$LoadedImplCopyWith(_$LoadedImpl value, $Res Function(_$LoadedImpl) then) = __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({UserModel user, List<FeedPostModel> posts});
+  $Res call({UserModel user, List<FeedPostModel> posts, bool isLoading, bool canLoadMore});
 }
 
 /// @nodoc
@@ -340,6 +340,8 @@ class __$$LoadedImplCopyWithImpl<$Res> extends _$UserDetailStateCopyWithImpl<$Re
   $Res call({
     Object? user = null,
     Object? posts = null,
+    Object? isLoading = null,
+    Object? canLoadMore = null,
   }) {
     return _then(_$LoadedImpl(
       null == user
@@ -350,6 +352,14 @@ class __$$LoadedImplCopyWithImpl<$Res> extends _$UserDetailStateCopyWithImpl<$Re
           ? _value._posts
           : posts // ignore: cast_nullable_to_non_nullable
               as List<FeedPostModel>,
+      null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      null == canLoadMore
+          ? _value.canLoadMore
+          : canLoadMore // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -357,7 +367,7 @@ class __$$LoadedImplCopyWithImpl<$Res> extends _$UserDetailStateCopyWithImpl<$Re
 /// @nodoc
 
 class _$LoadedImpl implements Loaded {
-  const _$LoadedImpl(this.user, final List<FeedPostModel> posts) : _posts = posts;
+  const _$LoadedImpl(this.user, final List<FeedPostModel> posts, this.isLoading, this.canLoadMore) : _posts = posts;
 
   @override
   final UserModel user;
@@ -370,18 +380,28 @@ class _$LoadedImpl implements Loaded {
   }
 
   @override
+  final bool isLoading;
+  @override
+  final bool canLoadMore;
+
+  @override
   String toString() {
-    return 'UserDetailState.loaded(user: $user, posts: $posts)';
+    return 'UserDetailState.loaded(user: $user, posts: $posts, isLoading: $isLoading, canLoadMore: $canLoadMore)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadedImpl && (identical(other.user, user) || other.user == user) && const DeepCollectionEquality().equals(other._posts, _posts));
+        (other.runtimeType == runtimeType &&
+            other is _$LoadedImpl &&
+            (identical(other.user, user) || other.user == user) &&
+            const DeepCollectionEquality().equals(other._posts, _posts) &&
+            (identical(other.isLoading, isLoading) || other.isLoading == isLoading) &&
+            (identical(other.canLoadMore, canLoadMore) || other.canLoadMore == canLoadMore));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, user, const DeepCollectionEquality().hash(_posts));
+  int get hashCode => Object.hash(runtimeType, user, const DeepCollectionEquality().hash(_posts), isLoading, canLoadMore);
 
   @JsonKey(ignore: true)
   @override
@@ -393,10 +413,10 @@ class _$LoadedImpl implements Loaded {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(UserModel user) initial,
-    required TResult Function(UserModel user, List<FeedPostModel> posts) loaded,
+    required TResult Function(UserModel user, List<FeedPostModel> posts, bool isLoading, bool canLoadMore) loaded,
     required TResult Function(String error) error,
   }) {
-    return loaded(user, posts);
+    return loaded(user, posts, isLoading, canLoadMore);
   }
 
   @override
@@ -404,10 +424,10 @@ class _$LoadedImpl implements Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(UserModel user)? initial,
-    TResult? Function(UserModel user, List<FeedPostModel> posts)? loaded,
+    TResult? Function(UserModel user, List<FeedPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
     TResult? Function(String error)? error,
   }) {
-    return loaded?.call(user, posts);
+    return loaded?.call(user, posts, isLoading, canLoadMore);
   }
 
   @override
@@ -415,12 +435,12 @@ class _$LoadedImpl implements Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(UserModel user)? initial,
-    TResult Function(UserModel user, List<FeedPostModel> posts)? loaded,
+    TResult Function(UserModel user, List<FeedPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(user, posts);
+      return loaded(user, posts, isLoading, canLoadMore);
     }
     return orElse();
   }
@@ -464,10 +484,12 @@ class _$LoadedImpl implements Loaded {
 }
 
 abstract class Loaded implements UserDetailState {
-  const factory Loaded(final UserModel user, final List<FeedPostModel> posts) = _$LoadedImpl;
+  const factory Loaded(final UserModel user, final List<FeedPostModel> posts, final bool isLoading, final bool canLoadMore) = _$LoadedImpl;
 
   UserModel get user;
   List<FeedPostModel> get posts;
+  bool get isLoading;
+  bool get canLoadMore;
   @JsonKey(ignore: true)
   _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith => throw _privateConstructorUsedError;
 }
@@ -528,7 +550,7 @@ class _$ErrorImpl implements Error {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(UserModel user) initial,
-    required TResult Function(UserModel user, List<FeedPostModel> posts) loaded,
+    required TResult Function(UserModel user, List<FeedPostModel> posts, bool isLoading, bool canLoadMore) loaded,
     required TResult Function(String error) error,
   }) {
     return error(this.error);
@@ -539,7 +561,7 @@ class _$ErrorImpl implements Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(UserModel user)? initial,
-    TResult? Function(UserModel user, List<FeedPostModel> posts)? loaded,
+    TResult? Function(UserModel user, List<FeedPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
     TResult? Function(String error)? error,
   }) {
     return error?.call(this.error);
@@ -550,7 +572,7 @@ class _$ErrorImpl implements Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(UserModel user)? initial,
-    TResult Function(UserModel user, List<FeedPostModel> posts)? loaded,
+    TResult Function(UserModel user, List<FeedPostModel> posts, bool isLoading, bool canLoadMore)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {

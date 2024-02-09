@@ -8,6 +8,7 @@ import 'package:superkauf/feature/user_detail/bloc/user_detail_bloc.dart';
 import 'package:superkauf/feature/user_detail/bloc/user_detail_state.dart';
 import 'package:superkauf/feature/user_detail/view/componenets/user_detail_view_preview.dart';
 import 'package:superkauf/generic/constants.dart';
+import 'package:superkauf/generic/functions.dart';
 import 'package:superkauf/generic/widget/app_progress.dart';
 
 import '../../../library/app_screen.dart';
@@ -23,9 +24,31 @@ class UserDetailScreen extends Screen {
 }
 
 class _UserDetailScreenState extends State<UserDetailScreen> {
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
+    _scrollController.addListener(_loadMoreListener);
+    _scrollController.addListener(_listener);
+
     super.initState();
+  }
+
+  void _listener() {
+    scrollToRefreshListener(controller: _scrollController);
+  }
+
+  void _loadMoreListener() {
+    scrollToRefreshListener(controller: _scrollController);
+    if (_scrollController.position.pixels > _scrollController.position.maxScrollExtent - 300) {
+      if ((context.read<UserDetailBloc>().state is Loaded) && ((context.read<UserDetailBloc>().state as Loaded).isLoading || (context.read<UserDetailBloc>().state as Loaded).canLoadMore == false)) {
+        return;
+      }
+      print('loading more');
+      context.read<UserDetailBloc>().add(
+            const LoadMore(),
+          );
+    }
   }
 
   @override
@@ -51,55 +74,64 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
             }, loaded: (loaded) {
               return SizedBox(
                   width: constraints.maxWidth,
-                  child: CustomScrollView(
-                    slivers: [
-                      SliverToBoxAdapter(
-                        child: UserDetailView(
-                          user: loaded.user,
-                          constraints: constraints,
-                        ),
-                      ),
-                      SliverGrid.builder(
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          mainAxisSpacing: 8.0,
-                          crossAxisSpacing: 8.0,
-                        ),
-                        itemCount: loaded.posts.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            child: GestureDetector(
-                              onTap: () {
-                                BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(
-                                  post: loaded.posts[index].post,
-                                  user: loaded.posts[index].user,
-                                ));
-
-                                BlocProvider.of<NavigationBloc>(context).add(const OpenPostDetailScreen());
-                              },
-                              child: CachedNetworkImage(
-                                imageUrl: loaded.posts[index].post.image,
-                                imageBuilder: (context, imageProvider) => Container(
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                    image: imageProvider,
-                                    fit: BoxFit.cover,
-                                  )),
-                                ),
-                                cacheManager: CacheManager(
-                                  Config(
-                                    'post_image',
-                                    stalePeriod: const Duration(days: 7),
-                                  ),
-                                ),
-                                progressIndicatorBuilder: (context, url, downloadProgress) => Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
-                                errorWidget: (context, url, error) => const Icon(Icons.error),
-                              ),
-                            ),
+                  child: RefreshIndicator(
+                    onRefresh: () async {
+                      context.read<UserDetailBloc>().add(
+                            const ReloadUser(),
                           );
-                        },
-                      ),
-                    ],
+                    },
+                    child: CustomScrollView(
+                      controller: _scrollController,
+                      slivers: [
+                        SliverToBoxAdapter(
+                          child: UserDetailView(
+                            user: loaded.user,
+                            constraints: constraints,
+                          ),
+                        ),
+                        SliverGrid.builder(
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            mainAxisSpacing: 8.0,
+                            crossAxisSpacing: 8.0,
+                          ),
+                          itemCount: loaded.posts.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Hero(
+                              tag: loaded.posts[index].post.id,
+                              child: GestureDetector(
+                                onTap: () {
+                                  BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(
+                                    post: loaded.posts[index].post,
+                                    user: loaded.posts[index].user,
+                                  ));
+
+                                  BlocProvider.of<NavigationBloc>(context).add(const OpenPostDetailScreen());
+                                },
+                                child: CachedNetworkImage(
+                                  imageUrl: loaded.posts[index].post.image,
+                                  imageBuilder: (context, imageProvider) => Container(
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
+                                    )),
+                                  ),
+                                  cacheManager: CacheManager(
+                                    Config(
+                                      'post_image',
+                                      stalePeriod: const Duration(days: 7),
+                                    ),
+                                  ),
+                                  progressIndicatorBuilder: (context, url, downloadProgress) => Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
+                                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ));
             }, error: (error) {
               return Text(error.error);
@@ -110,5 +142,12 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
         );
       }),
     );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+
+    super.dispose();
   }
 }

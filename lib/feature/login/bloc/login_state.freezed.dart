@@ -19,21 +19,27 @@ mixin _$LoginState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() error,
+    required TResult Function(String message) error,
+    required TResult Function() loginInProgress,
+    required TResult Function() confirmEmail,
     required TResult Function(String username) loggedIn,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function()? error,
+    TResult? Function(String message)? error,
+    TResult? Function()? loginInProgress,
+    TResult? Function()? confirmEmail,
     TResult? Function(String username)? loggedIn,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? error,
+    TResult Function(String message)? error,
+    TResult Function()? loginInProgress,
+    TResult Function()? confirmEmail,
     TResult Function(String username)? loggedIn,
     required TResult orElse(),
   }) =>
@@ -42,6 +48,8 @@ mixin _$LoginState {
   TResult map<TResult extends Object?>({
     required TResult Function(Loading value) loading,
     required TResult Function(Error value) error,
+    required TResult Function(LoginInProgress value) loginInProgress,
+    required TResult Function(ConfirmEmail value) confirmEmail,
     required TResult Function(LoggedIn value) loggedIn,
   }) =>
       throw _privateConstructorUsedError;
@@ -49,6 +57,8 @@ mixin _$LoginState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Loading value)? loading,
     TResult? Function(Error value)? error,
+    TResult? Function(LoginInProgress value)? loginInProgress,
+    TResult? Function(ConfirmEmail value)? confirmEmail,
     TResult? Function(LoggedIn value)? loggedIn,
   }) =>
       throw _privateConstructorUsedError;
@@ -56,6 +66,8 @@ mixin _$LoginState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Loading value)? loading,
     TResult Function(Error value)? error,
+    TResult Function(LoginInProgress value)? loginInProgress,
+    TResult Function(ConfirmEmail value)? confirmEmail,
     TResult Function(LoggedIn value)? loggedIn,
     required TResult orElse(),
   }) =>
@@ -109,7 +121,9 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() error,
+    required TResult Function(String message) error,
+    required TResult Function() loginInProgress,
+    required TResult Function() confirmEmail,
     required TResult Function(String username) loggedIn,
   }) {
     return loading();
@@ -119,7 +133,9 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function()? error,
+    TResult? Function(String message)? error,
+    TResult? Function()? loginInProgress,
+    TResult? Function()? confirmEmail,
     TResult? Function(String username)? loggedIn,
   }) {
     return loading?.call();
@@ -129,7 +145,9 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? error,
+    TResult Function(String message)? error,
+    TResult Function()? loginInProgress,
+    TResult Function()? confirmEmail,
     TResult Function(String username)? loggedIn,
     required TResult orElse(),
   }) {
@@ -144,6 +162,8 @@ class _$LoadingImpl implements Loading {
   TResult map<TResult extends Object?>({
     required TResult Function(Loading value) loading,
     required TResult Function(Error value) error,
+    required TResult Function(LoginInProgress value) loginInProgress,
+    required TResult Function(ConfirmEmail value) confirmEmail,
     required TResult Function(LoggedIn value) loggedIn,
   }) {
     return loading(this);
@@ -154,6 +174,8 @@ class _$LoadingImpl implements Loading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Loading value)? loading,
     TResult? Function(Error value)? error,
+    TResult? Function(LoginInProgress value)? loginInProgress,
+    TResult? Function(ConfirmEmail value)? confirmEmail,
     TResult? Function(LoggedIn value)? loggedIn,
   }) {
     return loading?.call(this);
@@ -164,6 +186,8 @@ class _$LoadingImpl implements Loading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Loading value)? loading,
     TResult Function(Error value)? error,
+    TResult Function(LoginInProgress value)? loginInProgress,
+    TResult Function(ConfirmEmail value)? confirmEmail,
     TResult Function(LoggedIn value)? loggedIn,
     required TResult orElse(),
   }) {
@@ -181,61 +205,90 @@ abstract class Loading implements LoginState {
 /// @nodoc
 abstract class _$$ErrorImplCopyWith<$Res> {
   factory _$$ErrorImplCopyWith(_$ErrorImpl value, $Res Function(_$ErrorImpl) then) = __$$ErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String message});
 }
 
 /// @nodoc
 class __$$ErrorImplCopyWithImpl<$Res> extends _$LoginStateCopyWithImpl<$Res, _$ErrorImpl> implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(_$ErrorImpl _value, $Res Function(_$ErrorImpl) _then) : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$ErrorImpl(
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$ErrorImpl implements Error {
-  const _$ErrorImpl();
+  const _$ErrorImpl(this.message);
+
+  @override
+  final String message;
 
   @override
   String toString() {
-    return 'LoginState.error()';
+    return 'LoginState.error(message: $message)';
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$ErrorImpl);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$ErrorImpl && (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith => __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() error,
+    required TResult Function(String message) error,
+    required TResult Function() loginInProgress,
+    required TResult Function() confirmEmail,
     required TResult Function(String username) loggedIn,
   }) {
-    return error();
+    return error(message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function()? error,
+    TResult? Function(String message)? error,
+    TResult? Function()? loginInProgress,
+    TResult? Function()? confirmEmail,
     TResult? Function(String username)? loggedIn,
   }) {
-    return error?.call();
+    return error?.call(message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? error,
+    TResult Function(String message)? error,
+    TResult Function()? loginInProgress,
+    TResult Function()? confirmEmail,
     TResult Function(String username)? loggedIn,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error();
+      return error(message);
     }
     return orElse();
   }
@@ -245,6 +298,8 @@ class _$ErrorImpl implements Error {
   TResult map<TResult extends Object?>({
     required TResult Function(Loading value) loading,
     required TResult Function(Error value) error,
+    required TResult Function(LoginInProgress value) loginInProgress,
+    required TResult Function(ConfirmEmail value) confirmEmail,
     required TResult Function(LoggedIn value) loggedIn,
   }) {
     return error(this);
@@ -255,6 +310,8 @@ class _$ErrorImpl implements Error {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Loading value)? loading,
     TResult? Function(Error value)? error,
+    TResult? Function(LoginInProgress value)? loginInProgress,
+    TResult? Function(ConfirmEmail value)? confirmEmail,
     TResult? Function(LoggedIn value)? loggedIn,
   }) {
     return error?.call(this);
@@ -265,6 +322,8 @@ class _$ErrorImpl implements Error {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Loading value)? loading,
     TResult Function(Error value)? error,
+    TResult Function(LoginInProgress value)? loginInProgress,
+    TResult Function(ConfirmEmail value)? confirmEmail,
     TResult Function(LoggedIn value)? loggedIn,
     required TResult orElse(),
   }) {
@@ -276,7 +335,237 @@ class _$ErrorImpl implements Error {
 }
 
 abstract class Error implements LoginState {
-  const factory Error() = _$ErrorImpl;
+  const factory Error(final String message) = _$ErrorImpl;
+
+  String get message;
+  @JsonKey(ignore: true)
+  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$LoginInProgressImplCopyWith<$Res> {
+  factory _$$LoginInProgressImplCopyWith(_$LoginInProgressImpl value, $Res Function(_$LoginInProgressImpl) then) = __$$LoginInProgressImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$LoginInProgressImplCopyWithImpl<$Res> extends _$LoginStateCopyWithImpl<$Res, _$LoginInProgressImpl> implements _$$LoginInProgressImplCopyWith<$Res> {
+  __$$LoginInProgressImplCopyWithImpl(_$LoginInProgressImpl _value, $Res Function(_$LoginInProgressImpl) _then) : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$LoginInProgressImpl implements LoginInProgress {
+  const _$LoginInProgressImpl();
+
+  @override
+  String toString() {
+    return 'LoginState.loginInProgress()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$LoginInProgressImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loading,
+    required TResult Function(String message) error,
+    required TResult Function() loginInProgress,
+    required TResult Function() confirmEmail,
+    required TResult Function(String username) loggedIn,
+  }) {
+    return loginInProgress();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loading,
+    TResult? Function(String message)? error,
+    TResult? Function()? loginInProgress,
+    TResult? Function()? confirmEmail,
+    TResult? Function(String username)? loggedIn,
+  }) {
+    return loginInProgress?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loading,
+    TResult Function(String message)? error,
+    TResult Function()? loginInProgress,
+    TResult Function()? confirmEmail,
+    TResult Function(String username)? loggedIn,
+    required TResult orElse(),
+  }) {
+    if (loginInProgress != null) {
+      return loginInProgress();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Loading value) loading,
+    required TResult Function(Error value) error,
+    required TResult Function(LoginInProgress value) loginInProgress,
+    required TResult Function(ConfirmEmail value) confirmEmail,
+    required TResult Function(LoggedIn value) loggedIn,
+  }) {
+    return loginInProgress(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Loading value)? loading,
+    TResult? Function(Error value)? error,
+    TResult? Function(LoginInProgress value)? loginInProgress,
+    TResult? Function(ConfirmEmail value)? confirmEmail,
+    TResult? Function(LoggedIn value)? loggedIn,
+  }) {
+    return loginInProgress?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Loading value)? loading,
+    TResult Function(Error value)? error,
+    TResult Function(LoginInProgress value)? loginInProgress,
+    TResult Function(ConfirmEmail value)? confirmEmail,
+    TResult Function(LoggedIn value)? loggedIn,
+    required TResult orElse(),
+  }) {
+    if (loginInProgress != null) {
+      return loginInProgress(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class LoginInProgress implements LoginState {
+  const factory LoginInProgress() = _$LoginInProgressImpl;
+}
+
+/// @nodoc
+abstract class _$$ConfirmEmailImplCopyWith<$Res> {
+  factory _$$ConfirmEmailImplCopyWith(_$ConfirmEmailImpl value, $Res Function(_$ConfirmEmailImpl) then) = __$$ConfirmEmailImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$ConfirmEmailImplCopyWithImpl<$Res> extends _$LoginStateCopyWithImpl<$Res, _$ConfirmEmailImpl> implements _$$ConfirmEmailImplCopyWith<$Res> {
+  __$$ConfirmEmailImplCopyWithImpl(_$ConfirmEmailImpl _value, $Res Function(_$ConfirmEmailImpl) _then) : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$ConfirmEmailImpl implements ConfirmEmail {
+  const _$ConfirmEmailImpl();
+
+  @override
+  String toString() {
+    return 'LoginState.confirmEmail()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$ConfirmEmailImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loading,
+    required TResult Function(String message) error,
+    required TResult Function() loginInProgress,
+    required TResult Function() confirmEmail,
+    required TResult Function(String username) loggedIn,
+  }) {
+    return confirmEmail();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loading,
+    TResult? Function(String message)? error,
+    TResult? Function()? loginInProgress,
+    TResult? Function()? confirmEmail,
+    TResult? Function(String username)? loggedIn,
+  }) {
+    return confirmEmail?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loading,
+    TResult Function(String message)? error,
+    TResult Function()? loginInProgress,
+    TResult Function()? confirmEmail,
+    TResult Function(String username)? loggedIn,
+    required TResult orElse(),
+  }) {
+    if (confirmEmail != null) {
+      return confirmEmail();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Loading value) loading,
+    required TResult Function(Error value) error,
+    required TResult Function(LoginInProgress value) loginInProgress,
+    required TResult Function(ConfirmEmail value) confirmEmail,
+    required TResult Function(LoggedIn value) loggedIn,
+  }) {
+    return confirmEmail(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Loading value)? loading,
+    TResult? Function(Error value)? error,
+    TResult? Function(LoginInProgress value)? loginInProgress,
+    TResult? Function(ConfirmEmail value)? confirmEmail,
+    TResult? Function(LoggedIn value)? loggedIn,
+  }) {
+    return confirmEmail?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Loading value)? loading,
+    TResult Function(Error value)? error,
+    TResult Function(LoginInProgress value)? loginInProgress,
+    TResult Function(ConfirmEmail value)? confirmEmail,
+    TResult Function(LoggedIn value)? loggedIn,
+    required TResult orElse(),
+  }) {
+    if (confirmEmail != null) {
+      return confirmEmail(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ConfirmEmail implements LoginState {
+  const factory ConfirmEmail() = _$ConfirmEmailImpl;
 }
 
 /// @nodoc
@@ -334,7 +623,9 @@ class _$LoggedInImpl implements LoggedIn {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() error,
+    required TResult Function(String message) error,
+    required TResult Function() loginInProgress,
+    required TResult Function() confirmEmail,
     required TResult Function(String username) loggedIn,
   }) {
     return loggedIn(username);
@@ -344,7 +635,9 @@ class _$LoggedInImpl implements LoggedIn {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function()? error,
+    TResult? Function(String message)? error,
+    TResult? Function()? loginInProgress,
+    TResult? Function()? confirmEmail,
     TResult? Function(String username)? loggedIn,
   }) {
     return loggedIn?.call(username);
@@ -354,7 +647,9 @@ class _$LoggedInImpl implements LoggedIn {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? error,
+    TResult Function(String message)? error,
+    TResult Function()? loginInProgress,
+    TResult Function()? confirmEmail,
     TResult Function(String username)? loggedIn,
     required TResult orElse(),
   }) {
@@ -369,6 +664,8 @@ class _$LoggedInImpl implements LoggedIn {
   TResult map<TResult extends Object?>({
     required TResult Function(Loading value) loading,
     required TResult Function(Error value) error,
+    required TResult Function(LoginInProgress value) loginInProgress,
+    required TResult Function(ConfirmEmail value) confirmEmail,
     required TResult Function(LoggedIn value) loggedIn,
   }) {
     return loggedIn(this);
@@ -379,6 +676,8 @@ class _$LoggedInImpl implements LoggedIn {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Loading value)? loading,
     TResult? Function(Error value)? error,
+    TResult? Function(LoginInProgress value)? loginInProgress,
+    TResult? Function(ConfirmEmail value)? confirmEmail,
     TResult? Function(LoggedIn value)? loggedIn,
   }) {
     return loggedIn?.call(this);
@@ -389,6 +688,8 @@ class _$LoggedInImpl implements LoggedIn {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Loading value)? loading,
     TResult Function(Error value)? error,
+    TResult Function(LoginInProgress value)? loginInProgress,
+    TResult Function(ConfirmEmail value)? confirmEmail,
     TResult Function(LoggedIn value)? loggedIn,
     required TResult orElse(),
   }) {

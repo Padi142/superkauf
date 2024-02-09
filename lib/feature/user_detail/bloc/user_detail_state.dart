@@ -10,7 +10,12 @@ abstract class UserDetailState with _$UserDetailState {
 
   const factory UserDetailState.initial(UserModel user) = Initial;
 
-  const factory UserDetailState.loaded(UserModel user, List<FeedPostModel> posts) = Loaded;
+  const factory UserDetailState.loaded(
+    UserModel user,
+    List<FeedPostModel> posts,
+    bool isLoading,
+    bool canLoadMore,
+  ) = Loaded;
 
   const factory UserDetailState.error(String error) = Error;
 }

@@ -4,7 +4,9 @@ import 'package:superkauf/feature/account/use_case/account_navigation.dart';
 import 'package:superkauf/feature/login/use_case/apple_login.dart';
 import 'package:superkauf/feature/login/use_case/discord_login.dart';
 import 'package:superkauf/feature/login/use_case/email_login_use_case.dart';
+import 'package:superkauf/feature/login/use_case/email_register_use_case.dart';
 import 'package:superkauf/feature/login/use_case/google_login.dart';
+import 'package:superkauf/feature/login/use_case/login_navigation.dart';
 import 'package:superkauf/feature/login/use_case/spotify_login.dart';
 import 'package:superkauf/feature/login/view/login_screen.dart';
 import 'package:superkauf/feature/my_channel/bloc/my_channel_bloc.dart';
@@ -15,7 +17,9 @@ import 'bloc/login_bloc.dart';
 
 class LoginModule extends AppModule {
   @override
-  void registerNavigation() {}
+  void registerNavigation() {
+    GetIt.I.registerFactory<LoginNavigation>(() => LoginNavigation());
+  }
 
   @override
   void registerUseCase() {
@@ -34,6 +38,9 @@ class LoginModule extends AppModule {
     GetIt.I.registerFactory<SpotifyLoginUseCase>(
       () => SpotifyLoginUseCase(),
     );
+    GetIt.I.registerFactory<EmailRegisterUseCase>(
+      () => EmailRegisterUseCase(),
+    );
   }
 
   @override
@@ -45,8 +52,10 @@ class LoginModule extends AppModule {
         googleLoginUseCase: GetIt.I.get<GoogleLoginUseCase>(),
         spotifyLoginUseCase: GetIt.I.get<SpotifyLoginUseCase>(),
         emailLoginUseCase: GetIt.I.get<EmailLoginUseCase>(),
-        loginNavigation: GetIt.I.get<AccountNavigation>(),
+        accountNavigation: GetIt.I.get<AccountNavigation>(),
+        loginNavigation: GetIt.I.get<LoginNavigation>(),
         createUserUseCase: GetIt.I.get<CreateUserUseCase>(),
+        emailRegisterUseCase: GetIt.I.get<EmailRegisterUseCase>(),
       ),
     );
   }

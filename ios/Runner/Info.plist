@@ -63,5 +63,17 @@
 	<string>https://eu.posthog.com</string>
 	<key>com.posthog.posthog.CAPTURE_APPLICATION_LIFECYCLE_EVENTS</key>
 	<true/>
+	<key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>googlegmail</string>
+        <string>x-dispatch</string>
+        <string>readdle-spark</string>
+        <string>airmail</string>
+        <string>ms-outlook</string>
+        <string>ymail</string>
+        <string>fastmail</string>
+        <string>superhuman</string>
+        <string>protonmail</string>
+    </array>
 </dict>
 </plist>

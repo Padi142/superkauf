@@ -70,7 +70,7 @@ class NotificationContainer extends StatelessWidget {
       tileColor: notification.seen ? App.appTheme.scaffoldBackgroundColor : Colors.grey[200],
       leading: GestureDetector(
         onTap: () {
-          BlocProvider.of<UserDetailBloc>(context).add(GetUser(userID: notification.relatedUserId));
+          BlocProvider.of<UserDetailBloc>(context).add(GetUser(userID: notification.recipientId));
           BlocProvider.of<NavigationBloc>(context).add(const OpenUserDetailScreen());
         },
         child: Padding(

@@ -25,4 +25,9 @@ abstract class SavedPostsApi {
   Future<SavedPostModel> deleteSavedPost({
     @Body() required Map<String, dynamic> body,
   });
+
+  @PUT('/saved_posts')
+  Future<SavedPostModel> updateSavedPost({
+    @Body() required Map<String, dynamic> body,
+  });
 }

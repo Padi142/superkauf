@@ -109,52 +109,111 @@ class FeedPostValidUntilLabel extends StatelessWidget {
 
 class PostDetailLike extends StatefulWidget {
   final PostModel post;
+  final bool isLiked;
 
-  const PostDetailLike({super.key, required this.post});
+  const PostDetailLike({
+    super.key,
+    required this.post,
+    required this.isLiked,
+  });
 
   @override
   State<PostDetailLike> createState() => _PostDetailLikeState();
 }
 
+var isLiked = false;
+
 class _PostDetailLikeState extends State<PostDetailLike> {
+  @override
+  void initState() {
+    isLiked = widget.isLiked;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
           onTap: () {
-            BlocProvider.of<PostBloc>(context).add(AddReaction(postId: widget.post.id));
+            if (isLiked) {
+              BlocProvider.of<PostBloc>(context).add(RemoveReaction(postId: widget.post.id));
+              setState(() {
+                isLiked = false;
+              });
+            } else {
+              BlocProvider.of<PostBloc>(context).add(AddReaction(postId: widget.post.id));
+              setState(() {
+                isLiked = true;
+              });
+            }
           },
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  offset: const Offset(0, 4),
-                  blurRadius: 4,
-                  color: Colors.black.withOpacity(0.25),
-                ),
-              ],
-            ),
-            child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.favorite_border,
-                      color: Colors.black,
-                      size: 30,
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            child: isLiked
+                ? Container(
+                    decoration: BoxDecoration(
+                      color: Colors.pinkAccent.withOpacity(0.8),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.pinkAccent, width: 2),
+                      boxShadow: [
+                        BoxShadow(
+                          offset: const Offset(0, 4),
+                          blurRadius: 4,
+                          color: Colors.pinkAccent.withOpacity(0.25),
+                        ),
+                      ],
                     ),
-                    const SizedBox(
-                      width: 8,
+                    child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.favorite,
+                              color: Colors.white,
+                              size: 30,
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            Text(
+                              widget.post.likes.toString(),
+                              style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+                            ),
+                          ],
+                        )),
+                  )
+                : Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          offset: const Offset(0, 4),
+                          blurRadius: 4,
+                          color: Colors.black.withOpacity(0.25),
+                        ),
+                      ],
                     ),
-                    Text(
-                      widget.post.likes.toString(),
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                  ],
-                )),
+                    child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.favorite_border,
+                              color: Colors.black,
+                              size: 30,
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            Text(
+                              widget.post.likes.toString(),
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ],
+                        )),
+                  ),
           )),
     );
   }

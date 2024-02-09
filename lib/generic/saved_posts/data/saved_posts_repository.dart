@@ -5,7 +5,9 @@ import 'package:superkauf/generic/saved_posts/model/create_saved_post_result.dar
 import 'package:superkauf/generic/saved_posts/model/delete_saved_post_body.dart';
 import 'package:superkauf/generic/saved_posts/model/delete_saved_post_model.dart';
 import 'package:superkauf/generic/saved_posts/model/get_saved_post_params.dart';
+import 'package:superkauf/generic/saved_posts/model/get_saved_post_result.dart';
 import 'package:superkauf/generic/saved_posts/model/get_saved_posts_result.dart';
+import 'package:superkauf/generic/saved_posts/model/update_saved_post_body.dart';
 
 class SavedPostsRepository {
   final SavedPostsApi savedPostsApi;
@@ -50,6 +52,17 @@ class SavedPostsRepository {
         return DeleteSavedPostResult.failure(error.message ?? 'error deleting saved post');
       }
       return const DeleteSavedPostResult.failure('error');
+    });
+  }
+
+  Future<GetSavedPostResult> updateSavedPost(UpdateSavedPostBody body) async {
+    return savedPostsApi.updateSavedPost(body: body.toJson()).then((post) {
+      return GetSavedPostResult.success(post);
+    }).onError((error, stackTrace) {
+      if (error is DioException) {
+        return GetSavedPostResult.failure(error.message ?? 'error deleting saved post');
+      }
+      return const GetSavedPostResult.failure('error');
     });
   }
 }

@@ -32,14 +32,17 @@ abstract class PostApi {
     @Body() required Map<String, dynamic> body,
   });
 
-  @GET('/post/{id}')
-  Future<PostModel> getPostById({
+  @GET('/post/{id}?userId={userId}')
+  Future<FullContextPostModel> getPostById({
     @Path() required String id,
+    @Path() required int userId,
   });
 
-  @GET('/user/posts/{id}')
+  @GET('/user/posts/{id}?offset={offset}&per_page={per_page}')
   Future<List<FeedPostModel>> getPostsByUser({
     @Path() required String id,
+    @Path() required int per_page,
+    @Path() required int offset,
   });
 
   @PUT('/post/image')

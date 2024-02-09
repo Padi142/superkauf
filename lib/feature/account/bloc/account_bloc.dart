@@ -7,6 +7,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:superkauf/feature/account/bloc/account_state.dart';
 import 'package:superkauf/feature/account/use_case/account_navigation.dart';
 import 'package:superkauf/feature/create_post/use_case/pick_image_use_case.dart';
+import 'package:superkauf/generic/post/model/models/get_personal_post_response.dart';
+import 'package:superkauf/generic/post/model/pagination_model.dart';
 import 'package:superkauf/generic/post/model/upload_post_image_params.dart';
 import 'package:superkauf/generic/post/use_case/get_posts_by_user.dart';
 import 'package:superkauf/generic/user/model/update_user_body.dart';
@@ -59,7 +61,15 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
       "username": user.username,
     });
 
-    final postsResult = await getPostsByUserUseCase.call(user.id);
+    final params = GetPersonalFeedParams(
+      pagination: const GetPostsPaginationModel(
+        perPage: 999,
+        offset: 0,
+      ),
+      userId: user.id,
+    );
+
+    final postsResult = await getPostsByUserUseCase.call(params);
 
     postsResult.map(success: (success) {
       emit(AccountState.loaded(user, success.response.posts));

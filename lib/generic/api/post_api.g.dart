@@ -130,19 +130,22 @@ class _PostApi implements PostApi {
   }
 
   @override
-  Future<PostModel> getPostById({required String id}) async {
+  Future<FullContextPostModel> getPostById({
+    required String id,
+    required int userId,
+  }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<PostModel>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<FullContextPostModel>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          '/post/${id}',
+          '/post/${id}?userId=${userId}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -151,12 +154,16 @@ class _PostApi implements PostApi {
           _dio.options.baseUrl,
           baseUrl,
         ))));
-    final value = PostModel.fromJson(_result.data!);
+    final value = FullContextPostModel.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<List<FeedPostModel>> getPostsByUser({required String id}) async {
+  Future<List<FeedPostModel>> getPostsByUser({
+    required String id,
+    required int per_page,
+    required int offset,
+  }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -168,7 +175,7 @@ class _PostApi implements PostApi {
     )
         .compose(
           _dio.options,
-          '/user/posts/${id}',
+          '/user/posts/${id}?offset=${offset}&per_page=${per_page}',
           queryParameters: queryParameters,
           data: _data,
         )

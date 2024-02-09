@@ -54,6 +54,8 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     final user = await getCurrentUserUseCase.call();
     if (user == null) {
       emit(const CreatePostState.error('User not found, are you logged in?'));
+
+      createPostNavigation.goToLogin();
       return;
     }
     emit(const CreatePostState.initial());
@@ -87,7 +89,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
   ) async {
     final supabase = Supabase.instance.client;
 
-    emit(const CreatePostState.loading());
+    emit(const CreatePostState.uploading());
 
     final params = UploadImageParams(file: event.image, path: userID.toString());
     final result = await uploadPostImageUseCase.call(params);
@@ -127,6 +129,8 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     CreatePost event,
     Emitter<CreatePostState> emit,
   ) async {
+    emit(const CreatePostState.creating());
+
     final user = await getCurrentUserUseCase.call();
 
     if (user == null) {

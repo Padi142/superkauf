@@ -20,7 +20,7 @@ mixin _$PostDetailState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(PostModel post, UserModel user) initial,
-    required TResult Function(PostModel post, UserModel user, bool canEdit) loaded,
+    required TResult Function(PostModel post, bool isLiked, UserModel user, bool canEdit) loaded,
     required TResult Function(String error) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +28,7 @@ mixin _$PostDetailState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(PostModel post, UserModel user)? initial,
-    TResult? Function(PostModel post, UserModel user, bool canEdit)? loaded,
+    TResult? Function(PostModel post, bool isLiked, UserModel user, bool canEdit)? loaded,
     TResult? Function(String error)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ mixin _$PostDetailState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(PostModel post, UserModel user)? initial,
-    TResult Function(PostModel post, UserModel user, bool canEdit)? loaded,
+    TResult Function(PostModel post, bool isLiked, UserModel user, bool canEdit)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) =>
@@ -116,7 +116,7 @@ class _$LoadingImpl implements Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(PostModel post, UserModel user) initial,
-    required TResult Function(PostModel post, UserModel user, bool canEdit) loaded,
+    required TResult Function(PostModel post, bool isLiked, UserModel user, bool canEdit) loaded,
     required TResult Function(String error) error,
   }) {
     return loading();
@@ -127,7 +127,7 @@ class _$LoadingImpl implements Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(PostModel post, UserModel user)? initial,
-    TResult? Function(PostModel post, UserModel user, bool canEdit)? loaded,
+    TResult? Function(PostModel post, bool isLiked, UserModel user, bool canEdit)? loaded,
     TResult? Function(String error)? error,
   }) {
     return loading?.call();
@@ -138,7 +138,7 @@ class _$LoadingImpl implements Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(PostModel post, UserModel user)? initial,
-    TResult Function(PostModel post, UserModel user, bool canEdit)? loaded,
+    TResult Function(PostModel post, bool isLiked, UserModel user, bool canEdit)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -254,7 +254,7 @@ class _$InitialImpl implements Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(PostModel post, UserModel user) initial,
-    required TResult Function(PostModel post, UserModel user, bool canEdit) loaded,
+    required TResult Function(PostModel post, bool isLiked, UserModel user, bool canEdit) loaded,
     required TResult Function(String error) error,
   }) {
     return initial(post, user);
@@ -265,7 +265,7 @@ class _$InitialImpl implements Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(PostModel post, UserModel user)? initial,
-    TResult? Function(PostModel post, UserModel user, bool canEdit)? loaded,
+    TResult? Function(PostModel post, bool isLiked, UserModel user, bool canEdit)? loaded,
     TResult? Function(String error)? error,
   }) {
     return initial?.call(post, user);
@@ -276,7 +276,7 @@ class _$InitialImpl implements Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(PostModel post, UserModel user)? initial,
-    TResult Function(PostModel post, UserModel user, bool canEdit)? loaded,
+    TResult Function(PostModel post, bool isLiked, UserModel user, bool canEdit)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -337,7 +337,7 @@ abstract class Initial implements PostDetailState {
 abstract class _$$LoadedImplCopyWith<$Res> {
   factory _$$LoadedImplCopyWith(_$LoadedImpl value, $Res Function(_$LoadedImpl) then) = __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({PostModel post, UserModel user, bool canEdit});
+  $Res call({PostModel post, bool isLiked, UserModel user, bool canEdit});
 }
 
 /// @nodoc
@@ -348,6 +348,7 @@ class __$$LoadedImplCopyWithImpl<$Res> extends _$PostDetailStateCopyWithImpl<$Re
   @override
   $Res call({
     Object? post = null,
+    Object? isLiked = null,
     Object? user = null,
     Object? canEdit = null,
   }) {
@@ -356,6 +357,10 @@ class __$$LoadedImplCopyWithImpl<$Res> extends _$PostDetailStateCopyWithImpl<$Re
           ? _value.post
           : post // ignore: cast_nullable_to_non_nullable
               as PostModel,
+      null == isLiked
+          ? _value.isLiked
+          : isLiked // ignore: cast_nullable_to_non_nullable
+              as bool,
       null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -371,10 +376,12 @@ class __$$LoadedImplCopyWithImpl<$Res> extends _$PostDetailStateCopyWithImpl<$Re
 /// @nodoc
 
 class _$LoadedImpl implements Loaded {
-  const _$LoadedImpl(this.post, this.user, this.canEdit);
+  const _$LoadedImpl(this.post, this.isLiked, this.user, this.canEdit);
 
   @override
   final PostModel post;
+  @override
+  final bool isLiked;
   @override
   final UserModel user;
   @override
@@ -382,7 +389,7 @@ class _$LoadedImpl implements Loaded {
 
   @override
   String toString() {
-    return 'PostDetailState.loaded(post: $post, user: $user, canEdit: $canEdit)';
+    return 'PostDetailState.loaded(post: $post, isLiked: $isLiked, user: $user, canEdit: $canEdit)';
   }
 
   @override
@@ -391,12 +398,13 @@ class _$LoadedImpl implements Loaded {
         (other.runtimeType == runtimeType &&
             other is _$LoadedImpl &&
             (identical(other.post, post) || other.post == post) &&
+            (identical(other.isLiked, isLiked) || other.isLiked == isLiked) &&
             (identical(other.user, user) || other.user == user) &&
             (identical(other.canEdit, canEdit) || other.canEdit == canEdit));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, post, user, canEdit);
+  int get hashCode => Object.hash(runtimeType, post, isLiked, user, canEdit);
 
   @JsonKey(ignore: true)
   @override
@@ -408,10 +416,10 @@ class _$LoadedImpl implements Loaded {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(PostModel post, UserModel user) initial,
-    required TResult Function(PostModel post, UserModel user, bool canEdit) loaded,
+    required TResult Function(PostModel post, bool isLiked, UserModel user, bool canEdit) loaded,
     required TResult Function(String error) error,
   }) {
-    return loaded(post, user, canEdit);
+    return loaded(post, isLiked, user, canEdit);
   }
 
   @override
@@ -419,10 +427,10 @@ class _$LoadedImpl implements Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(PostModel post, UserModel user)? initial,
-    TResult? Function(PostModel post, UserModel user, bool canEdit)? loaded,
+    TResult? Function(PostModel post, bool isLiked, UserModel user, bool canEdit)? loaded,
     TResult? Function(String error)? error,
   }) {
-    return loaded?.call(post, user, canEdit);
+    return loaded?.call(post, isLiked, user, canEdit);
   }
 
   @override
@@ -430,12 +438,12 @@ class _$LoadedImpl implements Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(PostModel post, UserModel user)? initial,
-    TResult Function(PostModel post, UserModel user, bool canEdit)? loaded,
+    TResult Function(PostModel post, bool isLiked, UserModel user, bool canEdit)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(post, user, canEdit);
+      return loaded(post, isLiked, user, canEdit);
     }
     return orElse();
   }
@@ -479,9 +487,10 @@ class _$LoadedImpl implements Loaded {
 }
 
 abstract class Loaded implements PostDetailState {
-  const factory Loaded(final PostModel post, final UserModel user, final bool canEdit) = _$LoadedImpl;
+  const factory Loaded(final PostModel post, final bool isLiked, final UserModel user, final bool canEdit) = _$LoadedImpl;
 
   PostModel get post;
+  bool get isLiked;
   UserModel get user;
   bool get canEdit;
   @JsonKey(ignore: true)
@@ -544,7 +553,7 @@ class _$ErrorImpl implements Error {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(PostModel post, UserModel user) initial,
-    required TResult Function(PostModel post, UserModel user, bool canEdit) loaded,
+    required TResult Function(PostModel post, bool isLiked, UserModel user, bool canEdit) loaded,
     required TResult Function(String error) error,
   }) {
     return error(this.error);
@@ -555,7 +564,7 @@ class _$ErrorImpl implements Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(PostModel post, UserModel user)? initial,
-    TResult? Function(PostModel post, UserModel user, bool canEdit)? loaded,
+    TResult? Function(PostModel post, bool isLiked, UserModel user, bool canEdit)? loaded,
     TResult? Function(String error)? error,
   }) {
     return error?.call(this.error);
@@ -566,7 +575,7 @@ class _$ErrorImpl implements Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(PostModel post, UserModel user)? initial,
-    TResult Function(PostModel post, UserModel user, bool canEdit)? loaded,
+    TResult Function(PostModel post, bool isLiked, UserModel user, bool canEdit)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {

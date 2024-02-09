@@ -62,6 +62,7 @@ class _FeedPostContainerState extends State<FeedPostContainer> {
                           padding: const EdgeInsets.all(2),
                           child: GestureDetector(
                             onTap: () {
+                              BlocProvider.of<UserDetailBloc>(context).add(InitialUserEvent(user: widget.post.user));
                               BlocProvider.of<UserDetailBloc>(context).add(GetUser(userID: widget.post.post.author));
                               BlocProvider.of<NavigationBloc>(context).add(const OpenUserDetailScreen());
                             },

@@ -22,6 +22,7 @@ mixin _$CreatePostState {
     required TResult Function() initial,
     required TResult Function(File image) imagePicked,
     required TResult Function() uploading,
+    required TResult Function() creating,
     required TResult Function(String image) imageUploaded,
     required TResult Function() success,
     required TResult Function(String error) error,
@@ -33,6 +34,7 @@ mixin _$CreatePostState {
     TResult? Function()? initial,
     TResult? Function(File image)? imagePicked,
     TResult? Function()? uploading,
+    TResult? Function()? creating,
     TResult? Function(String image)? imageUploaded,
     TResult? Function()? success,
     TResult? Function(String error)? error,
@@ -44,6 +46,7 @@ mixin _$CreatePostState {
     TResult Function()? initial,
     TResult Function(File image)? imagePicked,
     TResult Function()? uploading,
+    TResult Function()? creating,
     TResult Function(String image)? imageUploaded,
     TResult Function()? success,
     TResult Function(String error)? error,
@@ -56,6 +59,7 @@ mixin _$CreatePostState {
     required TResult Function(Initial value) initial,
     required TResult Function(ImagePicked value) imagePicked,
     required TResult Function(Uploading value) uploading,
+    required TResult Function(Creating value) creating,
     required TResult Function(ImageUploaded value) imageUploaded,
     required TResult Function(Success value) success,
     required TResult Function(Error value) error,
@@ -67,6 +71,7 @@ mixin _$CreatePostState {
     TResult? Function(Initial value)? initial,
     TResult? Function(ImagePicked value)? imagePicked,
     TResult? Function(Uploading value)? uploading,
+    TResult? Function(Creating value)? creating,
     TResult? Function(ImageUploaded value)? imageUploaded,
     TResult? Function(Success value)? success,
     TResult? Function(Error value)? error,
@@ -78,6 +83,7 @@ mixin _$CreatePostState {
     TResult Function(Initial value)? initial,
     TResult Function(ImagePicked value)? imagePicked,
     TResult Function(Uploading value)? uploading,
+    TResult Function(Creating value)? creating,
     TResult Function(ImageUploaded value)? imageUploaded,
     TResult Function(Success value)? success,
     TResult Function(Error value)? error,
@@ -136,6 +142,7 @@ class _$LoadingImpl implements Loading {
     required TResult Function() initial,
     required TResult Function(File image) imagePicked,
     required TResult Function() uploading,
+    required TResult Function() creating,
     required TResult Function(String image) imageUploaded,
     required TResult Function() success,
     required TResult Function(String error) error,
@@ -150,6 +157,7 @@ class _$LoadingImpl implements Loading {
     TResult? Function()? initial,
     TResult? Function(File image)? imagePicked,
     TResult? Function()? uploading,
+    TResult? Function()? creating,
     TResult? Function(String image)? imageUploaded,
     TResult? Function()? success,
     TResult? Function(String error)? error,
@@ -164,6 +172,7 @@ class _$LoadingImpl implements Loading {
     TResult Function()? initial,
     TResult Function(File image)? imagePicked,
     TResult Function()? uploading,
+    TResult Function()? creating,
     TResult Function(String image)? imageUploaded,
     TResult Function()? success,
     TResult Function(String error)? error,
@@ -182,6 +191,7 @@ class _$LoadingImpl implements Loading {
     required TResult Function(Initial value) initial,
     required TResult Function(ImagePicked value) imagePicked,
     required TResult Function(Uploading value) uploading,
+    required TResult Function(Creating value) creating,
     required TResult Function(ImageUploaded value) imageUploaded,
     required TResult Function(Success value) success,
     required TResult Function(Error value) error,
@@ -196,6 +206,7 @@ class _$LoadingImpl implements Loading {
     TResult? Function(Initial value)? initial,
     TResult? Function(ImagePicked value)? imagePicked,
     TResult? Function(Uploading value)? uploading,
+    TResult? Function(Creating value)? creating,
     TResult? Function(ImageUploaded value)? imageUploaded,
     TResult? Function(Success value)? success,
     TResult? Function(Error value)? error,
@@ -210,6 +221,7 @@ class _$LoadingImpl implements Loading {
     TResult Function(Initial value)? initial,
     TResult Function(ImagePicked value)? imagePicked,
     TResult Function(Uploading value)? uploading,
+    TResult Function(Creating value)? creating,
     TResult Function(ImageUploaded value)? imageUploaded,
     TResult Function(Success value)? success,
     TResult Function(Error value)? error,
@@ -261,6 +273,7 @@ class _$InitialImpl implements Initial {
     required TResult Function() initial,
     required TResult Function(File image) imagePicked,
     required TResult Function() uploading,
+    required TResult Function() creating,
     required TResult Function(String image) imageUploaded,
     required TResult Function() success,
     required TResult Function(String error) error,
@@ -275,6 +288,7 @@ class _$InitialImpl implements Initial {
     TResult? Function()? initial,
     TResult? Function(File image)? imagePicked,
     TResult? Function()? uploading,
+    TResult? Function()? creating,
     TResult? Function(String image)? imageUploaded,
     TResult? Function()? success,
     TResult? Function(String error)? error,
@@ -289,6 +303,7 @@ class _$InitialImpl implements Initial {
     TResult Function()? initial,
     TResult Function(File image)? imagePicked,
     TResult Function()? uploading,
+    TResult Function()? creating,
     TResult Function(String image)? imageUploaded,
     TResult Function()? success,
     TResult Function(String error)? error,
@@ -307,6 +322,7 @@ class _$InitialImpl implements Initial {
     required TResult Function(Initial value) initial,
     required TResult Function(ImagePicked value) imagePicked,
     required TResult Function(Uploading value) uploading,
+    required TResult Function(Creating value) creating,
     required TResult Function(ImageUploaded value) imageUploaded,
     required TResult Function(Success value) success,
     required TResult Function(Error value) error,
@@ -321,6 +337,7 @@ class _$InitialImpl implements Initial {
     TResult? Function(Initial value)? initial,
     TResult? Function(ImagePicked value)? imagePicked,
     TResult? Function(Uploading value)? uploading,
+    TResult? Function(Creating value)? creating,
     TResult? Function(ImageUploaded value)? imageUploaded,
     TResult? Function(Success value)? success,
     TResult? Function(Error value)? error,
@@ -335,6 +352,7 @@ class _$InitialImpl implements Initial {
     TResult Function(Initial value)? initial,
     TResult Function(ImagePicked value)? imagePicked,
     TResult Function(Uploading value)? uploading,
+    TResult Function(Creating value)? creating,
     TResult Function(ImageUploaded value)? imageUploaded,
     TResult Function(Success value)? success,
     TResult Function(Error value)? error,
@@ -409,6 +427,7 @@ class _$ImagePickedImpl implements ImagePicked {
     required TResult Function() initial,
     required TResult Function(File image) imagePicked,
     required TResult Function() uploading,
+    required TResult Function() creating,
     required TResult Function(String image) imageUploaded,
     required TResult Function() success,
     required TResult Function(String error) error,
@@ -423,6 +442,7 @@ class _$ImagePickedImpl implements ImagePicked {
     TResult? Function()? initial,
     TResult? Function(File image)? imagePicked,
     TResult? Function()? uploading,
+    TResult? Function()? creating,
     TResult? Function(String image)? imageUploaded,
     TResult? Function()? success,
     TResult? Function(String error)? error,
@@ -437,6 +457,7 @@ class _$ImagePickedImpl implements ImagePicked {
     TResult Function()? initial,
     TResult Function(File image)? imagePicked,
     TResult Function()? uploading,
+    TResult Function()? creating,
     TResult Function(String image)? imageUploaded,
     TResult Function()? success,
     TResult Function(String error)? error,
@@ -455,6 +476,7 @@ class _$ImagePickedImpl implements ImagePicked {
     required TResult Function(Initial value) initial,
     required TResult Function(ImagePicked value) imagePicked,
     required TResult Function(Uploading value) uploading,
+    required TResult Function(Creating value) creating,
     required TResult Function(ImageUploaded value) imageUploaded,
     required TResult Function(Success value) success,
     required TResult Function(Error value) error,
@@ -469,6 +491,7 @@ class _$ImagePickedImpl implements ImagePicked {
     TResult? Function(Initial value)? initial,
     TResult? Function(ImagePicked value)? imagePicked,
     TResult? Function(Uploading value)? uploading,
+    TResult? Function(Creating value)? creating,
     TResult? Function(ImageUploaded value)? imageUploaded,
     TResult? Function(Success value)? success,
     TResult? Function(Error value)? error,
@@ -483,6 +506,7 @@ class _$ImagePickedImpl implements ImagePicked {
     TResult Function(Initial value)? initial,
     TResult Function(ImagePicked value)? imagePicked,
     TResult Function(Uploading value)? uploading,
+    TResult Function(Creating value)? creating,
     TResult Function(ImageUploaded value)? imageUploaded,
     TResult Function(Success value)? success,
     TResult Function(Error value)? error,
@@ -538,6 +562,7 @@ class _$UploadingImpl implements Uploading {
     required TResult Function() initial,
     required TResult Function(File image) imagePicked,
     required TResult Function() uploading,
+    required TResult Function() creating,
     required TResult Function(String image) imageUploaded,
     required TResult Function() success,
     required TResult Function(String error) error,
@@ -552,6 +577,7 @@ class _$UploadingImpl implements Uploading {
     TResult? Function()? initial,
     TResult? Function(File image)? imagePicked,
     TResult? Function()? uploading,
+    TResult? Function()? creating,
     TResult? Function(String image)? imageUploaded,
     TResult? Function()? success,
     TResult? Function(String error)? error,
@@ -566,6 +592,7 @@ class _$UploadingImpl implements Uploading {
     TResult Function()? initial,
     TResult Function(File image)? imagePicked,
     TResult Function()? uploading,
+    TResult Function()? creating,
     TResult Function(String image)? imageUploaded,
     TResult Function()? success,
     TResult Function(String error)? error,
@@ -584,6 +611,7 @@ class _$UploadingImpl implements Uploading {
     required TResult Function(Initial value) initial,
     required TResult Function(ImagePicked value) imagePicked,
     required TResult Function(Uploading value) uploading,
+    required TResult Function(Creating value) creating,
     required TResult Function(ImageUploaded value) imageUploaded,
     required TResult Function(Success value) success,
     required TResult Function(Error value) error,
@@ -598,6 +626,7 @@ class _$UploadingImpl implements Uploading {
     TResult? Function(Initial value)? initial,
     TResult? Function(ImagePicked value)? imagePicked,
     TResult? Function(Uploading value)? uploading,
+    TResult? Function(Creating value)? creating,
     TResult? Function(ImageUploaded value)? imageUploaded,
     TResult? Function(Success value)? success,
     TResult? Function(Error value)? error,
@@ -612,6 +641,7 @@ class _$UploadingImpl implements Uploading {
     TResult Function(Initial value)? initial,
     TResult Function(ImagePicked value)? imagePicked,
     TResult Function(Uploading value)? uploading,
+    TResult Function(Creating value)? creating,
     TResult Function(ImageUploaded value)? imageUploaded,
     TResult Function(Success value)? success,
     TResult Function(Error value)? error,
@@ -626,6 +656,137 @@ class _$UploadingImpl implements Uploading {
 
 abstract class Uploading implements CreatePostState {
   const factory Uploading() = _$UploadingImpl;
+}
+
+/// @nodoc
+abstract class _$$CreatingImplCopyWith<$Res> {
+  factory _$$CreatingImplCopyWith(_$CreatingImpl value, $Res Function(_$CreatingImpl) then) = __$$CreatingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$CreatingImplCopyWithImpl<$Res> extends _$CreatePostStateCopyWithImpl<$Res, _$CreatingImpl> implements _$$CreatingImplCopyWith<$Res> {
+  __$$CreatingImplCopyWithImpl(_$CreatingImpl _value, $Res Function(_$CreatingImpl) _then) : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$CreatingImpl implements Creating {
+  const _$CreatingImpl();
+
+  @override
+  String toString() {
+    return 'CreatePostState.creating()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$CreatingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loading,
+    required TResult Function() initial,
+    required TResult Function(File image) imagePicked,
+    required TResult Function() uploading,
+    required TResult Function() creating,
+    required TResult Function(String image) imageUploaded,
+    required TResult Function() success,
+    required TResult Function(String error) error,
+  }) {
+    return creating();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loading,
+    TResult? Function()? initial,
+    TResult? Function(File image)? imagePicked,
+    TResult? Function()? uploading,
+    TResult? Function()? creating,
+    TResult? Function(String image)? imageUploaded,
+    TResult? Function()? success,
+    TResult? Function(String error)? error,
+  }) {
+    return creating?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loading,
+    TResult Function()? initial,
+    TResult Function(File image)? imagePicked,
+    TResult Function()? uploading,
+    TResult Function()? creating,
+    TResult Function(String image)? imageUploaded,
+    TResult Function()? success,
+    TResult Function(String error)? error,
+    required TResult orElse(),
+  }) {
+    if (creating != null) {
+      return creating();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Loading value) loading,
+    required TResult Function(Initial value) initial,
+    required TResult Function(ImagePicked value) imagePicked,
+    required TResult Function(Uploading value) uploading,
+    required TResult Function(Creating value) creating,
+    required TResult Function(ImageUploaded value) imageUploaded,
+    required TResult Function(Success value) success,
+    required TResult Function(Error value) error,
+  }) {
+    return creating(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Loading value)? loading,
+    TResult? Function(Initial value)? initial,
+    TResult? Function(ImagePicked value)? imagePicked,
+    TResult? Function(Uploading value)? uploading,
+    TResult? Function(Creating value)? creating,
+    TResult? Function(ImageUploaded value)? imageUploaded,
+    TResult? Function(Success value)? success,
+    TResult? Function(Error value)? error,
+  }) {
+    return creating?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Loading value)? loading,
+    TResult Function(Initial value)? initial,
+    TResult Function(ImagePicked value)? imagePicked,
+    TResult Function(Uploading value)? uploading,
+    TResult Function(Creating value)? creating,
+    TResult Function(ImageUploaded value)? imageUploaded,
+    TResult Function(Success value)? success,
+    TResult Function(Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (creating != null) {
+      return creating(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class Creating implements CreatePostState {
+  const factory Creating() = _$CreatingImpl;
 }
 
 /// @nodoc
@@ -686,6 +847,7 @@ class _$ImageUploadedImpl implements ImageUploaded {
     required TResult Function() initial,
     required TResult Function(File image) imagePicked,
     required TResult Function() uploading,
+    required TResult Function() creating,
     required TResult Function(String image) imageUploaded,
     required TResult Function() success,
     required TResult Function(String error) error,
@@ -700,6 +862,7 @@ class _$ImageUploadedImpl implements ImageUploaded {
     TResult? Function()? initial,
     TResult? Function(File image)? imagePicked,
     TResult? Function()? uploading,
+    TResult? Function()? creating,
     TResult? Function(String image)? imageUploaded,
     TResult? Function()? success,
     TResult? Function(String error)? error,
@@ -714,6 +877,7 @@ class _$ImageUploadedImpl implements ImageUploaded {
     TResult Function()? initial,
     TResult Function(File image)? imagePicked,
     TResult Function()? uploading,
+    TResult Function()? creating,
     TResult Function(String image)? imageUploaded,
     TResult Function()? success,
     TResult Function(String error)? error,
@@ -732,6 +896,7 @@ class _$ImageUploadedImpl implements ImageUploaded {
     required TResult Function(Initial value) initial,
     required TResult Function(ImagePicked value) imagePicked,
     required TResult Function(Uploading value) uploading,
+    required TResult Function(Creating value) creating,
     required TResult Function(ImageUploaded value) imageUploaded,
     required TResult Function(Success value) success,
     required TResult Function(Error value) error,
@@ -746,6 +911,7 @@ class _$ImageUploadedImpl implements ImageUploaded {
     TResult? Function(Initial value)? initial,
     TResult? Function(ImagePicked value)? imagePicked,
     TResult? Function(Uploading value)? uploading,
+    TResult? Function(Creating value)? creating,
     TResult? Function(ImageUploaded value)? imageUploaded,
     TResult? Function(Success value)? success,
     TResult? Function(Error value)? error,
@@ -760,6 +926,7 @@ class _$ImageUploadedImpl implements ImageUploaded {
     TResult Function(Initial value)? initial,
     TResult Function(ImagePicked value)? imagePicked,
     TResult Function(Uploading value)? uploading,
+    TResult Function(Creating value)? creating,
     TResult Function(ImageUploaded value)? imageUploaded,
     TResult Function(Success value)? success,
     TResult Function(Error value)? error,
@@ -815,6 +982,7 @@ class _$SuccessImpl implements Success {
     required TResult Function() initial,
     required TResult Function(File image) imagePicked,
     required TResult Function() uploading,
+    required TResult Function() creating,
     required TResult Function(String image) imageUploaded,
     required TResult Function() success,
     required TResult Function(String error) error,
@@ -829,6 +997,7 @@ class _$SuccessImpl implements Success {
     TResult? Function()? initial,
     TResult? Function(File image)? imagePicked,
     TResult? Function()? uploading,
+    TResult? Function()? creating,
     TResult? Function(String image)? imageUploaded,
     TResult? Function()? success,
     TResult? Function(String error)? error,
@@ -843,6 +1012,7 @@ class _$SuccessImpl implements Success {
     TResult Function()? initial,
     TResult Function(File image)? imagePicked,
     TResult Function()? uploading,
+    TResult Function()? creating,
     TResult Function(String image)? imageUploaded,
     TResult Function()? success,
     TResult Function(String error)? error,
@@ -861,6 +1031,7 @@ class _$SuccessImpl implements Success {
     required TResult Function(Initial value) initial,
     required TResult Function(ImagePicked value) imagePicked,
     required TResult Function(Uploading value) uploading,
+    required TResult Function(Creating value) creating,
     required TResult Function(ImageUploaded value) imageUploaded,
     required TResult Function(Success value) success,
     required TResult Function(Error value) error,
@@ -875,6 +1046,7 @@ class _$SuccessImpl implements Success {
     TResult? Function(Initial value)? initial,
     TResult? Function(ImagePicked value)? imagePicked,
     TResult? Function(Uploading value)? uploading,
+    TResult? Function(Creating value)? creating,
     TResult? Function(ImageUploaded value)? imageUploaded,
     TResult? Function(Success value)? success,
     TResult? Function(Error value)? error,
@@ -889,6 +1061,7 @@ class _$SuccessImpl implements Success {
     TResult Function(Initial value)? initial,
     TResult Function(ImagePicked value)? imagePicked,
     TResult Function(Uploading value)? uploading,
+    TResult Function(Creating value)? creating,
     TResult Function(ImageUploaded value)? imageUploaded,
     TResult Function(Success value)? success,
     TResult Function(Error value)? error,
@@ -963,6 +1136,7 @@ class _$ErrorImpl implements Error {
     required TResult Function() initial,
     required TResult Function(File image) imagePicked,
     required TResult Function() uploading,
+    required TResult Function() creating,
     required TResult Function(String image) imageUploaded,
     required TResult Function() success,
     required TResult Function(String error) error,
@@ -977,6 +1151,7 @@ class _$ErrorImpl implements Error {
     TResult? Function()? initial,
     TResult? Function(File image)? imagePicked,
     TResult? Function()? uploading,
+    TResult? Function()? creating,
     TResult? Function(String image)? imageUploaded,
     TResult? Function()? success,
     TResult? Function(String error)? error,
@@ -991,6 +1166,7 @@ class _$ErrorImpl implements Error {
     TResult Function()? initial,
     TResult Function(File image)? imagePicked,
     TResult Function()? uploading,
+    TResult Function()? creating,
     TResult Function(String image)? imageUploaded,
     TResult Function()? success,
     TResult Function(String error)? error,
@@ -1009,6 +1185,7 @@ class _$ErrorImpl implements Error {
     required TResult Function(Initial value) initial,
     required TResult Function(ImagePicked value) imagePicked,
     required TResult Function(Uploading value) uploading,
+    required TResult Function(Creating value) creating,
     required TResult Function(ImageUploaded value) imageUploaded,
     required TResult Function(Success value) success,
     required TResult Function(Error value) error,
@@ -1023,6 +1200,7 @@ class _$ErrorImpl implements Error {
     TResult? Function(Initial value)? initial,
     TResult? Function(ImagePicked value)? imagePicked,
     TResult? Function(Uploading value)? uploading,
+    TResult? Function(Creating value)? creating,
     TResult? Function(ImageUploaded value)? imageUploaded,
     TResult? Function(Success value)? success,
     TResult? Function(Error value)? error,
@@ -1037,6 +1215,7 @@ class _$ErrorImpl implements Error {
     TResult Function(Initial value)? initial,
     TResult Function(ImagePicked value)? imagePicked,
     TResult Function(Uploading value)? uploading,
+    TResult Function(Creating value)? creating,
     TResult Function(ImageUploaded value)? imageUploaded,
     TResult Function(Success value)? success,
     TResult Function(Error value)? error,

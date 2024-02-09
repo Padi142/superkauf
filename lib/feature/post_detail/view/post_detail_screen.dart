@@ -79,12 +79,10 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                         width: constraints.maxWidth,
                         child: Column(
                           children: [
-                            PostDetailViewComponent(
+                            InitialPostDetailViewComponent(
                               constraints: constraints,
                               post: initial.post,
                               user: initial.user,
-                              onDescriptionEdit: () {},
-                              canEdit: false,
                             ),
                             const SizedBox(
                               height: 20,
@@ -107,6 +105,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                                   descriptionEdit = true;
                                 });
                               },
+                              isLiked: loaded.isLiked,
                               canEdit: loaded.canEdit,
                             ),
                             const SizedBox(

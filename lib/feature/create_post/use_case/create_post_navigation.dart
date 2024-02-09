@@ -1,3 +1,5 @@
+import 'package:superkauf/generic/constants.dart';
+
 import '../../../library/app_navigation.dart';
 
 class CreatePostNavigation {
@@ -5,8 +7,12 @@ class CreatePostNavigation {
     AppNavigation().pop();
   }
 
-// void goToFeed() {
-//   AppNavigation().push(ScreenPath., root: false, replace: 1);
-//
-// }
+  void goToLogin() {
+    AppNavigation().push(
+      ScreenPath.loginScreen,
+      root: false,
+      replace: 1,
+      params: ScreenPath.createPostScreen,
+    );
+  }
 }
