@@ -1,6 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:superkauf/feature/feed/view/components/feed_post_container.dart';
 import 'package:superkauf/feature/feed/view/components/loading_feed_post.dart';
 import 'package:superkauf/feature/shopping_list/bloc/shopping_list_bloc.dart';
 import 'package:superkauf/feature/shopping_list/bloc/shopping_list_state.dart';
@@ -23,7 +23,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
 
   @override
   void initState() {
-    BlocProvider.of<ShoppingListBloc>(context).add(const GetShoppingList());
+    BlocProvider.of<ShoppingListBloc>(context).add(const InitialEvent());
     _scrollController.addListener(_listener);
     _scrollController.addListener(_loadMoreListener);
     super.initState();
@@ -34,17 +34,17 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
   }
 
   void _loadMoreListener() {
-    scrollToRefreshListener(controller: _scrollController);
-    if (_scrollController.position.pixels > _scrollController.position.maxScrollExtent - 300) {
-      if ((context.read<ShoppingListBloc>().state is Loaded) &&
-          ((context.read<ShoppingListBloc>().state as Loaded).isLoading || (context.read<ShoppingListBloc>().state as Loaded).canLoadMore == false)) {
-        return;
-      }
-      print('loading more');
-      context.read<ShoppingListBloc>().add(
-            const LoadMore(),
-          );
-    }
+    // scrollToRefreshListener(controller: _scrollController);
+    // if (_scrollController.position.pixels > _scrollController.position.maxScrollExtent - 300) {
+    //   if ((context.read<ShoppingListBloc>().state is Loaded) &&
+    //       ((context.read<ShoppingListBloc>().state as Loaded).isLoading || (context.read<ShoppingListBloc>().state as Loaded).canLoadMore == false)) {
+    //     return;
+    //   }
+    //   print('loading more');
+    //   context.read<ShoppingListBloc>().add(
+    //         const LoadMore(),
+    //       );
+    // }
   }
 
   @override
@@ -61,19 +61,59 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
             children: [
               BlocBuilder<ShoppingListBloc, ShoppingListState>(
                 builder: (context, state) {
-                  return state.maybeMap(loaded: (loaded) {
-                    return SizedBox(
-                      height: constraints.maxHeight,
-                      child: ListView.builder(
-                        controller: _scrollController,
-                        itemCount: loaded.posts.length,
-                        itemBuilder: (context, index) {
-                          return PersonalFeedPostContainer(
-                            post: loaded.posts[index],
-                            originScreen: ScreenPath.shoppingListScreen,
-                          );
-                        },
-                      ),
+                  return state.maybeMap(initial: (initial) {
+                    return Column(
+                      children: [
+                        SizedBox(
+                          height: constraints.maxHeight * 0.49,
+                          child: ListView.builder(
+                            controller: _scrollController,
+                            itemCount: initial.shoppingLists.length,
+                            itemBuilder: (context, index) {
+                              return ListTile(
+                                leading: ClipRRect(
+                                  borderRadius: BorderRadius.circular(6),
+                                  // Adjust the radius as needed
+                                  child: CachedNetworkImage(
+                                    imageUrl: initial.shoppingLists[index].logo,
+                                    fit: BoxFit.fitWidth,
+                                    placeholder: (context, url) => const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                                  ),
+                                ),
+                                title: Text(initial.shoppingLists[index].name),
+                                onTap: () {},
+                              );
+                            },
+                          ),
+                        ),
+                        const Divider(
+                          height: 2,
+                        ),
+                        SizedBox(
+                          height: constraints.maxHeight * 0.49,
+                          child: ListView.builder(
+                            controller: _scrollController,
+                            itemCount: initial.stores.length,
+                            itemBuilder: (context, index) {
+                              return ListTile(
+                                leading: ClipRRect(
+                                  borderRadius: BorderRadius.circular(6),
+                                  // Adjust the radius as needed
+                                  child: CachedNetworkImage(
+                                    imageUrl: initial.stores[index].image,
+                                    fit: BoxFit.fitWidth,
+                                    placeholder: (context, url) => const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                                  ),
+                                ),
+                                title: Text(initial.stores[index].name),
+                                onTap: () {},
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     );
                   }, error: (error) {
                     return Center(child: Text(error.error));

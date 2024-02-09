@@ -7,8 +7,8 @@ abstract class ShoppingListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetShoppingList extends ShoppingListEvent {
-  const GetShoppingList();
+class InitialEvent extends ShoppingListEvent {
+  const InitialEvent();
 }
 
 class ReloadShoppingList extends ShoppingListEvent {
@@ -19,4 +19,16 @@ class ReloadShoppingList extends ShoppingListEvent {
 
 class LoadMore extends ShoppingListEvent {
   const LoadMore();
+}
+
+class PickStore extends ShoppingListEvent {
+  final StoreModel store;
+  const PickStore({required this.store});
+}
+
+class PickShoppingList extends ShoppingListEvent {
+  final int shoppingListId;
+  const PickShoppingList({
+    required this.shoppingListId,
+  });
 }

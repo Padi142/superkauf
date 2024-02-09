@@ -33,6 +33,7 @@ import 'package:superkauf/generic/api/notification_api.dart';
 import 'package:superkauf/generic/api/post_api.dart';
 import 'package:superkauf/generic/api/report_api.dart';
 import 'package:superkauf/generic/api/saved_posts_api.dart';
+import 'package:superkauf/generic/api/shopping_list_api.dart';
 import 'package:superkauf/generic/api/store_api.dart';
 import 'package:superkauf/generic/api/user_api.dart';
 import 'package:superkauf/generic/comments/comments_module.dart';
@@ -42,6 +43,7 @@ import 'package:superkauf/generic/notifications/notification_module.dart';
 import 'package:superkauf/generic/post/posts_module.dart';
 import 'package:superkauf/generic/report/report_module.dart';
 import 'package:superkauf/generic/saved_posts/saved_posts_module.dart';
+import 'package:superkauf/generic/shopping_list/shopping_list_module.dart';
 import 'package:superkauf/generic/store/store_module.dart';
 import 'package:superkauf/generic/user/user_module.dart';
 import 'package:superkauf/library/app_navigation.dart';
@@ -100,6 +102,7 @@ Future<void> main() async {
       GetIt.I.registerFactory<CommentApi>(() => CommentApi(_dio(config.endpoint)));
       GetIt.I.registerFactory<ReportApi>(() => ReportApi(_dio(config.endpoint)));
       GetIt.I.registerFactory<NotificationApi>(() => NotificationApi(_dio(config.endpoint)));
+      GetIt.I.registerFactory<ShoppingListApi>(() => ShoppingListApi(_dio(config.endpoint)));
     },
   );
 
@@ -132,13 +135,14 @@ List<AppModule> modules() {
     StorePostsModule(),
     UserDetailModule(),
     SavedPostsModule(),
-    ShoppingListModule(),
+    ShoppingListScreenModule(),
     SnackbarModule(),
     CommentsModule(),
     ReportModule(),
     NotificationModule(),
     MyNotificationsModule(),
     DiscoverModule(),
+    ShoppingListModule(),
   ];
 }
 
