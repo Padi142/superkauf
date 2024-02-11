@@ -5,6 +5,7 @@ import 'package:superkauf/feature/account/use_case/account_navigation.dart';
 import 'package:superkauf/feature/account/view/account_screen.dart';
 import 'package:superkauf/feature/create_post/use_case/pick_image_use_case.dart';
 import 'package:superkauf/generic/post/use_case/get_posts_by_user.dart';
+import 'package:superkauf/generic/settings/use_case/get_settings_use_case.dart';
 import 'package:superkauf/generic/user/use_case/get_current_user_use_case.dart';
 import 'package:superkauf/generic/user/use_case/get_user_by_username_use_case.dart';
 import 'package:superkauf/generic/user/use_case/updat_user_use_case.dart';
@@ -29,6 +30,7 @@ class AccountModule extends AppModule {
         pickImageUseCase: GetIt.I.get<PickImageUseCase>(),
         uploadUserImageUseCase: GetIt.I.get<UploadUserImageUseCase>(),
         getPostsByUserUseCase: GetIt.I.get<GetPostsByUserUseCase>(),
+        getSettingsUseCase: GetIt.I.get<GetSettingsUseCase>(),
       ),
     );
   }

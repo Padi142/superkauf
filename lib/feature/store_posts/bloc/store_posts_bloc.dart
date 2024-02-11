@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:superkauf/feature/store_posts/bloc/store_posts_state.dart';
 import 'package:superkauf/generic/post/model/models/get_personal_post_response.dart';
 import 'package:superkauf/generic/post/model/pagination_model.dart';
+import 'package:superkauf/generic/settings/use_case/get_settings_use_case.dart';
 import 'package:superkauf/generic/store/model/get_post_by_store_params.dart';
 import 'package:superkauf/generic/store/use_case/get_posts_by_store_use_case.dart';
 import 'package:superkauf/generic/user/use_case/get_current_user_use_case.dart';
@@ -12,10 +13,12 @@ part 'store_posts_event.dart';
 class StorePostsBloc extends Bloc<StorePostsEvent, StorePostsState> {
   final GetPostsByStoreUseCase getPostsByStoreUseCase;
   final GetCurrentUserUseCase getCurrentUserUseCase;
+  final GetSettingsUseCase getSettingsUseCase;
 
   StorePostsBloc({
     required this.getPostsByStoreUseCase,
     required this.getCurrentUserUseCase,
+    required this.getSettingsUseCase,
   }) : super(const StorePostsState.loading()) {
     on<GetPosts>(_onGetPosts);
     on<ReloadStorePosts>(_onReloadStorePosts);
@@ -39,8 +42,11 @@ class StorePostsBloc extends Bloc<StorePostsEvent, StorePostsState> {
     }
     final List<FullContextPostModel> newPosts = [];
 
+    final settings = await getSettingsUseCase.call();
+
     final params = GetStorePostsParams(
       storeId: event.storeId,
+      country: settings.country,
       pagination: GetPostsPaginationModel(
         offset: page * perPage,
         perPage: perPage,

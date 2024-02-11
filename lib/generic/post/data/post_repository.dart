@@ -7,6 +7,7 @@ import 'package:superkauf/generic/post/model/delete_post_result.dart';
 import 'package:superkauf/generic/post/model/get_fullcontext_post_detail_result.dart';
 import 'package:superkauf/generic/post/model/get_post_detail_result.dart';
 import 'package:superkauf/generic/post/model/get_post_response.dart';
+import 'package:superkauf/generic/post/model/get_posts_body.dart';
 import 'package:superkauf/generic/post/model/get_posts_result.dart';
 import 'package:superkauf/generic/post/model/models/add_reaction_model.dart';
 import 'package:superkauf/generic/post/model/pagination_model.dart';
@@ -22,8 +23,8 @@ class PostsRepository {
     required this.postApi,
   });
 
-  Future<GetPostsResult> getPosts(GetPostsPaginationModel body) async {
-    return postApi.getFeed(body: body.toJson()).then((posts) {
+  Future<GetPostsResult> getPosts(GetPostsBody body) async {
+    return postApi.getFeed(body: body.pagination.toJson(), country: body.country).then((posts) {
       return GetPostsResult.success(posts);
     }).onError((error, stackTrace) {
       if (error is DioException) {
@@ -33,8 +34,8 @@ class PostsRepository {
     });
   }
 
-  Future<GetPersonalFeedResult> getPersonalFeed(GetPostsPaginationModel body, int id) async {
-    return postApi.getPersonalFeed(body: body.toJson(), id: id).then((posts) {
+  Future<GetPersonalFeedResult> getPersonalFeed(GetPostsBody body, int id) async {
+    return postApi.getPersonalFeed(body: body.toJson(), id: id, country: body.country).then((posts) {
       return GetPersonalFeedResult.success(posts);
     }).onError((error, stackTrace) {
       if (error is DioException) {
@@ -143,8 +144,16 @@ class PostsRepository {
     });
   }
 
-  Future<GetPersonalFeedResult> getTopPosts(GetPostsPaginationModel body, int userID, String timeRange) async {
-    return postApi.getTopPosts(per_page: body.perPage, offset: body.offset, userId: userID, timeRange: timeRange).then((posts) {
+  Future<GetPersonalFeedResult> getTopPosts(GetPostsBody body, int userID, String timeRange) async {
+    return postApi
+        .getTopPosts(
+      per_page: body.pagination.perPage,
+      offset: body.pagination.offset,
+      userId: userID,
+      timeRange: timeRange,
+      country: body.country,
+    )
+        .then((posts) {
       return GetPersonalFeedResult.success(posts);
     }).onError((error, stackTrace) {
       if (error is DioException) {

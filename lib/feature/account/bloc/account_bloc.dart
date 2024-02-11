@@ -7,10 +7,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:superkauf/feature/account/bloc/account_state.dart';
 import 'package:superkauf/feature/account/use_case/account_navigation.dart';
 import 'package:superkauf/feature/create_post/use_case/pick_image_use_case.dart';
+import 'package:superkauf/generic/post/model/get_posts_body.dart';
 import 'package:superkauf/generic/post/model/models/get_personal_post_response.dart';
 import 'package:superkauf/generic/post/model/pagination_model.dart';
 import 'package:superkauf/generic/post/model/upload_post_image_params.dart';
 import 'package:superkauf/generic/post/use_case/get_posts_by_user.dart';
+import 'package:superkauf/generic/settings/use_case/get_settings_use_case.dart';
 import 'package:superkauf/generic/user/model/update_user_body.dart';
 import 'package:superkauf/generic/user/model/user_model.dart';
 import 'package:superkauf/generic/user/use_case/get_current_user_use_case.dart';
@@ -28,6 +30,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   final PickImageUseCase pickImageUseCase;
   final UploadUserImageUseCase uploadUserImageUseCase;
   final GetPostsByUserUseCase getPostsByUserUseCase;
+  final GetSettingsUseCase getSettingsUseCase;
 
   AccountBloc({
     required this.accountNavigation,
@@ -37,6 +40,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     required this.pickImageUseCase,
     required this.uploadUserImageUseCase,
     required this.getPostsByUserUseCase,
+    required this.getSettingsUseCase,
   }) : super(const AccountState.loading()) {
     on<GetUser>(_onGetUser);
     on<LogOut>(_onLogOut);
@@ -56,15 +60,20 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
       return;
     }
 
+    final settings = await getSettingsUseCase.call();
+
     Posthog().identify(userId: user!.id.toString(), properties: {
       "supabase_uid": user.id,
       "username": user.username,
     });
 
     final params = GetPersonalFeedParams(
-      pagination: const GetPostsPaginationModel(
-        perPage: 999,
-        offset: 0,
+      body: GetPostsBody(
+        country: settings.country,
+        pagination: const GetPostsPaginationModel(
+          perPage: 999,
+          offset: 0,
+        ),
       ),
       userId: user.id,
     );

@@ -47,6 +47,7 @@ dependencies:
   path_drawing: ^1.0.1
   url_launcher: ^6.2.4
   open_mail_app: ^0.4.5
+  gap: ^3.0.1
 
 
 dev_dependencies:

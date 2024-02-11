@@ -43,6 +43,7 @@ import 'package:superkauf/generic/notifications/notification_module.dart';
 import 'package:superkauf/generic/post/posts_module.dart';
 import 'package:superkauf/generic/report/report_module.dart';
 import 'package:superkauf/generic/saved_posts/saved_posts_module.dart';
+import 'package:superkauf/generic/settings/settings_module.dart';
 import 'package:superkauf/generic/shopping_list/shopping_list_module.dart';
 import 'package:superkauf/generic/store/store_module.dart';
 import 'package:superkauf/generic/user/user_module.dart';
@@ -143,6 +144,7 @@ List<AppModule> modules() {
     MyNotificationsModule(),
     DiscoverModule(),
     ShoppingListModule(),
+    SettingsModule(),
   ];
 }
 

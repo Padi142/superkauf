@@ -19,9 +19,9 @@ mixin _$ShoppingListState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores) initial,
+    required TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores, List<FullContextPostModel> savedPosts) initial,
     required TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores) pickList,
-    required TResult Function(GetShoppingListResponse list) showShoppingList,
+    required TResult Function(GetShoppingListResponse list, int userId) showShoppingList,
     required TResult Function(List<FullContextPostModel> posts, StoreModel store) showStore,
     required TResult Function(String error) error,
   }) =>
@@ -29,9 +29,9 @@ mixin _$ShoppingListState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? initial,
+    TResult? Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores, List<FullContextPostModel> savedPosts)? initial,
     TResult? Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? pickList,
-    TResult? Function(GetShoppingListResponse list)? showShoppingList,
+    TResult? Function(GetShoppingListResponse list, int userId)? showShoppingList,
     TResult? Function(List<FullContextPostModel> posts, StoreModel store)? showStore,
     TResult? Function(String error)? error,
   }) =>
@@ -39,9 +39,9 @@ mixin _$ShoppingListState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? initial,
+    TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores, List<FullContextPostModel> savedPosts)? initial,
     TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? pickList,
-    TResult Function(GetShoppingListResponse list)? showShoppingList,
+    TResult Function(GetShoppingListResponse list, int userId)? showShoppingList,
     TResult Function(List<FullContextPostModel> posts, StoreModel store)? showStore,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -127,9 +127,9 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores) initial,
+    required TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores, List<FullContextPostModel> savedPosts) initial,
     required TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores) pickList,
-    required TResult Function(GetShoppingListResponse list) showShoppingList,
+    required TResult Function(GetShoppingListResponse list, int userId) showShoppingList,
     required TResult Function(List<FullContextPostModel> posts, StoreModel store) showStore,
     required TResult Function(String error) error,
   }) {
@@ -140,9 +140,9 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? initial,
+    TResult? Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores, List<FullContextPostModel> savedPosts)? initial,
     TResult? Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? pickList,
-    TResult? Function(GetShoppingListResponse list)? showShoppingList,
+    TResult? Function(GetShoppingListResponse list, int userId)? showShoppingList,
     TResult? Function(List<FullContextPostModel> posts, StoreModel store)? showStore,
     TResult? Function(String error)? error,
   }) {
@@ -153,9 +153,9 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? initial,
+    TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores, List<FullContextPostModel> savedPosts)? initial,
     TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? pickList,
-    TResult Function(GetShoppingListResponse list)? showShoppingList,
+    TResult Function(GetShoppingListResponse list, int userId)? showShoppingList,
     TResult Function(List<FullContextPostModel> posts, StoreModel store)? showStore,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -218,7 +218,7 @@ abstract class Loading implements ShoppingListState {
 abstract class _$$InitialImplCopyWith<$Res> {
   factory _$$InitialImplCopyWith(_$InitialImpl value, $Res Function(_$InitialImpl) then) = __$$InitialImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<ShoppingListModel> shoppingLists, List<StoreModel> stores});
+  $Res call({List<ShoppingListModel> shoppingLists, List<StoreModel> stores, List<FullContextPostModel> savedPosts});
 }
 
 /// @nodoc
@@ -230,6 +230,7 @@ class __$$InitialImplCopyWithImpl<$Res> extends _$ShoppingListStateCopyWithImpl<
   $Res call({
     Object? shoppingLists = null,
     Object? stores = null,
+    Object? savedPosts = null,
   }) {
     return _then(_$InitialImpl(
       null == shoppingLists
@@ -240,6 +241,10 @@ class __$$InitialImplCopyWithImpl<$Res> extends _$ShoppingListStateCopyWithImpl<
           ? _value._stores
           : stores // ignore: cast_nullable_to_non_nullable
               as List<StoreModel>,
+      null == savedPosts
+          ? _value._savedPosts
+          : savedPosts // ignore: cast_nullable_to_non_nullable
+              as List<FullContextPostModel>,
     ));
   }
 }
@@ -247,9 +252,10 @@ class __$$InitialImplCopyWithImpl<$Res> extends _$ShoppingListStateCopyWithImpl<
 /// @nodoc
 
 class _$InitialImpl implements Initial {
-  const _$InitialImpl(final List<ShoppingListModel> shoppingLists, final List<StoreModel> stores)
+  const _$InitialImpl(final List<ShoppingListModel> shoppingLists, final List<StoreModel> stores, final List<FullContextPostModel> savedPosts)
       : _shoppingLists = shoppingLists,
-        _stores = stores;
+        _stores = stores,
+        _savedPosts = savedPosts;
 
   final List<ShoppingListModel> _shoppingLists;
   @override
@@ -267,9 +273,17 @@ class _$InitialImpl implements Initial {
     return EqualUnmodifiableListView(_stores);
   }
 
+  final List<FullContextPostModel> _savedPosts;
+  @override
+  List<FullContextPostModel> get savedPosts {
+    if (_savedPosts is EqualUnmodifiableListView) return _savedPosts;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_savedPosts);
+  }
+
   @override
   String toString() {
-    return 'ShoppingListState.initial(shoppingLists: $shoppingLists, stores: $stores)';
+    return 'ShoppingListState.initial(shoppingLists: $shoppingLists, stores: $stores, savedPosts: $savedPosts)';
   }
 
   @override
@@ -278,11 +292,12 @@ class _$InitialImpl implements Initial {
         (other.runtimeType == runtimeType &&
             other is _$InitialImpl &&
             const DeepCollectionEquality().equals(other._shoppingLists, _shoppingLists) &&
-            const DeepCollectionEquality().equals(other._stores, _stores));
+            const DeepCollectionEquality().equals(other._stores, _stores) &&
+            const DeepCollectionEquality().equals(other._savedPosts, _savedPosts));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_shoppingLists), const DeepCollectionEquality().hash(_stores));
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_shoppingLists), const DeepCollectionEquality().hash(_stores), const DeepCollectionEquality().hash(_savedPosts));
 
   @JsonKey(ignore: true)
   @override
@@ -293,41 +308,41 @@ class _$InitialImpl implements Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores) initial,
+    required TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores, List<FullContextPostModel> savedPosts) initial,
     required TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores) pickList,
-    required TResult Function(GetShoppingListResponse list) showShoppingList,
+    required TResult Function(GetShoppingListResponse list, int userId) showShoppingList,
     required TResult Function(List<FullContextPostModel> posts, StoreModel store) showStore,
     required TResult Function(String error) error,
   }) {
-    return initial(shoppingLists, stores);
+    return initial(shoppingLists, stores, savedPosts);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? initial,
+    TResult? Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores, List<FullContextPostModel> savedPosts)? initial,
     TResult? Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? pickList,
-    TResult? Function(GetShoppingListResponse list)? showShoppingList,
+    TResult? Function(GetShoppingListResponse list, int userId)? showShoppingList,
     TResult? Function(List<FullContextPostModel> posts, StoreModel store)? showStore,
     TResult? Function(String error)? error,
   }) {
-    return initial?.call(shoppingLists, stores);
+    return initial?.call(shoppingLists, stores, savedPosts);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? initial,
+    TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores, List<FullContextPostModel> savedPosts)? initial,
     TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? pickList,
-    TResult Function(GetShoppingListResponse list)? showShoppingList,
+    TResult Function(GetShoppingListResponse list, int userId)? showShoppingList,
     TResult Function(List<FullContextPostModel> posts, StoreModel store)? showStore,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(shoppingLists, stores);
+      return initial(shoppingLists, stores, savedPosts);
     }
     return orElse();
   }
@@ -377,10 +392,11 @@ class _$InitialImpl implements Initial {
 }
 
 abstract class Initial implements ShoppingListState {
-  const factory Initial(final List<ShoppingListModel> shoppingLists, final List<StoreModel> stores) = _$InitialImpl;
+  const factory Initial(final List<ShoppingListModel> shoppingLists, final List<StoreModel> stores, final List<FullContextPostModel> savedPosts) = _$InitialImpl;
 
   List<ShoppingListModel> get shoppingLists;
   List<StoreModel> get stores;
+  List<FullContextPostModel> get savedPosts;
   @JsonKey(ignore: true)
   _$$InitialImplCopyWith<_$InitialImpl> get copyWith => throw _privateConstructorUsedError;
 }
@@ -464,9 +480,9 @@ class _$PickListImpl implements PickList {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores) initial,
+    required TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores, List<FullContextPostModel> savedPosts) initial,
     required TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores) pickList,
-    required TResult Function(GetShoppingListResponse list) showShoppingList,
+    required TResult Function(GetShoppingListResponse list, int userId) showShoppingList,
     required TResult Function(List<FullContextPostModel> posts, StoreModel store) showStore,
     required TResult Function(String error) error,
   }) {
@@ -477,9 +493,9 @@ class _$PickListImpl implements PickList {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? initial,
+    TResult? Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores, List<FullContextPostModel> savedPosts)? initial,
     TResult? Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? pickList,
-    TResult? Function(GetShoppingListResponse list)? showShoppingList,
+    TResult? Function(GetShoppingListResponse list, int userId)? showShoppingList,
     TResult? Function(List<FullContextPostModel> posts, StoreModel store)? showStore,
     TResult? Function(String error)? error,
   }) {
@@ -490,9 +506,9 @@ class _$PickListImpl implements PickList {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? initial,
+    TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores, List<FullContextPostModel> savedPosts)? initial,
     TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? pickList,
-    TResult Function(GetShoppingListResponse list)? showShoppingList,
+    TResult Function(GetShoppingListResponse list, int userId)? showShoppingList,
     TResult Function(List<FullContextPostModel> posts, StoreModel store)? showStore,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -560,7 +576,7 @@ abstract class PickList implements ShoppingListState {
 abstract class _$$ShowShoppingListImplCopyWith<$Res> {
   factory _$$ShowShoppingListImplCopyWith(_$ShowShoppingListImpl value, $Res Function(_$ShowShoppingListImpl) then) = __$$ShowShoppingListImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({GetShoppingListResponse list});
+  $Res call({GetShoppingListResponse list, int userId});
 }
 
 /// @nodoc
@@ -571,12 +587,17 @@ class __$$ShowShoppingListImplCopyWithImpl<$Res> extends _$ShoppingListStateCopy
   @override
   $Res call({
     Object? list = null,
+    Object? userId = null,
   }) {
     return _then(_$ShowShoppingListImpl(
       null == list
           ? _value.list
           : list // ignore: cast_nullable_to_non_nullable
               as GetShoppingListResponse,
+      null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -584,23 +605,26 @@ class __$$ShowShoppingListImplCopyWithImpl<$Res> extends _$ShoppingListStateCopy
 /// @nodoc
 
 class _$ShowShoppingListImpl implements ShowShoppingList {
-  const _$ShowShoppingListImpl(this.list);
+  const _$ShowShoppingListImpl(this.list, this.userId);
 
   @override
   final GetShoppingListResponse list;
+  @override
+  final int userId;
 
   @override
   String toString() {
-    return 'ShoppingListState.showShoppingList(list: $list)';
+    return 'ShoppingListState.showShoppingList(list: $list, userId: $userId)';
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$ShowShoppingListImpl && (identical(other.list, list) || other.list == list));
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$ShowShoppingListImpl && (identical(other.list, list) || other.list == list) && (identical(other.userId, userId) || other.userId == userId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, list);
+  int get hashCode => Object.hash(runtimeType, list, userId);
 
   @JsonKey(ignore: true)
   @override
@@ -611,41 +635,41 @@ class _$ShowShoppingListImpl implements ShowShoppingList {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores) initial,
+    required TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores, List<FullContextPostModel> savedPosts) initial,
     required TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores) pickList,
-    required TResult Function(GetShoppingListResponse list) showShoppingList,
+    required TResult Function(GetShoppingListResponse list, int userId) showShoppingList,
     required TResult Function(List<FullContextPostModel> posts, StoreModel store) showStore,
     required TResult Function(String error) error,
   }) {
-    return showShoppingList(list);
+    return showShoppingList(list, userId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? initial,
+    TResult? Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores, List<FullContextPostModel> savedPosts)? initial,
     TResult? Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? pickList,
-    TResult? Function(GetShoppingListResponse list)? showShoppingList,
+    TResult? Function(GetShoppingListResponse list, int userId)? showShoppingList,
     TResult? Function(List<FullContextPostModel> posts, StoreModel store)? showStore,
     TResult? Function(String error)? error,
   }) {
-    return showShoppingList?.call(list);
+    return showShoppingList?.call(list, userId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? initial,
+    TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores, List<FullContextPostModel> savedPosts)? initial,
     TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? pickList,
-    TResult Function(GetShoppingListResponse list)? showShoppingList,
+    TResult Function(GetShoppingListResponse list, int userId)? showShoppingList,
     TResult Function(List<FullContextPostModel> posts, StoreModel store)? showStore,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (showShoppingList != null) {
-      return showShoppingList(list);
+      return showShoppingList(list, userId);
     }
     return orElse();
   }
@@ -695,9 +719,10 @@ class _$ShowShoppingListImpl implements ShowShoppingList {
 }
 
 abstract class ShowShoppingList implements ShoppingListState {
-  const factory ShowShoppingList(final GetShoppingListResponse list) = _$ShowShoppingListImpl;
+  const factory ShowShoppingList(final GetShoppingListResponse list, final int userId) = _$ShowShoppingListImpl;
 
   GetShoppingListResponse get list;
+  int get userId;
   @JsonKey(ignore: true)
   _$$ShowShoppingListImplCopyWith<_$ShowShoppingListImpl> get copyWith => throw _privateConstructorUsedError;
 }
@@ -771,9 +796,9 @@ class _$ShowStoreImpl implements ShowStore {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores) initial,
+    required TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores, List<FullContextPostModel> savedPosts) initial,
     required TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores) pickList,
-    required TResult Function(GetShoppingListResponse list) showShoppingList,
+    required TResult Function(GetShoppingListResponse list, int userId) showShoppingList,
     required TResult Function(List<FullContextPostModel> posts, StoreModel store) showStore,
     required TResult Function(String error) error,
   }) {
@@ -784,9 +809,9 @@ class _$ShowStoreImpl implements ShowStore {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? initial,
+    TResult? Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores, List<FullContextPostModel> savedPosts)? initial,
     TResult? Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? pickList,
-    TResult? Function(GetShoppingListResponse list)? showShoppingList,
+    TResult? Function(GetShoppingListResponse list, int userId)? showShoppingList,
     TResult? Function(List<FullContextPostModel> posts, StoreModel store)? showStore,
     TResult? Function(String error)? error,
   }) {
@@ -797,9 +822,9 @@ class _$ShowStoreImpl implements ShowStore {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? initial,
+    TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores, List<FullContextPostModel> savedPosts)? initial,
     TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? pickList,
-    TResult Function(GetShoppingListResponse list)? showShoppingList,
+    TResult Function(GetShoppingListResponse list, int userId)? showShoppingList,
     TResult Function(List<FullContextPostModel> posts, StoreModel store)? showStore,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -918,9 +943,9 @@ class _$ErrorImpl implements Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores) initial,
+    required TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores, List<FullContextPostModel> savedPosts) initial,
     required TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores) pickList,
-    required TResult Function(GetShoppingListResponse list) showShoppingList,
+    required TResult Function(GetShoppingListResponse list, int userId) showShoppingList,
     required TResult Function(List<FullContextPostModel> posts, StoreModel store) showStore,
     required TResult Function(String error) error,
   }) {
@@ -931,9 +956,9 @@ class _$ErrorImpl implements Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? initial,
+    TResult? Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores, List<FullContextPostModel> savedPosts)? initial,
     TResult? Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? pickList,
-    TResult? Function(GetShoppingListResponse list)? showShoppingList,
+    TResult? Function(GetShoppingListResponse list, int userId)? showShoppingList,
     TResult? Function(List<FullContextPostModel> posts, StoreModel store)? showStore,
     TResult? Function(String error)? error,
   }) {
@@ -944,9 +969,9 @@ class _$ErrorImpl implements Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? initial,
+    TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores, List<FullContextPostModel> savedPosts)? initial,
     TResult Function(List<ShoppingListModel> shoppingLists, List<StoreModel> stores)? pickList,
-    TResult Function(GetShoppingListResponse list)? showShoppingList,
+    TResult Function(GetShoppingListResponse list, int userId)? showShoppingList,
     TResult Function(List<FullContextPostModel> posts, StoreModel store)? showStore,
     TResult Function(String error)? error,
     required TResult orElse(),

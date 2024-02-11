@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:superkauf/feature/store_posts/bloc/store_posts_bloc.dart';
 import 'package:superkauf/feature/store_posts/view/store_posts_view.dart';
+import 'package:superkauf/generic/settings/use_case/get_settings_use_case.dart';
 import 'package:superkauf/generic/store/bloc/store_bloc.dart';
 import 'package:superkauf/generic/store/use_case/get_posts_by_store_use_case.dart';
 import 'package:superkauf/generic/user/use_case/get_current_user_use_case.dart';
@@ -20,6 +21,7 @@ class StorePostsModule extends AppModule {
       () => StorePostsBloc(
         getPostsByStoreUseCase: GetIt.I.get<GetPostsByStoreUseCase>(),
         getCurrentUserUseCase: GetIt.I.get<GetCurrentUserUseCase>(),
+        getSettingsUseCase: GetIt.I.get<GetSettingsUseCase>(),
       ),
     );
   }

@@ -2,9 +2,11 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:superkauf/feature/user_detail/bloc/user_detail_state.dart';
 import 'package:superkauf/generic/post/model/get_post_response.dart';
+import 'package:superkauf/generic/post/model/get_posts_body.dart';
 import 'package:superkauf/generic/post/model/models/get_personal_post_response.dart';
 import 'package:superkauf/generic/post/model/pagination_model.dart';
 import 'package:superkauf/generic/post/use_case/get_posts_by_user.dart';
+import 'package:superkauf/generic/settings/use_case/get_settings_use_case.dart';
 import 'package:superkauf/generic/user/model/user_model.dart';
 import 'package:superkauf/generic/user/use_case/get_user_by_id_use_case.dart';
 
@@ -13,10 +15,12 @@ part 'user_detail_event.dart';
 class UserDetailBloc extends Bloc<UserDetailEvent, UserDetailState> {
   final GetUserByIdUseCase getUserByIdUseCase;
   final GetPostsByUserUseCase getPostsByUserUseCase;
+  final GetSettingsUseCase getSettingsUseCase;
 
   UserDetailBloc({
     required this.getUserByIdUseCase,
     required this.getPostsByUserUseCase,
+    required this.getSettingsUseCase,
   }) : super(const UserDetailState.loading()) {
     on<GetUser>(_onGetUser);
     on<InitialUserEvent>(_onInitialUserEvent);
@@ -47,10 +51,15 @@ class UserDetailBloc extends Bloc<UserDetailEvent, UserDetailState> {
     final List<FeedPostModel> newPosts = [];
     var canLoadMore = false;
 
+    final settings = await getSettingsUseCase.call();
+
     final params = GetPersonalFeedParams(
-      pagination: GetPostsPaginationModel(
-        perPage: perPage,
-        offset: page * perPage,
+      body: GetPostsBody(
+        country: settings.country,
+        pagination: GetPostsPaginationModel(
+          perPage: perPage,
+          offset: page * perPage,
+        ),
       ),
       userId: event.userID,
     );

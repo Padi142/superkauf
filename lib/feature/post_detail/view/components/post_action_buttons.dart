@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:superkauf/feature/feed/bloc/feed_bloc.dart';
+import 'package:superkauf/feature/home/bloc/saved_posts_panel_bloc/saved_posts_panel_bloc.dart';
 import 'package:superkauf/feature/snackbar/bloc/snackbar_bloc.dart';
 import 'package:superkauf/generic/post/bloc/post_bloc.dart';
 import 'package:superkauf/generic/post/model/post_model.dart';
@@ -66,6 +67,10 @@ class PostActionButtons extends StatelessWidget {
                   postId: post.id,
                 ),
               );
+              BlocProvider.of<SavedPostsPanelBloc>(context).add(OpenSavedPostsPanel(
+                storeId: post.store,
+                postId: post.id,
+              ));
               BlocProvider.of<SnackbarBloc>(context).add(
                 InfoSnackbar(
                   message: 'post_saved_successfully'.tr(),

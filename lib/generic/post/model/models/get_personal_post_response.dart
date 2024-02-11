@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:superkauf/generic/post/model/get_posts_body.dart';
 import 'package:superkauf/generic/post/model/models/reaction_model.dart';
 import 'package:superkauf/generic/post/model/pagination_model.dart';
 import 'package:superkauf/generic/post/model/post_model.dart';
@@ -56,11 +57,11 @@ class FullContextPostModel extends Equatable {
 
 @JsonSerializable(explicitToJson: true, fieldRename: FieldRename.snake)
 class GetPersonalFeedParams extends Equatable {
-  final GetPostsPaginationModel pagination;
+  final GetPostsBody body;
   final int userId;
 
   const GetPersonalFeedParams({
-    required this.pagination,
+    required this.body,
     required this.userId,
   });
 
@@ -70,20 +71,20 @@ class GetPersonalFeedParams extends Equatable {
 
   @override
   List<Object?> get props => [
-        pagination,
+        body,
         userId,
       ];
 }
 
 @JsonSerializable(explicitToJson: true, fieldRename: FieldRename.snake)
 class GetTopPostsParams extends Equatable {
-  final GetPostsPaginationModel pagination;
+  final GetPostsBody body;
   final int userId;
   final String timeRange;
   final String sortBy;
 
   const GetTopPostsParams({
-    required this.pagination,
+    required this.body,
     required this.userId,
     required this.timeRange,
     required this.sortBy,
@@ -95,7 +96,7 @@ class GetTopPostsParams extends Equatable {
 
   @override
   List<Object?> get props => [
-        pagination,
+        body,
         userId,
       ];
 }

@@ -1,9 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
+import 'package:superkauf/generic/post/model/get_posts_body.dart';
 import 'package:superkauf/generic/post/model/models/get_personal_post_response.dart';
 import 'package:superkauf/generic/post/model/pagination_model.dart';
 import 'package:superkauf/generic/post/use_case/get_top_posts_use_case.dart';
+import 'package:superkauf/generic/settings/use_case/get_settings_use_case.dart';
 import 'package:superkauf/generic/user/use_case/get_current_user_use_case.dart';
 
 import 'discover_state.dart';
@@ -13,10 +15,12 @@ part 'discover_event.dart';
 class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
   final GetTopPostsUseCase getTopPostsUseCase;
   final GetCurrentUserUseCase getCurrentUserUseCase;
+  final GetSettingsUseCase getSettingsUseCase;
 
   DiscoverBloc({
     required this.getTopPostsUseCase,
     required this.getCurrentUserUseCase,
+    required this.getSettingsUseCase,
   }) : super(const DiscoverState.loading()) {
     on<GetTopPosts>(_onGetTopPosts);
     on<LoadMore>(_onLoadMore);
@@ -39,11 +43,16 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
 
     final user = await getCurrentUserUseCase.call();
 
+    final settings = await getSettingsUseCase.call();
+
     final params = GetTopPostsParams(
         userId: user?.id ?? 0,
-        pagination: GetPostsPaginationModel(
-          offset: page * perPage,
-          perPage: perPage,
+        body: GetPostsBody(
+          pagination: GetPostsPaginationModel(
+            offset: page * perPage,
+            perPage: perPage,
+          ),
+          country: settings.country,
         ),
         timeRange: timeRange.name,
         sortBy: '');

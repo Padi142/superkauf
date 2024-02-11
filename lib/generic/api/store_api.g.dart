@@ -19,7 +19,7 @@ class _StoreApi implements StoreApi {
   String? baseUrl;
 
   @override
-  Future<List<StoreModel>> getStores() async {
+  Future<List<StoreModel>> getStores({required String country}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -31,7 +31,7 @@ class _StoreApi implements StoreApi {
     )
         .compose(
           _dio.options,
-          '/store',
+          '/store?country=${country}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -50,6 +50,7 @@ class _StoreApi implements StoreApi {
     required int perPage,
     required int offset,
     int? userId,
+    required String country,
   }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -63,7 +64,7 @@ class _StoreApi implements StoreApi {
     )
         .compose(
           _dio.options,
-          '/store/posts/${id}?per_page=${perPage}&offset=${offset}&userId=${userId}',
+          '/store/posts/${id}?per_page=${perPage}&offset=${offset}&userId=${userId}?country=${country}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -73,6 +74,32 @@ class _StoreApi implements StoreApi {
           baseUrl,
         ))));
     final value = GetPaginatedPostsResponseModel.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<StoreModel> getStore({required int id}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<StoreModel>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/store/${id}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    final value = StoreModel.fromJson(_result.data!);
     return value;
   }
 

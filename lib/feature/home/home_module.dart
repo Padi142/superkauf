@@ -7,8 +7,13 @@ import 'package:superkauf/feature/home/view/home_screen.dart';
 import 'package:superkauf/feature/snackbar/bloc/snackbar_bloc.dart';
 import 'package:superkauf/generic/notifications/presentation/check_notifications_bloc.dart';
 import 'package:superkauf/generic/post/bloc/post_bloc.dart';
+import 'package:superkauf/generic/shopping_list/bloc/shopping_list_data_bloc.dart';
+import 'package:superkauf/generic/shopping_list/use_case/get_shopping_list_for_user_use_case.dart';
+import 'package:superkauf/generic/store/use_case/GetStoresUseCase.dart';
+import 'package:superkauf/generic/user/use_case/get_current_user_use_case.dart';
 
 import '../../library/app_module.dart';
+import 'bloc/saved_posts_panel_bloc/saved_posts_panel_bloc.dart';
 
 class HomeModule extends AppModule {
   @override
@@ -26,6 +31,14 @@ class HomeModule extends AppModule {
 
     GetIt.I.registerSingleton<NavigationBloc>(
       NavigationBloc(),
+    );
+
+    GetIt.I.registerFactory<SavedPostsPanelBloc>(
+      () => SavedPostsPanelBloc(
+        getCurrentUserUseCase: GetIt.I.get<GetCurrentUserUseCase>(),
+        getShoppingListForUserUseCase: GetIt.I.get<GetShoppingListsForUserUseCase>(),
+        getStoreUseCase: GetIt.I.get<GetStoreUseCase>(),
+      ),
     );
   }
 
@@ -50,6 +63,12 @@ class HomeModule extends AppModule {
           ),
           BlocProvider<CheckNotificationBloc>.value(
             value: GetIt.I.get<CheckNotificationBloc>(),
+          ),
+          BlocProvider<SavedPostsPanelBloc>.value(
+            value: GetIt.I.get<SavedPostsPanelBloc>(),
+          ),
+          BlocProvider<ShoppingListDataBloc>.value(
+            value: GetIt.I.get<ShoppingListDataBloc>(),
           ),
         ],
         child: GetIt.I.get<HomeScreen>(),

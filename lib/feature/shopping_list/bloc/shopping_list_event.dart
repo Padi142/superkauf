@@ -7,8 +7,8 @@ abstract class ShoppingListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class InitialEvent extends ShoppingListEvent {
-  const InitialEvent();
+class InitialListEvent extends ShoppingListEvent {
+  const InitialListEvent();
 }
 
 class ReloadShoppingList extends ShoppingListEvent {
@@ -30,5 +30,15 @@ class PickShoppingList extends ShoppingListEvent {
   final int shoppingListId;
   const PickShoppingList({
     required this.shoppingListId,
+  });
+}
+
+class UpdateSavedPostEvent extends ShoppingListEvent {
+  final int postId;
+  final bool isCompleted;
+
+  const UpdateSavedPostEvent({
+    required this.postId,
+    required this.isCompleted,
   });
 }

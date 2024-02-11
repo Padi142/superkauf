@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:superkauf/generic/shopping_list/model/get_shopping_list_response.dart';
-import 'package:superkauf/generic/shopping_list/model/shopping_list_model.dart';
 
 part 'get_shopping_list_result.freezed.dart';
 

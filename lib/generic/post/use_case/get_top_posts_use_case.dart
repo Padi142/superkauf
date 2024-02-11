@@ -12,6 +12,6 @@ class GetTopPostsUseCase extends UseCase<GetPersonalFeedResult, GetTopPostsParam
 
   @override
   Future<GetPersonalFeedResult> call(params) async {
-    return await repository.getTopPosts(params.pagination, params.userId, params.timeRange);
+    return await repository.getTopPosts(params.body, params.userId, params.timeRange);
   }
 }

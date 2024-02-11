@@ -1,10 +1,15 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:superkauf/feature/shopping_list/bloc/shopping_list_state.dart';
+import 'package:superkauf/generic/post/model/get_posts_body.dart';
 import 'package:superkauf/generic/post/model/models/get_personal_post_response.dart';
 import 'package:superkauf/generic/post/model/pagination_model.dart';
 import 'package:superkauf/generic/saved_posts/model/get_saved_post_params.dart';
+import 'package:superkauf/generic/saved_posts/model/get_saved_posts_result.dart';
+import 'package:superkauf/generic/saved_posts/model/update_saved_post_body.dart';
 import 'package:superkauf/generic/saved_posts/use_case/get_saved_posts_by_user_use_case.dart';
+import 'package:superkauf/generic/saved_posts/use_case/update_saved_post_use_case.dart';
+import 'package:superkauf/generic/settings/use_case/get_settings_use_case.dart';
 import 'package:superkauf/generic/shopping_list/model/get_shopping_lists_for_user_result.dart';
 import 'package:superkauf/generic/shopping_list/model/shopping_list_model.dart';
 import 'package:superkauf/generic/shopping_list/use_case/get_shopping_list_for_user_use_case.dart';
@@ -22,6 +27,8 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
   final GetShoppingListsForUserUseCase getShoppingListForUserUseCase;
   final GetShoppingListInfoUseCase getShoppingListInfoUseCase;
   final GetStoresUseCase getStoresUseCase;
+  final UpdateSavedPostUseCase updateSavedPostUseCase;
+  final GetSettingsUseCase getSettingsUseCase;
 
   ShoppingListBloc({
     required this.getCurrentUserUseCase,
@@ -29,20 +36,21 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
     required this.getShoppingListForUserUseCase,
     required this.getShoppingListInfoUseCase,
     required this.getStoresUseCase,
+    required this.updateSavedPostUseCase,
+    required this.getSettingsUseCase,
   }) : super(const ShoppingListState.loading()) {
-    on<InitialEvent>(_onInitialEvent);
+    on<InitialListEvent>(_onInitialListEvent);
     on<PickShoppingList>(_onPickShoppingList);
     on<PickStore>(_onPickStore);
-    // on<ReloadShoppingList>(_onReloadShoppingList);
-    // on<LoadMore>(_onLoadMore);
+    on<UpdateSavedPostEvent>(_onUpdateSavedPostEvent);
   }
 
   var page = 0;
   var loading = false;
   static const perPage = 999;
 
-  Future<void> _onInitialEvent(
-    InitialEvent event,
+  Future<void> _onInitialListEvent(
+    InitialListEvent event,
     Emitter<ShoppingListState> emit,
   ) async {
     final userResult = await getCurrentUserUseCase.call();
@@ -51,16 +59,31 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
       return;
     }
 
-    final Future<GetStoresResult> storeCall = getStoresUseCase.call();
+    final settings = await getSettingsUseCase.call();
+
+    final params = GetPostsBody(
+      country: settings.country,
+      pagination: const GetPostsPaginationModel(perPage: 0, offset: 0),
+    );
+
+    final Future<GetStoresResult> storeCall = getStoresUseCase.call(params);
+    final Future<GetSavedPostsResult> savedPostsCall = getSavedPostsByUserUseCase.call(
+      GetSavedPostsParams(
+        userId: userResult.id,
+        pagination: const GetPostsPaginationModel(perPage: perPage, offset: 0),
+      ),
+    );
     final Future<GetShoppingListsForUserResult> shoppingListCall = getShoppingListForUserUseCase.call(userResult.id);
 
-    final List<dynamic> results = await Future.wait([storeCall, shoppingListCall]);
+    final List<dynamic> results = await Future.wait([storeCall, shoppingListCall, savedPostsCall]);
 
     final GetStoresResult storesResult = results[0] as GetStoresResult;
     final GetShoppingListsForUserResult shoppingListResult = results[1] as GetShoppingListsForUserResult;
+    final GetSavedPostsResult savedPostsResult = results[2] as GetSavedPostsResult;
 
     var stores = <StoreModel>[];
     var shoppingLists = <ShoppingListModel>[];
+    var savedPosts = <FullContextPostModel>[];
     storesResult.map(
         success: (success) {
           stores.addAll(success.stores);
@@ -73,17 +96,24 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
         },
         failure: (failure) {});
 
-    emit(ShoppingListState.initial(shoppingLists, stores));
+    savedPostsResult.map(
+        success: (success) {
+          savedPosts.addAll(success.response.posts);
+        },
+        failure: (failure) {});
+
+    emit(ShoppingListState.initial(shoppingLists, stores, savedPosts));
   }
 
   Future<void> _onPickShoppingList(
     PickShoppingList event,
     Emitter<ShoppingListState> emit,
   ) async {
+    final getCurrentUserResult = await getCurrentUserUseCase.call();
     final result = await getShoppingListInfoUseCase.call(event.shoppingListId);
     result.map(
       success: (success) {
-        emit(ShoppingListState.showShoppingList(success.list));
+        emit(ShoppingListState.showShoppingList(success.list, getCurrentUserResult?.id ?? 0));
       },
       failure: (failure) {
         emit(ShoppingListState.error(failure.message));
@@ -123,43 +153,17 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
     ));
   }
 
-  // Future<void> _onReloadShoppingList(
-  //   ReloadShoppingList event,
-  //   Emitter<ShoppingListState> emit,
-  // ) async {
-  //   if (event.wait) {
-  //     await Future.delayed(const Duration(milliseconds: 400));
-  //   }
-  //   page = 0;
-  //
-  //   emit(const ShoppingListState.loading());
-  //   add(const GetShoppingList());
-  // }
+  Future<void> _onUpdateSavedPostEvent(
+    UpdateSavedPostEvent event,
+    Emitter<ShoppingListState> emit,
+  ) async {
+    final result = await updateSavedPostUseCase.call(
+      UpdateSavedPostBody(
+        savedPostId: event.postId,
+        isCompleted: event.isCompleted,
+      ),
+    );
 
-  // Future<void> _onLoadMore(
-  //   LoadMore event,
-  //   Emitter<ShoppingListState> emit,
-  // ) async {
-  //   if (loading) {
-  //     return;
-  //   }
-  //   loading = true;
-  //
-  //   var shouldReturn = false;
-  //   state.maybeMap(
-  //     loaded: (loaded) {
-  //       if (loaded.posts.length % perPage == 0) {
-  //         emit(loaded.copyWith(isLoading: true));
-  //       } else {
-  //         shouldReturn = true;
-  //       }
-  //     },
-  //     orElse: () {},
-  //   );
-  //   if (shouldReturn) {
-  //     return;
-  //   }
-  //   page++;
-  //   add(const GetShoppingList());
-  // }
+    // add(const GetShoppingList());
+  }
 }

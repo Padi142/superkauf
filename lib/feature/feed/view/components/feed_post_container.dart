@@ -6,6 +6,7 @@ import 'package:superkauf/feature/feed/view/components/post_image.dart';
 import 'package:superkauf/feature/feed/view/components/save_post_button.dart';
 import 'package:superkauf/feature/feed/view/components/time_ago_widget.dart';
 import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
+import 'package:superkauf/feature/home/bloc/saved_posts_panel_bloc/saved_posts_panel_bloc.dart';
 import 'package:superkauf/feature/post_detail/bloc/post_detail_bloc.dart';
 import 'package:superkauf/feature/user_detail/bloc/user_detail_bloc.dart';
 import 'package:superkauf/generic/post/bloc/post_bloc.dart';
@@ -66,9 +67,9 @@ class _FeedPostContainerState extends State<FeedPostContainer> {
                               BlocProvider.of<UserDetailBloc>(context).add(GetUser(userID: widget.post.post.author));
                               BlocProvider.of<NavigationBloc>(context).add(const OpenUserDetailScreen());
                             },
-                            child: Material(
+                            child: const Material(
                               elevation: 4,
-                              shape: const CircleBorder(),
+                              shape: CircleBorder(),
                               child: CircleAvatar(),
                             ),
                           ),
@@ -101,7 +102,6 @@ class _FeedPostContainerState extends State<FeedPostContainer> {
                               savedPost: null,
                               addReaction: () {},
                               isSaved: false,
-                              onSave: (isSaved) {},
                             )
                           ],
                         ),
@@ -145,13 +145,11 @@ class PersonalFeedPostContainer extends StatefulWidget {
 class _PersonalFeedPostContainerState extends State<PersonalFeedPostContainer> {
   var reactions = 0;
   var likeState = LikedState.initial;
-  var isSaved = false;
 
   @override
   void initState() {
     super.initState();
     reactions = widget.post.post.likes;
-    isSaved = widget.post.saved != null;
   }
 
   @override
@@ -215,12 +213,7 @@ class _PersonalFeedPostContainerState extends State<PersonalFeedPostContainer> {
                                 post: widget.post.post,
                                 user: widget.post.user,
                               ),
-                              onSave: (isSaved) {
-                                setState(() {
-                                  this.isSaved = isSaved;
-                                });
-                              },
-                              isSaved: isSaved,
+                              isSaved: widget.post.saved != null,
                               constraints: constraints,
                               savedPost: widget.post.saved,
                               originScreen: widget.originScreen,
@@ -297,7 +290,6 @@ class PostContent extends StatelessWidget {
   final String originScreen;
   final SavedPostModel? savedPost;
   final Function() addReaction;
-  final Function(bool) onSave;
   final bool isSaved;
 
   const PostContent({
@@ -307,7 +299,6 @@ class PostContent extends StatelessWidget {
     required this.originScreen,
     required this.savedPost,
     required this.addReaction,
-    required this.onSave,
     required this.isSaved,
   });
 
@@ -354,10 +345,27 @@ class PostContent extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           SavePostButton(
-                            postId: post.post.id,
+                            post: post.post,
                             isSaved: isSaved || savedPost != null,
-                            originScreen: originScreen,
-                            onPressed: onSave,
+                            onPressed: (value) {
+                              if (value) {
+                                BlocProvider.of<PostBloc>(context).add(
+                                  SavePost(
+                                    postId: post.post.id,
+                                  ),
+                                );
+                                BlocProvider.of<SavedPostsPanelBloc>(context).add(OpenSavedPostsPanel(
+                                  storeId: post.post.store,
+                                  postId: post.post.id,
+                                ));
+                              } else {
+                                BlocProvider.of<PostBloc>(context).add(
+                                  RemoveSavedPost(
+                                    postId: post.post.id,
+                                  ),
+                                );
+                              }
+                            },
                           ),
                           const SizedBox(
                             height: 5,

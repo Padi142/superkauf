@@ -9,14 +9,22 @@ part 'store_api.g.dart';
 abstract class StoreApi {
   factory StoreApi(Dio dio) = _StoreApi;
 
-  @GET('/store')
-  Future<List<StoreModel>> getStores();
+  @GET('/store?country={country}')
+  Future<List<StoreModel>> getStores({
+    @Path() required String country,
+  });
 
-  @GET('/store/posts/{id}?per_page={perPage}&offset={offset}&userId={userId}')
+  @GET('/store/posts/{id}?per_page={perPage}&offset={offset}&userId={userId}?country={country}')
   Future<GetPaginatedPostsResponseModel> getPostsByStore({
     @Path() required int id,
     @Path() required int perPage,
     @Path() required int offset,
     @Path() required int? userId,
+    @Path() required String country,
+  });
+
+  @GET('/store/{id}')
+  Future<StoreModel> getStore({
+    @Path() required int id,
   });
 }

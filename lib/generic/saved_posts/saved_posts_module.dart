@@ -29,23 +29,19 @@ class SavedPostsModule extends AppModule {
   @override
   void registerUseCase() {
     GetIt.I.registerFactory<CreateSavedPostUseCase>(
-      () => CreateSavedPostUseCase(
-          repository: GetIt.I.get<SavedPostsRepository>()),
+      () => CreateSavedPostUseCase(repository: GetIt.I.get<SavedPostsRepository>()),
     );
 
     GetIt.I.registerFactory<DeleteSavedPostUseCase>(
-      () => DeleteSavedPostUseCase(
-          repository: GetIt.I.get<SavedPostsRepository>()),
+      () => DeleteSavedPostUseCase(repository: GetIt.I.get<SavedPostsRepository>()),
     );
 
     GetIt.I.registerFactory<GetSavedPostsByUserUseCase>(
-      () => GetSavedPostsByUserUseCase(
-          repository: GetIt.I.get<SavedPostsRepository>()),
+      () => GetSavedPostsByUserUseCase(repository: GetIt.I.get<SavedPostsRepository>()),
     );
 
     GetIt.I.registerFactory<UpdateSavedPostUseCase>(
-      () => UpdateSavedPostUseCase(
-          repository: GetIt.I.get<SavedPostsRepository>()),
+      () => UpdateSavedPostUseCase(repository: GetIt.I.get<SavedPostsRepository>()),
     );
   }
 

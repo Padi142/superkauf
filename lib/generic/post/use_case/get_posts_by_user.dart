@@ -12,6 +12,6 @@ class GetPostsByUserUseCase extends UseCase<GetPostsResult, GetPersonalFeedParam
 
   @override
   Future<GetPostsResult> call(params) async {
-    return await repository.getPostsByUser(params.pagination, params.userId);
+    return await repository.getPostsByUser(params.body.pagination, params.userId);
   }
 }

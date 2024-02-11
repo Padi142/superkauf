@@ -11,15 +11,17 @@ part 'post_api.g.dart';
 abstract class PostApi {
   factory PostApi(Dio dio) = _PostApi;
 
-  @POST('/feed')
+  @POST('/feed?country={country}')
   Future<GetPostsResponseModel> getFeed({
     @Body() required Map<String, dynamic> body,
+    @Path() required String country,
   });
 
-  @POST('/feed/{id}')
+  @POST('/feed/{id}?country={country}')
   Future<GetPaginatedPostsResponseModel> getPersonalFeed({
     @Body() required Map<String, dynamic> body,
     @Path() required int id,
+    @Path() required String country,
   });
 
   @POST('/post')
@@ -68,11 +70,12 @@ abstract class PostApi {
     @Body() required Map<String, dynamic> body,
   });
 
-  @GET('/feed/top?offset={offset}&per_page={per_page}&userId={userId}&timeRange={timeRange}')
+  @GET('/feed/top?offset={offset}&per_page={per_page}&userId={userId}&timeRange={timeRange}?country={country}')
   Future<GetPaginatedPostsResponseModel> getTopPosts({
     @Path() required int per_page,
     @Path() required int offset,
     @Path() required int userId,
     @Path() required String timeRange,
+    @Path() required String country,
   });
 }

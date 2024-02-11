@@ -9,14 +9,18 @@ class ShoppingListModel extends Equatable {
   final String name;
   final int createdBy;
   final String logo;
+  final String code;
   final DateTime createdAt;
+  final int? postsLength;
 
   const ShoppingListModel({
     required this.id,
     required this.name,
     required this.createdBy,
     required this.logo,
+    required this.code,
     required this.createdAt,
+    this.postsLength,
   });
 
   factory ShoppingListModel.fromJson(Map<String, dynamic> json) => _$ShoppingListModelFromJson(json);

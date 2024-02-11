@@ -12,6 +12,6 @@ class GetPersonalFeedUseCase extends UseCase<GetPersonalFeedResult, GetPersonalF
 
   @override
   Future<GetPersonalFeedResult> call(params) async {
-    return await repository.getPersonalFeed(params.pagination, params.userId);
+    return await repository.getPersonalFeed(params.body, params.userId);
   }
 }

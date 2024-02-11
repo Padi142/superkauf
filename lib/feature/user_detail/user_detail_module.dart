@@ -4,6 +4,7 @@ import 'package:superkauf/feature/user_detail/bloc/user_detail_bloc.dart';
 import 'package:superkauf/feature/user_detail/view/user_detail_screen.dart';
 import 'package:superkauf/generic/post/bloc/post_bloc.dart';
 import 'package:superkauf/generic/post/use_case/get_posts_by_user.dart';
+import 'package:superkauf/generic/settings/use_case/get_settings_use_case.dart';
 import 'package:superkauf/generic/user/use_case/get_user_by_id_use_case.dart';
 import 'package:superkauf/library/app_module.dart';
 
@@ -20,6 +21,7 @@ class UserDetailModule extends AppModule {
       UserDetailBloc(
         getUserByIdUseCase: GetIt.I.get<GetUserByIdUseCase>(),
         getPostsByUserUseCase: GetIt.I.get<GetPostsByUserUseCase>(),
+        getSettingsUseCase: GetIt.I.get<GetSettingsUseCase>(),
       ),
     );
   }

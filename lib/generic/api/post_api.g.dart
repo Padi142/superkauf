@@ -19,7 +19,10 @@ class _PostApi implements PostApi {
   String? baseUrl;
 
   @override
-  Future<GetPostsResponseModel> getFeed({required Map<String, dynamic> body}) async {
+  Future<GetPostsResponseModel> getFeed({
+    required Map<String, dynamic> body,
+    required String country,
+  }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -32,7 +35,7 @@ class _PostApi implements PostApi {
     )
         .compose(
           _dio.options,
-          '/feed',
+          '/feed?country=${country}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -49,6 +52,7 @@ class _PostApi implements PostApi {
   Future<GetPaginatedPostsResponseModel> getPersonalFeed({
     required Map<String, dynamic> body,
     required int id,
+    required String country,
   }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -62,7 +66,7 @@ class _PostApi implements PostApi {
     )
         .compose(
           _dio.options,
-          '/feed/${id}',
+          '/feed/${id}?country=${country}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -311,6 +315,7 @@ class _PostApi implements PostApi {
     required int offset,
     required int userId,
     required String timeRange,
+    required String country,
   }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -323,7 +328,7 @@ class _PostApi implements PostApi {
     )
         .compose(
           _dio.options,
-          '/feed/top?offset=${offset}&per_page=${per_page}&userId=${userId}&timeRange=${timeRange}',
+          '/feed/top?offset=${offset}&per_page=${per_page}&userId=${userId}&timeRange=${timeRange}?country=${country}',
           queryParameters: queryParameters,
           data: _data,
         )

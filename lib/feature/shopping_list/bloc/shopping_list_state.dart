@@ -12,6 +12,7 @@ abstract class ShoppingListState with _$ShoppingListState {
   const factory ShoppingListState.initial(
     List<ShoppingListModel> shoppingLists,
     List<StoreModel> stores,
+    List<FullContextPostModel> savedPosts,
   ) = Initial;
 
   const factory ShoppingListState.pickList(
@@ -21,6 +22,7 @@ abstract class ShoppingListState with _$ShoppingListState {
 
   const factory ShoppingListState.showShoppingList(
     GetShoppingListResponse list,
+    int userId,
   ) = ShowShoppingList;
 
   const factory ShoppingListState.showStore(List<FullContextPostModel> posts, StoreModel store

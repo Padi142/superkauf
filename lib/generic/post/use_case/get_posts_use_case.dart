@@ -1,9 +1,9 @@
 import 'package:superkauf/generic/post/data/post_repository.dart';
+import 'package:superkauf/generic/post/model/get_posts_body.dart';
 import 'package:superkauf/generic/post/model/get_posts_result.dart';
-import 'package:superkauf/generic/post/model/pagination_model.dart';
 import 'package:superkauf/library/use_case.dart';
 
-class GetPostsUseCase extends UseCase<GetPostsResult, GetPostsPaginationModel> {
+class GetPostsUseCase extends UseCase<GetPostsResult, GetPostsBody> {
   PostsRepository repository;
 
   GetPostsUseCase({

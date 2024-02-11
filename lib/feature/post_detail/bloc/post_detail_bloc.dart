@@ -6,16 +6,19 @@ import 'package:superkauf/generic/post/model/results/get_post_detail_params.dart
 import 'package:superkauf/generic/post/use_case/get_post_detail_use_case.dart';
 import 'package:superkauf/generic/user/model/user_model.dart';
 import 'package:superkauf/generic/user/use_case/get_current_user_use_case.dart';
+import 'package:superkauf/generic/user/use_case/get_user_by_id_use_case.dart';
 
 part 'post_detail_event.dart';
 
 class PostDetailBloc extends Bloc<PostDetailEvent, PostDetailState> {
   final GetPostDetailUseCase getPostDetailUseCase;
   final GetCurrentUserUseCase getCurrentUserUseCase;
+  final GetUserByIdUseCase getUserByIdUseCase;
 
   PostDetailBloc({
     required this.getPostDetailUseCase,
     required this.getCurrentUserUseCase,
+    required this.getUserByIdUseCase,
   }) : super(const PostDetailState.loading()) {
     on<InitialEvent>(_onInitialEvent);
     on<GetPost>(_onGetPost);
@@ -26,7 +29,18 @@ class PostDetailBloc extends Bloc<PostDetailEvent, PostDetailState> {
     InitialEvent event,
     Emitter<PostDetailState> emit,
   ) async {
-    emit(PostDetailState.initial(event.post, event.user));
+    if (event.user == null) {
+      final userResult = await getUserByIdUseCase.call(event.post.author);
+
+      userResult.map(
+          success: (success) {
+            emit(PostDetailState.initial(event.post, success.user));
+          },
+          failure: (failure) {});
+    } else {
+      emit(PostDetailState.initial(event.post, event.user!));
+    }
+
     add(GetPost(postId: event.post.id.toString()));
   }
 

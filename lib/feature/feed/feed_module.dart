@@ -4,6 +4,7 @@ import 'package:superkauf/feature/feed/bloc/feed_bloc.dart';
 import 'package:superkauf/feature/feed/view/feed_view.dart';
 import 'package:superkauf/generic/post/use_case/get_personal_feed_use_case.dart';
 import 'package:superkauf/generic/post/use_case/get_posts_use_case.dart';
+import 'package:superkauf/generic/settings/use_case/get_settings_use_case.dart';
 import 'package:superkauf/generic/user/use_case/get_current_user_use_case.dart';
 import 'package:superkauf/library/app_module.dart';
 
@@ -20,6 +21,7 @@ class FeedModule extends AppModule {
         getPostsUseCase: GetIt.I.get<GetPostsUseCase>(),
         getCurrentUserUseCase: GetIt.I.get<GetCurrentUserUseCase>(),
         getPersonalFeedUseCase: GetIt.I.get<GetPersonalFeedUseCase>(),
+        getSettingsUseCase: GetIt.I.get<GetSettingsUseCase>(),
       ),
     );
   }

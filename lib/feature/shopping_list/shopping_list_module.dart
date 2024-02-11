@@ -3,6 +3,8 @@ import 'package:get_it/get_it.dart';
 import 'package:superkauf/feature/shopping_list/bloc/shopping_list_bloc.dart';
 import 'package:superkauf/feature/shopping_list/view/shopping_list_screen.dart';
 import 'package:superkauf/generic/saved_posts/use_case/get_saved_posts_by_user_use_case.dart';
+import 'package:superkauf/generic/saved_posts/use_case/update_saved_post_use_case.dart';
+import 'package:superkauf/generic/settings/use_case/get_settings_use_case.dart';
 import 'package:superkauf/generic/shopping_list/use_case/get_shopping_list_for_user_use_case.dart';
 import 'package:superkauf/generic/shopping_list/use_case/get_shopping_list_info_use_case.dart';
 import 'package:superkauf/generic/store/use_case/get_stores_use_case.dart';
@@ -24,6 +26,8 @@ class ShoppingListScreenModule extends AppModule {
         getShoppingListForUserUseCase: GetIt.I.get<GetShoppingListsForUserUseCase>(),
         getShoppingListInfoUseCase: GetIt.I.get<GetShoppingListInfoUseCase>(),
         getStoresUseCase: GetIt.I.get<GetStoresUseCase>(),
+        updateSavedPostUseCase: GetIt.I.get<UpdateSavedPostUseCase>(),
+        getSettingsUseCase: GetIt.I.get<GetSettingsUseCase>(),
       ),
     );
   }
@@ -38,6 +42,9 @@ class ShoppingListScreenModule extends AppModule {
     routes[ShoppingListScreen.name] = (context) {
       return MultiBlocProvider(
         providers: [
+          BlocProvider<ShoppingListBloc>.value(
+            value: GetIt.I.get<ShoppingListBloc>(),
+          ),
           BlocProvider<ShoppingListBloc>.value(
             value: GetIt.I.get<ShoppingListBloc>(),
           ),
