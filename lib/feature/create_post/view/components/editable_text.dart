@@ -11,12 +11,14 @@ class EditableTextField extends StatefulWidget {
   final TextInputType keyboardType;
   final List<Validator>? validators;
   final int maxLines;
+  final Color filledColor;
 
   const EditableTextField({
     Key? key,
     required this.initialText,
     required this.model,
     required this.theme,
+    required this.filledColor,
     this.validators,
     this.width,
     this.maxLines = 1,
@@ -69,6 +71,7 @@ class _EditableTextFieldState extends State<EditableTextField> {
                   widget.model,
                   context: context,
                   autofocus: true,
+                  filled: widget.filledColor,
                   border: const OutlineInputBorder(),
                   hint: widget.initialText,
                   keyboardType: widget.keyboardType,

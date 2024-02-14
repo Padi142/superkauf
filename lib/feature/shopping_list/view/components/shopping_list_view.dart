@@ -36,16 +36,19 @@ class _ShoppingListViewState extends State<ShoppingListView> {
         SizedBox(
           width: widget.constraints.maxWidth,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              IconButton(
-                  onPressed: () {
-                    BlocProvider.of<ShoppingListBloc>(context).add(const InitialListEvent());
-                  },
-                  icon: const FaIcon(FontAwesomeIcons.arrowLeft)),
-              const Spacer(),
+              SizedBox(
+                width: widget.constraints.maxWidth * 0.1,
+                child: IconButton(
+                    onPressed: () {
+                      BlocProvider.of<ShoppingListBloc>(context)
+                          .add(const InitialListEvent());
+                    },
+                    icon: const FaIcon(FontAwesomeIcons.arrowLeft)),
+              ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(4),
                 child: Material(
                   elevation: 4, // Adjust the elevation as needed
                   borderRadius: BorderRadius.circular(6),
@@ -53,21 +56,23 @@ class _ShoppingListViewState extends State<ShoppingListView> {
                     borderRadius: BorderRadius.circular(6),
                     // Adjust the radius as needed
                     child: CachedNetworkImage(
-                      height: 60,
-                      width: 120,
+                      height: 50,
+                      width: widget.constraints.maxWidth * 0.25,
                       imageUrl: widget.list.list.logo,
                       fit: BoxFit.fitWidth,
-                      placeholder: (context, url) => const CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => const Icon(Icons.error),
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
                     ),
                   ),
                 ),
               ),
-              const Gap(4),
-              Text(widget.list.list.name, style: App.appTheme.textTheme.titleMedium),
-              const Spacer(
-                flex: 2,
-              ),
+              const Gap(2),
+              SizedBox(
+                  width: widget.constraints.maxWidth * 0.45,
+                  child: Text(widget.list.list.name,
+                      maxLines: 4, style: App.appTheme.textTheme.titleMedium)),
               ListActionButtons(
                 list: widget.list.list,
                 canEdit: widget.list.list.createdBy == widget.userId,
@@ -150,7 +155,8 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
                 user: null,
               ));
 
-              BlocProvider.of<NavigationBloc>(context).add(const OpenPostDetailScreen());
+              BlocProvider.of<NavigationBloc>(context)
+                  .add(const OpenPostDetailScreen());
             },
             child: Stack(
               alignment: Alignment.center,
@@ -167,9 +173,12 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
                         imageUrl: widget.post.post.image,
                         fit: BoxFit.fitWidth,
                         color: isCompleted ? Colors.grey : null,
-                        colorBlendMode: isCompleted ? BlendMode.saturation : null,
-                        placeholder: (context, url) => const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => const Icon(Icons.error),
+                        colorBlendMode:
+                            isCompleted ? BlendMode.saturation : null,
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
                       ),
                     ),
                   ),
@@ -188,8 +197,10 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
                         width: 20,
                         imageUrl: widget.addedBy.profilePicture,
                         fit: BoxFit.fitWidth,
-                        placeholder: (context, url) => const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => const Icon(Icons.error),
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
                       ),
                     ),
                   ),
@@ -203,7 +214,8 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
-            decoration: isCompleted ? TextDecoration.lineThrough : TextDecoration.none,
+            decoration:
+                isCompleted ? TextDecoration.lineThrough : TextDecoration.none,
             color: isCompleted ? Colors.grey : Colors.black,
           ),
         ),
@@ -222,13 +234,15 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
         ),
         onTap: () {},
         onLongPress: () {
-          final RenderBox renderBox = _widgetKey.currentContext!.findRenderObject() as RenderBox;
+          final RenderBox renderBox =
+              _widgetKey.currentContext!.findRenderObject() as RenderBox;
           showMenu(
             context: context,
             position: RelativeRect.fromRect(
               Rect.fromPoints(
                 renderBox.localToGlobal(Offset.zero),
-                renderBox.localToGlobal(renderBox.size.bottomRight(Offset.zero)),
+                renderBox
+                    .localToGlobal(renderBox.size.bottomRight(Offset.zero)),
               ),
               Offset.zero & MediaQuery.of(context).size,
             ),
@@ -237,9 +251,11 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
                   value: 'delete',
                   child: const Text('Delete post'),
                   onTap: () {
-                    BlocProvider.of<PostBloc>(context).add(RemoveSavedPost(postId: widget.post.post.id));
+                    BlocProvider.of<PostBloc>(context)
+                        .add(RemoveSavedPost(postId: widget.post.post.id));
 
-                    BlocProvider.of<ShoppingListBloc>(context).add(PickShoppingList(shoppingListId: widget.listId));
+                    BlocProvider.of<ShoppingListBloc>(context)
+                        .add(PickShoppingList(shoppingListId: widget.listId));
                   }),
             ],
           );

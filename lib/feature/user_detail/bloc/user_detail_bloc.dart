@@ -40,7 +40,7 @@ class UserDetailBloc extends Bloc<UserDetailEvent, UserDetailState> {
   ) async {
     late UserModel user;
 
-    if (userId != event.userID) {
+    if (page == 0 || userId != event.userID) {
       page = 0;
       emit(const UserDetailState.loading());
     }

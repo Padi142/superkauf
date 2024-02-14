@@ -62,7 +62,10 @@ class _CreatePostScreen extends State<CreatePostScreen> {
       appBar: AppBar(
         title: Text(
           'create_post_title'.tr(),
-          style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium!
+              .copyWith(color: Colors.white),
         ),
       ),
       body: LayoutBuilder(builder: (context, constraints) {
@@ -87,9 +90,9 @@ class _CreatePostScreen extends State<CreatePostScreen> {
             minHeight: 0,
             maxHeight: 450,
             panelBuilder: (ScrollController sc) {
-              return storePanel(context, _storePickPanelController, constraints, (store) {
+              return storePanel(context, _storePickPanelController, constraints,
+                  (store) {
                 selectedStore = store;
-                _storePickPanelController.close();
                 setState(() {});
               });
             },
@@ -109,7 +112,8 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                         priceField: priceField,
                         selectedStore: selectedStore,
                         constraints: constraints,
-                        storeNotPickedError: selectedStore == null ? storeNotPickedError : false,
+                        storeNotPickedError:
+                            selectedStore == null ? storeNotPickedError : false,
                       ),
                     ),
                     const SizedBox(
@@ -130,13 +134,17 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                     SizedBox(
                       height: 50,
                       width: 270,
-                      child: BlocBuilder<CreatePostBloc, CreatePostState>(builder: (context, state) {
+                      child: BlocBuilder<CreatePostBloc, CreatePostState>(
+                          builder: (context, state) {
                         return state.maybeWhen(imagePicked: (image) {
                           return AppButton(
                             backgroundColor: App.appTheme.colorScheme.primary,
                             radius: 6,
                             text: 'button_post_create_label'.tr(),
-                            textStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+                            textStyle: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(color: Colors.white),
                             onClick: () async {
                               // Prevent multiple clicks
                               if (createButtonClicked) {
@@ -148,17 +156,22 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                                 setState(() {
                                   storeNotPickedError = true;
                                 });
-                                Future.delayed(const Duration(milliseconds: 2500)).then((value) => setState(() {
-                                      storeNotPickedError = false;
-                                    }));
+                                Future.delayed(
+                                        const Duration(milliseconds: 2500))
+                                    .then((value) => setState(() {
+                                          storeNotPickedError = false;
+                                        }));
 
-                                BlocProvider.of<SnackbarBloc>(context).add(const ErrorSnackbar(message: 'No store selected'));
+                                BlocProvider.of<SnackbarBloc>(context).add(
+                                    const ErrorSnackbar(
+                                        message: 'No store selected'));
 
                                 return;
                               }
                               descriptionField.controller.text.trim();
                               //Validate fields
-                              final valid = await TextEntryModel.validateFields([priceField, descriptionField]);
+                              final valid = await TextEntryModel.validateFields(
+                                  [priceField, descriptionField]);
                               if (!valid) {
                                 setState(() {});
 
@@ -167,9 +180,11 @@ class _CreatePostScreen extends State<CreatePostScreen> {
 
                               createButtonClicked = true;
 
-                              BlocProvider.of<CreatePostBloc>(context).add(CreatePost(
+                              BlocProvider.of<CreatePostBloc>(context)
+                                  .add(CreatePost(
                                 description: descriptionField.text,
-                                price: double.parse(priceField.text.replaceAll(',', '.')),
+                                price: double.parse(
+                                    priceField.text.replaceAll(',', '.')),
                                 store: selectedStore!,
                                 cardRequired: requiredCard,
                                 image: image,
@@ -182,9 +197,14 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                             backgroundColor: Colors.grey,
                             radius: 6,
                             text: 'button_post_create_label'.tr(),
-                            textStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+                            textStyle: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(color: Colors.white),
                             onClick: () {
-                              BlocProvider.of<SnackbarBloc>(context).add(const ErrorSnackbar(message: 'No image selected'));
+                              BlocProvider.of<SnackbarBloc>(context).add(
+                                  const ErrorSnackbar(
+                                      message: 'No image selected'));
                             },
                           );
                         });
@@ -238,7 +258,8 @@ class CreatePostContainer extends StatelessWidget {
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  BlocBuilder<CreatePostBloc, CreatePostState>(builder: (context, state) {
+                  BlocBuilder<CreatePostBloc, CreatePostState>(
+                      builder: (context, state) {
                     return state.maybeMap(initial: (initial) {
                       // if (selectedStore == null) {
                       //   imagePickPanelController.open();
@@ -249,7 +270,8 @@ class CreatePostContainer extends StatelessWidget {
                           imagePickPanelController.open();
                         },
                         child: CachedNetworkImage(
-                          imageUrl: 'https://wwrhodyufftnwdbafguo.supabase.co/storage/v1/object/public/profile_pics/zeleny-kocur.jpg',
+                          imageUrl:
+                              'https://wwrhodyufftnwdbafguo.supabase.co/storage/v1/object/public/profile_pics/zeleny-kocur.jpg',
                           imageBuilder: (context, imageProvider) => Container(
                             decoration: BoxDecoration(
                                 image: DecorationImage(
@@ -290,7 +312,8 @@ class CreatePostContainer extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () {
                         FocusScope.of(context).requestFocus(FocusNode());
-                        BlocProvider.of<StoreBloc>(context).add(const GetAllStores());
+                        BlocProvider.of<StoreBloc>(context)
+                            .add(const GetAllStores());
 
                         storePickPanelController.open();
                       },
@@ -303,14 +326,18 @@ class CreatePostContainer extends StatelessWidget {
                           curve: Curves.easeIn,
                           // Adjust animation curve
                           decoration: BoxDecoration(
-                            color: storeNotPickedError ? Colors.redAccent : Theme.of(context).cardColor,
+                            color: storeNotPickedError
+                                ? Colors.redAccent
+                                : Theme.of(context).cardColor,
                             borderRadius: BorderRadius.circular(16.0),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(6),
                             child: Text(
                               selectedStore?.name ?? 'Obchod',
-                              style: storeNotPickedError ? Theme.of(context).textTheme.titleMedium : Theme.of(context).textTheme.bodyMedium,
+                              style: storeNotPickedError
+                                  ? Theme.of(context).textTheme.titleMedium
+                                  : Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
                         ),
@@ -336,15 +363,23 @@ class CreatePostContainer extends StatelessWidget {
                               model: priceField,
                               width: null,
                               keyboardType: TextInputType.number,
+                              filledColor: Colors.yellowAccent,
                               validators: [
                                 ValidatorEmpty(),
-                                ValidatorRegex(r'^\d{1,5}(?:[.,]\d{1,2})?$', 'invalid number'),
+                                ValidatorRegex(r'^\d{1,5}(?:[.,]\d{1,2})?$',
+                                    'invalid number'),
                               ],
-                              theme: Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.black),
+                              theme: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge!
+                                  .copyWith(color: Colors.black),
                             ),
                             Text(
                               'Kč',
-                              style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.black),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge!
+                                  .copyWith(color: Colors.black),
                             )
                           ],
                         ),
@@ -366,8 +401,13 @@ class CreatePostContainer extends StatelessWidget {
                           initialText: 'Přidat popisek....',
                           model: descriptionField,
                           width: constraints.maxWidth * 0.7,
+                          filledColor: Colors.white,
                           maxLines: 2,
-                          validators: [ValidatorEmpty(), ValidatorRegex(r'^.{5,250}$', 'Post can be 5-250 chars long')],
+                          validators: [
+                            ValidatorEmpty(),
+                            ValidatorRegex(
+                                r'^.{5,250}$', 'Post can be 5-250 chars long')
+                          ],
                           theme: Theme.of(context).textTheme.bodyMedium!,
                         ),
                       ),
@@ -388,7 +428,11 @@ class ExpandedPostSettings extends StatelessWidget {
   final Function(DateTime) onValidUntilChanged;
   final BoxConstraints constraints;
 
-  const ExpandedPostSettings({super.key, required this.onCardRequiredChanged, required this.onValidUntilChanged, required this.constraints});
+  const ExpandedPostSettings(
+      {super.key,
+      required this.onCardRequiredChanged,
+      required this.onValidUntilChanged,
+      required this.constraints});
 
   @override
   Widget build(BuildContext context) {
@@ -410,7 +454,8 @@ class ExpandedPostSettings extends StatelessWidget {
   }
 }
 
-Widget imagePanel(BuildContext context, PanelController _imagePickPanelController, BoxConstraints constraints) {
+Widget imagePanel(BuildContext context,
+    PanelController _imagePickPanelController, BoxConstraints constraints) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
@@ -422,7 +467,8 @@ Widget imagePanel(BuildContext context, PanelController _imagePickPanelControlle
         width: constraints.maxWidth * 0.4,
         child: GestureDetector(
           onTap: () {
-            BlocProvider.of<CreatePostBloc>(context).add(const PickImage(isCamera: false));
+            BlocProvider.of<CreatePostBloc>(context)
+                .add(const PickImage(isCamera: false));
             _imagePickPanelController.close();
           },
           child: Container(
@@ -442,7 +488,8 @@ Widget imagePanel(BuildContext context, PanelController _imagePickPanelControlle
         width: constraints.maxWidth * 0.4,
         child: GestureDetector(
           onTap: () {
-            BlocProvider.of<CreatePostBloc>(context).add(const PickImage(isCamera: true));
+            BlocProvider.of<CreatePostBloc>(context)
+                .add(const PickImage(isCamera: true));
             _imagePickPanelController.close();
           },
           child: Container(
@@ -461,13 +508,18 @@ Widget imagePanel(BuildContext context, PanelController _imagePickPanelControlle
   );
 }
 
-Widget storePanel(BuildContext context, PanelController _storePickPanelController, BoxConstraints constraints, Function(StoreModel store) onStoreSelected) {
+Widget storePanel(
+    BuildContext context,
+    PanelController storePickPanelController,
+    BoxConstraints constraints,
+    Function(StoreModel store) onStoreSelected) {
   return BlocBuilder<StoreBloc, StoreState>(builder: (context, state) {
     return state.maybeMap(success: (success) {
       return StoreCarousel(
         stores: success.stores,
         onStoreSelected: onStoreSelected,
         height: 250,
+        panelController: storePickPanelController,
       );
     }, orElse: () {
       return const AppProgress();

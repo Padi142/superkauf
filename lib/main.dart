@@ -99,11 +99,16 @@ Future<void> main() async {
       GetIt.I.registerFactory<PostApi>(() => PostApi(_dio(config.endpoint)));
       GetIt.I.registerFactory<UserApi>(() => UserApi(_dio(config.endpoint)));
       GetIt.I.registerFactory<StoreApi>(() => StoreApi(_dio(config.endpoint)));
-      GetIt.I.registerFactory<SavedPostsApi>(() => SavedPostsApi(_dio(config.endpoint)));
-      GetIt.I.registerFactory<CommentApi>(() => CommentApi(_dio(config.endpoint)));
-      GetIt.I.registerFactory<ReportApi>(() => ReportApi(_dio(config.endpoint)));
-      GetIt.I.registerFactory<NotificationApi>(() => NotificationApi(_dio(config.endpoint)));
-      GetIt.I.registerFactory<ShoppingListApi>(() => ShoppingListApi(_dio(config.endpoint)));
+      GetIt.I.registerFactory<SavedPostsApi>(
+          () => SavedPostsApi(_dio(config.endpoint)));
+      GetIt.I
+          .registerFactory<CommentApi>(() => CommentApi(_dio(config.endpoint)));
+      GetIt.I
+          .registerFactory<ReportApi>(() => ReportApi(_dio(config.endpoint)));
+      GetIt.I.registerFactory<NotificationApi>(
+          () => NotificationApi(_dio(config.endpoint)));
+      GetIt.I.registerFactory<ShoppingListApi>(
+          () => ShoppingListApi(_dio(config.endpoint)));
     },
   );
 
@@ -122,6 +127,7 @@ AppConfig appConfig() {
 
 List<AppModule> modules() {
   return [
+    SettingsModule(),
     PostModule(),
     InitModule(),
     HomeModule(),
@@ -144,7 +150,6 @@ List<AppModule> modules() {
     MyNotificationsModule(),
     DiscoverModule(),
     ShoppingListModule(),
-    SettingsModule(),
   ];
 }
 

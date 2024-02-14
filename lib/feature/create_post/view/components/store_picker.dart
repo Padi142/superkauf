@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:superkauf/generic/store/model/store_model.dart';
 import 'package:superkauf/library/app.dart';
 
@@ -7,12 +8,14 @@ class StoreCarousel extends StatefulWidget {
   final List<StoreModel> stores;
   final Function(StoreModel) onStoreSelected;
   final double height;
+  final PanelController panelController;
 
   const StoreCarousel({
     Key? key,
     required this.stores,
     required this.onStoreSelected,
     required this.height,
+    required this.panelController,
   }) : super(key: key);
 
   @override
@@ -30,6 +33,9 @@ class _StoreCarouselState extends State<StoreCarousel> {
         viewportFraction: 0.6,
         showIndicator: true,
         enlargeCenterPage: true,
+        onPageChanged: (index, reason) {
+          widget.onStoreSelected(widget.stores[index]);
+        },
         slideIndicator: CircularSlideIndicator(),
       ),
       items: widget.stores.map((store) => _buildStoreCard(store)).toList(),
@@ -38,7 +44,10 @@ class _StoreCarouselState extends State<StoreCarousel> {
 
   Widget _buildStoreCard(StoreModel store) {
     return GestureDetector(
-      onTap: () => widget.onStoreSelected(store),
+      onTap: () {
+        widget.onStoreSelected(store);
+        widget.panelController.close();
+      },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10.0),
         decoration: BoxDecoration(

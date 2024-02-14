@@ -63,25 +63,35 @@ class AppTextField extends StatelessWidget {
             isDense: false,
             errorText: model.error?.tr(),
             fillColor: filled ?? App.appTheme.colorScheme.background,
+            focusColor: filled ?? App.appTheme.colorScheme.background,
             border: border ??
                 OutlineInputBorder(
-                  borderSide: BorderSide(color: App.appTheme.primaryColor, width: 1),
+                  borderSide:
+                      BorderSide(color: App.appTheme.primaryColor, width: 1),
                   borderRadius: BorderRadius.circular(radius),
                 ),
             focusedBorder: border ??
                 OutlineInputBorder(
-                  borderSide: BorderSide(color: App.appTheme.primaryColor, width: 1),
+                  borderSide:
+                      BorderSide(color: App.appTheme.primaryColor, width: 1),
                   borderRadius: BorderRadius.circular(radius),
                 ),
             enabledBorder: border ??
                 OutlineInputBorder(
-                  borderSide: BorderSide(color: App.appTheme.primaryColor, width: 1),
+                  borderSide:
+                      BorderSide(color: App.appTheme.primaryColor, width: 1),
                   borderRadius: BorderRadius.circular(radius),
                 ),
             hintText: hint,
-            hintStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: App.appTheme.colorScheme.onSecondary),
+            hintStyle: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(color: App.appTheme.colorScheme.onSecondary),
             labelText: label,
-            labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: App.appTheme.colorScheme.onSecondary),
+            labelStyle: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(color: App.appTheme.colorScheme.onSecondary),
           ),
         ),
         super(key: key) {
@@ -114,7 +124,8 @@ class TextEntryModel {
   String? error;
   List<Validator> validators = [];
 
-  TextEntryModel({String text = ''}) : controller = TextEditingController(text: text);
+  TextEntryModel({String text = ''})
+      : controller = TextEditingController(text: text);
 
   String get text => controller.text;
 
@@ -134,7 +145,8 @@ class TextEntryModel {
     String? hasError;
 
     for (final Validator validator in validators) {
-      final ValidatorResult result = await validator.validate(<ValidableParam, dynamic>{ValidableParam.text: controller.text});
+      final ValidatorResult result = await validator.validate(
+          <ValidableParam, dynamic>{ValidableParam.text: controller.text});
       if (!result.valid) {
         isValid = isValid && result.valid;
         hasError = hasError ?? result.error;
