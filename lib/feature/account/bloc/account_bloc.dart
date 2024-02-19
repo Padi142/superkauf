@@ -62,7 +62,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
 
     final settings = await getSettingsUseCase.call();
 
-    Posthog().identify(userId: user!.id.toString(), properties: {
+    Posthog().identify(userId: user.id.toString(), userProperties: {
       "supabase_uid": user.id,
       "username": user.username,
     });
@@ -137,8 +137,8 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     );
     final result = await updateUserUseCase.call(params);
 
-    Posthog().identify(userId: params.id.toString(), properties: {
-      "username": params.username,
+    Posthog().identify(userId: params.id.toString(), userProperties: {
+      "username": params.username!,
     });
 
     add(const GetUser());

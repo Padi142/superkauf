@@ -16,6 +16,7 @@ class ShoppingListRepository {
   ShoppingListRepository({
     required this.shoppingListApi,
   });
+
   Future<GetShoppingListsForUserResult> getListsForUser(int userId) async {
     return shoppingListApi.getUserLists(userId: userId).then((lists) {
       return GetShoppingListsForUserResult.success(lists);
@@ -51,7 +52,18 @@ class ShoppingListRepository {
 
   Future<AddSavedPostToLostResult> removeSavedPostFromList(RemoveSavedPostFromListBody body) async {
     return shoppingListApi.removeSavedPostFromList(listId: body.listId, savedPostId: body.savedPostId!, userId: body.userId).then((result) {
-      return result ? const AddSavedPostToLostResult.success() : const AddSavedPostToLostResult.failure('error saved post');
+      return result ? const AddSavedPostToLostResult.success() : const AddSavedPostToLostResult.failure('error deleting saved post');
+    }).onError((error, stackTrace) {
+      if (error is DioException) {
+        return AddSavedPostToLostResult.failure(error.message ?? 'error deleting comment');
+      }
+      return const AddSavedPostToLostResult.failure('error');
+    });
+  }
+
+  Future<AddSavedPostToLostResult> removePostFromList(AddSavedPostToListBody body) async {
+    return shoppingListApi.removePostFromList(body: body.toJson(), listId: body.listId).then((result) {
+      return result ? const AddSavedPostToLostResult.success() : const AddSavedPostToLostResult.failure('error deleting saved post');
     }).onError((error, stackTrace) {
       if (error is DioException) {
         return AddSavedPostToLostResult.failure(error.message ?? 'error deleting comment');

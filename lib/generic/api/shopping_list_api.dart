@@ -25,11 +25,17 @@ abstract class ShoppingListApi {
     @Body() required Map<String, dynamic> body,
   });
 
-  @POST('/shopping_lists/posts/{listId}/{savedPostId}?userId={userId}')
+  @DELETE('/shopping_lists/posts/{listId}/{savedPostId}?userId={userId}')
   Future<bool> removeSavedPostFromList({
     @Path('listId') required int listId,
     @Path('savedPostId') required int savedPostId,
     @Path('userId') required int userId,
+  });
+
+  @DELETE('/shopping_lists/posts/{listId}')
+  Future<bool> removePostFromList({
+    @Path('listId') required int listId,
+    @Body() required Map<String, dynamic> body,
   });
 
   @POST('/shopping_lists')

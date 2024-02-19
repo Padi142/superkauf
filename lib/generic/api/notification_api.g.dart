@@ -20,10 +20,10 @@ class _NotificationApi implements NotificationApi {
 
   @override
   Future<List<NotificationModel>> getNotifications({required int userId}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<List<dynamic>>(_setStreamType<List<NotificationModel>>(Options(
       method: 'GET',
       headers: _headers,
@@ -46,10 +46,10 @@ class _NotificationApi implements NotificationApi {
 
   @override
   Future<CheckNotificationResponse> checkNotifications({required int userId}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<CheckNotificationResponse>(Options(
       method: 'GET',
       headers: _headers,

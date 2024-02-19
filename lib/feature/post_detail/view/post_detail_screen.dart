@@ -83,8 +83,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                             if (postId == -1) {
                               return;
                             }
-                            BlocProvider.of<PostDetailBloc>(context)
-                                .add(ReloadPost(
+                            BlocProvider.of<PostDetailBloc>(context).add(ReloadPost(
                               postId: postId.toString(),
                               wait: false,
                             ));
@@ -142,8 +141,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                                     post: loaded.post,
                                     scrollController: _scrollController,
                                     onDone: (newDescription) {
-                                      BlocProvider.of<PostBloc>(context)
-                                          .add(UpdatePost(
+                                      BlocProvider.of<PostBloc>(context).add(UpdatePost(
                                         postId: loaded.post.id,
                                         newDescription: newDescription,
                                       ));

@@ -25,6 +25,7 @@ class SavedPostsPanelBloc extends Bloc<SavedPostsPanelEvent, SavedPostsPanelStat
     on<Initial>(_onInitial);
     on<OpenSavedPostsPanel>(_onOpenSavedPostsPanel);
   }
+
   Future<void> _onInitial(
     Initial event,
     Emitter<SavedPostsPanelState> emit,

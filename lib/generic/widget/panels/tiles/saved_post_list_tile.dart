@@ -9,11 +9,14 @@ class SavedPostListTile extends StatefulWidget {
   final ShoppingListModel list;
   final int postId;
   final Function(bool) onTap;
+  final bool isSaved;
+
   const SavedPostListTile({
     super.key,
     required this.list,
     required this.postId,
     required this.onTap,
+    required this.isSaved,
   });
 
   @override
@@ -23,6 +26,12 @@ class SavedPostListTile extends StatefulWidget {
 var isClicked = false;
 
 class _SavedPostListTileState extends State<SavedPostListTile> {
+  @override
+  void initState() {
+    isClicked = widget.isSaved;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -79,6 +88,7 @@ class _SavedPostListTileState extends State<SavedPostListTile> {
 
 class StoreSavedPostTile extends StatelessWidget {
   final StoreModel store;
+
   const StoreSavedPostTile({super.key, required this.store});
 
   @override

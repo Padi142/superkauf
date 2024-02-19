@@ -11,6 +11,7 @@ import 'package:superkauf/library/app.dart';
 
 class SavePostPanel extends StatelessWidget {
   final PanelController panelController;
+
   const SavePostPanel({
     super.key,
     required this.panelController,
@@ -57,10 +58,18 @@ class SavePostPanel extends StatelessWidget {
                         return SavedPostListTile(
                           list: loaded.lists[index],
                           postId: loaded.postId,
+                          isSaved: false,
                           onTap: (isClicked) {
                             if (isClicked) {
                               BlocProvider.of<ShoppingListDataBloc>(context).add(
                                 AddPostToList(
+                                  postId: loaded.postId,
+                                  listId: loaded.lists[index].id,
+                                ),
+                              );
+                            } else {
+                              BlocProvider.of<ShoppingListDataBloc>(context).add(
+                                RemovePostFromList(
                                   postId: loaded.postId,
                                   listId: loaded.lists[index].id,
                                 ),

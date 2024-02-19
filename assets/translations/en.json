@@ -1,5 +1,5 @@
 {
-  "app_title": "SuperKauf",
+  "app_title": "TurboKauf",
 
   "error__validate_min_length": "Text is short",
   "error__validate_empty": "Can not be empty",
@@ -16,6 +16,7 @@
   "store_post_create_label": "Store",
   "button_post_create_label": "Create a post!",
   "card_required_label": "Do you need a loyalty card?",
+  "cant_upload_image_label": "You have to have at least {} karma to upload images",
 
   "post_tags_label": "Tags",
   "post_store_card_required": "Loyalty card only",

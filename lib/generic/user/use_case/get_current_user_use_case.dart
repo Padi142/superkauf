@@ -43,6 +43,8 @@ class GetCurrentUserUseCase extends UnitUseCase<UserModel?> {
         returnUser = null;
       },
     );
+    await box.close();
+
     return returnUser;
   }
 }

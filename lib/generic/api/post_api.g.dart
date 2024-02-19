@@ -23,7 +23,7 @@ class _PostApi implements PostApi {
     required Map<String, dynamic> body,
     required String country,
   }) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -54,7 +54,7 @@ class _PostApi implements PostApi {
     required int id,
     required String country,
   }) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -81,7 +81,7 @@ class _PostApi implements PostApi {
 
   @override
   Future<PostModel> createPost({required Map<String, dynamic> body}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -108,7 +108,7 @@ class _PostApi implements PostApi {
 
   @override
   Future<PostModel> deletePost({required Map<String, dynamic> body}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -138,10 +138,10 @@ class _PostApi implements PostApi {
     required String id,
     required int userId,
   }) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<FullContextPostModel>(Options(
       method: 'GET',
       headers: _headers,
@@ -168,10 +168,10 @@ class _PostApi implements PostApi {
     required int per_page,
     required int offset,
   }) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<List<dynamic>>(_setStreamType<List<FeedPostModel>>(Options(
       method: 'GET',
       headers: _headers,
@@ -194,7 +194,7 @@ class _PostApi implements PostApi {
 
   @override
   Future<PostModel> updatePostImage({required Map<String, dynamic> body}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -224,7 +224,7 @@ class _PostApi implements PostApi {
     required Map<String, dynamic> body,
     required String field,
   }) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -254,7 +254,7 @@ class _PostApi implements PostApi {
     required String id,
     required Map<String, dynamic> body,
   }) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -284,7 +284,7 @@ class _PostApi implements PostApi {
     required String id,
     required Map<String, dynamic> body,
   }) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -317,10 +317,10 @@ class _PostApi implements PostApi {
     required String timeRange,
     required String country,
   }) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<GetPaginatedPostsResponseModel>(Options(
       method: 'GET',
       headers: _headers,

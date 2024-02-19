@@ -19,7 +19,7 @@ class AppButton<DROPDOWN_VALUE_TYPE extends Object> extends StatelessWidget {
   final Function(PopupOption<DROPDOWN_VALUE_TYPE>)? onSelectPopup;
 
   const AppButton({
-    Key? key,
+    super.key,
     this.backgroundColor,
     this.onClick,
     this.text = '',
@@ -35,7 +35,7 @@ class AppButton<DROPDOWN_VALUE_TYPE extends Object> extends StatelessWidget {
     this.radius = 0,
     this.borderColor = Colors.transparent,
     this.elevation,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ class AppButton<DROPDOWN_VALUE_TYPE extends Object> extends StatelessWidget {
         child.add(SizedBox(width: spaceTextImage));
         child.add(imageSuffixChild);
       }
-      btnChild = Row(children: child, mainAxisAlignment: MainAxisAlignment.center);
+      btnChild = Row(mainAxisAlignment: MainAxisAlignment.center, children: child);
     } else {
       btnChild = textChild;
     }
@@ -126,8 +126,7 @@ class AppButton<DROPDOWN_VALUE_TYPE extends Object> extends StatelessWidget {
           child: TextButton(
             style: ElevatedButton.styleFrom(
               elevation: elevation,
-              // ignore: deprecated_member_use
-              primary: backgroundColor ?? Colors.transparent,
+              backgroundColor: backgroundColor ?? Colors.transparent,
               shape: shape as OutlinedBorder,
               padding: padding,
             ),
@@ -173,6 +172,10 @@ class PopupOption<T> {
   PopupMenuEntry<PopupOption<T>> make() {
     if (divider) {
       return PopupMenuItem<PopupOption<T>>(
+        value: this,
+        enabled: false,
+        height: 1,
+        padding: EdgeInsets.zero,
         child: Builder(
           builder: (context) {
             return Container(
@@ -181,13 +184,12 @@ class PopupOption<T> {
             );
           },
         ),
-        value: this,
-        enabled: false,
-        height: 1,
-        padding: EdgeInsets.zero,
       );
     } else if (title.isNotEmpty) {
       return PopupMenuItem<PopupOption<T>>(
+        value: this,
+        enabled: enabled,
+        padding: EdgeInsets.zero,
         child: Builder(
           builder: (context) {
             return Row(
@@ -215,12 +217,11 @@ class PopupOption<T> {
             );
           },
         ),
-        value: this,
-        enabled: enabled,
-        padding: EdgeInsets.zero,
       );
     } else if (buttons.isNotEmpty) {
       return PopupMenuItem<PopupOption<T>>(
+        enabled: false,
+        value: this,
         child: Row(
           children: buttons.map((btn) {
             return Container(
@@ -231,19 +232,17 @@ class PopupOption<T> {
             );
           }).toList(),
         ),
-        enabled: false,
-        value: this,
       );
     } else if (widget != null) {
       return PopupMenuItem<PopupOption<T>>(
+        value: this,
+        enabled: false,
+        padding: EdgeInsets.zero,
         child: Builder(
           builder: (context) {
             return widget!;
           },
         ),
-        value: this,
-        enabled: false,
-        padding: EdgeInsets.zero,
       );
     }
     return const PopupMenuDivider(height: 0);

@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -66,6 +67,8 @@ Future<void> main() async {
       authOptions: const FlutterAuthClientOptions(
         authFlowType: AuthFlowType.pkce,
       ));
+
+  await Hive.initFlutter();
   //Push notification service
   OneSignal.initialize(dotenv.env['ONESIGNAL_KEY'] ?? '');
   OneSignal.Notifications.requestPermission(true);
@@ -99,16 +102,11 @@ Future<void> main() async {
       GetIt.I.registerFactory<PostApi>(() => PostApi(_dio(config.endpoint)));
       GetIt.I.registerFactory<UserApi>(() => UserApi(_dio(config.endpoint)));
       GetIt.I.registerFactory<StoreApi>(() => StoreApi(_dio(config.endpoint)));
-      GetIt.I.registerFactory<SavedPostsApi>(
-          () => SavedPostsApi(_dio(config.endpoint)));
-      GetIt.I
-          .registerFactory<CommentApi>(() => CommentApi(_dio(config.endpoint)));
-      GetIt.I
-          .registerFactory<ReportApi>(() => ReportApi(_dio(config.endpoint)));
-      GetIt.I.registerFactory<NotificationApi>(
-          () => NotificationApi(_dio(config.endpoint)));
-      GetIt.I.registerFactory<ShoppingListApi>(
-          () => ShoppingListApi(_dio(config.endpoint)));
+      GetIt.I.registerFactory<SavedPostsApi>(() => SavedPostsApi(_dio(config.endpoint)));
+      GetIt.I.registerFactory<CommentApi>(() => CommentApi(_dio(config.endpoint)));
+      GetIt.I.registerFactory<ReportApi>(() => ReportApi(_dio(config.endpoint)));
+      GetIt.I.registerFactory<NotificationApi>(() => NotificationApi(_dio(config.endpoint)));
+      GetIt.I.registerFactory<ShoppingListApi>(() => ShoppingListApi(_dio(config.endpoint)));
     },
   );
 

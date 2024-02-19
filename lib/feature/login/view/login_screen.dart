@@ -53,7 +53,7 @@ class _InitScreenState extends State<LoginScreen> with SingleTickerProviderState
     });
     controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 700),
+      duration: const Duration(milliseconds: 700),
     );
     super.initState();
   }
@@ -184,24 +184,24 @@ class LoginView extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                'app_title'.tr(),
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.normal),
+              Image.asset(
+                'assets/images/kauf_logo1.png',
+                width: 200,
+                height: 200,
               ),
               const SizedBox(
-                height: 50,
+                height: 30,
               ),
               const EmailLogin(),
               const SizedBox(
-                height: 50,
+                height: 30,
               ),
               Divider(
                 thickness: 3,
                 color: App.appTheme.colorScheme.primary,
               ),
               const SizedBox(
-                height: 50,
+                height: 30,
               ),
               const AuthProviders()
             ],
@@ -260,24 +260,24 @@ class RegisterView extends StatelessWidget {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'app_title'.tr(),
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.normal),
+                  Image.asset(
+                    'assets/images/kauf_logo1.png',
+                    width: 200,
+                    height: 200,
                   ),
                   const SizedBox(
-                    height: 50,
+                    height: 30,
                   ),
                   const EmailRegister(),
                   const SizedBox(
-                    height: 50,
+                    height: 30,
                   ),
                   Divider(
                     thickness: 3,
                     color: App.appTheme.colorScheme.primary,
                   ),
                   const SizedBox(
-                    height: 50,
+                    height: 30,
                   ),
                   const AuthProviders()
                 ],

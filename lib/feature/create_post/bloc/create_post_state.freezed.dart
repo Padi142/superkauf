@@ -12,14 +12,14 @@ part of 'create_post_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$CreatePostState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() initial,
+    required TResult Function(bool canUploadFiles, int requiredKarma) initial,
     required TResult Function(File image) imagePicked,
     required TResult Function() uploading,
     required TResult Function() creating,
@@ -31,7 +31,7 @@ mixin _$CreatePostState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function()? initial,
+    TResult? Function(bool canUploadFiles, int requiredKarma)? initial,
     TResult? Function(File image)? imagePicked,
     TResult? Function()? uploading,
     TResult? Function()? creating,
@@ -43,7 +43,7 @@ mixin _$CreatePostState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? initial,
+    TResult Function(bool canUploadFiles, int requiredKarma)? initial,
     TResult Function(File image)? imagePicked,
     TResult Function()? uploading,
     TResult Function()? creating,
@@ -139,7 +139,7 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() initial,
+    required TResult Function(bool canUploadFiles, int requiredKarma) initial,
     required TResult Function(File image) imagePicked,
     required TResult Function() uploading,
     required TResult Function() creating,
@@ -154,7 +154,7 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function()? initial,
+    TResult? Function(bool canUploadFiles, int requiredKarma)? initial,
     TResult? Function(File image)? imagePicked,
     TResult? Function()? uploading,
     TResult? Function()? creating,
@@ -169,7 +169,7 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? initial,
+    TResult Function(bool canUploadFiles, int requiredKarma)? initial,
     TResult Function(File image)? imagePicked,
     TResult Function()? uploading,
     TResult Function()? creating,
@@ -241,36 +241,70 @@ abstract class Loading implements CreatePostState {
 /// @nodoc
 abstract class _$$InitialImplCopyWith<$Res> {
   factory _$$InitialImplCopyWith(_$InitialImpl value, $Res Function(_$InitialImpl) then) = __$$InitialImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({bool canUploadFiles, int requiredKarma});
 }
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<$Res> extends _$CreatePostStateCopyWithImpl<$Res, _$InitialImpl> implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(_$InitialImpl _value, $Res Function(_$InitialImpl) _then) : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? canUploadFiles = null,
+    Object? requiredKarma = null,
+  }) {
+    return _then(_$InitialImpl(
+      canUploadFiles: null == canUploadFiles
+          ? _value.canUploadFiles
+          : canUploadFiles // ignore: cast_nullable_to_non_nullable
+              as bool,
+      requiredKarma: null == requiredKarma
+          ? _value.requiredKarma
+          : requiredKarma // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$InitialImpl implements Initial {
-  const _$InitialImpl();
+  const _$InitialImpl({required this.canUploadFiles, required this.requiredKarma});
+
+  @override
+  final bool canUploadFiles;
+  @override
+  final int requiredKarma;
 
   @override
   String toString() {
-    return 'CreatePostState.initial()';
+    return 'CreatePostState.initial(canUploadFiles: $canUploadFiles, requiredKarma: $requiredKarma)';
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$InitialImpl);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$InitialImpl &&
+            (identical(other.canUploadFiles, canUploadFiles) || other.canUploadFiles == canUploadFiles) &&
+            (identical(other.requiredKarma, requiredKarma) || other.requiredKarma == requiredKarma));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, canUploadFiles, requiredKarma);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$InitialImplCopyWith<_$InitialImpl> get copyWith => __$$InitialImplCopyWithImpl<_$InitialImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() initial,
+    required TResult Function(bool canUploadFiles, int requiredKarma) initial,
     required TResult Function(File image) imagePicked,
     required TResult Function() uploading,
     required TResult Function() creating,
@@ -278,14 +312,14 @@ class _$InitialImpl implements Initial {
     required TResult Function() success,
     required TResult Function(String error) error,
   }) {
-    return initial();
+    return initial(canUploadFiles, requiredKarma);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function()? initial,
+    TResult? Function(bool canUploadFiles, int requiredKarma)? initial,
     TResult? Function(File image)? imagePicked,
     TResult? Function()? uploading,
     TResult? Function()? creating,
@@ -293,14 +327,14 @@ class _$InitialImpl implements Initial {
     TResult? Function()? success,
     TResult? Function(String error)? error,
   }) {
-    return initial?.call();
+    return initial?.call(canUploadFiles, requiredKarma);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? initial,
+    TResult Function(bool canUploadFiles, int requiredKarma)? initial,
     TResult Function(File image)? imagePicked,
     TResult Function()? uploading,
     TResult Function()? creating,
@@ -310,7 +344,7 @@ class _$InitialImpl implements Initial {
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial();
+      return initial(canUploadFiles, requiredKarma);
     }
     return orElse();
   }
@@ -366,7 +400,12 @@ class _$InitialImpl implements Initial {
 }
 
 abstract class Initial implements CreatePostState {
-  const factory Initial() = _$InitialImpl;
+  const factory Initial({required final bool canUploadFiles, required final int requiredKarma}) = _$InitialImpl;
+
+  bool get canUploadFiles;
+  int get requiredKarma;
+  @JsonKey(ignore: true)
+  _$$InitialImplCopyWith<_$InitialImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -424,7 +463,7 @@ class _$ImagePickedImpl implements ImagePicked {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() initial,
+    required TResult Function(bool canUploadFiles, int requiredKarma) initial,
     required TResult Function(File image) imagePicked,
     required TResult Function() uploading,
     required TResult Function() creating,
@@ -439,7 +478,7 @@ class _$ImagePickedImpl implements ImagePicked {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function()? initial,
+    TResult? Function(bool canUploadFiles, int requiredKarma)? initial,
     TResult? Function(File image)? imagePicked,
     TResult? Function()? uploading,
     TResult? Function()? creating,
@@ -454,7 +493,7 @@ class _$ImagePickedImpl implements ImagePicked {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? initial,
+    TResult Function(bool canUploadFiles, int requiredKarma)? initial,
     TResult Function(File image)? imagePicked,
     TResult Function()? uploading,
     TResult Function()? creating,
@@ -559,7 +598,7 @@ class _$UploadingImpl implements Uploading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() initial,
+    required TResult Function(bool canUploadFiles, int requiredKarma) initial,
     required TResult Function(File image) imagePicked,
     required TResult Function() uploading,
     required TResult Function() creating,
@@ -574,7 +613,7 @@ class _$UploadingImpl implements Uploading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function()? initial,
+    TResult? Function(bool canUploadFiles, int requiredKarma)? initial,
     TResult? Function(File image)? imagePicked,
     TResult? Function()? uploading,
     TResult? Function()? creating,
@@ -589,7 +628,7 @@ class _$UploadingImpl implements Uploading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? initial,
+    TResult Function(bool canUploadFiles, int requiredKarma)? initial,
     TResult Function(File image)? imagePicked,
     TResult Function()? uploading,
     TResult Function()? creating,
@@ -690,7 +729,7 @@ class _$CreatingImpl implements Creating {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() initial,
+    required TResult Function(bool canUploadFiles, int requiredKarma) initial,
     required TResult Function(File image) imagePicked,
     required TResult Function() uploading,
     required TResult Function() creating,
@@ -705,7 +744,7 @@ class _$CreatingImpl implements Creating {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function()? initial,
+    TResult? Function(bool canUploadFiles, int requiredKarma)? initial,
     TResult? Function(File image)? imagePicked,
     TResult? Function()? uploading,
     TResult? Function()? creating,
@@ -720,7 +759,7 @@ class _$CreatingImpl implements Creating {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? initial,
+    TResult Function(bool canUploadFiles, int requiredKarma)? initial,
     TResult Function(File image)? imagePicked,
     TResult Function()? uploading,
     TResult Function()? creating,
@@ -844,7 +883,7 @@ class _$ImageUploadedImpl implements ImageUploaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() initial,
+    required TResult Function(bool canUploadFiles, int requiredKarma) initial,
     required TResult Function(File image) imagePicked,
     required TResult Function() uploading,
     required TResult Function() creating,
@@ -859,7 +898,7 @@ class _$ImageUploadedImpl implements ImageUploaded {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function()? initial,
+    TResult? Function(bool canUploadFiles, int requiredKarma)? initial,
     TResult? Function(File image)? imagePicked,
     TResult? Function()? uploading,
     TResult? Function()? creating,
@@ -874,7 +913,7 @@ class _$ImageUploadedImpl implements ImageUploaded {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? initial,
+    TResult Function(bool canUploadFiles, int requiredKarma)? initial,
     TResult Function(File image)? imagePicked,
     TResult Function()? uploading,
     TResult Function()? creating,
@@ -979,7 +1018,7 @@ class _$SuccessImpl implements Success {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() initial,
+    required TResult Function(bool canUploadFiles, int requiredKarma) initial,
     required TResult Function(File image) imagePicked,
     required TResult Function() uploading,
     required TResult Function() creating,
@@ -994,7 +1033,7 @@ class _$SuccessImpl implements Success {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function()? initial,
+    TResult? Function(bool canUploadFiles, int requiredKarma)? initial,
     TResult? Function(File image)? imagePicked,
     TResult? Function()? uploading,
     TResult? Function()? creating,
@@ -1009,7 +1048,7 @@ class _$SuccessImpl implements Success {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? initial,
+    TResult Function(bool canUploadFiles, int requiredKarma)? initial,
     TResult Function(File image)? imagePicked,
     TResult Function()? uploading,
     TResult Function()? creating,
@@ -1133,7 +1172,7 @@ class _$ErrorImpl implements Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() initial,
+    required TResult Function(bool canUploadFiles, int requiredKarma) initial,
     required TResult Function(File image) imagePicked,
     required TResult Function() uploading,
     required TResult Function() creating,
@@ -1148,7 +1187,7 @@ class _$ErrorImpl implements Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function()? initial,
+    TResult? Function(bool canUploadFiles, int requiredKarma)? initial,
     TResult? Function(File image)? imagePicked,
     TResult? Function()? uploading,
     TResult? Function()? creating,
@@ -1163,7 +1202,7 @@ class _$ErrorImpl implements Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? initial,
+    TResult Function(bool canUploadFiles, int requiredKarma)? initial,
     TResult Function(File image)? imagePicked,
     TResult Function()? uploading,
     TResult Function()? creating,

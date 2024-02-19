@@ -51,10 +51,10 @@ class DeleteList extends ShoppingListDataEvent {
 
 class RemovePostFromList extends ShoppingListDataEvent {
   final int listId;
-  final int savedPostId;
+  final int postId;
 
   const RemovePostFromList({
     required this.listId,
-    required this.savedPostId,
+    required this.postId,
   });
 }

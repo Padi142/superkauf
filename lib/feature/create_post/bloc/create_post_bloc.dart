@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:superkauf/feature/create_post/bloc/create_post_state.dart';
@@ -51,6 +52,10 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     InitialEvent event,
     Emitter<CreatePostState> emit,
   ) async {
+    final box = await Hive.openBox('user');
+    await box.clear();
+    await box.close();
+
     final user = await getCurrentUserUseCase.call();
     if (user == null) {
       emit(const CreatePostState.error('User not found, are you logged in?'));
@@ -58,7 +63,16 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
       createPostNavigation.goToLogin();
       return;
     }
-    emit(const CreatePostState.initial());
+    final flag = await Posthog().isFeatureEnabled('protected-files-upload');
+    if (flag) {
+      final requiredKarma = await Posthog().getFeatureFlagPayload('protected-files-upload') as int;
+
+      emit(CreatePostState.initial(canUploadFiles: user.karma >= requiredKarma, requiredKarma: requiredKarma));
+
+      return;
+    }
+
+    emit(const CreatePostState.initial(canUploadFiles: true, requiredKarma: 0));
   }
 
   var userID = -1;

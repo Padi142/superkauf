@@ -20,7 +20,7 @@ class _CommentApi implements CommentApi {
 
   @override
   Future<CommentModel> createComment({required Map<String, dynamic> body}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -47,7 +47,7 @@ class _CommentApi implements CommentApi {
 
   @override
   Future<CommentModel> deleteComment({required Map<String, dynamic> body}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -74,10 +74,10 @@ class _CommentApi implements CommentApi {
 
   @override
   Future<List<PostCommentModel>> getCommentsForPost({required int id}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<List<dynamic>>(_setStreamType<List<PostCommentModel>>(Options(
       method: 'GET',
       headers: _headers,

@@ -1,5 +1,5 @@
 {
-  "app_title": "SuperKauf",
+  "app_title": "TurboKauf",
 
   "error__validate_min_length": "Moc kratké",
   "error__validate_empty": "Prázdné pole",
@@ -16,6 +16,8 @@
   "store_post_create_label": "Obchod",
   "button_post_create_label": "Vytvořit!",
   "card_required_label": "Je potřeba kartička?",
+  "cant_upload_image_label": "Potřebuješ aspoň {} karmy pro nahrání obrázku",
+
 
   "post_saved_successfully": "Uloženo!",
 

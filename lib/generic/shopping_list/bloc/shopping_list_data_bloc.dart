@@ -9,7 +9,7 @@ import 'package:superkauf/generic/shopping_list/use_case/create_shopping_list_us
 import 'package:superkauf/generic/shopping_list/use_case/delete_list_use_case.dart';
 import 'package:superkauf/generic/shopping_list/use_case/get_shopping_list_info_use_case.dart';
 import 'package:superkauf/generic/shopping_list/use_case/join_user_to_list_use_case.dart';
-import 'package:superkauf/generic/shopping_list/use_case/remove_saved_post_from_list_use_case.dart';
+import 'package:superkauf/generic/shopping_list/use_case/remove_post_from_list_use_case.dart';
 import 'package:superkauf/generic/shopping_list/use_case/remove_user_from_list_use_case.dart';
 import 'package:superkauf/generic/user/use_case/get_current_user_use_case.dart';
 
@@ -17,16 +17,17 @@ part 'shopping_list_data_event.dart';
 
 class ShoppingListDataBloc extends Bloc<ShoppingListDataEvent, ShoppingListDataState> {
   final AddSavedPostToListUseCase addSavedPostToListUseCase;
-  final RemoveSavedPostFromListUseCase removeSavedPostFromListUseCase;
+  final RemovePostFromListUseCase removePostFromListUseCase;
   final GetCurrentUserUseCase getCurrentUserUseCase;
   final CreateShoppingListUseCase createShoppingListUseCase;
   final JoinUserToShoppingListUseCase joinShoppingListUseCase;
   final RemoveUserFromShoppingListUseCase removeUserFromShoppingListUseCase;
   final DeleteListUseCase deleteListUseCase;
   final GetShoppingListInfoUseCase getShoppingListInfoUseCase;
+
   ShoppingListDataBloc({
     required this.addSavedPostToListUseCase,
-    required this.removeSavedPostFromListUseCase,
+    required this.removePostFromListUseCase,
     required this.getCurrentUserUseCase,
     required this.createShoppingListUseCase,
     required this.joinShoppingListUseCase,
@@ -41,6 +42,7 @@ class ShoppingListDataBloc extends Bloc<ShoppingListDataEvent, ShoppingListDataS
     on<LeaveList>(_onLeaveList);
     on<DeleteList>(_onDeleteList);
   }
+
   Future<void> _onAddPostToList(
     AddPostToList event,
     Emitter<ShoppingListDataState> emit,
@@ -70,10 +72,10 @@ class ShoppingListDataBloc extends Bloc<ShoppingListDataEvent, ShoppingListDataS
       return;
     }
 
-    final result = await removeSavedPostFromListUseCase.call(
-      RemoveSavedPostFromListBody(
+    final result = await removePostFromListUseCase.call(
+      AddSavedPostToListBody(
         listId: event.listId,
-        savedPostId: event.savedPostId,
+        postId: event.postId,
         userId: userResult.id,
       ),
     );

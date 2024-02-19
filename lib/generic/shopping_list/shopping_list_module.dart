@@ -8,6 +8,7 @@ import 'package:superkauf/generic/shopping_list/use_case/delete_list_use_case.da
 import 'package:superkauf/generic/shopping_list/use_case/get_shopping_list_for_user_use_case.dart';
 import 'package:superkauf/generic/shopping_list/use_case/get_shopping_list_info_use_case.dart';
 import 'package:superkauf/generic/shopping_list/use_case/join_user_to_list_use_case.dart';
+import 'package:superkauf/generic/shopping_list/use_case/remove_post_from_list_use_case.dart';
 import 'package:superkauf/generic/shopping_list/use_case/remove_saved_post_from_list_use_case.dart';
 import 'package:superkauf/generic/shopping_list/use_case/remove_user_from_list_use_case.dart';
 import 'package:superkauf/generic/user/use_case/get_current_user_use_case.dart';
@@ -32,7 +33,7 @@ class ShoppingListModule extends AppModule {
       () => ShoppingListDataBloc(
         addSavedPostToListUseCase: GetIt.I.get<AddSavedPostToListUseCase>(),
         getCurrentUserUseCase: GetIt.I.get<GetCurrentUserUseCase>(),
-        removeSavedPostFromListUseCase: GetIt.I.get<RemoveSavedPostFromListUseCase>(),
+        removePostFromListUseCase: GetIt.I.get<RemovePostFromListUseCase>(),
         createShoppingListUseCase: GetIt.I.get<CreateShoppingListUseCase>(),
         joinShoppingListUseCase: GetIt.I.get<JoinUserToShoppingListUseCase>(),
         removeUserFromShoppingListUseCase: GetIt.I.get<RemoveUserFromShoppingListUseCase>(),
@@ -91,6 +92,12 @@ class ShoppingListModule extends AppModule {
 
     GetIt.I.registerFactory<DeleteListUseCase>(
       () => DeleteListUseCase(
+        repository: GetIt.I.get<ShoppingListRepository>(),
+      ),
+    );
+
+    GetIt.I.registerFactory<RemovePostFromListUseCase>(
+      () => RemovePostFromListUseCase(
         repository: GetIt.I.get<ShoppingListRepository>(),
       ),
     );

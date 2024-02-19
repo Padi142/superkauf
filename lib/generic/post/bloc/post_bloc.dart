@@ -26,7 +26,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   final GetUserByUidUseCase getUserByUidUseCase;
   final CreateSavedPostUseCase createSavedPostUseCase;
   final DeleteSavedPostUseCase deleteSavedPostUseCase;
-  final GetCurrentUserUseCase getCurrentUser;
+  final GetCurrentUserUseCase getCurrentUserUseCase;
   final UpdatePostUseCase updatePostUseCase;
   final UpdatePostValidUntilUseCase updatePostValidUntilUseCase;
   final AddReactionUseCase addReactionUseCase;
@@ -38,7 +38,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     required this.getUserByUidUseCase,
     required this.createSavedPostUseCase,
     required this.deleteSavedPostUseCase,
-    required this.getCurrentUser,
+    required this.getCurrentUserUseCase,
     required this.updatePostUseCase,
     required this.updatePostValidUntilUseCase,
     required this.addReactionUseCase,
@@ -105,7 +105,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     SavePost event,
     Emitter<PostState> emit,
   ) async {
-    final user = await getCurrentUser.call();
+    final user = await getCurrentUserUseCase.call();
     if (user == null) {
       emit(const PostState.error("You are not logged in"));
       return;
@@ -131,7 +131,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     UpdatePost event,
     Emitter<PostState> emit,
   ) async {
-    final user = await getCurrentUser.call();
+    final user = await getCurrentUserUseCase.call();
     if (user == null) {
       emit(const PostState.error("You are not logged in"));
       return;
@@ -157,7 +157,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     UpdatePostValidUntilEvent event,
     Emitter<PostState> emit,
   ) async {
-    final user = await getCurrentUser.call();
+    final user = await getCurrentUserUseCase.call();
     if (user == null) {
       emit(const PostState.error("You are not logged in"));
       return;
@@ -183,7 +183,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     RemoveSavedPost event,
     Emitter<PostState> emit,
   ) async {
-    final user = await getCurrentUser.call();
+    final user = await getCurrentUserUseCase.call();
     if (user == null) {
       emit(const PostState.error("You are not logged in"));
       return;
@@ -209,7 +209,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     AddReaction event,
     Emitter<PostState> emit,
   ) async {
-    final user = await getCurrentUser.call();
+    final user = await getCurrentUserUseCase.call();
     if (user == null) {
       emit(const PostState.error("You are not logged in"));
       return;
@@ -235,7 +235,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     RemoveReaction event,
     Emitter<PostState> emit,
   ) async {
-    final user = await getCurrentUser.call();
+    final user = await getCurrentUserUseCase.call();
     if (user == null) {
       emit(const PostState.error("You are not logged in"));
       return;
@@ -261,7 +261,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     ReportPost event,
     Emitter<PostState> emit,
   ) async {
-    final user = await getCurrentUser.call();
+    final user = await getCurrentUserUseCase.call();
     if (user == null) {
       emit(const PostState.error("You are not logged in"));
       return;
@@ -272,7 +272,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     result.map(
       success: (value) {
         Posthog().capture(eventName: 'post_reported', properties: {
-          'post_id': params.reportedPost,
+          'post_id': params.reportedPost!,
         });
 
         emit(const PostState.success());

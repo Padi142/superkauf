@@ -20,10 +20,10 @@ class _StoreApi implements StoreApi {
 
   @override
   Future<List<StoreModel>> getStores({required String country}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<List<dynamic>>(_setStreamType<List<StoreModel>>(Options(
       method: 'GET',
       headers: _headers,
@@ -52,11 +52,11 @@ class _StoreApi implements StoreApi {
     int? userId,
     required String country,
   }) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<GetPaginatedPostsResponseModel>(Options(
       method: 'GET',
       headers: _headers,
@@ -79,10 +79,10 @@ class _StoreApi implements StoreApi {
 
   @override
   Future<StoreModel> getStore({required int id}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<StoreModel>(Options(
       method: 'GET',
       headers: _headers,

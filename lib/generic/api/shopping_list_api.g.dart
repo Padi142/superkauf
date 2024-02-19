@@ -20,10 +20,10 @@ class _ShoppingListApi implements ShoppingListApi {
 
   @override
   Future<List<ShoppingListModel>> getUserLists({required int userId}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<List<dynamic>>(_setStreamType<List<ShoppingListModel>>(Options(
       method: 'GET',
       headers: _headers,
@@ -46,10 +46,10 @@ class _ShoppingListApi implements ShoppingListApi {
 
   @override
   Future<GetShoppingListResponse> getList({required int listId}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<GetShoppingListResponse>(Options(
       method: 'GET',
       headers: _headers,
@@ -72,7 +72,7 @@ class _ShoppingListApi implements ShoppingListApi {
 
   @override
   Future<bool> addSavedPostToList({required Map<String, dynamic> body}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -103,12 +103,12 @@ class _ShoppingListApi implements ShoppingListApi {
     required int savedPostId,
     required int userId,
   }) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<bool>(_setStreamType<bool>(Options(
-      method: 'POST',
+      method: 'DELETE',
       headers: _headers,
       extra: _extra,
     )
@@ -128,8 +128,38 @@ class _ShoppingListApi implements ShoppingListApi {
   }
 
   @override
+  Future<bool> removePostFromList({
+    required int listId,
+    required Map<String, dynamic> body,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
+    final _result = await _dio.fetch<bool>(_setStreamType<bool>(Options(
+      method: 'DELETE',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/shopping_lists/posts/${listId}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    final value = _result.data!;
+    return value;
+  }
+
+  @override
   Future<ShoppingListModel> createShoppingList({required Map<String, dynamic> body}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -156,7 +186,7 @@ class _ShoppingListApi implements ShoppingListApi {
 
   @override
   Future<UserJoinedResult> joinShoppingList({required Map<String, dynamic> body}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -183,7 +213,7 @@ class _ShoppingListApi implements ShoppingListApi {
 
   @override
   Future<dynamic> leaveShoppingList({required Map<String, dynamic> body}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -213,10 +243,10 @@ class _ShoppingListApi implements ShoppingListApi {
     required int listId,
     required int userId,
   }) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<ShoppingListModel>(Options(
       method: 'DELETE',
       headers: _headers,

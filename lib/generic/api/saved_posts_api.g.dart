@@ -24,10 +24,10 @@ class _SavedPostsApi implements SavedPostsApi {
     required int perPage,
     required int offset,
   }) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<GetPaginatedPostsResponseModel>(Options(
       method: 'GET',
       headers: _headers,
@@ -50,7 +50,7 @@ class _SavedPostsApi implements SavedPostsApi {
 
   @override
   Future<SavedPostModel> createSavedPost({required Map<String, dynamic> body}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -77,7 +77,7 @@ class _SavedPostsApi implements SavedPostsApi {
 
   @override
   Future<SavedPostModel> deleteSavedPost({required Map<String, dynamic> body}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -104,7 +104,7 @@ class _SavedPostsApi implements SavedPostsApi {
 
   @override
   Future<SavedPostModel> updateSavedPost({required Map<String, dynamic> body}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};

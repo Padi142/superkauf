@@ -152,7 +152,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     final result = await createUserUseCase.call(params);
 
     result.map(success: (success) {
-      Posthog().identify(userId: success.user.id.toString(), properties: {
+      Posthog().identify(userId: success.user.id.toString(), userProperties: {
         "supabase_uid": session.user.id,
         "username": success.user.username,
       });

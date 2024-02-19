@@ -20,10 +20,10 @@ class _UserApi implements UserApi {
 
   @override
   Future<UserModel> getUserById({required int id}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<UserModel>(Options(
       method: 'GET',
       headers: _headers,
@@ -46,10 +46,10 @@ class _UserApi implements UserApi {
 
   @override
   Future<UserModel> getUserByUid({required String uid}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<UserModel>(Options(
       method: 'GET',
       headers: _headers,
@@ -72,10 +72,10 @@ class _UserApi implements UserApi {
 
   @override
   Future<CheckUsernameResponse> getUserByUsername({required String username}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<CheckUsernameResponse>(Options(
       method: 'GET',
       headers: _headers,
@@ -101,7 +101,7 @@ class _UserApi implements UserApi {
     required int id,
     required Map<String, dynamic> body,
   }) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -128,7 +128,7 @@ class _UserApi implements UserApi {
 
   @override
   Future<UserModel> createUser({required Map<String, dynamic> body}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};

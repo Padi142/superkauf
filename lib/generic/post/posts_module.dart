@@ -42,7 +42,7 @@ class PostModule extends AppModule {
         getUserByUidUseCase: GetIt.I.get<GetUserByUidUseCase>(),
         createSavedPostUseCase: GetIt.I.get<CreateSavedPostUseCase>(),
         deleteSavedPostUseCase: GetIt.I.get<DeleteSavedPostUseCase>(),
-        getCurrentUser: GetIt.I.get<GetCurrentUserUseCase>(),
+        getCurrentUserUseCase: GetIt.I.get<GetCurrentUserUseCase>(),
         updatePostUseCase: GetIt.I.get<UpdatePostUseCase>(),
         updatePostValidUntilUseCase: GetIt.I.get<UpdatePostValidUntilUseCase>(),
         addReactionUseCase: GetIt.I.get<AddReactionUseCase>(),
