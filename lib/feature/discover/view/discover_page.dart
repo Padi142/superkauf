@@ -25,7 +25,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
 
   @override
   void initState() {
-    BlocProvider.of<DiscoverBloc>(context).add(const GetTopPosts());
+    BlocProvider.of<DiscoverBloc>(context).add(const Initial());
     _scrollController.addListener(_listener);
     _scrollController.addListener(_loadMoreListener);
 
@@ -38,8 +38,12 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
 
   void _loadMoreListener() {
     scrollToRefreshListener(controller: _scrollController);
-    if (_scrollController.position.pixels > _scrollController.position.maxScrollExtent - 300) {
-      if ((context.read<DiscoverBloc>().state is Loaded) && ((context.read<DiscoverBloc>().state as Loaded).isLoading || (context.read<DiscoverBloc>().state as Loaded).canLoadMore == false)) {
+    if (_scrollController.position.pixels >
+        _scrollController.position.maxScrollExtent - 300) {
+      if ((context.read<DiscoverBloc>().state is Loaded) &&
+          ((context.read<DiscoverBloc>().state as Loaded).isLoading ||
+              (context.read<DiscoverBloc>().state as Loaded).canLoadMore ==
+                  false)) {
         return;
       }
       print('loading more');
@@ -72,6 +76,8 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                             child: SortingButtons(
                               sortType: loaded.sortType,
                               timeRange: loaded.timeRange,
+                              stores: loaded.stores,
+                              selectedStore: loaded.selectedStore,
                             ),
                           ),
                           Center(
@@ -84,7 +90,9 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              Text('no_posts_for_timerange_2'.tr(), style: Theme.of(context).textTheme.titleSmall),
+                              Text('no_posts_for_timerange_2'.tr(),
+                                  style:
+                                      Theme.of(context).textTheme.titleSmall),
                             ],
                           ))
                         ],
@@ -97,6 +105,8 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                           child: SortingButtons(
                             sortType: loaded.sortType,
                             timeRange: loaded.timeRange,
+                            stores: loaded.stores,
+                            selectedStore: loaded.selectedStore,
                           ),
                         ),
                         SizedBox(
@@ -106,7 +116,10 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                             controller: _scrollController,
                             itemBuilder: (context, index) {
                               return Padding(
-                                padding: EdgeInsets.only(bottom: loaded.posts.length == index + 1 ? 100 : 0),
+                                padding: EdgeInsets.only(
+                                    bottom: loaded.posts.length == index + 1
+                                        ? 100
+                                        : 0),
                                 child: PersonalFeedPostContainer(
                                   post: loaded.posts[index],
                                   originScreen: ScreenPath.discoverScreen,

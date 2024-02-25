@@ -6,6 +6,7 @@ class ScreenPath {
   static const String feedScreen = '/feed';
   static const String discoverScreen = '/discover';
   static const String storesScreen = '/stores';
+  static const String searchScreen = '/search';
   static const String shoppingListScreen = '/shoppingList';
   static const String loginScreen = '/login';
   static const String createPostScreen = '/create_post';

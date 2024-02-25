@@ -8,10 +8,12 @@ abstract class PostDetailEvent extends Equatable {
 }
 
 class InitialEvent extends PostDetailEvent {
-  final PostModel post;
+  final PostModel? post;
+  final int? postId;
   final UserModel? user;
+  final int? userId;
 
-  const InitialEvent({required this.post, required this.user});
+  const InitialEvent({this.post, this.user, this.postId, this.userId});
 }
 
 class GetPost extends PostDetailEvent {

@@ -10,6 +10,7 @@ import 'package:superkauf/feature/shopping_list/view/components/list_action_butt
 import 'package:superkauf/generic/post/bloc/post_bloc.dart';
 import 'package:superkauf/generic/shopping_list/model/get_shopping_list_response.dart';
 import 'package:superkauf/generic/user/model/user_model.dart';
+import 'package:superkauf/generic/widget/app_progress.dart';
 import 'package:superkauf/library/app.dart';
 
 class ShoppingListView extends StatefulWidget {
@@ -17,6 +18,7 @@ class ShoppingListView extends StatefulWidget {
   final BoxConstraints constraints;
 
   final int userId;
+
   const ShoppingListView({
     super.key,
     required this.list,
@@ -59,7 +61,7 @@ class _ShoppingListViewState extends State<ShoppingListView> {
                       width: widget.constraints.maxWidth * 0.25,
                       imageUrl: widget.list.list.logo,
                       fit: BoxFit.fitWidth,
-                      placeholder: (context, url) => const CircularProgressIndicator(),
+                      placeholder: (context, url) => const Center(child: AppProgress()),
                       errorWidget: (context, url, error) => const Icon(Icons.error),
                     ),
                   ),
@@ -110,13 +112,13 @@ class ShoppingListItem extends StatefulWidget {
   final ValueChanged<bool> onToggleCompleted;
 
   const ShoppingListItem({
-    Key? key,
+    super.key,
     required this.post,
     required this.addedBy,
     required this.listId,
     this.completed = false,
     required this.onToggleCompleted,
-  }) : super(key: key);
+  });
 
   @override
   State<ShoppingListItem> createState() => _ShoppingListItemState();
@@ -167,7 +169,7 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
                         fit: BoxFit.fitWidth,
                         color: isCompleted ? Colors.grey : null,
                         colorBlendMode: isCompleted ? BlendMode.saturation : null,
-                        placeholder: (context, url) => const CircularProgressIndicator(),
+                        placeholder: (context, url) => const Center(child: AppProgress()),
                         errorWidget: (context, url, error) => const Icon(Icons.error),
                       ),
                     ),
@@ -187,7 +189,7 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
                         width: 20,
                         imageUrl: widget.addedBy.profilePicture,
                         fit: BoxFit.fitWidth,
-                        placeholder: (context, url) => const CircularProgressIndicator(),
+                        placeholder: (context, url) => const Center(child: AppProgress()),
                         errorWidget: (context, url, error) => const Icon(Icons.error),
                       ),
                     ),

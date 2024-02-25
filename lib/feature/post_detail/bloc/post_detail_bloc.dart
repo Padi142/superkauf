@@ -29,19 +29,24 @@ class PostDetailBloc extends Bloc<PostDetailEvent, PostDetailState> {
     InitialEvent event,
     Emitter<PostDetailState> emit,
   ) async {
+    if (event.postId != null) {
+      add(GetPost(postId: event.postId.toString()));
+      return;
+    }
+
     if (event.user == null) {
-      final userResult = await getUserByIdUseCase.call(event.post.author);
+      final userResult = await getUserByIdUseCase.call(event.post?.author ?? 0);
 
       userResult.map(
           success: (success) {
-            emit(PostDetailState.initial(event.post, success.user));
+            emit(PostDetailState.initial(event.post!, success.user));
           },
           failure: (failure) {});
     } else {
-      emit(PostDetailState.initial(event.post, event.user!));
+      emit(PostDetailState.initial(event.post!, event.user!));
     }
 
-    add(GetPost(postId: event.post.id.toString()));
+    add(GetPost(postId: event.post!.id.toString()));
   }
 
   Future<void> _onGetPost(

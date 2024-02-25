@@ -70,6 +70,17 @@ class GoToCreatePostScreen extends NavigationEvent {
   List<Object?> get props => [];
 }
 
+class OpenSearchScreen extends NavigationEvent {
+  final int? index;
+
+  const OpenSearchScreen(
+    this.index,
+  );
+
+  @override
+  List<Object?> get props => [];
+}
+
 class OpenPostDetailScreen extends NavigationEvent {
   const OpenPostDetailScreen();
 

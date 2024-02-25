@@ -33,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   final PanelController _postSavedPanel = PanelController();
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<SnackbarBloc, SnackbarState>(
@@ -136,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           BlocProvider.of<NavigationBloc>(context).add(OpenFeedScreen(index));
                           break;
                         case 1:
-                          BlocProvider.of<NavigationBloc>(context).add(OpenStoresScreen(index));
+                          BlocProvider.of<NavigationBloc>(context).add(OpenSearchScreen(index));
                           break;
                         case 2:
                           BlocProvider.of<NavigationBloc>(context).add(GoToCreatePostScreen(index));
@@ -159,9 +160,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         label: 'Feed',
                       ),
                       NavigationDestination(
-                        selectedIcon: Icon(Icons.storefront_rounded),
-                        icon: Icon(Icons.storefront),
-                        label: 'Stores',
+                        selectedIcon: Icon(Icons.search),
+                        icon: Icon(Icons.search),
+                        label: 'Search',
                       ),
                       NavigationDestination(
                         selectedIcon: Icon(Icons.add),

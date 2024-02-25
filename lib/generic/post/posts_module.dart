@@ -108,6 +108,10 @@ class PostModule extends AppModule {
     GetIt.I.registerFactory<GetTopPostsUseCase>(
       () => GetTopPostsUseCase(repository: GetIt.I.get<PostsRepository>()),
     );
+
+    GetIt.I.registerFactory<UploadS3PostImageUseCase>(
+      () => UploadS3PostImageUseCase(),
+    );
   }
 
   @override

@@ -13,6 +13,7 @@ import 'package:superkauf/generic/post/model/create_post_model.dart';
 import 'package:superkauf/generic/post/model/post_model.dart';
 import 'package:superkauf/generic/post/model/update_post_image_body.dart';
 import 'package:superkauf/generic/post/model/upload_post_image_params.dart';
+import 'package:superkauf/generic/post/model/upload_post_image_result.dart';
 import 'package:superkauf/generic/post/use_case/create_post_use_case.dart';
 import 'package:superkauf/generic/post/use_case/update_post_image_use_case.dart';
 import 'package:superkauf/generic/post/use_case/upload_post_image_use_case.dart';
@@ -31,6 +32,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
   final GetStoresUseCase getStoresUseCase;
   final GetCurrentUserUseCase getCurrentUserUseCase;
   final UpdatePostImageUseCase updatePostImageUseCase;
+  final UploadS3PostImageUseCase uploadS3PostImageUseCase;
 
   CreatePostBloc({
     required this.createPostUseCase,
@@ -41,6 +43,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     required this.getStoresUseCase,
     required this.getCurrentUserUseCase,
     required this.updatePostImageUseCase,
+    required this.uploadS3PostImageUseCase,
   }) : super(const CreatePostState.loading()) {
     on<UploadImage>(_onUploadImage);
     on<PickImage>(_onPickImage);
@@ -106,14 +109,19 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     emit(const CreatePostState.uploading());
 
     final params = UploadImageParams(file: event.image, path: userID.toString());
-    final result = await uploadPostImageUseCase.call(params);
+
+    late UploadImageResult result;
+
+    if (await Posthog().isFeatureEnabled('use-supabase-storage')) {
+      result = await uploadPostImageUseCase.call(params);
+    } else {
+      result = await uploadS3PostImageUseCase.call(params);
+    }
 
     var imageLink = '';
     result.map(
       success: (success) {
-        imageLink = supabase.storage.from('posts').getPublicUrl(
-              success.path,
-            );
+        imageLink = success.path;
         emit(CreatePostState.imageUploaded(imageLink));
       },
       failure: (error) async {

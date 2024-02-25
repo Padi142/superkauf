@@ -147,6 +147,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                               if (selectedStore == null) {
                                 setState(() {
                                   storeNotPickedError = true;
+                                  _storePickPanelController.open();
                                 });
                                 Future.delayed(const Duration(milliseconds: 2500)).then((value) => setState(() {
                                       storeNotPickedError = false;

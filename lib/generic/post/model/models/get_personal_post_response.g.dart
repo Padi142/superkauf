@@ -43,6 +43,7 @@ Map<String, dynamic> _$GetPersonalFeedParamsToJson(GetPersonalFeedParams instanc
 GetTopPostsParams _$GetTopPostsParamsFromJson(Map<String, dynamic> json) => GetTopPostsParams(
       body: GetPostsBody.fromJson(json['body'] as Map<String, dynamic>),
       userId: json['user_id'] as int,
+      store: json['store'] as int?,
       timeRange: json['time_range'] as String,
       sortBy: json['sort_by'] as String,
     );
@@ -50,6 +51,7 @@ GetTopPostsParams _$GetTopPostsParamsFromJson(Map<String, dynamic> json) => GetT
 Map<String, dynamic> _$GetTopPostsParamsToJson(GetTopPostsParams instance) => <String, dynamic>{
       'body': instance.body.toJson(),
       'user_id': instance.userId,
+      'store': instance.store,
       'time_range': instance.timeRange,
       'sort_by': instance.sortBy,
     };

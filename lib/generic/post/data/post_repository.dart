@@ -144,7 +144,7 @@ class PostsRepository {
     });
   }
 
-  Future<GetPersonalFeedResult> getTopPosts(GetPostsBody body, int userID, String timeRange) async {
+  Future<GetPersonalFeedResult> getTopPosts(GetPostsBody body, int userID, int? store, String timeRange) async {
     return postApi
         .getTopPosts(
       per_page: body.pagination.perPage,
@@ -152,6 +152,7 @@ class PostsRepository {
       userId: userID,
       timeRange: timeRange,
       country: body.country,
+      store: store,
     )
         .then((posts) {
       return GetPersonalFeedResult.success(posts);

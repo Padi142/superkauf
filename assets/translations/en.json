@@ -27,6 +27,11 @@
   "post_comments_label": "Comments",
   "no_comments_label": "No comments yet",
 
+  "stores": "Stores",
+  "search_page_label":"Search for something",
+  "search_page_placeholder":"Search",
+
+
   "today_label": "today",
   "tomorrow_label": "tomorrow",
   "ends_in_multiple_days_label": "days",

@@ -22,6 +22,7 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     on<OpenPostDetailScreen>(_onOpenPostDetailScreen);
     on<OpenUserDetailScreen>(_onOpenUserDetailScreen);
     on<OpenMyNotificationsScreen>(_onOpenMyNotificationsScreen);
+    on<OpenSearchScreen>(_onOpenSearchScreen);
   }
 
   var bottomBarIndex = 0;
@@ -51,6 +52,18 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
 
     Posthog().screen(
       screenName: ScreenPath.discoverScreen,
+    );
+  }
+
+  Future<void> _onOpenSearchScreen(
+    OpenSearchScreen event,
+    Emitter<NavigationState> emit,
+  ) async {
+    bottomBarIndex = 2;
+    emit(NavigationStateLoaded(bottomNavIndex: event.index != null ? event.index! : bottomBarIndex, screenName: ScreenPath.searchScreen));
+
+    Posthog().screen(
+      screenName: ScreenPath.searchScreen,
     );
   }
 

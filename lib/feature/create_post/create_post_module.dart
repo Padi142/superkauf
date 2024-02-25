@@ -43,6 +43,7 @@ class CreatePostModule extends AppModule {
         getStoresUseCase: GetIt.I.get<GetStoresUseCase>(),
         getCurrentUserUseCase: GetIt.I.get<GetCurrentUserUseCase>(),
         updatePostImageUseCase: GetIt.I.get<UpdatePostImageUseCase>(),
+        uploadS3PostImageUseCase: GetIt.I.get<UploadS3PostImageUseCase>(),
       ),
     );
   }

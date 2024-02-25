@@ -316,9 +316,11 @@ class _PostApi implements PostApi {
     required int userId,
     required String timeRange,
     required String country,
+    int? store,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<GetPaginatedPostsResponseModel>(Options(
@@ -328,7 +330,7 @@ class _PostApi implements PostApi {
     )
         .compose(
           _dio.options,
-          '/feed/top?offset=${offset}&per_page=${per_page}&userId=${userId}&timeRange=${timeRange}?country=${country}',
+          '/feed/top?offset=${offset}&per_page=${per_page}&userId=${userId}&timeRange=${timeRange}&country=${country}&store=${store}',
           queryParameters: queryParameters,
           data: _data,
         )

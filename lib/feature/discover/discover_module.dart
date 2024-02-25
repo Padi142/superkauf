@@ -4,6 +4,7 @@ import 'package:superkauf/feature/discover/bloc/discover_bloc.dart';
 import 'package:superkauf/feature/discover/view/discover_page.dart';
 import 'package:superkauf/generic/post/use_case/get_top_posts_use_case.dart';
 import 'package:superkauf/generic/settings/use_case/get_settings_use_case.dart';
+import 'package:superkauf/generic/store/use_case/get_stores_use_case.dart';
 import 'package:superkauf/generic/user/use_case/get_current_user_use_case.dart';
 
 import '../../library/app_module.dart';
@@ -21,6 +22,7 @@ class DiscoverModule extends AppModule {
           getTopPostsUseCase: GetIt.I.get<GetTopPostsUseCase>(),
           getCurrentUserUseCase: GetIt.I.get<GetCurrentUserUseCase>(),
           getSettingsUseCase: GetIt.I.get<GetSettingsUseCase>(),
+          getStoresUseCase: GetIt.I.get<GetStoresUseCase>(),
         ));
   }
 

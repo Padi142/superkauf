@@ -1,21 +1,27 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:superkauf/generic/post/model/post_model.dart';
 
 class FeedPostImage extends StatelessWidget {
   final BoxConstraints constraints;
-  final PostModel post;
-  const FeedPostImage({super.key, required this.constraints, required this.post});
+  final String postImage;
+  final int id;
+
+  const FeedPostImage({
+    super.key,
+    required this.constraints,
+    required this.postImage,
+    required this.id,
+  });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: constraints.maxWidth,
       child: Hero(
-        tag: post.id,
+        tag: id,
         child: CachedNetworkImage(
-          imageUrl: post.image,
+          imageUrl: postImage,
           imageBuilder: (context, imageProvider) => Container(
             decoration: BoxDecoration(
                 image: DecorationImage(

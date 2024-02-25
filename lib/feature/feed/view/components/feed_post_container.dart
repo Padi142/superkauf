@@ -323,7 +323,8 @@ class PostContent extends StatelessWidget {
                 child: Stack(
                   children: [
                     FeedPostImage(
-                      post: post.post,
+                      postImage: post.post.image,
+                      id: post.post.id,
                       constraints: constraints,
                     ),
                     Positioned(

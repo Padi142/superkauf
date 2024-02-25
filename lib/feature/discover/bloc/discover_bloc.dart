@@ -6,6 +6,8 @@ import 'package:superkauf/generic/post/model/models/get_personal_post_response.d
 import 'package:superkauf/generic/post/model/pagination_model.dart';
 import 'package:superkauf/generic/post/use_case/get_top_posts_use_case.dart';
 import 'package:superkauf/generic/settings/use_case/get_settings_use_case.dart';
+import 'package:superkauf/generic/store/model/store_model.dart';
+import 'package:superkauf/generic/store/use_case/get_stores_use_case.dart';
 import 'package:superkauf/generic/user/use_case/get_current_user_use_case.dart';
 
 import 'discover_state.dart';
@@ -16,16 +18,20 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
   final GetTopPostsUseCase getTopPostsUseCase;
   final GetCurrentUserUseCase getCurrentUserUseCase;
   final GetSettingsUseCase getSettingsUseCase;
+  final GetStoresUseCase getStoresUseCase;
 
   DiscoverBloc({
     required this.getTopPostsUseCase,
     required this.getCurrentUserUseCase,
     required this.getSettingsUseCase,
+    required this.getStoresUseCase,
   }) : super(const DiscoverState.loading()) {
     on<GetTopPosts>(_onGetTopPosts);
+    on<Initial>(_onInitial);
     on<LoadMore>(_onLoadMore);
     on<ReloadPosts>(_onReloadPosts);
     on<ChangeTimeRange>(_onChangeTimeRange);
+    on<ChangeSelectedStore>(_onChangeSelectedStore);
   }
 
   var page = 0;
@@ -34,6 +40,8 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
 
   var sortBy = SortType.top;
   var timeRange = TimeRange.week;
+  final List<StoreModel> stores = [];
+  StoreModel? selectedStore;
 
   Future<void> _onGetTopPosts(
     GetTopPosts event,
@@ -55,6 +63,7 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
           country: settings.country,
         ),
         timeRange: timeRange.name,
+        store: selectedStore?.id,
         sortBy: '');
 
     final result = await getTopPostsUseCase.call(params);
@@ -74,14 +83,30 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
           final canLoadMore = posts.length % perPage == 0;
 
           emit(
-            DiscoverState.loaded(posts, false, canLoadMore, sortBy, timeRange),
+            DiscoverState.loaded(
+              posts,
+              false,
+              canLoadMore,
+              sortBy,
+              timeRange,
+              stores,
+              selectedStore,
+            ),
           );
         },
         loading: (loading) {
           final canLoadMore = newPosts.length % perPage == 0;
 
           emit(
-            DiscoverState.loaded(newPosts, false, canLoadMore, sortBy, timeRange),
+            DiscoverState.loaded(
+              newPosts,
+              false,
+              canLoadMore,
+              sortBy,
+              timeRange,
+              stores,
+              selectedStore,
+            ),
           );
         },
         orElse: () {});
@@ -99,6 +124,27 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
     add(const GetTopPosts());
   }
 
+  Future<void> _onInitial(
+    Initial event,
+    Emitter<DiscoverState> emit,
+  ) async {
+    final settings = await getSettingsUseCase.call();
+
+    final storesResult = await getStoresUseCase.call(settings.country);
+
+    storesResult.when(
+      success: (success) {
+        stores.addAll(success);
+      },
+      failure: (message) {
+        emit(DiscoverState.error(message));
+      },
+    );
+
+    emit(const DiscoverState.loading());
+    add(const GetTopPosts());
+  }
+
   Future<void> _onChangeTimeRange(
     ChangeTimeRange event,
     Emitter<DiscoverState> emit,
@@ -109,6 +155,24 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
     Posthog().capture(eventName: 'discover_sort', properties: {
       'sortType': sortBy.name,
       'timeRange': timeRange.name,
+      'storeName': selectedStore?.name ?? '',
+    });
+
+    emit(const DiscoverState.loading());
+    add(const GetTopPosts());
+  }
+
+  Future<void> _onChangeSelectedStore(
+    ChangeSelectedStore event,
+    Emitter<DiscoverState> emit,
+  ) async {
+    page = 0;
+    selectedStore = event.store;
+
+    Posthog().capture(eventName: 'discover_sort', properties: {
+      'sortType': sortBy.name,
+      'timeRange': timeRange.name,
+      'storeName': selectedStore?.name ?? '',
     });
 
     emit(const DiscoverState.loading());

@@ -23,6 +23,7 @@ import 'package:superkauf/feature/my_channel/my_channel_module.dart';
 import 'package:superkauf/feature/notification_page/notifications_page_module.dart';
 import 'package:superkauf/feature/post_detail/bloc/post_detail_bloc.dart';
 import 'package:superkauf/feature/post_detail/post_detail_module.dart';
+import 'package:superkauf/feature/search/search_module.dart';
 import 'package:superkauf/feature/shopping_list/shopping_list_module.dart';
 import 'package:superkauf/feature/snackbar/bloc/snackbar_bloc.dart';
 import 'package:superkauf/feature/snackbar/snackbar_module.dart';
@@ -148,6 +149,7 @@ List<AppModule> modules() {
     MyNotificationsModule(),
     DiscoverModule(),
     ShoppingListModule(),
+    SearchModule(),
   ];
 }
 

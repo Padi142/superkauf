@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:superkauf/feature/shopping_list/bloc/shopping_list_state.dart';
-import 'package:superkauf/generic/post/model/get_posts_body.dart';
 import 'package:superkauf/generic/post/model/models/get_personal_post_response.dart';
 import 'package:superkauf/generic/post/model/pagination_model.dart';
 import 'package:superkauf/generic/saved_posts/model/get_saved_post_params.dart';
@@ -61,12 +60,7 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
 
     final settings = await getSettingsUseCase.call();
 
-    final params = GetPostsBody(
-      country: settings.country,
-      pagination: const GetPostsPaginationModel(perPage: 0, offset: 0),
-    );
-
-    final Future<GetStoresResult> storeCall = getStoresUseCase.call(params);
+    final Future<GetStoresResult> storeCall = getStoresUseCase.call(settings.country);
     final Future<GetSavedPostsResult> savedPostsCall = getSavedPostsByUserUseCase.call(
       GetSavedPostsParams(
         userId: userResult.id,

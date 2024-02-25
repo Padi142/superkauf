@@ -80,12 +80,14 @@ class GetPersonalFeedParams extends Equatable {
 class GetTopPostsParams extends Equatable {
   final GetPostsBody body;
   final int userId;
+  final int? store;
   final String timeRange;
   final String sortBy;
 
   const GetTopPostsParams({
     required this.body,
     required this.userId,
+    this.store,
     required this.timeRange,
     required this.sortBy,
   });

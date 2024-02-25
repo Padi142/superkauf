@@ -9,6 +9,7 @@ import 'package:superkauf/feature/shopping_list/bloc/shopping_list_bloc.dart';
 import 'package:superkauf/generic/post/bloc/post_bloc.dart';
 import 'package:superkauf/generic/post/model/models/get_personal_post_response.dart';
 import 'package:superkauf/generic/store/model/store_model.dart';
+import 'package:superkauf/generic/widget/app_progress.dart';
 import 'package:superkauf/library/app.dart';
 
 class StoresPostsListView extends StatefulWidget {
@@ -58,7 +59,7 @@ class _StoresPostsListViewState extends State<StoresPostsListView> {
                       width: 120,
                       imageUrl: widget.store.image,
                       fit: BoxFit.fitWidth,
-                      placeholder: (context, url) => const CircularProgressIndicator(),
+                      placeholder: (context, url) => const Center(child: AppProgress()),
                       errorWidget: (context, url, error) => const Icon(Icons.error),
                     ),
                   ),
@@ -125,6 +126,7 @@ class _StoreListItemState extends State<StoreListItem> {
   }
 
   final GlobalKey _widgetKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
@@ -154,7 +156,7 @@ class _StoreListItemState extends State<StoreListItem> {
                   fit: BoxFit.fitWidth,
                   color: isCompleted ? Colors.grey : null,
                   colorBlendMode: isCompleted ? BlendMode.saturation : null,
-                  placeholder: (context, url) => const CircularProgressIndicator(),
+                  placeholder: (context, url) => const Center(child: AppProgress()),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
