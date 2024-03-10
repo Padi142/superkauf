@@ -134,6 +134,9 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
 
     Posthog().screen(
       screenName: ScreenPath.postDetailScreen,
+      properties: {
+        'post_id': event.postId,
+      },
     );
   }
 

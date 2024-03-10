@@ -7,17 +7,19 @@ part 'notification_model.g.dart';
 
 @JsonSerializable(explicitToJson: true, fieldRename: FieldRename.snake)
 class NotificationModel extends Equatable {
+  final int id;
   final String text;
   final int recipientId;
-  final int relatedPostId;
-  final int relatedUserId;
+  final int? relatedPostId;
+  final int? relatedUserId;
   final bool seen;
   final NotificationType type;
   final DateTime createdAt;
-  final PostModel relatedPost;
-  final UserModel relatedUser;
+  final PostModel? relatedPost;
+  final UserModel? relatedUser;
 
   const NotificationModel({
+    required this.id,
     required this.text,
     required this.recipientId,
     required this.relatedPostId,
@@ -52,5 +54,6 @@ enum NotificationType {
   post_comment,
   post_like_count,
   none,
+  highlight,
   generic,
 }

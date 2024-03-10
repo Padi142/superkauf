@@ -10,9 +10,10 @@ import 'package:superkauf/library/app.dart';
 class AccountInfoWidget extends StatelessWidget {
   final UserModel user;
   final Function() onUsernameChange;
-  final Function() onUsernameChaneDone;
+  final Function(String username) onUsernameChaneDone;
   final bool changeUsername;
   final BoxConstraints constraints;
+
   const AccountInfoWidget({
     super.key,
     required this.user,
@@ -71,7 +72,7 @@ class AccountInfoWidget extends StatelessWidget {
                   changeUsername
                       ? ChangeUsernameField(
                           onDone: (username) {
-                            onUsernameChaneDone();
+                            onUsernameChaneDone(username);
                           },
                         )
                       : Row(

@@ -82,7 +82,11 @@ class OpenSearchScreen extends NavigationEvent {
 }
 
 class OpenPostDetailScreen extends NavigationEvent {
-  const OpenPostDetailScreen();
+  final int postId;
+
+  const OpenPostDetailScreen({
+    required this.postId,
+  });
 
   @override
   List<Object?> get props => [];

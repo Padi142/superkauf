@@ -20,7 +20,9 @@
 
   "stores": "Obchody",
   "search_page_label":"Vyhleden něco!",
-    "search_page_placeholder":"Hledat", 
+    "search_page_placeholder":"Hledat",
+
+  "post_reported_successfully": "Nahlášeno!",
 
   "post_saved_successfully": "Uloženo!",
 

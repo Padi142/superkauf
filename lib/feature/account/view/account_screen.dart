@@ -54,7 +54,11 @@ class _FeedScreenState extends State<AccountScreen> {
                             changeUsername = !changeUsername;
                           });
                         },
-                        onUsernameChaneDone: () {
+                        onUsernameChaneDone: (String username) {
+                          BlocProvider.of<AccountBloc>(context).add(ChangeUsername(
+                            username: username,
+                            user: loaded.user,
+                          ));
                           setState(() {
                             changeUsername = false;
                           });
@@ -83,7 +87,9 @@ class _FeedScreenState extends State<AccountScreen> {
                                 user: loaded.posts[index].user,
                               ));
 
-                              BlocProvider.of<NavigationBloc>(context).add(const OpenPostDetailScreen());
+                              BlocProvider.of<NavigationBloc>(context).add(OpenPostDetailScreen(
+                                postId: loaded.posts[index].post.id,
+                              ));
                             },
                             child: CachedNetworkImage(
                               imageUrl: loaded.posts[index].post.image,

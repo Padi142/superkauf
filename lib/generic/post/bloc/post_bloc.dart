@@ -262,12 +262,8 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     Emitter<PostState> emit,
   ) async {
     final user = await getCurrentUserUseCase.call();
-    if (user == null) {
-      emit(const PostState.error("You are not logged in"));
-      return;
-    }
 
-    final params = CreateReportBody(reportedPost: event.postId, reportedBy: user.id, type: 'post');
+    final params = CreateReportBody(reportedPost: event.postId, reportedBy: user?.id ?? 0, type: 'post');
     final result = await createReportUseCase.call(params);
     result.map(
       success: (value) {

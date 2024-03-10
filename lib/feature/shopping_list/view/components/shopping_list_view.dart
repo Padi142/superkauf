@@ -151,7 +151,9 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
                 user: null,
               ));
 
-              BlocProvider.of<NavigationBloc>(context).add(const OpenPostDetailScreen());
+              BlocProvider.of<NavigationBloc>(context).add(OpenPostDetailScreen(
+                postId: widget.post.post.id,
+              ));
             },
             child: Stack(
               alignment: Alignment.center,

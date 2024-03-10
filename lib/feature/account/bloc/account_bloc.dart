@@ -11,6 +11,7 @@ import 'package:superkauf/generic/post/model/get_posts_body.dart';
 import 'package:superkauf/generic/post/model/models/get_personal_post_response.dart';
 import 'package:superkauf/generic/post/model/pagination_model.dart';
 import 'package:superkauf/generic/post/model/upload_post_image_params.dart';
+import 'package:superkauf/generic/post/model/upload_post_image_result.dart';
 import 'package:superkauf/generic/post/use_case/get_posts_by_user.dart';
 import 'package:superkauf/generic/settings/use_case/get_settings_use_case.dart';
 import 'package:superkauf/generic/user/model/update_user_body.dart';
@@ -31,6 +32,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   final UploadUserImageUseCase uploadUserImageUseCase;
   final GetPostsByUserUseCase getPostsByUserUseCase;
   final GetSettingsUseCase getSettingsUseCase;
+  final UploadUserS3ImageUseCase uploadUserS3ImageUseCase;
 
   AccountBloc({
     required this.accountNavigation,
@@ -41,6 +43,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     required this.uploadUserImageUseCase,
     required this.getPostsByUserUseCase,
     required this.getSettingsUseCase,
+    required this.uploadUserS3ImageUseCase,
   }) : super(const AccountState.loading()) {
     on<GetUser>(_onGetUser);
     on<LogOut>(_onLogOut);
@@ -52,6 +55,8 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     GetUser event,
     Emitter<AccountState> emit,
   ) async {
+    final box = await Hive.openBox('user');
+    box.clear();
     final user = await getCurrentUSeUseCase.call();
 
     if (user == null) {
@@ -113,6 +118,14 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   ) async {
     emit(const AccountState.loading());
 
+    Posthog().capture(
+      eventName: 'change_user_name',
+      properties: {
+        'user_id': event.user.id,
+        'name': event.username,
+      },
+    );
+
     var shouldReturn = false;
 
     final userResult = await getUserByUsernameUseCase.call(event.username.toLowerCase());
@@ -141,6 +154,8 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
       "username": params.username!,
     });
 
+    await Future.delayed(const Duration(milliseconds: 600));
+
     add(const GetUser());
   }
 
@@ -151,6 +166,13 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     final supabase = Supabase.instance.client;
     emit(const AccountState.loading());
 
+    Posthog().capture(
+      eventName: 'change_profile_pic',
+      properties: {
+        'user_id': event.user.id,
+      },
+    );
+
     final image = await pickImageUseCase.call();
     if (image == null) {
       add(const GetUser());
@@ -160,16 +182,22 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     final path = '${event.user.id}/${event.user.username}';
     final params = UploadImageParams(path: path, file: image);
 
-    final result = await uploadUserImageUseCase.call(params);
+    late UploadImageResult result;
+    await Posthog().reloadFeatureFlags();
+    final isEnabled = await Posthog().isFeatureEnabled('use-supabase-storage');
+    if (isEnabled) {
+      result = await uploadUserImageUseCase.call(params);
+    } else {
+      result = await uploadUserS3ImageUseCase.call(params);
+    }
 
-    result.map(
-        success: (success) {},
-        failure: (failure) {
-          emit(const AccountState.error("Something went wrong"));
-          return;
-        });
-
-    final imageLink = supabase.storage.from('profile_pics').getPublicUrl(path);
+    String imageLink = '';
+    result.map(success: (success) {
+      imageLink = success.path;
+    }, failure: (failure) {
+      emit(const AccountState.error("Something went wrong"));
+      return;
+    });
 
     final updateParams = UpdateUserBody(
       id: event.user.id,
@@ -185,6 +213,8 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
           emit(const AccountState.error("Something went wrong"));
           return;
         });
+
+    await Future.delayed(const Duration(milliseconds: 600));
 
     add(const GetUser());
   }

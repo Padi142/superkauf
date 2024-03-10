@@ -77,11 +77,9 @@ class _PostDetailScreenState extends State<SearchScreen> {
             );
             ;
           }, initial: (_) {
-            return SliverToBoxAdapter(
-                child: Center(child: Text('search_page_label'.tr())));
+            return SliverToBoxAdapter(child: Center(child: Text('search_page_label'.tr())));
           }, orElse: () {
-            return const SliverToBoxAdapter(
-                child: Center(child: CircularProgressIndicator()));
+            return const SliverToBoxAdapter(child: Center(child: CircularProgressIndicator()));
           });
         })
       ]);

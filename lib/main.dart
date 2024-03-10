@@ -10,6 +10,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:superkauf/feature/account/account_module.dart';
 import 'package:superkauf/feature/create_post/create_post_module.dart';
@@ -93,23 +94,27 @@ Future<void> main() async {
     return dio;
   }
 
-  App.instance.init(
-    config: config,
-    modules: modules(),
-    registerDependencies: () {
-      GetIt.I.registerFactory<LocaleResource>(
-        () => LocaleResource(appConfig: config),
-      );
-      GetIt.I.registerFactory<PostApi>(() => PostApi(_dio(config.endpoint)));
-      GetIt.I.registerFactory<UserApi>(() => UserApi(_dio(config.endpoint)));
-      GetIt.I.registerFactory<StoreApi>(() => StoreApi(_dio(config.endpoint)));
-      GetIt.I.registerFactory<SavedPostsApi>(() => SavedPostsApi(_dio(config.endpoint)));
-      GetIt.I.registerFactory<CommentApi>(() => CommentApi(_dio(config.endpoint)));
-      GetIt.I.registerFactory<ReportApi>(() => ReportApi(_dio(config.endpoint)));
-      GetIt.I.registerFactory<NotificationApi>(() => NotificationApi(_dio(config.endpoint)));
-      GetIt.I.registerFactory<ShoppingListApi>(() => ShoppingListApi(_dio(config.endpoint)));
-    },
-  );
+  await SentryFlutter.init((options) {
+    options.dsn = dotenv.env['SENTRY_DSN'] ?? '';
+    options.tracesSampleRate = 1.0;
+  },
+      appRunner: () => App.instance.init(
+            config: config,
+            modules: modules(),
+            registerDependencies: () {
+              GetIt.I.registerFactory<LocaleResource>(
+                () => LocaleResource(appConfig: config),
+              );
+              GetIt.I.registerFactory<PostApi>(() => PostApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<UserApi>(() => UserApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<StoreApi>(() => StoreApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<SavedPostsApi>(() => SavedPostsApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<CommentApi>(() => CommentApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<ReportApi>(() => ReportApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<NotificationApi>(() => NotificationApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<ShoppingListApi>(() => ShoppingListApi(_dio(config.endpoint)));
+            },
+          ));
 
   assert(config.languages.isNotEmpty);
 

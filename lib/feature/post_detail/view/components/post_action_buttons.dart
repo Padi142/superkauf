@@ -11,6 +11,7 @@ class PostActionButtons extends StatelessWidget {
   final PostModel post;
   final Function() onDescriptionEdit;
   final bool canEdit;
+
   const PostActionButtons({
     super.key,
     required this.post,
@@ -34,6 +35,18 @@ class PostActionButtons extends StatelessWidget {
                 BlocProvider.of<FeedBloc>(context).add(const ReloadFeed());
                 Navigator.of(context).pop();
               });
+
+              break;
+            }
+
+          case 'report':
+            {
+              BlocProvider.of<PostBloc>(context).add(ReportPost(
+                postId: post.id,
+              ));
+              BlocProvider.of<SnackbarBloc>(context).add(SuccessSnackbar(
+                message: 'post_reported_successfully'.tr(),
+              ));
 
               break;
             }
@@ -156,6 +169,23 @@ class PostActionButtons extends StatelessWidget {
                 width: 8,
               ),
               Text('Save post'),
+            ],
+          ),
+        ));
+
+        list.add(const PopupMenuItem<String>(
+          value: 'report',
+          child: Row(
+            children: [
+              Icon(
+                Icons.report,
+                color: Colors.black,
+                size: 20,
+              ),
+              SizedBox(
+                width: 8,
+              ),
+              Text('Report post'),
             ],
           ),
         ));

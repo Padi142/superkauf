@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:superkauf/feature/feed/bloc/feed_state.dart';
 import 'package:superkauf/generic/post/model/get_posts_body.dart';
 import 'package:superkauf/generic/post/model/models/get_personal_post_response.dart';
@@ -126,6 +127,10 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     }
     var shouldReturn = false;
     loading = true;
+
+    Posthog().capture(eventName: 'feed_load_more', properties: {
+      'page': page,
+    });
     state.maybeMap(
       loaded: (loaded) {
         if (loaded.posts.length % perPage == 0) {

@@ -310,7 +310,9 @@ class PostContent extends StatelessWidget {
       },
       onTap: () {
         BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(post: post.post, user: post.user));
-        BlocProvider.of<NavigationBloc>(context).add(const OpenPostDetailScreen());
+        BlocProvider.of<NavigationBloc>(context).add(OpenPostDetailScreen(
+          postId: post.post.id,
+        ));
       },
       child: Card(
         elevation: 7,

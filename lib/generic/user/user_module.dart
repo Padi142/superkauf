@@ -58,6 +58,10 @@ class UserModule extends AppModule {
     GetIt.I.registerFactory<UploadUserImageUseCase>(
       () => UploadUserImageUseCase(),
     );
+
+    GetIt.I.registerFactory<UploadUserS3ImageUseCase>(
+      () => UploadUserS3ImageUseCase(),
+    );
   }
 
   @override

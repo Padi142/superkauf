@@ -143,7 +143,9 @@ class _StoreListItemState extends State<StoreListItem> {
                 user: widget.post.user,
               ));
 
-              BlocProvider.of<NavigationBloc>(context).add(const OpenPostDetailScreen());
+              BlocProvider.of<NavigationBloc>(context).add(OpenPostDetailScreen(
+                postId: widget.post.post.id,
+              ));
             },
             child: Material(
               elevation: 4, // Adjust the elevation as needed

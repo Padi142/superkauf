@@ -186,6 +186,12 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
     if (loading) {
       return;
     }
+    Posthog().capture(eventName: 'discover_load_more', properties: {
+      'sortType': sortBy.name,
+      'timeRange': timeRange.name,
+      'storeName': selectedStore?.name ?? '',
+    });
+
     var shouldReturn = false;
     loading = true;
     state.maybeMap(
@@ -203,6 +209,7 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
     }
     page++;
     add(const GetTopPosts());
+
     //
     // final pepici = ['Jarda', 'Stanislav', 'Ondřej', 'František'];
     //

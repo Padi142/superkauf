@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:superkauf/generic/widget/app_button.dart';
 import 'package:superkauf/library/app.dart';
 
@@ -47,6 +48,7 @@ class _StoreCardPickerState extends State<StoreCardPicker> {
                           cardRequired = false;
                         });
                         widget.onChange(false);
+                        Posthog().capture(eventName: 'create_post_store_picked');
                       }),
                   const SizedBox(
                     width: 5,

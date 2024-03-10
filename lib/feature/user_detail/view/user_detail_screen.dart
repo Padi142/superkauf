@@ -106,7 +106,9 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                     user: loaded.posts[index].user,
                                   ));
 
-                                  BlocProvider.of<NavigationBloc>(context).add(const OpenPostDetailScreen());
+                                  BlocProvider.of<NavigationBloc>(context).add(OpenPostDetailScreen(
+                                    postId: loaded.posts[index].post.id,
+                                  ));
                                 },
                                 child: CachedNetworkImage(
                                   imageUrl: loaded.posts[index].post.image,

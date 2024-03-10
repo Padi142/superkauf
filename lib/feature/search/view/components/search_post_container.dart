@@ -20,7 +20,9 @@ class SearchPostContainer extends StatelessWidget {
         BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(
           postId: post.id,
         ));
-        BlocProvider.of<NavigationBloc>(context).add(const OpenPostDetailScreen());
+        BlocProvider.of<NavigationBloc>(context).add(OpenPostDetailScreen(
+          postId: post.id,
+        ));
       },
       child: Card(
         elevation: 7,

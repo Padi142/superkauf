@@ -70,8 +70,7 @@ abstract class PostApi {
     @Body() required Map<String, dynamic> body,
   });
 
-  @GET(
-      '/feed/top?offset={offset}&per_page={per_page}&userId={userId}&timeRange={timeRange}&country={country}&store={store}')
+  @GET('/feed/top?offset={offset}&per_page={per_page}&userId={userId}&timeRange={timeRange}&country={country}&store={store}')
   Future<GetPaginatedPostsResponseModel> getTopPosts({
     @Path() required int per_page,
     @Path() required int offset,

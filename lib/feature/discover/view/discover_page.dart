@@ -38,12 +38,8 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
 
   void _loadMoreListener() {
     scrollToRefreshListener(controller: _scrollController);
-    if (_scrollController.position.pixels >
-        _scrollController.position.maxScrollExtent - 300) {
-      if ((context.read<DiscoverBloc>().state is Loaded) &&
-          ((context.read<DiscoverBloc>().state as Loaded).isLoading ||
-              (context.read<DiscoverBloc>().state as Loaded).canLoadMore ==
-                  false)) {
+    if (_scrollController.position.pixels > _scrollController.position.maxScrollExtent - 300) {
+      if ((context.read<DiscoverBloc>().state is Loaded) && ((context.read<DiscoverBloc>().state as Loaded).isLoading || (context.read<DiscoverBloc>().state as Loaded).canLoadMore == false)) {
         return;
       }
       print('loading more');
@@ -90,9 +86,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              Text('no_posts_for_timerange_2'.tr(),
-                                  style:
-                                      Theme.of(context).textTheme.titleSmall),
+                              Text('no_posts_for_timerange_2'.tr(), style: Theme.of(context).textTheme.titleSmall),
                             ],
                           ))
                         ],
@@ -116,10 +110,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                             controller: _scrollController,
                             itemBuilder: (context, index) {
                               return Padding(
-                                padding: EdgeInsets.only(
-                                    bottom: loaded.posts.length == index + 1
-                                        ? 100
-                                        : 0),
+                                padding: EdgeInsets.only(bottom: loaded.posts.length == index + 1 ? 100 : 0),
                                 child: PersonalFeedPostContainer(
                                   post: loaded.posts[index],
                                   originScreen: ScreenPath.discoverScreen,

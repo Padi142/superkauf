@@ -97,6 +97,8 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
       return;
     }
 
+    Posthog().capture(eventName: 'create_post_image_picked');
+
     emit(CreatePostState.imagePicked(image));
   }
 
@@ -111,8 +113,9 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     final params = UploadImageParams(file: event.image, path: userID.toString());
 
     late UploadImageResult result;
-
-    if (await Posthog().isFeatureEnabled('use-supabase-storage')) {
+    await Posthog().reloadFeatureFlags();
+    final isEnabled = await Posthog().isFeatureEnabled('use-supabase-storage');
+    if (isEnabled) {
       result = await uploadPostImageUseCase.call(params);
     } else {
       result = await uploadS3PostImageUseCase.call(params);
