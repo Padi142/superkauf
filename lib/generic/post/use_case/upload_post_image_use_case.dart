@@ -10,7 +10,8 @@ import 'package:superkauf/generic/post/model/upload_post_image_params.dart';
 import 'package:superkauf/generic/post/model/upload_post_image_result.dart';
 import 'package:superkauf/library/use_case.dart';
 
-class UploadPostImageUseCase extends UseCase<UploadImageResult, UploadImageParams> {
+class UploadPostImageUseCase
+    extends UseCase<UploadImageResult, UploadImageParams> {
   UploadPostImageUseCase();
 
   @override
@@ -27,7 +28,8 @@ class UploadPostImageUseCase extends UseCase<UploadImageResult, UploadImageParam
       );
 
       if (result == null) {
-        return const UploadImageResult.failure('Upload failed, could not compress image');
+        return const UploadImageResult.failure(
+            'Upload failed, could not compress image');
       }
 
       final hash = md5.convert(await result.readAsBytes());
@@ -36,21 +38,25 @@ class UploadPostImageUseCase extends UseCase<UploadImageResult, UploadImageParam
 
       final supabase = Supabase.instance.client;
 
-      final response = await supabase.storage.from('posts').upload(newPath, File(result.path), fileOptions: const FileOptions(upsert: true));
+      final response = await supabase.storage.from('posts').upload(
+          newPath, File(result.path),
+          fileOptions: const FileOptions(upsert: true));
 
       if (response == "") {
         return const UploadImageResult.failure('Upload failed');
       }
-      return UploadImageResult.success(supabase.storage.from('posts').getPublicUrl(
-            newPath,
-          ));
+      return UploadImageResult.success(
+          supabase.storage.from('posts').getPublicUrl(
+                newPath,
+              ));
     } catch (e) {
       return UploadImageResult.failure('Upload failed: $e');
     }
   }
 }
 
-class UploadS3PostImageUseCase extends UseCase<UploadImageResult, UploadImageParams> {
+class UploadS3PostImageUseCase
+    extends UseCase<UploadImageResult, UploadImageParams> {
   UploadS3PostImageUseCase();
 
   @override
@@ -67,21 +73,24 @@ class UploadS3PostImageUseCase extends UseCase<UploadImageResult, UploadImagePar
       );
 
       if (result == null) {
-        return const UploadImageResult.failure('Upload failed, could not compress image');
+        return const UploadImageResult.failure(
+            'Upload failed, could not compress image');
       }
 
       /// Load the credentials from the JSON key file.
-      String data = await rootBundle.loadString('assets/superkauf-account.json');
+      String data =
+          await rootBundle.loadString('assets/superkauf-account.json');
 
       final credentials = ServiceAccountCredentials.fromJson(data);
 
-      final httpClient = await clientViaServiceAccount(credentials, [StorageApi.devstorageReadWriteScope]);
+      final httpClient = await clientViaServiceAccount(
+          credentials, [StorageApi.devstorageReadWriteScope]);
 
       final storage = StorageApi(httpClient);
 
       final hash = md5.convert(await result.readAsBytes());
 
-      final newPath = 'posts/${params.path}/$hash.png';
+      final newPath = 'posts/${params.path}/$hash.webp';
 
       final fileContent = await params.file.readAsBytes();
 
@@ -93,6 +102,7 @@ class UploadS3PostImageUseCase extends UseCase<UploadImageResult, UploadImagePar
         uploadMedia: Media(
           Stream<List<int>>.fromIterable([fileContent]),
           fileContent.length,
+          contentType: 'image/webp',
         ),
       );
       if (resp.mediaLink != null) {

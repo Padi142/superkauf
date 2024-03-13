@@ -190,6 +190,7 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
       'sortType': sortBy.name,
       'timeRange': timeRange.name,
       'storeName': selectedStore?.name ?? '',
+      'page': page,
     });
 
     var shouldReturn = false;

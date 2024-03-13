@@ -58,9 +58,6 @@ class CreatePostModule extends AppModule {
     routes[CreatePostScreen.name] = (context) {
       return MultiBlocProvider(
         providers: [
-          BlocProvider<CreatePostBloc>.value(
-            value: GetIt.I.get<CreatePostBloc>(),
-          ),
           BlocProvider<StoreBloc>.value(
             value: GetIt.I.get<StoreBloc>(),
           ),
