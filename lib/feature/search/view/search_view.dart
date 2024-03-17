@@ -1,3 +1,4 @@
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,7 +52,9 @@ class _PostDetailScreenState extends State<SearchScreen> {
                   suffixWidget: const Icon(Icons.search),
                   radius: 20,
                   onChanged: (value) {
-                    context.read<SearchBloc>().add(SearchPosts(input: value));
+                    EasyDebounce.debounce('search-debouncer', const Duration(milliseconds: 300), () {
+                      context.read<SearchBloc>().add(SearchPosts(input: value));
+                    });
                   },
                   context: context,
                 ),

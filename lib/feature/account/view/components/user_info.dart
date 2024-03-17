@@ -4,22 +4,29 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:superkauf/feature/account/bloc/account_bloc.dart';
 import 'package:superkauf/feature/account/view/components/account_actions_button.dart';
 import 'package:superkauf/feature/account/view/components/change_username_component.dart';
+import 'package:superkauf/generic/user/components/instagram_button.dart';
 import 'package:superkauf/generic/user/model/user_model.dart';
 import 'package:superkauf/library/app.dart';
 
 class AccountInfoWidget extends StatelessWidget {
   final UserModel user;
   final Function() onUsernameChange;
+  final Function() onChangeInstagram;
   final Function(String username) onUsernameChaneDone;
+  final Function(String username) onInstagramChangeDone;
   final bool changeUsername;
+  final bool changeInstagram;
   final BoxConstraints constraints;
 
   const AccountInfoWidget({
     super.key,
     required this.user,
     required this.onUsernameChange,
+    required this.onChangeInstagram,
+    required this.onInstagramChangeDone,
     required this.onUsernameChaneDone,
     required this.changeUsername,
+    required this.changeInstagram,
     required this.constraints,
   });
 
@@ -116,6 +123,16 @@ class AccountInfoWidget extends StatelessWidget {
                     'Karma: ${user.karma}',
                     style: App.appTheme.textTheme.titleMedium,
                   ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  changeInstagram
+                      ? ChangeInstagramField(
+                          onDone: onInstagramChangeDone,
+                        )
+                      : InstagramButton(
+                          user: user,
+                        ),
                 ],
               ),
             ),
@@ -126,6 +143,9 @@ class AccountInfoWidget extends StatelessWidget {
             child: AccountActionsButton(
               onChangeUsername: () {
                 onUsernameChange();
+              },
+              onChangeInstagram: () {
+                onChangeInstagram();
               },
             ),
           ),

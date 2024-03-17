@@ -4,11 +4,13 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:superkauf/feature/create_post/bloc/create_post_state.dart';
 import 'package:superkauf/feature/create_post/use_case/create_post_navigation.dart';
 import 'package:superkauf/feature/create_post/use_case/pick_image_camera_use_case.dart';
 import 'package:superkauf/feature/create_post/use_case/pick_image_use_case.dart';
+import 'package:superkauf/generic/label/model/create_label_body.dart';
+import 'package:superkauf/generic/label/use_case/create_label_use_case.dart';
+import 'package:superkauf/generic/label/use_case/get_labels_use_case.dart';
 import 'package:superkauf/generic/post/model/create_post_model.dart';
 import 'package:superkauf/generic/post/model/post_model.dart';
 import 'package:superkauf/generic/post/model/update_post_image_body.dart';
@@ -17,6 +19,7 @@ import 'package:superkauf/generic/post/model/upload_post_image_result.dart';
 import 'package:superkauf/generic/post/use_case/create_post_use_case.dart';
 import 'package:superkauf/generic/post/use_case/update_post_image_use_case.dart';
 import 'package:superkauf/generic/post/use_case/upload_post_image_use_case.dart';
+import 'package:superkauf/generic/settings/use_case/get_settings_use_case.dart';
 import 'package:superkauf/generic/store/model/store_model.dart';
 import 'package:superkauf/generic/store/use_case/get_stores_use_case.dart';
 import 'package:superkauf/generic/user/use_case/get_current_user_use_case.dart';
@@ -33,6 +36,9 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
   final GetCurrentUserUseCase getCurrentUserUseCase;
   final UpdatePostImageUseCase updatePostImageUseCase;
   final UploadS3PostImageUseCase uploadS3PostImageUseCase;
+  final GetLabelsUseCase getLabelsUseCase;
+  final CreateLabelUseCase createLabelUseCase;
+  final GetSettingsUseCase getSettingsUseCase;
 
   CreatePostBloc({
     required this.createPostUseCase,
@@ -44,6 +50,9 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     required this.getCurrentUserUseCase,
     required this.updatePostImageUseCase,
     required this.uploadS3PostImageUseCase,
+    required this.getLabelsUseCase,
+    required this.createLabelUseCase,
+    required this.getSettingsUseCase,
   }) : super(const CreatePostState.loading()) {
     on<UploadImage>(_onUploadImage);
     on<PickImage>(_onPickImage);
@@ -106,8 +115,6 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     UploadImage event,
     Emitter<CreatePostState> emit,
   ) async {
-    final supabase = Supabase.instance.client;
-
     emit(const CreatePostState.uploading());
 
     final params = UploadImageParams(file: event.image, path: userID.toString());
@@ -140,7 +147,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
 
     imageUpdateResult.map(
       success: (success) async {
-        emit(const CreatePostState.success());
+        emit(CreatePostState.success(event.postId));
 
         createPostNavigation.goBack();
       },
@@ -157,6 +164,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     emit(const CreatePostState.creating());
 
     final user = await getCurrentUserUseCase.call();
+    final settings = await getSettingsUseCase.call();
 
     if (user == null) {
       emit(const CreatePostState.error('User not found, are you logged in?'));
@@ -172,9 +180,20 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
       requiresStoreCard: event.cardRequired,
       author: userID.toString(),
       validUntil: event.validUntil,
+      country: settings.country.code,
     );
 
+    final labelCalls = event.labels.map((it) {
+      final params = CreateLabelBody(
+        label: it,
+        user: userID,
+        post: 0,
+      );
+      return createLabelUseCase.call(params);
+    }).toList();
+
     final result = await createPostUseCase.call(params);
+    await Future.wait(labelCalls);
 
     PostModel? post;
     result.map(

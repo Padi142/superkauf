@@ -4,10 +4,11 @@ abstract class NavigationEvent extends Equatable {
   const NavigationEvent();
 }
 
-class OpenMyChannelScreen extends NavigationEvent {
-  final int? index;
-
-  const OpenMyChannelScreen(this.index);
+class OpenSettingsScreen extends NavigationEvent {
+  final bool shouldReplace;
+  const OpenSettingsScreen({
+    this.shouldReplace = false,
+  });
 
   @override
   List<Object?> get props => [];

@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:superkauf/generic/settings/use_case/get_settings_use_case.dart';
+import 'package:superkauf/generic/settings/use_case/update_settings_use_case.dart';
 import 'package:superkauf/library/app_module.dart';
 
 class SettingsModule extends AppModule {
@@ -19,6 +20,10 @@ class SettingsModule extends AppModule {
   void registerUseCase() {
     GetIt.I.registerFactory<GetSettingsUseCase>(
       () => GetSettingsUseCase(),
+    );
+
+    GetIt.I.registerFactory<UpdateSettingsUseCase>(
+      () => UpdateSettingsUseCase(),
     );
   }
 

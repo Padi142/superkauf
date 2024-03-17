@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:hive/hive.dart';
+import 'package:superkauf/generic/countries/model/country_model.dart';
 import 'package:superkauf/generic/settings/model/settings_model.dart';
 import 'package:superkauf/library/use_case.dart';
 
@@ -19,7 +20,9 @@ class GetSettingsUseCase extends UnitUseCase<SettingsModel> {
       }
     }
 
-    const defaultSettings = SettingsModel(country: 'cs');
+    const defaultSettings = SettingsModel(
+      country: CountryModel(code: 'cs', name: 'Czechia', currency: 'Kč'),
+    );
 
     await box.put('settings', json.encode(defaultSettings.toJson()));
 

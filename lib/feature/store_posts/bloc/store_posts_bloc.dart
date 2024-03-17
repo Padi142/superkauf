@@ -46,7 +46,7 @@ class StorePostsBloc extends Bloc<StorePostsEvent, StorePostsState> {
 
     final params = GetStorePostsParams(
       storeId: event.storeId,
-      country: settings.country,
+      country: settings.country.code,
       pagination: GetPostsPaginationModel(
         offset: page * perPage,
         perPage: perPage,

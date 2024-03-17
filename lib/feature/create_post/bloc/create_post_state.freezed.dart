@@ -24,7 +24,7 @@ mixin _$CreatePostState {
     required TResult Function() uploading,
     required TResult Function() creating,
     required TResult Function(String image) imageUploaded,
-    required TResult Function() success,
+    required TResult Function(int postId) success,
     required TResult Function(String error) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ mixin _$CreatePostState {
     TResult? Function()? uploading,
     TResult? Function()? creating,
     TResult? Function(String image)? imageUploaded,
-    TResult? Function()? success,
+    TResult? Function(int postId)? success,
     TResult? Function(String error)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -48,7 +48,7 @@ mixin _$CreatePostState {
     TResult Function()? uploading,
     TResult Function()? creating,
     TResult Function(String image)? imageUploaded,
-    TResult Function()? success,
+    TResult Function(int postId)? success,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) =>
@@ -144,7 +144,7 @@ class _$LoadingImpl implements Loading {
     required TResult Function() uploading,
     required TResult Function() creating,
     required TResult Function(String image) imageUploaded,
-    required TResult Function() success,
+    required TResult Function(int postId) success,
     required TResult Function(String error) error,
   }) {
     return loading();
@@ -159,7 +159,7 @@ class _$LoadingImpl implements Loading {
     TResult? Function()? uploading,
     TResult? Function()? creating,
     TResult? Function(String image)? imageUploaded,
-    TResult? Function()? success,
+    TResult? Function(int postId)? success,
     TResult? Function(String error)? error,
   }) {
     return loading?.call();
@@ -174,7 +174,7 @@ class _$LoadingImpl implements Loading {
     TResult Function()? uploading,
     TResult Function()? creating,
     TResult Function(String image)? imageUploaded,
-    TResult Function()? success,
+    TResult Function(int postId)? success,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -309,7 +309,7 @@ class _$InitialImpl implements Initial {
     required TResult Function() uploading,
     required TResult Function() creating,
     required TResult Function(String image) imageUploaded,
-    required TResult Function() success,
+    required TResult Function(int postId) success,
     required TResult Function(String error) error,
   }) {
     return initial(canUploadFiles, requiredKarma);
@@ -324,7 +324,7 @@ class _$InitialImpl implements Initial {
     TResult? Function()? uploading,
     TResult? Function()? creating,
     TResult? Function(String image)? imageUploaded,
-    TResult? Function()? success,
+    TResult? Function(int postId)? success,
     TResult? Function(String error)? error,
   }) {
     return initial?.call(canUploadFiles, requiredKarma);
@@ -339,7 +339,7 @@ class _$InitialImpl implements Initial {
     TResult Function()? uploading,
     TResult Function()? creating,
     TResult Function(String image)? imageUploaded,
-    TResult Function()? success,
+    TResult Function(int postId)? success,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -468,7 +468,7 @@ class _$ImagePickedImpl implements ImagePicked {
     required TResult Function() uploading,
     required TResult Function() creating,
     required TResult Function(String image) imageUploaded,
-    required TResult Function() success,
+    required TResult Function(int postId) success,
     required TResult Function(String error) error,
   }) {
     return imagePicked(image);
@@ -483,7 +483,7 @@ class _$ImagePickedImpl implements ImagePicked {
     TResult? Function()? uploading,
     TResult? Function()? creating,
     TResult? Function(String image)? imageUploaded,
-    TResult? Function()? success,
+    TResult? Function(int postId)? success,
     TResult? Function(String error)? error,
   }) {
     return imagePicked?.call(image);
@@ -498,7 +498,7 @@ class _$ImagePickedImpl implements ImagePicked {
     TResult Function()? uploading,
     TResult Function()? creating,
     TResult Function(String image)? imageUploaded,
-    TResult Function()? success,
+    TResult Function(int postId)? success,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -603,7 +603,7 @@ class _$UploadingImpl implements Uploading {
     required TResult Function() uploading,
     required TResult Function() creating,
     required TResult Function(String image) imageUploaded,
-    required TResult Function() success,
+    required TResult Function(int postId) success,
     required TResult Function(String error) error,
   }) {
     return uploading();
@@ -618,7 +618,7 @@ class _$UploadingImpl implements Uploading {
     TResult? Function()? uploading,
     TResult? Function()? creating,
     TResult? Function(String image)? imageUploaded,
-    TResult? Function()? success,
+    TResult? Function(int postId)? success,
     TResult? Function(String error)? error,
   }) {
     return uploading?.call();
@@ -633,7 +633,7 @@ class _$UploadingImpl implements Uploading {
     TResult Function()? uploading,
     TResult Function()? creating,
     TResult Function(String image)? imageUploaded,
-    TResult Function()? success,
+    TResult Function(int postId)? success,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -734,7 +734,7 @@ class _$CreatingImpl implements Creating {
     required TResult Function() uploading,
     required TResult Function() creating,
     required TResult Function(String image) imageUploaded,
-    required TResult Function() success,
+    required TResult Function(int postId) success,
     required TResult Function(String error) error,
   }) {
     return creating();
@@ -749,7 +749,7 @@ class _$CreatingImpl implements Creating {
     TResult? Function()? uploading,
     TResult? Function()? creating,
     TResult? Function(String image)? imageUploaded,
-    TResult? Function()? success,
+    TResult? Function(int postId)? success,
     TResult? Function(String error)? error,
   }) {
     return creating?.call();
@@ -764,7 +764,7 @@ class _$CreatingImpl implements Creating {
     TResult Function()? uploading,
     TResult Function()? creating,
     TResult Function(String image)? imageUploaded,
-    TResult Function()? success,
+    TResult Function(int postId)? success,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -888,7 +888,7 @@ class _$ImageUploadedImpl implements ImageUploaded {
     required TResult Function() uploading,
     required TResult Function() creating,
     required TResult Function(String image) imageUploaded,
-    required TResult Function() success,
+    required TResult Function(int postId) success,
     required TResult Function(String error) error,
   }) {
     return imageUploaded(image);
@@ -903,7 +903,7 @@ class _$ImageUploadedImpl implements ImageUploaded {
     TResult? Function()? uploading,
     TResult? Function()? creating,
     TResult? Function(String image)? imageUploaded,
-    TResult? Function()? success,
+    TResult? Function(int postId)? success,
     TResult? Function(String error)? error,
   }) {
     return imageUploaded?.call(image);
@@ -918,7 +918,7 @@ class _$ImageUploadedImpl implements ImageUploaded {
     TResult Function()? uploading,
     TResult Function()? creating,
     TResult Function(String image)? imageUploaded,
-    TResult Function()? success,
+    TResult Function(int postId)? success,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -989,30 +989,53 @@ abstract class ImageUploaded implements CreatePostState {
 /// @nodoc
 abstract class _$$SuccessImplCopyWith<$Res> {
   factory _$$SuccessImplCopyWith(_$SuccessImpl value, $Res Function(_$SuccessImpl) then) = __$$SuccessImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int postId});
 }
 
 /// @nodoc
 class __$$SuccessImplCopyWithImpl<$Res> extends _$CreatePostStateCopyWithImpl<$Res, _$SuccessImpl> implements _$$SuccessImplCopyWith<$Res> {
   __$$SuccessImplCopyWithImpl(_$SuccessImpl _value, $Res Function(_$SuccessImpl) _then) : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? postId = null,
+  }) {
+    return _then(_$SuccessImpl(
+      null == postId
+          ? _value.postId
+          : postId // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$SuccessImpl implements Success {
-  const _$SuccessImpl();
+  const _$SuccessImpl(this.postId);
+
+  @override
+  final int postId;
 
   @override
   String toString() {
-    return 'CreatePostState.success()';
+    return 'CreatePostState.success(postId: $postId)';
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$SuccessImpl);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$SuccessImpl && (identical(other.postId, postId) || other.postId == postId));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, postId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith => __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1023,10 +1046,10 @@ class _$SuccessImpl implements Success {
     required TResult Function() uploading,
     required TResult Function() creating,
     required TResult Function(String image) imageUploaded,
-    required TResult Function() success,
+    required TResult Function(int postId) success,
     required TResult Function(String error) error,
   }) {
-    return success();
+    return success(postId);
   }
 
   @override
@@ -1038,10 +1061,10 @@ class _$SuccessImpl implements Success {
     TResult? Function()? uploading,
     TResult? Function()? creating,
     TResult? Function(String image)? imageUploaded,
-    TResult? Function()? success,
+    TResult? Function(int postId)? success,
     TResult? Function(String error)? error,
   }) {
-    return success?.call();
+    return success?.call(postId);
   }
 
   @override
@@ -1053,12 +1076,12 @@ class _$SuccessImpl implements Success {
     TResult Function()? uploading,
     TResult Function()? creating,
     TResult Function(String image)? imageUploaded,
-    TResult Function()? success,
+    TResult Function(int postId)? success,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success();
+      return success(postId);
     }
     return orElse();
   }
@@ -1114,7 +1137,11 @@ class _$SuccessImpl implements Success {
 }
 
 abstract class Success implements CreatePostState {
-  const factory Success() = _$SuccessImpl;
+  const factory Success(final int postId) = _$SuccessImpl;
+
+  int get postId;
+  @JsonKey(ignore: true)
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1177,7 +1204,7 @@ class _$ErrorImpl implements Error {
     required TResult Function() uploading,
     required TResult Function() creating,
     required TResult Function(String image) imageUploaded,
-    required TResult Function() success,
+    required TResult Function(int postId) success,
     required TResult Function(String error) error,
   }) {
     return error(this.error);
@@ -1192,7 +1219,7 @@ class _$ErrorImpl implements Error {
     TResult? Function()? uploading,
     TResult? Function()? creating,
     TResult? Function(String image)? imageUploaded,
-    TResult? Function()? success,
+    TResult? Function(int postId)? success,
     TResult? Function(String error)? error,
   }) {
     return error?.call(this.error);
@@ -1207,7 +1234,7 @@ class _$ErrorImpl implements Error {
     TResult Function()? uploading,
     TResult Function()? creating,
     TResult Function(String image)? imageUploaded,
-    TResult Function()? success,
+    TResult Function(int postId)? success,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {

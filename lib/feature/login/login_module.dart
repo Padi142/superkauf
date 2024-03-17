@@ -9,7 +9,7 @@ import 'package:superkauf/feature/login/use_case/google_login.dart';
 import 'package:superkauf/feature/login/use_case/login_navigation.dart';
 import 'package:superkauf/feature/login/use_case/spotify_login.dart';
 import 'package:superkauf/feature/login/view/login_screen.dart';
-import 'package:superkauf/feature/my_channel/bloc/my_channel_bloc.dart';
+import 'package:superkauf/generic/countries/bloc/countries_bloc.dart';
 
 import '../../generic/user/use_case/create_user_use_case.dart';
 import '../../library/app_module.dart';
@@ -73,8 +73,8 @@ class LoginModule extends AppModule {
           BlocProvider<LoginBloc>.value(
             value: GetIt.I.get<LoginBloc>(),
           ),
-          BlocProvider<MyChannelBloc>.value(
-            value: GetIt.I.get<MyChannelBloc>(),
+          BlocProvider<CountriesBloc>.value(
+            value: GetIt.I.get<CountriesBloc>(),
           ),
         ],
         child: GetIt.I.get<LoginScreen>(),

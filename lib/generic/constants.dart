@@ -2,7 +2,7 @@ class ScreenPath {
   static const String initScreen = '/init';
   static const String homeScreen = '/home';
   static const String profileScreen = '/profile';
-  static const String myChannelScreen = '/myChannel';
+  static const String settingsScreen = '/settings_screen';
   static const String feedScreen = '/feed';
   static const String discoverScreen = '/discover';
   static const String storesScreen = '/stores';

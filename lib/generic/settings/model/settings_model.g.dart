@@ -7,9 +7,9 @@ part of 'settings_model.dart';
 // **************************************************************************
 
 SettingsModel _$SettingsModelFromJson(Map<String, dynamic> json) => SettingsModel(
-      country: json['country'] as String,
+      country: CountryModel.fromJson(json['country'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$SettingsModelToJson(SettingsModel instance) => <String, dynamic>{
-      'country': instance.country,
+      'country': instance.country.toJson(),
     };

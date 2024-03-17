@@ -13,18 +13,21 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:superkauf/feature/account/account_module.dart';
+import 'package:superkauf/feature/account/bloc/account_bloc.dart';
+import 'package:superkauf/feature/create_post/bloc/create_post_bloc.dart';
 import 'package:superkauf/feature/create_post/create_post_module.dart';
 import 'package:superkauf/feature/discover/discover_module.dart';
+import 'package:superkauf/feature/feed/bloc/feed_bloc.dart';
 import 'package:superkauf/feature/feed/feed_module.dart';
 import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
 import 'package:superkauf/feature/home/home_module.dart';
 import 'package:superkauf/feature/init/init_module.dart';
 import 'package:superkauf/feature/login/login_module.dart';
-import 'package:superkauf/feature/my_channel/my_channel_module.dart';
 import 'package:superkauf/feature/notification_page/notifications_page_module.dart';
 import 'package:superkauf/feature/post_detail/bloc/post_detail_bloc.dart';
 import 'package:superkauf/feature/post_detail/post_detail_module.dart';
 import 'package:superkauf/feature/search/search_module.dart';
+import 'package:superkauf/feature/settings/settings_module.dart';
 import 'package:superkauf/feature/shopping_list/shopping_list_module.dart';
 import 'package:superkauf/feature/snackbar/bloc/snackbar_bloc.dart';
 import 'package:superkauf/feature/snackbar/snackbar_module.dart';
@@ -32,6 +35,8 @@ import 'package:superkauf/feature/store_posts/store_posts_module.dart';
 import 'package:superkauf/feature/user_detail/bloc/user_detail_bloc.dart';
 import 'package:superkauf/feature/user_detail/user_detail_module.dart';
 import 'package:superkauf/generic/api/comment_api.dart';
+import 'package:superkauf/generic/api/countries_api.dart';
+import 'package:superkauf/generic/api/label_api.dart';
 import 'package:superkauf/generic/api/notification_api.dart';
 import 'package:superkauf/generic/api/post_api.dart';
 import 'package:superkauf/generic/api/report_api.dart';
@@ -41,12 +46,16 @@ import 'package:superkauf/generic/api/store_api.dart';
 import 'package:superkauf/generic/api/user_api.dart';
 import 'package:superkauf/generic/comments/comments_module.dart';
 import 'package:superkauf/generic/constants.dart';
+import 'package:superkauf/generic/countries/countries_module.dart';
+import 'package:superkauf/generic/label/label_module.dart';
 import 'package:superkauf/generic/locale/locale_resource.dart';
 import 'package:superkauf/generic/notifications/notification_module.dart';
 import 'package:superkauf/generic/post/posts_module.dart';
 import 'package:superkauf/generic/report/report_module.dart';
 import 'package:superkauf/generic/saved_posts/saved_posts_module.dart';
+import 'package:superkauf/generic/settings/model/settings_model.dart';
 import 'package:superkauf/generic/settings/settings_module.dart';
+import 'package:superkauf/generic/settings/use_case/get_settings_use_case.dart';
 import 'package:superkauf/generic/shopping_list/shopping_list_module.dart';
 import 'package:superkauf/generic/store/store_module.dart';
 import 'package:superkauf/generic/user/user_module.dart';
@@ -75,7 +84,10 @@ Future<void> main() async {
   OneSignal.initialize(dotenv.env['ONESIGNAL_KEY'] ?? '');
   OneSignal.Notifications.requestPermission(true);
 
-  final AppConfig config = appConfig();
+  final getSettingsUseCase = GetSettingsUseCase();
+  final settings = await getSettingsUseCase.call();
+
+  final AppConfig config = appConfig(settings);
 
   GetIt.I.allowReassignment = true;
 
@@ -96,7 +108,8 @@ Future<void> main() async {
 
   await SentryFlutter.init((options) {
     options.dsn = dotenv.env['SENTRY_DSN'] ?? '';
-    options.tracesSampleRate = 1.0;
+    options.tracesSampleRate = 0.2;
+    options.autoAppStart = true;
   },
       appRunner: () => App.instance.init(
             config: config,
@@ -113,6 +126,8 @@ Future<void> main() async {
               GetIt.I.registerFactory<ReportApi>(() => ReportApi(_dio(config.endpoint)));
               GetIt.I.registerFactory<NotificationApi>(() => NotificationApi(_dio(config.endpoint)));
               GetIt.I.registerFactory<ShoppingListApi>(() => ShoppingListApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<LabelApi>(() => LabelApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<CountriesApi>(() => CountriesApi(_dio(config.endpoint)));
             },
           ));
 
@@ -121,10 +136,11 @@ Future<void> main() async {
   App.instance.run(const MainWidget());
 }
 
-AppConfig appConfig() {
+AppConfig appConfig(SettingsModel settings) {
   return AppConfig(
     endpoint: dotenv.env['API_URL'] ?? '',
     languages: ['en'],
+    settings: settings,
     theme: MainTheme(),
   );
 }
@@ -139,7 +155,6 @@ List<AppModule> modules() {
     LoginModule(),
     AccountModule(),
     CreatePostModule(),
-    MyChannelModule(),
     UserModule(),
     PostDetailModule(),
     StoreModule(),
@@ -155,6 +170,10 @@ List<AppModule> modules() {
     DiscoverModule(),
     ShoppingListModule(),
     SearchModule(),
+    LabelModule(),
+    SettingsModule(),
+    CountriesModule(),
+    UserSettingsModule()
   ];
 }
 
@@ -237,6 +256,15 @@ class MainWidget extends StatelessWidget {
         ),
         BlocProvider<SnackbarBloc>.value(
           value: GetIt.I.get<SnackbarBloc>(),
+        ),
+        BlocProvider<CreatePostBloc>.value(
+          value: GetIt.I.get<CreatePostBloc>(),
+        ),
+        BlocProvider<FeedBloc>.value(
+          value: GetIt.I.get<FeedBloc>(),
+        ),
+        BlocProvider<AccountBloc>.value(
+          value: GetIt.I.get<AccountBloc>(),
         ),
       ],
       child: MaterialApp(

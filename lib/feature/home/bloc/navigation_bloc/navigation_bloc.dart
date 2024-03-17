@@ -14,7 +14,7 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
   NavigationBloc() : super(const NavigationStateLoaded(bottomNavIndex: 0, screenName: ScreenPath.feedScreen)) {
     on<OpenStoresScreen>(_onOpenStoresScreen);
     on<OpenDiscoverScreen>(_onOpenDiscoverScreen);
-    on<OpenMyChannelScreen>(_onOpenMyChannelScreen);
+    on<OpenSettingsScreen>(_onOpenSettingsScreen);
     on<OpenFeedScreen>(_onOpenFeedScreen);
     on<OpenProfileScreen>(_onOpenProfileScreen);
     on<OpenShoppingListScreen>(_onOpenShoppingListScreen);
@@ -67,15 +67,15 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     );
   }
 
-  Future<void> _onOpenMyChannelScreen(
-    OpenMyChannelScreen event,
+  Future<void> _onOpenSettingsScreen(
+    OpenSettingsScreen event,
     Emitter<NavigationState> emit,
   ) async {
     bottomBarIndex = 3;
-    emit(NavigationStateLoaded(bottomNavIndex: event.index != null ? event.index! : bottomBarIndex, screenName: ScreenPath.myChannelScreen));
+    AppNavigation().push(ScreenPath.settingsScreen);
 
     Posthog().screen(
-      screenName: ScreenPath.myChannelScreen,
+      screenName: ScreenPath.settingsScreen,
     );
   }
 

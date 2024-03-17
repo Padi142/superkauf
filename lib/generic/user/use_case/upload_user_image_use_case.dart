@@ -9,8 +9,7 @@ import 'package:superkauf/generic/post/model/upload_post_image_params.dart';
 import 'package:superkauf/generic/post/model/upload_post_image_result.dart';
 import 'package:superkauf/library/use_case.dart';
 
-class UploadUserImageUseCase
-    extends UseCase<UploadImageResult, UploadImageParams> {
+class UploadUserImageUseCase extends UseCase<UploadImageResult, UploadImageParams> {
   UploadUserImageUseCase();
 
   @override
@@ -26,28 +25,23 @@ class UploadUserImageUseCase
     );
 
     if (result == null) {
-      return const UploadImageResult.failure(
-          'Upload failed, could not compress image');
+      return const UploadImageResult.failure('Upload failed, could not compress image');
     }
 
     final supabase = Supabase.instance.client;
 
-    final response = await supabase.storage.from('profile_pics').upload(
-        params.path, File(result.path),
-        fileOptions: const FileOptions(upsert: true));
+    final response = await supabase.storage.from('profile_pics').upload(params.path, File(result.path), fileOptions: const FileOptions(upsert: true));
 
     if (response == "") {
       return const UploadImageResult.failure('Upload failed');
     }
 
-    final imageLink =
-        supabase.storage.from('profile_pics').getPublicUrl(params.path);
+    final imageLink = supabase.storage.from('profile_pics').getPublicUrl(params.path);
     return UploadImageResult.success(imageLink);
   }
 }
 
-class UploadUserS3ImageUseCase
-    extends UseCase<UploadImageResult, UploadImageParams> {
+class UploadUserS3ImageUseCase extends UseCase<UploadImageResult, UploadImageParams> {
   UploadUserS3ImageUseCase();
 
   @override
@@ -64,17 +58,14 @@ class UploadUserS3ImageUseCase
       );
 
       if (result == null) {
-        return const UploadImageResult.failure(
-            'Upload failed, could not compress image');
+        return const UploadImageResult.failure('Upload failed, could not compress image');
       }
 
-      String data =
-          await rootBundle.loadString('assets/superkauf-account.json');
+      String data = await rootBundle.loadString('assets/superkauf-account.json');
 
       final credentials = ServiceAccountCredentials.fromJson(data);
 
-      final httpClient = await clientViaServiceAccount(
-          credentials, [StorageApi.devstorageReadWriteScope]);
+      final httpClient = await clientViaServiceAccount(credentials, [StorageApi.devstorageReadWriteScope]);
 
       final storage = StorageApi(httpClient);
 

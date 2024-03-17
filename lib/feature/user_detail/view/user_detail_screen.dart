@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:card_loading/card_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -125,7 +126,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                       stalePeriod: const Duration(days: 7),
                                     ),
                                   ),
-                                  progressIndicatorBuilder: (context, url, downloadProgress) => Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
+                                  progressIndicatorBuilder: (context, url, downloadProgress) => CardLoading(height: constraints.maxWidth * 0.3),
                                   errorWidget: (context, url, error) => const Icon(Icons.error),
                                 ),
                               ),

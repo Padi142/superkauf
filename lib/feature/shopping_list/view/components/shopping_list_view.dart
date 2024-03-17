@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:card_loading/card_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
+import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
 import 'package:superkauf/feature/post_detail/bloc/post_detail_bloc.dart';
 import 'package:superkauf/feature/shopping_list/bloc/shopping_list_bloc.dart';
@@ -83,6 +85,7 @@ class _ShoppingListViewState extends State<ShoppingListView> {
             itemCount: widget.list.posts.length,
             itemBuilder: (context, index) {
               return ShoppingListItem(
+                constraints: widget.constraints,
                 post: widget.list.posts[index].post,
                 addedBy: widget.list.posts[index].addedBy,
                 listId: widget.list.list.id,
@@ -93,6 +96,10 @@ class _ShoppingListViewState extends State<ShoppingListView> {
                           isCompleted: completed,
                         ),
                       );
+                  Posthog().capture(eventName: 'post_completed', properties: {
+                    'post_id': widget.list.posts[index].post,
+                    'completed': completed,
+                  });
                 },
                 completed: widget.list.posts[index].post.savedPost.isCompleted,
               );
@@ -105,6 +112,7 @@ class _ShoppingListViewState extends State<ShoppingListView> {
 }
 
 class ShoppingListItem extends StatefulWidget {
+  final BoxConstraints constraints;
   final SavedPostWithContext post;
   final UserModel addedBy;
   final int listId;
@@ -113,6 +121,7 @@ class ShoppingListItem extends StatefulWidget {
 
   const ShoppingListItem({
     super.key,
+    required this.constraints,
     required this.post,
     required this.addedBy,
     required this.listId,
@@ -141,7 +150,7 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
       duration: const Duration(milliseconds: 300),
       child: ListTile(
         key: _widgetKey,
-        subtitle: Text('${widget.post.post.price}Kč'),
+        subtitle: Text('${widget.post.post.price}${App.appConfig.settings.country.currency}'),
         leading: Padding(
           padding: const EdgeInsets.all(1),
           child: GestureDetector(
@@ -158,21 +167,24 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(2),
-                  child: Material(
-                    elevation: 6,
-                    borderRadius: BorderRadius.circular(6),
-                    child: ClipRRect(
+                SizedBox(
+                  width: widget.constraints.maxWidth * 0.2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(2),
+                    child: Material(
+                      elevation: 6,
                       borderRadius: BorderRadius.circular(6),
-                      // Adjust the radius as needed
-                      child: CachedNetworkImage(
-                        imageUrl: widget.post.post.image,
-                        fit: BoxFit.fitWidth,
-                        color: isCompleted ? Colors.grey : null,
-                        colorBlendMode: isCompleted ? BlendMode.saturation : null,
-                        placeholder: (context, url) => const Center(child: AppProgress()),
-                        errorWidget: (context, url, error) => const Icon(Icons.error),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(6),
+                        // Adjust the radius as needed
+                        child: CachedNetworkImage(
+                          imageUrl: widget.post.post.image,
+                          fit: BoxFit.fitWidth,
+                          color: isCompleted ? Colors.grey : null,
+                          colorBlendMode: isCompleted ? BlendMode.saturation : null,
+                          placeholder: (context, url) => const Center(child: CardLoading(height: 50)),
+                          errorWidget: (context, url, error) => const Icon(Icons.error),
+                        ),
                       ),
                     ),
                   ),

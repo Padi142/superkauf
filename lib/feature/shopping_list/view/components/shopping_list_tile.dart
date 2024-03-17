@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:card_loading/card_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
@@ -33,7 +34,7 @@ class ShoppingListTile extends StatelessWidget {
             width: 80,
             imageUrl: image,
             fit: BoxFit.fitWidth,
-            placeholder: (context, url) => const CircularProgressIndicator(),
+            placeholder: (context, url) => const CardLoading(height: 40),
             errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
         ),

@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:superkauf/generic/user/components/instagram_button.dart';
 import 'package:superkauf/generic/user/model/user_model.dart';
 import 'package:superkauf/library/app.dart';
 
@@ -73,6 +74,12 @@ class UserDetailView extends StatelessWidget {
               'Karma: ${user.karma}',
               style: App.appTheme.textTheme.titleMedium,
             ),
+            const SizedBox(height: 10),
+            user.instagram != ''
+                ? InstagramButton(
+                    user: user,
+                  )
+                : Container(),
           ],
         ),
       ),

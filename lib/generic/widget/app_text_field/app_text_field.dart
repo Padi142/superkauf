@@ -12,21 +12,25 @@ class AppTextField extends StatelessWidget {
   final OutlineInputBorder? border;
   final Function(AppTextField)? beginEdit;
   final Function(AppTextField)? endEdit;
+  final Function(String)? onSubmit;
   final ValueChanged<String>? onChanged;
 
   AppTextField(
     this.model, {
     Key? key,
     Widget? suffixWidget,
+    Widget? prefixWidget,
     TextAlign textAlign = TextAlign.start,
     String hint = '',
     String? label,
+    TextInputAction textInputAction = TextInputAction.done,
     bool secure = false,
     required this.context,
     int lines = 1,
     this.onChanged,
     this.beginEdit,
     this.endEdit,
+    this.onSubmit,
     this.validators = const [],
     TextInputType keyboardType = TextInputType.text,
     bool enabled = true,
@@ -38,7 +42,7 @@ class AppTextField extends StatelessWidget {
     double radius = 4.0,
   })  : _textField = TextField(
           obscureText: secure,
-          textInputAction: TextInputAction.go,
+          textInputAction: textInputAction,
           focusNode: model.focusNode,
           autocorrect: false,
           keyboardType: keyboardType,
@@ -46,6 +50,9 @@ class AppTextField extends StatelessWidget {
           maxLines: lines,
           enabled: enabled && editable,
           controller: model.controller,
+          onSubmitted: (text) {
+            onSubmit?.call(text);
+          },
           onChanged: (text) {
             onChanged?.call(text);
           },
@@ -55,6 +62,7 @@ class AppTextField extends StatelessWidget {
           cursorWidth: 1,
           decoration: InputDecoration(
             suffixIcon: suffixWidget,
+            prefixIcon: prefixWidget,
             suffixIconConstraints: const BoxConstraints(
               minHeight: 32,
               minWidth: 32,

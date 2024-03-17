@@ -42,7 +42,7 @@
   "sale_ends_in_label": "Sale ends",
   "sale_ends_in_not_picked_label": "Choose",
   "sale_expired": "Expired",
-
+  "tags_label": "Tags (for the algo :3)",
 
   "field_not_mandatory_label": "Not mandatory",
 
@@ -62,8 +62,10 @@
 
   "logout_button_text": "Log out",
   "change_username_button_text": "Change username",
+  "change_instagram_button_text": "Change instagram",
 
   "login_button_text": "Log in",
+  "settings_button_text": "Settings",
   "register_button_text": "Register",
 
   "confirm_email_text": "Please confirm your email address by clicking the link in the email we sent you",

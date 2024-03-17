@@ -8,6 +8,7 @@ class CreatePostModel {
   final double price;
   final String author;
   final String storeName;
+  final String country;
   final int store;
   final DateTime? validUntil;
   final bool requiresStoreCard;
@@ -18,6 +19,7 @@ class CreatePostModel {
     required this.author,
     required this.storeName,
     required this.store,
+    required this.country,
     required this.validUntil,
     required this.requiresStoreCard,
   });

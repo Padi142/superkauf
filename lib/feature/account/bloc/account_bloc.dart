@@ -7,6 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:superkauf/feature/account/bloc/account_state.dart';
 import 'package:superkauf/feature/account/use_case/account_navigation.dart';
 import 'package:superkauf/feature/create_post/use_case/pick_image_use_case.dart';
+import 'package:superkauf/generic/countries/model/country_model.dart';
 import 'package:superkauf/generic/post/model/get_posts_body.dart';
 import 'package:superkauf/generic/post/model/models/get_personal_post_response.dart';
 import 'package:superkauf/generic/post/model/pagination_model.dart';
@@ -18,7 +19,8 @@ import 'package:superkauf/generic/user/model/update_user_body.dart';
 import 'package:superkauf/generic/user/model/user_model.dart';
 import 'package:superkauf/generic/user/use_case/get_current_user_use_case.dart';
 import 'package:superkauf/generic/user/use_case/get_user_by_username_use_case.dart';
-import 'package:superkauf/generic/user/use_case/updat_user_use_case.dart';
+import 'package:superkauf/generic/user/use_case/refresh_current_user_use_case.dart';
+import 'package:superkauf/generic/user/use_case/update_user_use_case.dart';
 import 'package:superkauf/generic/user/use_case/upload_user_image_use_case.dart';
 
 part 'account_event.dart';
@@ -33,6 +35,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   final GetPostsByUserUseCase getPostsByUserUseCase;
   final GetSettingsUseCase getSettingsUseCase;
   final UploadUserS3ImageUseCase uploadUserS3ImageUseCase;
+  final RefreshCurrentUserUseCase refreshCurrentUserUseCase;
 
   AccountBloc({
     required this.accountNavigation,
@@ -44,11 +47,13 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     required this.getPostsByUserUseCase,
     required this.getSettingsUseCase,
     required this.uploadUserS3ImageUseCase,
+    required this.refreshCurrentUserUseCase,
   }) : super(const AccountState.loading()) {
     on<GetUser>(_onGetUser);
     on<LogOut>(_onLogOut);
     on<ChangeUsername>(_onChangeUsername);
     on<ChangeProfilePic>(_onChangeProfilePic);
+    on<ChangeInstagram>(_onChangeInstagram);
   }
 
   Future<void> _onGetUser(
@@ -74,7 +79,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
 
     final params = GetPersonalFeedParams(
       body: GetPostsBody(
-        country: settings.country,
+        country: settings.country.code,
         pagination: const GetPostsPaginationModel(
           perPage: 999,
           offset: 0,
@@ -146,15 +151,16 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     final params = UpdateUserBody(
       username: event.username,
       id: event.user.id,
-      profilePicture: event.user.profilePicture,
     );
-    final result = await updateUserUseCase.call(params);
+    await updateUserUseCase.call(params);
 
     Posthog().identify(userId: params.id.toString(), userProperties: {
       "username": params.username!,
     });
 
     await Future.delayed(const Duration(milliseconds: 600));
+
+    await refreshCurrentUserUseCase.call();
 
     add(const GetUser());
   }
@@ -163,7 +169,6 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     ChangeProfilePic event,
     Emitter<AccountState> emit,
   ) async {
-    final supabase = Supabase.instance.client;
     emit(const AccountState.loading());
 
     Posthog().capture(
@@ -215,6 +220,35 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
         });
 
     await Future.delayed(const Duration(milliseconds: 600));
+
+    await refreshCurrentUserUseCase.call();
+
+    add(const GetUser());
+  }
+
+  Future<void> _onChangeInstagram(
+    ChangeInstagram event,
+    Emitter<AccountState> emit,
+  ) async {
+    emit(const AccountState.loading());
+
+    Posthog().capture(
+      eventName: 'change_user_instagram',
+      properties: {
+        'user_id': event.user.id,
+        'name': event.instagram,
+      },
+    );
+
+    final params = UpdateUserBody(
+      instagram: event.instagram,
+      id: event.user.id,
+    );
+    await updateUserUseCase.call(params);
+
+    await Future.delayed(const Duration(milliseconds: 600));
+
+    await refreshCurrentUserUseCase.call();
 
     add(const GetUser());
   }

@@ -55,7 +55,7 @@ class UserDetailBloc extends Bloc<UserDetailEvent, UserDetailState> {
 
     final params = GetPersonalFeedParams(
       body: GetPostsBody(
-        country: settings.country,
+        country: settings.country.code,
         pagination: GetPostsPaginationModel(
           perPage: perPage,
           offset: page * perPage,

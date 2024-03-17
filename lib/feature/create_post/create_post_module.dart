@@ -5,9 +5,13 @@ import 'package:superkauf/feature/create_post/use_case/create_post_navigation.da
 import 'package:superkauf/feature/create_post/use_case/pick_image_camera_use_case.dart';
 import 'package:superkauf/feature/create_post/use_case/pick_image_use_case.dart';
 import 'package:superkauf/feature/create_post/view/create_post_page.dart';
+import 'package:superkauf/generic/label/bloc/label_bloc.dart';
+import 'package:superkauf/generic/label/use_case/create_label_use_case.dart';
+import 'package:superkauf/generic/label/use_case/get_labels_use_case.dart';
 import 'package:superkauf/generic/post/use_case/create_post_use_case.dart';
 import 'package:superkauf/generic/post/use_case/update_post_image_use_case.dart';
 import 'package:superkauf/generic/post/use_case/upload_post_image_use_case.dart';
+import 'package:superkauf/generic/settings/use_case/get_settings_use_case.dart';
 import 'package:superkauf/generic/store/bloc/store_bloc.dart';
 import 'package:superkauf/generic/store/use_case/get_stores_use_case.dart';
 import 'package:superkauf/generic/user/use_case/get_current_user_use_case.dart';
@@ -44,6 +48,9 @@ class CreatePostModule extends AppModule {
         getCurrentUserUseCase: GetIt.I.get<GetCurrentUserUseCase>(),
         updatePostImageUseCase: GetIt.I.get<UpdatePostImageUseCase>(),
         uploadS3PostImageUseCase: GetIt.I.get<UploadS3PostImageUseCase>(),
+        getLabelsUseCase: GetIt.I.get<GetLabelsUseCase>(),
+        createLabelUseCase: GetIt.I.get<CreateLabelUseCase>(),
+        getSettingsUseCase: GetIt.I.get<GetSettingsUseCase>(),
       ),
     );
   }
@@ -60,6 +67,9 @@ class CreatePostModule extends AppModule {
         providers: [
           BlocProvider<StoreBloc>.value(
             value: GetIt.I.get<StoreBloc>(),
+          ),
+          BlocProvider<LabelBloc>.value(
+            value: GetIt.I.get<LabelBloc>(),
           ),
         ],
         child: GetIt.I.get<CreatePostScreen>(),

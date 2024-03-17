@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:superkauf/feature/feed/view/components/loading_feed_post.dart';
+import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:superkauf/feature/shopping_list/bloc/shopping_list_bloc.dart';
 import 'package:superkauf/feature/shopping_list/bloc/shopping_list_state.dart';
+import 'package:superkauf/feature/shopping_list/view/components/loading_view.dart';
 import 'package:superkauf/feature/shopping_list/view/components/shopping_list_tile.dart';
 import 'package:superkauf/feature/shopping_list/view/components/shopping_list_view.dart';
 import 'package:superkauf/feature/shopping_list/view/components/store_posts_view.dart';
@@ -76,9 +77,22 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
                 context,
                 (code) {
                   context.read<ShoppingListDataBloc>().add(JoinList(code: code));
+
+                  Posthog().capture(
+                    eventName: 'shopping_list_joined',
+                    properties: {
+                      'code': code,
+                    },
+                  );
                 },
                 (name) {
                   context.read<ShoppingListDataBloc>().add(CreateList(name: name));
+                  Posthog().capture(
+                    eventName: 'shopping_list_created',
+                    properties: {
+                      'name': name,
+                    },
+                  );
                 },
               );
             },
@@ -137,6 +151,10 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
                 index < initial.shoppingLists.length
                     ? context.read<ShoppingListBloc>().add(PickShoppingList(shoppingListId: initial.shoppingLists[index].id))
                     : context.read<ShoppingListBloc>().add(PickStore(store: initial.stores[index - (initial.shoppingLists.length + 1)]));
+
+                Posthog().capture(eventName: index < initial.shoppingLists.length ? 'shopping_list_tile_tapped' : 'store_tile_tapped', properties: {
+                  'list': index < initial.shoppingLists.length ? initial.shoppingLists[index].id : initial.stores[index - (initial.shoppingLists.length + 1)].id,
+                });
               },
             );
           },
@@ -166,7 +184,12 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     }, error: (error) {
       return Center(child: Text(error.error));
     }, orElse: () {
-      return const PostLoadingView();
+      return SizedBox(
+        width: constraints.maxWidth,
+        child: ShoppingListLoadingView(
+          constraints: constraints,
+        ),
+      );
     });
   }
 

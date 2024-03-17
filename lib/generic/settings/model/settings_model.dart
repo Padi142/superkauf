@@ -1,11 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:superkauf/generic/countries/model/country_model.dart';
 
 part 'settings_model.g.dart';
 
 @JsonSerializable(explicitToJson: true, fieldRename: FieldRename.snake)
 class SettingsModel extends Equatable {
-  final String country;
+  final CountryModel country;
 
   const SettingsModel({
     required this.country,
@@ -19,4 +20,12 @@ class SettingsModel extends Equatable {
   List<Object?> get props => [
         country,
       ];
+
+  SettingsModel copyWith({
+    CountryModel? country,
+  }) {
+    return SettingsModel(
+      country: country ?? this.country,
+    );
+  }
 }

@@ -12,6 +12,8 @@ import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart
 import 'package:superkauf/feature/login/bloc/login_state.dart';
 import 'package:superkauf/feature/snackbar/bloc/snackbar_bloc.dart';
 import 'package:superkauf/generic/constants.dart';
+import 'package:superkauf/generic/countries/bloc/countries_bloc.dart';
+import 'package:superkauf/generic/countries/view/countries_picker.dart';
 import 'package:superkauf/generic/widget/app_button.dart';
 import 'package:superkauf/generic/widget/app_progress.dart';
 import 'package:superkauf/generic/widget/app_text_field/index.dart';
@@ -50,6 +52,7 @@ class _InitScreenState extends State<LoginScreen> with SingleTickerProviderState
           BlocProvider.of<LoginBloc>(context).add(GoBack(path: widget.params!));
         }
       }
+      BlocProvider.of<CountriesBloc>(context).add(const GetCountries());
     });
     controller = AnimationController(
       vsync: this,
@@ -118,6 +121,9 @@ class _InitScreenState extends State<LoginScreen> with SingleTickerProviderState
                                     radius: 8,
                                     elevation: 10,
                                   ),
+                                ),
+                                const SizedBox(
+                                  height: 20,
                                 ),
                                 const SizedBox(
                                   height: 20,
@@ -260,6 +266,9 @@ class RegisterView extends StatelessWidget {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const SizedBox(
+                    height: 30,
+                  ),
                   Image.asset(
                     'assets/images/kauf_logo1.png',
                     width: 200,
@@ -279,7 +288,10 @@ class RegisterView extends StatelessWidget {
                   const SizedBox(
                     height: 30,
                   ),
-                  const AuthProviders()
+                  const AuthProviders(),
+                  const SizedBox(
+                    height: 60,
+                  ),
                 ],
               );
             });
@@ -456,6 +468,7 @@ class EmailRegister extends StatefulWidget {
 class _EmailRegisterState extends State<EmailRegister> {
   final emailController = TextEntryModel(text: '');
   final passwordController = TextEntryModel(text: '');
+  String? pickedCountry;
 
   @override
   Widget build(BuildContext context) {
@@ -486,7 +499,17 @@ class _EmailRegisterState extends State<EmailRegister> {
           ),
         ),
         const SizedBox(
-          height: 20,
+          height: 10,
+        ),
+        CountriesPicker(
+          pickedCountry: pickedCountry,
+          onCountryPicked: (value) {
+            pickedCountry = value;
+            setState(() {});
+          },
+        ),
+        const SizedBox(
+          height: 10,
         ),
         BlocConsumer<LoginBloc, LoginState>(listener: (context, state) {
           state.maybeMap(

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:card_loading/card_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,7 +10,6 @@ import 'package:superkauf/feature/shopping_list/bloc/shopping_list_bloc.dart';
 import 'package:superkauf/generic/post/bloc/post_bloc.dart';
 import 'package:superkauf/generic/post/model/models/get_personal_post_response.dart';
 import 'package:superkauf/generic/store/model/store_model.dart';
-import 'package:superkauf/generic/widget/app_progress.dart';
 import 'package:superkauf/library/app.dart';
 
 class StoresPostsListView extends StatefulWidget {
@@ -59,7 +59,10 @@ class _StoresPostsListViewState extends State<StoresPostsListView> {
                       width: 120,
                       imageUrl: widget.store.image,
                       fit: BoxFit.fitWidth,
-                      placeholder: (context, url) => const Center(child: AppProgress()),
+                      placeholder: (context, url) => const Center(
+                          child: CardLoading(
+                        height: 60,
+                      )),
                       errorWidget: (context, url, error) => const Icon(Icons.error),
                     ),
                   ),
@@ -74,13 +77,14 @@ class _StoresPostsListViewState extends State<StoresPostsListView> {
           ),
         ),
         SizedBox(
-          height: widget.constraints.maxHeight * 0.8,
+          height: widget.constraints.maxHeight * 0.87,
           child: ListView.builder(
             itemCount: widget.posts.length,
             itemBuilder: (context, index) {
               return StoreListItem(
                   post: widget.posts[index],
                   store: widget.store,
+                  constraints: widget.constraints,
                   onToggleCompleted: (completed) {
                     context.read<ShoppingListBloc>().add(
                           UpdateSavedPostEvent(
@@ -99,18 +103,20 @@ class _StoresPostsListViewState extends State<StoresPostsListView> {
 }
 
 class StoreListItem extends StatefulWidget {
+  final BoxConstraints constraints;
   final FullContextPostModel post;
   final bool completed;
   final StoreModel store;
   final ValueChanged<bool> onToggleCompleted;
 
   const StoreListItem({
-    Key? key,
+    super.key,
+    required this.constraints,
     required this.post,
     this.completed = false,
     required this.store,
     required this.onToggleCompleted,
-  }) : super(key: key);
+  });
 
   @override
   State<StoreListItem> createState() => _StoreListItemState();
@@ -133,33 +139,36 @@ class _StoreListItemState extends State<StoreListItem> {
       duration: const Duration(milliseconds: 300),
       child: ListTile(
         key: _widgetKey,
-        subtitle: Text('${widget.post.post.price}Kč'),
-        leading: Padding(
-          padding: const EdgeInsets.all(2),
-          child: GestureDetector(
-            onTap: () {
-              BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(
-                post: widget.post.post,
-                user: widget.post.user,
-              ));
+        subtitle: Text('${widget.post.post.price}${App.appConfig.settings.country.currency}'),
+        leading: SizedBox(
+          width: widget.constraints.maxWidth * 0.2,
+          child: Padding(
+            padding: const EdgeInsets.all(2),
+            child: GestureDetector(
+              onTap: () {
+                BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(
+                  post: widget.post.post,
+                  user: widget.post.user,
+                ));
 
-              BlocProvider.of<NavigationBloc>(context).add(OpenPostDetailScreen(
-                postId: widget.post.post.id,
-              ));
-            },
-            child: Material(
-              elevation: 4, // Adjust the elevation as needed
-              borderRadius: BorderRadius.circular(6),
-              child: ClipRRect(
+                BlocProvider.of<NavigationBloc>(context).add(OpenPostDetailScreen(
+                  postId: widget.post.post.id,
+                ));
+              },
+              child: Material(
+                elevation: 4, // Adjust the elevation as needed
                 borderRadius: BorderRadius.circular(6),
-                // Adjust the radius as needed
-                child: CachedNetworkImage(
-                  imageUrl: widget.post.post.image,
-                  fit: BoxFit.fitWidth,
-                  color: isCompleted ? Colors.grey : null,
-                  colorBlendMode: isCompleted ? BlendMode.saturation : null,
-                  placeholder: (context, url) => const Center(child: AppProgress()),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(6),
+                  // Adjust the radius as needed
+                  child: CachedNetworkImage(
+                    imageUrl: widget.post.post.image,
+                    fit: BoxFit.fitWidth,
+                    color: isCompleted ? Colors.grey : null,
+                    colorBlendMode: isCompleted ? BlendMode.saturation : null,
+                    placeholder: (context, url) => const Center(child: CardLoading(height: 50)),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                  ),
                 ),
               ),
             ),

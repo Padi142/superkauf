@@ -18,9 +18,21 @@ class ChangeUsername extends AccountEvent {
   const ChangeUsername({required this.username, required this.user});
 }
 
+class ChangeInstagram extends AccountEvent {
+  final String instagram;
+  final UserModel user;
+
+  const ChangeInstagram({required this.instagram, required this.user});
+}
+
 class ChangeProfilePic extends AccountEvent {
   final UserModel user;
   const ChangeProfilePic({required this.user});
+}
+
+class UpdateCountry extends AccountEvent {
+  final CountryModel country;
+  const UpdateCountry({required this.country});
 }
 
 class LogOut extends AccountEvent {

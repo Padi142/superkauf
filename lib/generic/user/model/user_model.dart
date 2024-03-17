@@ -13,6 +13,7 @@ class UserModel extends Equatable {
   final String profilePicture;
   final int karma;
   final String supabaseUid;
+  final String instagram;
 
   const UserModel({
     required this.id,
@@ -23,6 +24,7 @@ class UserModel extends Equatable {
     required this.profilePicture,
     required this.karma,
     required this.supabaseUid,
+    required this.instagram,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);

@@ -22,7 +22,7 @@ abstract class CreatePostState with _$CreatePostState {
   const factory CreatePostState.imageUploaded(String image) = ImageUploaded;
 
   // const factory CreatePostState.success(PostModel post) = Success;
-  const factory CreatePostState.success() = Success;
+  const factory CreatePostState.success(int postId) = Success;
 
   const factory CreatePostState.error(String error) = Error;
 }

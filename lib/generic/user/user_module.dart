@@ -6,7 +6,8 @@ import 'package:superkauf/generic/user/use_case/get_current_user_use_case.dart';
 import 'package:superkauf/generic/user/use_case/get_user_by_id_use_case.dart';
 import 'package:superkauf/generic/user/use_case/get_user_by_uid_use_case.dart';
 import 'package:superkauf/generic/user/use_case/get_user_by_username_use_case.dart';
-import 'package:superkauf/generic/user/use_case/updat_user_use_case.dart';
+import 'package:superkauf/generic/user/use_case/refresh_current_user_use_case.dart';
+import 'package:superkauf/generic/user/use_case/update_user_use_case.dart';
 import 'package:superkauf/generic/user/use_case/upload_user_image_use_case.dart';
 import 'package:superkauf/library/app_module.dart';
 
@@ -61,6 +62,10 @@ class UserModule extends AppModule {
 
     GetIt.I.registerFactory<UploadUserS3ImageUseCase>(
       () => UploadUserS3ImageUseCase(),
+    );
+
+    GetIt.I.registerFactory<RefreshCurrentUserUseCase>(
+      () => RefreshCurrentUserUseCase(repository: GetIt.I.get<UserRepository>()),
     );
   }
 

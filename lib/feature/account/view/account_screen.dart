@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:card_loading/card_loading.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +10,7 @@ import 'package:superkauf/feature/account/view/components/user_info.dart';
 import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
 import 'package:superkauf/feature/post_detail/bloc/post_detail_bloc.dart';
 import 'package:superkauf/generic/constants.dart';
+import 'package:superkauf/generic/countries/bloc/countries_bloc.dart';
 import 'package:superkauf/generic/widget/app_progress.dart';
 
 import '../../../library/app_screen.dart';
@@ -26,10 +28,13 @@ class _FeedScreenState extends State<AccountScreen> {
   @override
   void initState() {
     BlocProvider.of<AccountBloc>(context).add(const GetUser());
+    BlocProvider.of<CountriesBloc>(context).add(const GetCountries());
+
     super.initState();
   }
 
   var changeUsername = false;
+  var changeInstagram = false;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +59,11 @@ class _FeedScreenState extends State<AccountScreen> {
                             changeUsername = !changeUsername;
                           });
                         },
+                        onChangeInstagram: () {
+                          setState(() {
+                            changeInstagram = !changeInstagram;
+                          });
+                        },
                         onUsernameChaneDone: (String username) {
                           BlocProvider.of<AccountBloc>(context).add(ChangeUsername(
                             username: username,
@@ -63,8 +73,18 @@ class _FeedScreenState extends State<AccountScreen> {
                             changeUsername = false;
                           });
                         },
+                        onInstagramChangeDone: (String instagram) {
+                          BlocProvider.of<AccountBloc>(context).add(ChangeInstagram(
+                            instagram: instagram,
+                            user: loaded.user,
+                          ));
+                          setState(() {
+                            changeInstagram = false;
+                          });
+                        },
                         changeUsername: changeUsername,
                         constraints: constraints,
+                        changeInstagram: changeInstagram,
                       ),
                     ),
                     // const SizedBox(
@@ -106,7 +126,7 @@ class _FeedScreenState extends State<AccountScreen> {
                                   stalePeriod: const Duration(days: 7),
                                 ),
                               ),
-                              progressIndicatorBuilder: (context, url, downloadProgress) => Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
+                              progressIndicatorBuilder: (context, url, downloadProgress) => Center(child: CardLoading(height: constraints.maxWidth * 0.3)),
                               errorWidget: (context, url, error) => const Icon(Icons.error),
                             ),
                           ),

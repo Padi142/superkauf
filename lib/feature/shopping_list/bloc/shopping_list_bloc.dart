@@ -52,6 +52,8 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
     InitialListEvent event,
     Emitter<ShoppingListState> emit,
   ) async {
+    emit(const ShoppingListState.loading());
+
     final userResult = await getCurrentUserUseCase.call();
     if (userResult == null) {
       emit(const ShoppingListState.error("You are not logged in"));
@@ -60,7 +62,7 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
 
     final settings = await getSettingsUseCase.call();
 
-    final Future<GetStoresResult> storeCall = getStoresUseCase.call(settings.country);
+    final Future<GetStoresResult> storeCall = getStoresUseCase.call(settings.country.code);
     final Future<GetSavedPostsResult> savedPostsCall = getSavedPostsByUserUseCase.call(
       GetSavedPostsParams(
         userId: userResult.id,
@@ -103,6 +105,8 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
     PickShoppingList event,
     Emitter<ShoppingListState> emit,
   ) async {
+    emit(const ShoppingListState.loading());
+
     final getCurrentUserResult = await getCurrentUserUseCase.call();
     final result = await getShoppingListInfoUseCase.call(event.shoppingListId);
     result.map(
@@ -119,6 +123,8 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
     PickStore event,
     Emitter<ShoppingListState> emit,
   ) async {
+    emit(const ShoppingListState.loading());
+
     final userResult = await getCurrentUserUseCase.call();
     if (userResult == null) {
       emit(const ShoppingListState.error("You are not logged in"));

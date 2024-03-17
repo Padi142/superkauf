@@ -60,7 +60,7 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
             offset: page * perPage,
             perPage: perPage,
           ),
-          country: settings.country,
+          country: settings.country.code,
         ),
         timeRange: timeRange.name,
         store: selectedStore?.id,
@@ -130,7 +130,7 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
   ) async {
     final settings = await getSettingsUseCase.call();
 
-    final storesResult = await getStoresUseCase.call(settings.country);
+    final storesResult = await getStoresUseCase.call(settings.country.code);
 
     storesResult.when(
       success: (success) {

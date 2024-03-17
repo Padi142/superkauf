@@ -7,11 +7,13 @@ class UpdateUserBody {
   final int id;
   final String? username;
   final String? profilePicture;
+  final String? instagram;
 
   const UpdateUserBody({
     required this.id,
     this.username,
     this.profilePicture,
+    this.instagram,
   });
 
   factory UpdateUserBody.fromJson(Map<String, dynamic> json) => _$UpdateUserBodyFromJson(json);

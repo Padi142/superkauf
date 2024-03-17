@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:superkauf/generic/functions.dart';
+import 'package:superkauf/library/app.dart';
 
 class RequiresStoreCard extends StatelessWidget {
   const RequiresStoreCard({super.key});
@@ -123,7 +124,7 @@ class FeedContainerPrice extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Text(
-          '${(price % 1 == 0) ? price.toInt().toString() : price.toStringAsFixed(2)} Kč',
+          '${(price % 1 == 0) ? price.toInt().toString() : price.toStringAsFixed(2)} ${App.appConfig.settings.country.currency}',
           style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.black),
         ),
       ),

@@ -41,6 +41,7 @@
   "sale_ends_in_label": "Sleva končí",
   "sale_ends_in_not_picked_label": "Vybrat",
   "sale_expired": "Sleva vypršela",
+  "tags_label": "Tagy (pro algorotimus :3)",
 
   "field_not_mandatory_label": "Není povinné",
 
@@ -60,7 +61,9 @@
   "user_info_registered_on_label": "Registrován od",
 
   "logout_button_text": "Odhlásit",
+  "settings_button_text": "Nastavení",
   "change_username_button_text": "Změnit jméno",
+  "change_instagram_button_text": "Změnit instagram",
 
   "login_button_text": "Přihlásit",
   "register_button_text": "Registrovat",

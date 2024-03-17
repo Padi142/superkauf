@@ -25,7 +25,7 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
 
     final settings = await getSettingsUseCase.call();
 
-    final result = await getStoresUseCase.call(settings.country);
+    final result = await getStoresUseCase.call(settings.country.code);
     result.when(
       success: (success) {
         emit(StoreState.success(success));

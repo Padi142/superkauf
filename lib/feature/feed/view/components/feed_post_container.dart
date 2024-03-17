@@ -182,7 +182,7 @@ class _PersonalFeedPostContainerState extends State<PersonalFeedPostContainer> {
                               elevation: 4,
                               shape: const CircleBorder(),
                               child: CircleAvatar(
-                                backgroundImage: CachedNetworkImageProvider('${widget.post.user.profilePicture}?'),
+                                backgroundImage: CachedNetworkImageProvider(widget.post.user.profilePicture),
                               ),
                             ),
                           ),

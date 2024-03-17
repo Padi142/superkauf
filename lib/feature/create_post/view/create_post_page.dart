@@ -7,9 +7,12 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:superkauf/feature/create_post/bloc/create_post_bloc.dart';
 import 'package:superkauf/feature/create_post/bloc/create_post_state.dart';
 import 'package:superkauf/feature/create_post/view/components/editable_text.dart';
+import 'package:superkauf/feature/create_post/view/components/post_tags.dart';
 import 'package:superkauf/feature/create_post/view/components/store_card_picker.dart';
 import 'package:superkauf/feature/create_post/view/components/store_picker.dart';
 import 'package:superkauf/feature/create_post/view/components/valid_until_picker.dart';
+import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
+import 'package:superkauf/feature/post_detail/bloc/post_detail_bloc.dart' as postDetail;
 import 'package:superkauf/feature/snackbar/bloc/snackbar_bloc.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/store/bloc/store_bloc.dart';
@@ -52,6 +55,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
   var requiredCard = false;
   var createButtonClicked = false;
   var storeNotPickedError = false;
+  var tags = <String>[];
   DateTime? saleEnds;
   late final PanelController _imagePickPanelController;
   late final PanelController _storePickPanelController;
@@ -122,6 +126,9 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                         onValidUntilChanged: (date) {
                           saleEnds = date;
                         },
+                        onTagsChanged: (tags) {
+                          this.tags = tags;
+                        },
                         constraints: constraints),
                     const SizedBox(
                       height: 30,
@@ -147,6 +154,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                               if (selectedStore == null) {
                                 setState(() {
                                   storeNotPickedError = true;
+                                  BlocProvider.of<StoreBloc>(context).add(const GetAllStores());
                                   _storePickPanelController.open();
                                 });
                                 Future.delayed(const Duration(milliseconds: 2500)).then((value) => setState(() {
@@ -174,10 +182,16 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                                 store: selectedStore!,
                                 cardRequired: requiredCard,
                                 image: image,
+                                labels: tags,
                                 validUntil: saleEnds,
                               ));
                             },
                           );
+                        }, success: (success) {
+                          //Reload feed on post created
+                          BlocProvider.of<postDetail.PostDetailBloc>(context).add(postDetail.InitialEvent(postId: success));
+                          BlocProvider.of<NavigationBloc>(context).add(OpenPostDetailScreen(postId: success));
+                          return Container();
                         }, orElse: () {
                           return AppButton(
                             backgroundColor: Colors.grey,
@@ -351,7 +365,7 @@ class CreatePostContainer extends StatelessWidget {
                               theme: Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.black),
                             ),
                             Text(
-                              'Kč',
+                              App.appConfig.settings.country.currency,
                               style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.black),
                             )
                           ],
@@ -395,9 +409,16 @@ class CreatePostContainer extends StatelessWidget {
 class ExpandedPostSettings extends StatelessWidget {
   final Function(bool) onCardRequiredChanged;
   final Function(DateTime) onValidUntilChanged;
+  final Function(List<String>) onTagsChanged;
   final BoxConstraints constraints;
 
-  const ExpandedPostSettings({super.key, required this.onCardRequiredChanged, required this.onValidUntilChanged, required this.constraints});
+  const ExpandedPostSettings({
+    super.key,
+    required this.onCardRequiredChanged,
+    required this.onValidUntilChanged,
+    required this.onTagsChanged,
+    required this.constraints,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -413,6 +434,13 @@ class ExpandedPostSettings extends StatelessWidget {
         ValidUntilPicker(
           validUntilPicked: onValidUntilChanged,
           constraints: constraints,
+        ),
+        const SizedBox(
+          width: 15,
+        ),
+        PostTagsField(
+          constraints: constraints,
+          onTagsChanged: onTagsChanged,
         ),
       ],
     );

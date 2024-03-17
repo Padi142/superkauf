@@ -42,7 +42,7 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     final settings = await getSettingsUseCase.call();
 
     final params = GetPostsBody(
-      country: settings.country,
+      country: settings.country.code,
       pagination: GetPostsPaginationModel(
         offset: page * perPage,
         perPage: perPage,
@@ -70,7 +70,7 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     } else {
       final result = await getPersonalFeedUseCase.call(GetPersonalFeedParams(
         body: GetPostsBody(
-          country: settings.country,
+          country: settings.country.code,
           pagination: GetPostsPaginationModel(
             perPage: perPage,
             offset: page * perPage,

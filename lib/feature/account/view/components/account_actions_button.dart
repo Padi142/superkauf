@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:superkauf/feature/account/bloc/account_bloc.dart';
+import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
 
 class AccountActionsButton extends StatelessWidget {
   final Function() onChangeUsername;
+  final Function() onChangeInstagram;
   const AccountActionsButton({
     super.key,
     required this.onChangeUsername,
+    required this.onChangeInstagram,
   });
 
   @override
@@ -27,9 +30,22 @@ class AccountActionsButton extends StatelessWidget {
               );
               break;
             }
+          case 'settings':
+            {
+              print('mlem');
+              BlocProvider.of<NavigationBloc>(context).add(
+                const OpenSettingsScreen(shouldReplace: true),
+              );
+              break;
+            }
           case 'changeUsername':
             {
               onChangeUsername();
+            }
+
+          case 'changeInstagram':
+            {
+              onChangeInstagram();
             }
           default:
             break;
@@ -55,6 +71,22 @@ class AccountActionsButton extends StatelessWidget {
         ));
 
         list.add(PopupMenuItem<String>(
+          value: 'changeInstagram',
+          child: Row(
+            children: [
+              const FaIcon(
+                FontAwesomeIcons.instagram,
+                size: 20,
+              ),
+              const SizedBox(
+                width: 8,
+              ),
+              Text('change_username_button_text'.tr()),
+            ],
+          ),
+        ));
+
+        list.add(PopupMenuItem<String>(
           value: 'logout',
           child: Row(
             children: [
@@ -67,6 +99,23 @@ class AccountActionsButton extends StatelessWidget {
                 width: 8,
               ),
               Text('logout_button_text'.tr()),
+            ],
+          ),
+        ));
+
+        list.add(PopupMenuItem<String>(
+          value: 'settings',
+          child: Row(
+            children: [
+              const Icon(
+                Icons.settings,
+                color: Colors.black,
+                size: 20,
+              ),
+              const SizedBox(
+                width: 8,
+              ),
+              Text('settings_button_text'.tr()),
             ],
           ),
         ));

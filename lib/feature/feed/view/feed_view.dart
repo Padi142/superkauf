@@ -63,6 +63,9 @@ class _FeedScreenState extends State<FeedScreen> {
               BlocBuilder<FeedBloc, FeedState>(
                 builder: (context, state) {
                   return state.maybeMap(loaded: (loaded) {
+                    if (loaded.posts.isEmpty) {
+                      return const Center(child: Text('No posts yet'));
+                    }
                     return SizedBox(
                       height: constraints.maxHeight,
                       child: ListView.builder(

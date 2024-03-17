@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'my_channel_state.dart';
+part of 'label_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,25 +15,25 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$MyChannelState {
+mixin _$LabelState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<FeedPostModel> posts) loaded,
+    required TResult Function(List<LabelModel> labels) loaded,
     required TResult Function(String error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<FeedPostModel> posts)? loaded,
+    TResult? Function(List<LabelModel> labels)? loaded,
     TResult? Function(String error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<FeedPostModel> posts)? loaded,
+    TResult Function(List<LabelModel> labels)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) =>
@@ -63,13 +63,13 @@ mixin _$MyChannelState {
 }
 
 /// @nodoc
-abstract class $MyChannelStateCopyWith<$Res> {
-  factory $MyChannelStateCopyWith(MyChannelState value, $Res Function(MyChannelState) then) = _$MyChannelStateCopyWithImpl<$Res, MyChannelState>;
+abstract class $LabelStateCopyWith<$Res> {
+  factory $LabelStateCopyWith(LabelState value, $Res Function(LabelState) then) = _$LabelStateCopyWithImpl<$Res, LabelState>;
 }
 
 /// @nodoc
-class _$MyChannelStateCopyWithImpl<$Res, $Val extends MyChannelState> implements $MyChannelStateCopyWith<$Res> {
-  _$MyChannelStateCopyWithImpl(this._value, this._then);
+class _$LabelStateCopyWithImpl<$Res, $Val extends LabelState> implements $LabelStateCopyWith<$Res> {
+  _$LabelStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -83,7 +83,7 @@ abstract class _$$LoadingImplCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$LoadingImplCopyWithImpl<$Res> extends _$MyChannelStateCopyWithImpl<$Res, _$LoadingImpl> implements _$$LoadingImplCopyWith<$Res> {
+class __$$LoadingImplCopyWithImpl<$Res> extends _$LabelStateCopyWithImpl<$Res, _$LoadingImpl> implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(_$LoadingImpl _value, $Res Function(_$LoadingImpl) _then) : super(_value, _then);
 }
 
@@ -94,7 +94,7 @@ class _$LoadingImpl implements Loading {
 
   @override
   String toString() {
-    return 'MyChannelState.loading()';
+    return 'LabelState.loading()';
   }
 
   @override
@@ -109,7 +109,7 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<FeedPostModel> posts) loaded,
+    required TResult Function(List<LabelModel> labels) loaded,
     required TResult Function(String error) error,
   }) {
     return loading();
@@ -119,7 +119,7 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<FeedPostModel> posts)? loaded,
+    TResult? Function(List<LabelModel> labels)? loaded,
     TResult? Function(String error)? error,
   }) {
     return loading?.call();
@@ -129,7 +129,7 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<FeedPostModel> posts)? loaded,
+    TResult Function(List<LabelModel> labels)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -174,7 +174,7 @@ class _$LoadingImpl implements Loading {
   }
 }
 
-abstract class Loading implements MyChannelState {
+abstract class Loading implements LabelState {
   const factory Loading() = _$LoadingImpl;
 }
 
@@ -182,23 +182,23 @@ abstract class Loading implements MyChannelState {
 abstract class _$$LoadedImplCopyWith<$Res> {
   factory _$$LoadedImplCopyWith(_$LoadedImpl value, $Res Function(_$LoadedImpl) then) = __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<FeedPostModel> posts});
+  $Res call({List<LabelModel> labels});
 }
 
 /// @nodoc
-class __$$LoadedImplCopyWithImpl<$Res> extends _$MyChannelStateCopyWithImpl<$Res, _$LoadedImpl> implements _$$LoadedImplCopyWith<$Res> {
+class __$$LoadedImplCopyWithImpl<$Res> extends _$LabelStateCopyWithImpl<$Res, _$LoadedImpl> implements _$$LoadedImplCopyWith<$Res> {
   __$$LoadedImplCopyWithImpl(_$LoadedImpl _value, $Res Function(_$LoadedImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? posts = null,
+    Object? labels = null,
   }) {
     return _then(_$LoadedImpl(
-      null == posts
-          ? _value._posts
-          : posts // ignore: cast_nullable_to_non_nullable
-              as List<FeedPostModel>,
+      null == labels
+          ? _value._labels
+          : labels // ignore: cast_nullable_to_non_nullable
+              as List<LabelModel>,
     ));
   }
 }
@@ -206,28 +206,28 @@ class __$$LoadedImplCopyWithImpl<$Res> extends _$MyChannelStateCopyWithImpl<$Res
 /// @nodoc
 
 class _$LoadedImpl implements Loaded {
-  const _$LoadedImpl(final List<FeedPostModel> posts) : _posts = posts;
+  const _$LoadedImpl(final List<LabelModel> labels) : _labels = labels;
 
-  final List<FeedPostModel> _posts;
+  final List<LabelModel> _labels;
   @override
-  List<FeedPostModel> get posts {
-    if (_posts is EqualUnmodifiableListView) return _posts;
+  List<LabelModel> get labels {
+    if (_labels is EqualUnmodifiableListView) return _labels;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_posts);
+    return EqualUnmodifiableListView(_labels);
   }
 
   @override
   String toString() {
-    return 'MyChannelState.loaded(posts: $posts)';
+    return 'LabelState.loaded(labels: $labels)';
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$LoadedImpl && const DeepCollectionEquality().equals(other._posts, _posts));
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$LoadedImpl && const DeepCollectionEquality().equals(other._labels, _labels));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_posts));
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_labels));
 
   @JsonKey(ignore: true)
   @override
@@ -238,32 +238,32 @@ class _$LoadedImpl implements Loaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<FeedPostModel> posts) loaded,
+    required TResult Function(List<LabelModel> labels) loaded,
     required TResult Function(String error) error,
   }) {
-    return loaded(posts);
+    return loaded(labels);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<FeedPostModel> posts)? loaded,
+    TResult? Function(List<LabelModel> labels)? loaded,
     TResult? Function(String error)? error,
   }) {
-    return loaded?.call(posts);
+    return loaded?.call(labels);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<FeedPostModel> posts)? loaded,
+    TResult Function(List<LabelModel> labels)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(posts);
+      return loaded(labels);
     }
     return orElse();
   }
@@ -303,10 +303,10 @@ class _$LoadedImpl implements Loaded {
   }
 }
 
-abstract class Loaded implements MyChannelState {
-  const factory Loaded(final List<FeedPostModel> posts) = _$LoadedImpl;
+abstract class Loaded implements LabelState {
+  const factory Loaded(final List<LabelModel> labels) = _$LoadedImpl;
 
-  List<FeedPostModel> get posts;
+  List<LabelModel> get labels;
   @JsonKey(ignore: true)
   _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith => throw _privateConstructorUsedError;
 }
@@ -319,7 +319,7 @@ abstract class _$$ErrorImplCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$ErrorImplCopyWithImpl<$Res> extends _$MyChannelStateCopyWithImpl<$Res, _$ErrorImpl> implements _$$ErrorImplCopyWith<$Res> {
+class __$$ErrorImplCopyWithImpl<$Res> extends _$LabelStateCopyWithImpl<$Res, _$ErrorImpl> implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(_$ErrorImpl _value, $Res Function(_$ErrorImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -346,7 +346,7 @@ class _$ErrorImpl implements Error {
 
   @override
   String toString() {
-    return 'MyChannelState.error(error: $error)';
+    return 'LabelState.error(error: $error)';
   }
 
   @override
@@ -366,7 +366,7 @@ class _$ErrorImpl implements Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<FeedPostModel> posts) loaded,
+    required TResult Function(List<LabelModel> labels) loaded,
     required TResult Function(String error) error,
   }) {
     return error(this.error);
@@ -376,7 +376,7 @@ class _$ErrorImpl implements Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<FeedPostModel> posts)? loaded,
+    TResult? Function(List<LabelModel> labels)? loaded,
     TResult? Function(String error)? error,
   }) {
     return error?.call(this.error);
@@ -386,7 +386,7 @@ class _$ErrorImpl implements Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<FeedPostModel> posts)? loaded,
+    TResult Function(List<LabelModel> labels)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -431,7 +431,7 @@ class _$ErrorImpl implements Error {
   }
 }
 
-abstract class Error implements MyChannelState {
+abstract class Error implements LabelState {
   const factory Error(final String error) = _$ErrorImpl;
 
   String get error;
