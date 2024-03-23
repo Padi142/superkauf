@@ -80,10 +80,14 @@ class _PostApi implements PostApi {
   }
 
   @override
-  Future<PostModel> createPost({required Map<String, dynamic> body}) async {
+  Future<PostModel> createPost({
+    required String token,
+    required Map<String, dynamic> body,
+  }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(body);
     final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<PostModel>(Options(
@@ -107,10 +111,14 @@ class _PostApi implements PostApi {
   }
 
   @override
-  Future<PostModel> deletePost({required Map<String, dynamic> body}) async {
+  Future<PostModel> deletePost({
+    required String token,
+    required Map<String, dynamic> body,
+  }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(body);
     final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<PostModel>(Options(
@@ -193,10 +201,14 @@ class _PostApi implements PostApi {
   }
 
   @override
-  Future<PostModel> updatePostImage({required Map<String, dynamic> body}) async {
+  Future<PostModel> updatePostImage({
+    required String token,
+    required Map<String, dynamic> body,
+  }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(body);
     final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<PostModel>(Options(
@@ -221,12 +233,14 @@ class _PostApi implements PostApi {
 
   @override
   Future<PostModel> updatePostContent({
+    required String token,
     required Map<String, dynamic> body,
     required String field,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(body);
     final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<PostModel>(Options(
@@ -251,12 +265,14 @@ class _PostApi implements PostApi {
 
   @override
   Future<ReactionModel> addReaction({
+    required String token,
     required String id,
     required Map<String, dynamic> body,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(body);
     final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<ReactionModel>(Options(
@@ -281,12 +297,14 @@ class _PostApi implements PostApi {
 
   @override
   Future<ReactionModel> removeReaction({
+    required String token,
     required String id,
     required Map<String, dynamic> body,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(body);
     final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<ReactionModel>(Options(

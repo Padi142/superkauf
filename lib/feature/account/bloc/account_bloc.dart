@@ -27,7 +27,7 @@ part 'account_event.dart';
 
 class AccountBloc extends Bloc<AccountEvent, AccountState> {
   final AccountNavigation accountNavigation;
-  final GetCurrentUserUseCase getCurrentUSeUseCase;
+  final GetCurrentUserUseCase getCurrentUserUseCase;
   final UpdateUserUseCase updateUserUseCase;
   final GetUserByUsernameUseCase getUserByUsernameUseCase;
   final PickImageUseCase pickImageUseCase;
@@ -39,7 +39,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
 
   AccountBloc({
     required this.accountNavigation,
-    required this.getCurrentUSeUseCase,
+    required this.getCurrentUserUseCase,
     required this.updateUserUseCase,
     required this.getUserByUsernameUseCase,
     required this.pickImageUseCase,
@@ -62,7 +62,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   ) async {
     final box = await Hive.openBox('user');
     box.clear();
-    final user = await getCurrentUSeUseCase.call();
+    final user = await getCurrentUserUseCase.call(false);
 
     if (user == null) {
       emit(const AccountState.error('You are not logged in'));
@@ -171,10 +171,16 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   ) async {
     emit(const AccountState.loading());
 
+    UserModel? user = event.user;
+
+    if (event.user == null) {
+      user = await getCurrentUserUseCase.call(false);
+    }
+
     Posthog().capture(
       eventName: 'change_profile_pic',
       properties: {
-        'user_id': event.user.id,
+        'user_id': user!.id,
       },
     );
 
@@ -184,7 +190,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
       return;
     }
 
-    final path = '${event.user.id}/${event.user.username}';
+    final path = '${user.id}/${user.username}';
     final params = UploadImageParams(path: path, file: image);
 
     late UploadImageResult result;
@@ -205,9 +211,9 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     });
 
     final updateParams = UpdateUserBody(
-      id: event.user.id,
+      id: user.id,
       profilePicture: imageLink,
-      username: event.user.username,
+      username: user.username,
     );
 
     final updateResult = await updateUserUseCase.call(updateParams);

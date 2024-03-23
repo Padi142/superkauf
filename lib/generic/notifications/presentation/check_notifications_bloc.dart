@@ -23,7 +23,7 @@ class CheckNotificationBloc extends Bloc<CheckNotificationEvent, CheckNotificati
     Emitter<CheckNotificationsState> emit,
   ) async {
     emit(const CheckNotificationsState.loading());
-    final currentUser = await getCurrentUserUseCase.call();
+    final currentUser = await getCurrentUserUseCase.call(false);
 
     if (currentUser == null) {
       return;

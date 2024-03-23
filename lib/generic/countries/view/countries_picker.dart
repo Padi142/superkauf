@@ -9,6 +9,7 @@ import 'package:superkauf/library/app.dart';
 class CountriesPicker extends StatelessWidget {
   final String? pickedCountry;
   final Function(String) onCountryPicked;
+
   const CountriesPicker({
     super.key,
     required this.pickedCountry,
@@ -28,7 +29,7 @@ class CountriesPicker extends StatelessWidget {
           width: 120,
           height: 40,
           child: AppButton(
-            elevation: 16,
+            elevation: 4,
             popupMenu: loaded.countries.map((it) => PopupOption<String>(value: it.code, title: it.name)).toList(),
             text: pickedCountry ?? 'Country',
             textStyle: App.appTheme.textTheme.titleMedium!.copyWith(),

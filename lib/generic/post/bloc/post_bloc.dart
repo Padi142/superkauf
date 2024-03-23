@@ -86,7 +86,9 @@ class PostBloc extends Bloc<PostEvent, PostState> {
 
     final params = DeletePostBody(postId: event.postId, author: userId.toString());
 
-    final result = await deletePostUseCase.call(params);
+    final token = Supabase.instance.client.auth.currentSession?.accessToken ?? '';
+
+    final result = await deletePostUseCase.call((model: params, token: token));
     result.when(
       success: () {
         Posthog().capture(eventName: 'post_deleted', properties: {
@@ -105,7 +107,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     SavePost event,
     Emitter<PostState> emit,
   ) async {
-    final user = await getCurrentUserUseCase.call();
+    final user = await getCurrentUserUseCase.call(false);
     if (user == null) {
       emit(const PostState.error("You are not logged in"));
       return;
@@ -131,14 +133,16 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     UpdatePost event,
     Emitter<PostState> emit,
   ) async {
-    final user = await getCurrentUserUseCase.call();
+    final user = await getCurrentUserUseCase.call(false);
     if (user == null) {
       emit(const PostState.error("You are not logged in"));
       return;
     }
 
     final params = UpdatePostBody(postId: event.postId, content: event.newDescription, user: user.id);
-    final result = await updatePostUseCase.call(params);
+
+    final token = Supabase.instance.client.auth.currentSession?.accessToken ?? '';
+    final result = await updatePostUseCase.call((model: params, token: token));
     result.map(
       success: (value) async {
         Posthog().capture(eventName: 'post_updated', properties: {
@@ -157,14 +161,17 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     UpdatePostValidUntilEvent event,
     Emitter<PostState> emit,
   ) async {
-    final user = await getCurrentUserUseCase.call();
+    final user = await getCurrentUserUseCase.call(false);
     if (user == null) {
       emit(const PostState.error("You are not logged in"));
       return;
     }
 
     final params = UpdatePostValidUntilBody(postId: event.postId, validUntil: event.newValidUntil, user: user.id);
-    final result = await updatePostValidUntilUseCase.call(params);
+
+    final token = Supabase.instance.client.auth.currentSession?.accessToken ?? '';
+
+    final result = await updatePostValidUntilUseCase.call((model: params, token: token));
     result.map(
       success: (value) async {
         Posthog().capture(eventName: 'post_sale_end_updated', properties: {
@@ -183,7 +190,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     RemoveSavedPost event,
     Emitter<PostState> emit,
   ) async {
-    final user = await getCurrentUserUseCase.call();
+    final user = await getCurrentUserUseCase.call(false);
     if (user == null) {
       emit(const PostState.error("You are not logged in"));
       return;
@@ -209,14 +216,17 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     AddReaction event,
     Emitter<PostState> emit,
   ) async {
-    final user = await getCurrentUserUseCase.call();
+    final user = await getCurrentUserUseCase.call(false);
     if (user == null) {
       emit(const PostState.error("You are not logged in"));
       return;
     }
 
     final params = AddReactionModel(post: event.postId, user: user.id, type: 'like');
-    final result = await addReactionUseCase.call(params);
+
+    final token = Supabase.instance.client.auth.currentSession?.accessToken ?? '';
+
+    final result = await addReactionUseCase.call((model: params, token: token));
     result.map(
       success: (value) async {
         Posthog().capture(eventName: 'post_liked', properties: {
@@ -235,14 +245,17 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     RemoveReaction event,
     Emitter<PostState> emit,
   ) async {
-    final user = await getCurrentUserUseCase.call();
+    final user = await getCurrentUserUseCase.call(false);
     if (user == null) {
       emit(const PostState.error("You are not logged in"));
       return;
     }
 
     final params = RemoveReactionModel(post: event.postId, user: user.id, type: 'like');
-    final result = await removeReactionUseCase.call(params);
+
+    final token = Supabase.instance.client.auth.currentSession?.accessToken ?? '';
+
+    final result = await removeReactionUseCase.call((model: params, token: token));
     result.map(
       success: (value) {
         Posthog().capture(eventName: 'post_unliked', properties: {
@@ -261,7 +274,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     ReportPost event,
     Emitter<PostState> emit,
   ) async {
-    final user = await getCurrentUserUseCase.call();
+    final user = await getCurrentUserUseCase.call(false);
 
     final params = CreateReportBody(reportedPost: event.postId, reportedBy: user?.id ?? 0, type: 'post');
     final result = await createReportUseCase.call(params);

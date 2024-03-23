@@ -3,7 +3,7 @@ import 'package:superkauf/generic/post/model/models/add_reaction_model.dart';
 import 'package:superkauf/generic/post/model/results/reactions_result.dart';
 import 'package:superkauf/library/use_case.dart';
 
-class AddReactionUseCase extends UseCase<ReactionsResult, AddReactionModel> {
+class AddReactionUseCase extends UseCase<ReactionsResult, ({AddReactionModel model, String token})> {
   PostsRepository repository;
 
   AddReactionUseCase({
@@ -12,6 +12,6 @@ class AddReactionUseCase extends UseCase<ReactionsResult, AddReactionModel> {
 
   @override
   Future<ReactionsResult> call(params) async {
-    return await repository.addReaction(params);
+    return await repository.addReaction(params.model, params.token);
   }
 }

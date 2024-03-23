@@ -49,7 +49,7 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
   ) async {
     final List<FullContextPostModel> newPosts = [];
 
-    final user = await getCurrentUserUseCase.call();
+    final user = await getCurrentUserUseCase.call(false);
 
     final settings = await getSettingsUseCase.call();
 

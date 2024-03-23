@@ -10,3 +10,13 @@ abstract class MyNotificationsEvent extends Equatable {
 class GetNotifications extends MyNotificationsEvent {
   const GetNotifications();
 }
+
+class LoadMore extends MyNotificationsEvent {
+  const LoadMore();
+}
+
+class ReloadNotifications extends MyNotificationsEvent {
+  final bool wait;
+
+  const ReloadNotifications({this.wait = false});
+}

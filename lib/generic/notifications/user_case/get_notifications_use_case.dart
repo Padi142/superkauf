@@ -2,7 +2,7 @@ import 'package:superkauf/generic/notifications/data/notification_repository.dar
 import 'package:superkauf/generic/notifications/model/get_notifications_result.dart';
 import 'package:superkauf/library/use_case.dart';
 
-class GetNotificationsUseCase extends UseCase<GetNotificationsResult, int> {
+class GetNotificationsUseCase extends UseCase<GetNotificationsResult, ({int userId, int page, int limit})> {
   NotificationRepository repository;
 
   GetNotificationsUseCase({
@@ -11,6 +11,10 @@ class GetNotificationsUseCase extends UseCase<GetNotificationsResult, int> {
 
   @override
   Future<GetNotificationsResult> call(params) async {
-    return await repository.getNotifications(params);
+    return await repository.getNotifications(
+      params.userId,
+      params.page,
+      params.limit,
+    );
   }
 }

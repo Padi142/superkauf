@@ -19,21 +19,21 @@ mixin _$MyNotificationsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<NotificationModel> notifications) loaded,
+    required TResult Function(List<NotificationModel> notifications, bool isLoading, bool canLoadMore) loaded,
     required TResult Function(String error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<NotificationModel> notifications)? loaded,
+    TResult? Function(List<NotificationModel> notifications, bool isLoading, bool canLoadMore)? loaded,
     TResult? Function(String error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<NotificationModel> notifications)? loaded,
+    TResult Function(List<NotificationModel> notifications, bool isLoading, bool canLoadMore)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) =>
@@ -109,7 +109,7 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<NotificationModel> notifications) loaded,
+    required TResult Function(List<NotificationModel> notifications, bool isLoading, bool canLoadMore) loaded,
     required TResult Function(String error) error,
   }) {
     return loading();
@@ -119,7 +119,7 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<NotificationModel> notifications)? loaded,
+    TResult? Function(List<NotificationModel> notifications, bool isLoading, bool canLoadMore)? loaded,
     TResult? Function(String error)? error,
   }) {
     return loading?.call();
@@ -129,7 +129,7 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<NotificationModel> notifications)? loaded,
+    TResult Function(List<NotificationModel> notifications, bool isLoading, bool canLoadMore)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -182,7 +182,7 @@ abstract class Loading implements MyNotificationsState {
 abstract class _$$LoadedImplCopyWith<$Res> {
   factory _$$LoadedImplCopyWith(_$LoadedImpl value, $Res Function(_$LoadedImpl) then) = __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<NotificationModel> notifications});
+  $Res call({List<NotificationModel> notifications, bool isLoading, bool canLoadMore});
 }
 
 /// @nodoc
@@ -193,12 +193,22 @@ class __$$LoadedImplCopyWithImpl<$Res> extends _$MyNotificationsStateCopyWithImp
   @override
   $Res call({
     Object? notifications = null,
+    Object? isLoading = null,
+    Object? canLoadMore = null,
   }) {
     return _then(_$LoadedImpl(
       null == notifications
           ? _value._notifications
           : notifications // ignore: cast_nullable_to_non_nullable
               as List<NotificationModel>,
+      null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      null == canLoadMore
+          ? _value.canLoadMore
+          : canLoadMore // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -206,7 +216,7 @@ class __$$LoadedImplCopyWithImpl<$Res> extends _$MyNotificationsStateCopyWithImp
 /// @nodoc
 
 class _$LoadedImpl implements Loaded {
-  const _$LoadedImpl(final List<NotificationModel> notifications) : _notifications = notifications;
+  const _$LoadedImpl(final List<NotificationModel> notifications, this.isLoading, this.canLoadMore) : _notifications = notifications;
 
   final List<NotificationModel> _notifications;
   @override
@@ -217,17 +227,27 @@ class _$LoadedImpl implements Loaded {
   }
 
   @override
+  final bool isLoading;
+  @override
+  final bool canLoadMore;
+
+  @override
   String toString() {
-    return 'MyNotificationsState.loaded(notifications: $notifications)';
+    return 'MyNotificationsState.loaded(notifications: $notifications, isLoading: $isLoading, canLoadMore: $canLoadMore)';
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$LoadedImpl && const DeepCollectionEquality().equals(other._notifications, _notifications));
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LoadedImpl &&
+            const DeepCollectionEquality().equals(other._notifications, _notifications) &&
+            (identical(other.isLoading, isLoading) || other.isLoading == isLoading) &&
+            (identical(other.canLoadMore, canLoadMore) || other.canLoadMore == canLoadMore));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_notifications));
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_notifications), isLoading, canLoadMore);
 
   @JsonKey(ignore: true)
   @override
@@ -238,32 +258,32 @@ class _$LoadedImpl implements Loaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<NotificationModel> notifications) loaded,
+    required TResult Function(List<NotificationModel> notifications, bool isLoading, bool canLoadMore) loaded,
     required TResult Function(String error) error,
   }) {
-    return loaded(notifications);
+    return loaded(notifications, isLoading, canLoadMore);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<NotificationModel> notifications)? loaded,
+    TResult? Function(List<NotificationModel> notifications, bool isLoading, bool canLoadMore)? loaded,
     TResult? Function(String error)? error,
   }) {
-    return loaded?.call(notifications);
+    return loaded?.call(notifications, isLoading, canLoadMore);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<NotificationModel> notifications)? loaded,
+    TResult Function(List<NotificationModel> notifications, bool isLoading, bool canLoadMore)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(notifications);
+      return loaded(notifications, isLoading, canLoadMore);
     }
     return orElse();
   }
@@ -304,9 +324,11 @@ class _$LoadedImpl implements Loaded {
 }
 
 abstract class Loaded implements MyNotificationsState {
-  const factory Loaded(final List<NotificationModel> notifications) = _$LoadedImpl;
+  const factory Loaded(final List<NotificationModel> notifications, final bool isLoading, final bool canLoadMore) = _$LoadedImpl;
 
   List<NotificationModel> get notifications;
+  bool get isLoading;
+  bool get canLoadMore;
   @JsonKey(ignore: true)
   _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith => throw _privateConstructorUsedError;
 }
@@ -366,7 +388,7 @@ class _$ErrorImpl implements Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<NotificationModel> notifications) loaded,
+    required TResult Function(List<NotificationModel> notifications, bool isLoading, bool canLoadMore) loaded,
     required TResult Function(String error) error,
   }) {
     return error(this.error);
@@ -376,7 +398,7 @@ class _$ErrorImpl implements Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<NotificationModel> notifications)? loaded,
+    TResult? Function(List<NotificationModel> notifications, bool isLoading, bool canLoadMore)? loaded,
     TResult? Function(String error)? error,
   }) {
     return error?.call(this.error);
@@ -386,7 +408,7 @@ class _$ErrorImpl implements Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<NotificationModel> notifications)? loaded,
+    TResult Function(List<NotificationModel> notifications, bool isLoading, bool canLoadMore)? loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {

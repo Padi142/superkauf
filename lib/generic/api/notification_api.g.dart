@@ -19,7 +19,11 @@ class _NotificationApi implements NotificationApi {
   String? baseUrl;
 
   @override
-  Future<List<NotificationModel>> getNotifications({required int userId}) async {
+  Future<List<NotificationModel>> getNotifications({
+    required int userId,
+    required int page,
+    required int limit,
+  }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -31,7 +35,7 @@ class _NotificationApi implements NotificationApi {
     )
         .compose(
           _dio.options,
-          '/notifications/${userId}',
+          '/notifications/${userId}?page=${page}&limit=${limit}',
           queryParameters: queryParameters,
           data: _data,
         )

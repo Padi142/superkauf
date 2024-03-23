@@ -32,7 +32,7 @@ class SavedPostsPanelBloc extends Bloc<SavedPostsPanelEvent, SavedPostsPanelStat
   ) async {
     emit(const SavedPostsPanelState.loading());
 
-    final userResult = await getCurrentUserUseCase();
+    final userResult = await getCurrentUserUseCase(false);
     if (userResult == null) {
       emit(const SavedPostsPanelState.loading());
       return;

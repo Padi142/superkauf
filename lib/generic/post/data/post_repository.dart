@@ -67,8 +67,8 @@ class PostsRepository {
     });
   }
 
-  Future<CreatePostResult> createPost(CreatePostModel body) async {
-    return postApi.createPost(body: body.toJson()).then((post) {
+  Future<CreatePostResult> createPost(CreatePostModel body, String token) async {
+    return postApi.createPost(body: body.toJson(), token: token).then((post) {
       return CreatePostResult.success(post);
     }).onError((error, stackTrace) {
       if (error is DioException) {
@@ -78,8 +78,8 @@ class PostsRepository {
     });
   }
 
-  Future<DeletePostResult> deletePost(DeletePostBody body) async {
-    return postApi.deletePost(body: body.toJson()).then((post) {
+  Future<DeletePostResult> deletePost(DeletePostBody body, String token) async {
+    return postApi.deletePost(body: body.toJson(), token: token).then((post) {
       return const DeletePostResult.success();
     }).onError((error, stackTrace) {
       if (error is DioException) {
@@ -89,8 +89,8 @@ class PostsRepository {
     });
   }
 
-  Future<GetPostDetailResult> updatePostImage(UpdatePostImageBody body) async {
-    return postApi.updatePostImage(body: body.toJson()).then((post) {
+  Future<GetPostDetailResult> updatePostImage(UpdatePostImageBody body, String token) async {
+    return postApi.updatePostImage(body: body.toJson(), token: token).then((post) {
       return GetPostDetailResult.success(post);
     }).onError((error, stackTrace) {
       if (error is DioException) {
@@ -100,8 +100,8 @@ class PostsRepository {
     });
   }
 
-  Future<GetPostDetailResult> updatePostContent(UpdatePostBody body) async {
-    return postApi.updatePostContent(body: body.toJson(), field: 'description').then((post) {
+  Future<GetPostDetailResult> updatePostContent(UpdatePostBody body, String token) async {
+    return postApi.updatePostContent(body: body.toJson(), field: 'description', token: token).then((post) {
       return GetPostDetailResult.success(post);
     }).onError((error, stackTrace) {
       if (error is DioException) {
@@ -111,8 +111,8 @@ class PostsRepository {
     });
   }
 
-  Future<GetPostDetailResult> updatePostValidUntil(UpdatePostValidUntilBody body) async {
-    return postApi.updatePostContent(body: body.toJson(), field: 'valid_until').then((post) {
+  Future<GetPostDetailResult> updatePostValidUntil(UpdatePostValidUntilBody body, String token) async {
+    return postApi.updatePostContent(body: body.toJson(), field: 'valid_until', token: token).then((post) {
       return GetPostDetailResult.success(post);
     }).onError((error, stackTrace) {
       if (error is DioException) {
@@ -122,8 +122,8 @@ class PostsRepository {
     });
   }
 
-  Future<ReactionsResult> addReaction(AddReactionModel body) async {
-    return postApi.addReaction(body: body.toJson(), id: body.post.toString()).then((reaction) {
+  Future<ReactionsResult> addReaction(AddReactionModel body, String token) async {
+    return postApi.addReaction(body: body.toJson(), id: body.post.toString(), token: token).then((reaction) {
       return ReactionsResult.success(reaction);
     }).onError((error, stackTrace) {
       if (error is DioException) {
@@ -133,8 +133,8 @@ class PostsRepository {
     });
   }
 
-  Future<ReactionsResult> removeReaction(RemoveReactionModel body) async {
-    return postApi.removeReaction(body: body.toJson(), id: body.post.toString()).then((reaction) {
+  Future<ReactionsResult> removeReaction(RemoveReactionModel body, String token) async {
+    return postApi.removeReaction(body: body.toJson(), id: body.post.toString(), token: token).then((reaction) {
       return ReactionsResult.success(reaction);
     }).onError((error, stackTrace) {
       if (error is DioException) {

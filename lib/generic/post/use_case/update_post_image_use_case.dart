@@ -3,7 +3,7 @@ import 'package:superkauf/generic/post/model/get_post_detail_result.dart';
 import 'package:superkauf/generic/post/model/update_post_image_body.dart';
 import 'package:superkauf/library/use_case.dart';
 
-class UpdatePostImageUseCase extends UseCase<GetPostDetailResult, UpdatePostImageBody> {
+class UpdatePostImageUseCase extends UseCase<GetPostDetailResult, ({UpdatePostImageBody model, String token})> {
   PostsRepository repository;
 
   UpdatePostImageUseCase({
@@ -12,6 +12,6 @@ class UpdatePostImageUseCase extends UseCase<GetPostDetailResult, UpdatePostImag
 
   @override
   Future<GetPostDetailResult> call(params) async {
-    return await repository.updatePostImage(params);
+    return await repository.updatePostImage(params.model, params.token);
   }
 }

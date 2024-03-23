@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
+import 'package:superkauf/feature/account/bloc/account_bloc.dart';
 import 'package:superkauf/feature/feed/view/components/loading_feed_post.dart';
 import 'package:superkauf/feature/settings/bloc/settings_bloc.dart';
 import 'package:superkauf/feature/settings/bloc/settings_state.dart';
+import 'package:superkauf/feature/settings/view/components/socials.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/countries/bloc/countries_bloc.dart';
 import 'package:superkauf/generic/countries/view/countries_picker.dart';
 import 'package:superkauf/generic/functions.dart';
+import 'package:superkauf/generic/widget/app_button.dart';
 
+import '../../../library/app.dart';
 import '../../../library/app_screen.dart';
 
 class SettingsScreen extends Screen {
@@ -32,6 +37,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   var pickedCountry = '';
+
   void _listener() {
     scrollToRefreshListener(controller: _scrollController);
   }
@@ -54,6 +60,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        SizedBox(
+                          width: 120,
+                          height: 40,
+                          child: AppButton(
+                            text: 'Change pfp',
+                            radius: 8,
+                            elevation: 4,
+                            textStyle: App.appTheme.textTheme.titleMedium!.copyWith(),
+                            backgroundColor: App.appTheme.colorScheme.surface,
+                            onClick: () {
+                              BlocProvider.of<AccountBloc>(context).add(const ChangeProfilePic(user: null));
+                            },
+                          ),
+                        ),
+                        const Gap(20),
                         CountriesPicker(
                           pickedCountry: pickedCountry,
                           onCountryPicked: (value) {
@@ -65,6 +86,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             setState(() {});
                           },
                         ),
+                        const Gap(200),
+                        const SocialsPanel(),
                       ],
                     );
                   }, error: (error) {

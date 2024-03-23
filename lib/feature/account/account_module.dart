@@ -26,7 +26,7 @@ class AccountModule extends AppModule {
     GetIt.I.registerFactory<AccountBloc>(
       () => AccountBloc(
         accountNavigation: GetIt.I.get<AccountNavigation>(),
-        getCurrentUSeUseCase: GetIt.I.get<GetCurrentUserUseCase>(),
+        getCurrentUserUseCase: GetIt.I.get<GetCurrentUserUseCase>(),
         updateUserUseCase: GetIt.I.get<UpdateUserUseCase>(),
         getUserByUsernameUseCase: GetIt.I.get<GetUserByUsernameUseCase>(),
         pickImageUseCase: GetIt.I.get<PickImageUseCase>(),

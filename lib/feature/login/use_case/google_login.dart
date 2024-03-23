@@ -1,3 +1,4 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -8,8 +9,9 @@ class GoogleLoginUseCase extends UnitUseCase<String?> {
 
   @override
   Future<String?> call() async {
+    final webClientId = dotenv.env['FIREBASE_WEB_CLIENT_ID'] ?? '';
     final supabase = Supabase.instance.client;
-    final GoogleSignIn googleSignIn = GoogleSignIn();
+    final GoogleSignIn googleSignIn = GoogleSignIn(serverClientId: webClientId);
     final googleUser = await googleSignIn.signIn();
     final googleAuth = await googleUser!.authentication;
     final accessToken = googleAuth.accessToken;

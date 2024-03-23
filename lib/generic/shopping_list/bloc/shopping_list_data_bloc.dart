@@ -47,7 +47,7 @@ class ShoppingListDataBloc extends Bloc<ShoppingListDataEvent, ShoppingListDataS
     AddPostToList event,
     Emitter<ShoppingListDataState> emit,
   ) async {
-    final userResult = await getCurrentUserUseCase.call();
+    final userResult = await getCurrentUserUseCase.call(false);
 
     if (userResult == null) {
       return;
@@ -66,7 +66,7 @@ class ShoppingListDataBloc extends Bloc<ShoppingListDataEvent, ShoppingListDataS
     RemovePostFromList event,
     Emitter<ShoppingListDataState> emit,
   ) async {
-    final userResult = await getCurrentUserUseCase.call();
+    final userResult = await getCurrentUserUseCase.call(false);
 
     if (userResult == null) {
       return;
@@ -85,7 +85,7 @@ class ShoppingListDataBloc extends Bloc<ShoppingListDataEvent, ShoppingListDataS
     CreateList event,
     Emitter<ShoppingListDataState> emit,
   ) async {
-    final userResult = await getCurrentUserUseCase.call();
+    final userResult = await getCurrentUserUseCase.call(false);
 
     if (userResult == null) {
       return;
@@ -114,7 +114,7 @@ class ShoppingListDataBloc extends Bloc<ShoppingListDataEvent, ShoppingListDataS
     JoinList event,
     Emitter<ShoppingListDataState> emit,
   ) async {
-    final userResult = await getCurrentUserUseCase.call();
+    final userResult = await getCurrentUserUseCase.call(false);
 
     if (userResult == null) {
       return;
@@ -143,7 +143,7 @@ class ShoppingListDataBloc extends Bloc<ShoppingListDataEvent, ShoppingListDataS
     LeaveList event,
     Emitter<ShoppingListDataState> emit,
   ) async {
-    final userResult = await getCurrentUserUseCase.call();
+    final userResult = await getCurrentUserUseCase.call(false);
 
     if (userResult == null) {
       return;
@@ -181,7 +181,7 @@ class ShoppingListDataBloc extends Bloc<ShoppingListDataEvent, ShoppingListDataS
     DeleteList event,
     Emitter<ShoppingListDataState> emit,
   ) async {
-    final userResult = await getCurrentUserUseCase.call();
+    final userResult = await getCurrentUserUseCase.call(false);
 
     if (userResult == null) {
       return;

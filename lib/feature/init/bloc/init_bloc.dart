@@ -27,7 +27,7 @@ class InitBloc extends Bloc<InitEvent, InitState> {
     emit(const InitState.loading());
     initNavigation.goToHome();
 
-    final user = await getCurrentUserUseCase.call();
+    final user = await getCurrentUserUseCase.call(false);
 
     if (user != null) {
       Posthog().identify(userId: user.id.toString(), userProperties: {"username": user.username, "supabase_uid": user.supabaseUid});

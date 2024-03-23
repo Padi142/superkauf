@@ -34,7 +34,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     Emitter<CommentState> emit,
   ) async {
     emit(const CommentState.loading());
-    final currentUser = await getCurrentUserUseCase.call();
+    final currentUser = await getCurrentUserUseCase.call(false);
 
     final result = await getCommentsUseCase.call(event.postId);
     result.when(
@@ -53,7 +53,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
   ) async {
     emit(const CommentState.loading());
 
-    final user = await getCurrentUserUseCase.call();
+    final user = await getCurrentUserUseCase.call(false);
 
     if (user == null) {
       emit(const CommentState.error('No user found. Are you logged in?'));
@@ -89,7 +89,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
   ) async {
     emit(const CommentState.loading());
 
-    final user = await getCurrentUserUseCase.call();
+    final user = await getCurrentUserUseCase.call(false);
 
     if (user == null) {
       emit(const CommentState.error('user not found'));

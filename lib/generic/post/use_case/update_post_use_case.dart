@@ -3,7 +3,7 @@ import 'package:superkauf/generic/post/model/get_post_detail_result.dart';
 import 'package:superkauf/generic/post/model/update_post_body.dart';
 import 'package:superkauf/library/use_case.dart';
 
-class UpdatePostUseCase extends UseCase<GetPostDetailResult, UpdatePostBody> {
+class UpdatePostUseCase extends UseCase<GetPostDetailResult, ({UpdatePostBody model, String token})> {
   PostsRepository repository;
 
   UpdatePostUseCase({
@@ -12,11 +12,11 @@ class UpdatePostUseCase extends UseCase<GetPostDetailResult, UpdatePostBody> {
 
   @override
   Future<GetPostDetailResult> call(params) async {
-    return await repository.updatePostContent(params);
+    return await repository.updatePostContent(params.model, params.token);
   }
 }
 
-class UpdatePostValidUntilUseCase extends UseCase<GetPostDetailResult, UpdatePostValidUntilBody> {
+class UpdatePostValidUntilUseCase extends UseCase<GetPostDetailResult, ({UpdatePostValidUntilBody model, String token})> {
   PostsRepository repository;
 
   UpdatePostValidUntilUseCase({
@@ -25,6 +25,6 @@ class UpdatePostValidUntilUseCase extends UseCase<GetPostDetailResult, UpdatePos
 
   @override
   Future<GetPostDetailResult> call(params) async {
-    return await repository.updatePostValidUntil(params);
+    return await repository.updatePostValidUntil(params.model, params.token);
   }
 }

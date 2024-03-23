@@ -54,7 +54,7 @@ class PostDetailBloc extends Bloc<PostDetailEvent, PostDetailState> {
     Emitter<PostDetailState> emit,
   ) async {
     var canEdit = false;
-    final userResult = await getCurrentUserUseCase.call();
+    final userResult = await getCurrentUserUseCase.call(false);
 
     final params = GetPostDetailParams(postId: event.postId, userId: userResult?.id ?? 0);
 

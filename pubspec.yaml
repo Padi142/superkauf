@@ -2,7 +2,7 @@ name: superkauf
 description: "A new Flutter project."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+9
+version: 1.0.0+10
 
 environment:
   sdk: '>=3.2.3 <4.0.0'
@@ -55,6 +55,7 @@ dependencies:
   sentry_flutter: ^7.17.0
   textfield_tags: ^3.0.1
   easy_debounce: ^2.0.3
+  shared_preferences: ^2.2.2
 #  flutter_native_splash: ^2.3.10
 
 

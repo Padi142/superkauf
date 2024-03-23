@@ -41,7 +41,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
     _imagePickPanelController = PanelController();
     _storePickPanelController = PanelController();
     Future.delayed(const Duration(milliseconds: 400)).then((value) {
-      if (_imagePickPanelController.isAttached) {
+      if (_imagePickPanelController.isAttached && _imagePickPanelController.isPanelClosed) {
         _imagePickPanelController.open();
       }
     });
@@ -264,7 +264,7 @@ class CreatePostContainer extends StatelessWidget {
                           imagePickPanelController.open();
                         },
                         child: CachedNetworkImage(
-                          imageUrl: 'https://wwrhodyufftnwdbafguo.supabase.co/storage/v1/object/public/profile_pics/zeleny-kocur.jpg',
+                          imageUrl: 'https://storage.googleapis.com/superkauf/profile_pics/zeleny-kocur.jpg',
                           imageBuilder: (context, imageProvider) => Container(
                             decoration: BoxDecoration(
                                 image: DecorationImage(

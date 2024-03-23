@@ -10,8 +10,8 @@ class NotificationRepository {
     required this.notificationApi,
   });
 
-  Future<GetNotificationsResult> getNotifications(int userId) async {
-    return notificationApi.getNotifications(userId: userId).then((notifications) {
+  Future<GetNotificationsResult> getNotifications(int userId, int page, int limit) async {
+    return notificationApi.getNotifications(userId: userId, page: page, limit: limit).then((notifications) {
       return GetNotificationsResult.success(notifications);
     }).onError((error, stackTrace) {
       if (error is DioException) {

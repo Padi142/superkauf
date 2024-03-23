@@ -7,7 +7,11 @@ part 'my_notifications_state.freezed.dart';
 abstract class MyNotificationsState with _$MyNotificationsState {
   const factory MyNotificationsState.loading() = Loading;
 
-  const factory MyNotificationsState.loaded(List<NotificationModel> notifications) = Loaded;
+  const factory MyNotificationsState.loaded(
+    List<NotificationModel> notifications,
+    bool isLoading,
+    bool canLoadMore,
+  ) = Loaded;
 
   const factory MyNotificationsState.error(String error) = Error;
 }

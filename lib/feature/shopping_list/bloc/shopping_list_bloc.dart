@@ -54,7 +54,7 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
   ) async {
     emit(const ShoppingListState.loading());
 
-    final userResult = await getCurrentUserUseCase.call();
+    final userResult = await getCurrentUserUseCase.call(false);
     if (userResult == null) {
       emit(const ShoppingListState.error("You are not logged in"));
       return;
@@ -107,7 +107,7 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
   ) async {
     emit(const ShoppingListState.loading());
 
-    final getCurrentUserResult = await getCurrentUserUseCase.call();
+    final getCurrentUserResult = await getCurrentUserUseCase.call(false);
     final result = await getShoppingListInfoUseCase.call(event.shoppingListId);
     result.map(
       success: (success) {
@@ -125,7 +125,7 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
   ) async {
     emit(const ShoppingListState.loading());
 
-    final userResult = await getCurrentUserUseCase.call();
+    final userResult = await getCurrentUserUseCase.call(false);
     if (userResult == null) {
       emit(const ShoppingListState.error("You are not logged in"));
       return;

@@ -9,9 +9,11 @@ part 'notification_api.g.dart';
 abstract class NotificationApi {
   factory NotificationApi(Dio dio) = _NotificationApi;
 
-  @GET('/notifications/{userId}')
+  @GET('/notifications/{userId}?page={page}&limit={limit}')
   Future<List<NotificationModel>> getNotifications({
     @Path('userId') required int userId,
+    @Path('page') required int page,
+    @Path('limit') required int limit,
   });
 
   @GET('/notifications/{userId}/check')

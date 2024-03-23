@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:hive/hive.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:superkauf/feature/create_post/bloc/create_post_state.dart';
 import 'package:superkauf/feature/create_post/use_case/create_post_navigation.dart';
 import 'package:superkauf/feature/create_post/use_case/pick_image_camera_use_case.dart';
@@ -64,11 +64,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     InitialEvent event,
     Emitter<CreatePostState> emit,
   ) async {
-    final box = await Hive.openBox('user');
-    await box.clear();
-    await box.close();
-
-    final user = await getCurrentUserUseCase.call();
+    final user = await getCurrentUserUseCase.call(true);
     if (user == null) {
       emit(const CreatePostState.error('User not found, are you logged in?'));
 
@@ -139,10 +135,15 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
       },
     );
 
-    final imageUpdateResult = await updatePostImageUseCase.call(UpdatePostImageBody(
-      postId: event.postId,
-      image: imageLink,
-      user: userID,
+    final token = Supabase.instance.client.auth.currentSession?.accessToken ?? '';
+
+    final imageUpdateResult = await updatePostImageUseCase.call((
+      model: UpdatePostImageBody(
+        postId: event.postId,
+        image: imageLink,
+        user: userID,
+      ),
+      token: token
     ));
 
     imageUpdateResult.map(
@@ -163,7 +164,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
   ) async {
     emit(const CreatePostState.creating());
 
-    final user = await getCurrentUserUseCase.call();
+    final user = await getCurrentUserUseCase.call(false);
     final settings = await getSettingsUseCase.call();
 
     if (user == null) {
@@ -192,7 +193,9 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
       return createLabelUseCase.call(params);
     }).toList();
 
-    final result = await createPostUseCase.call(params);
+    final token = Supabase.instance.client.auth.currentSession?.accessToken ?? '';
+
+    final result = await createPostUseCase.call((model: params, token: token));
     await Future.wait(labelCalls);
 
     PostModel? post;

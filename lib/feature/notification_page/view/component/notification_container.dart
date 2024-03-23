@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:card_loading/card_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
@@ -73,7 +74,10 @@ class NotificationContainer extends StatelessWidget {
         padding: const EdgeInsets.all(4),
         child: CachedNetworkImage(
           imageUrl: notification.relatedPost!.image,
-          placeholder: (context, url) => const CircularProgressIndicator(),
+          placeholder: (context, url) => const CardLoading(
+            height: 80,
+            width: 30,
+          ),
           errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
       ),
@@ -118,7 +122,10 @@ class NotificationContainer extends StatelessWidget {
         padding: const EdgeInsets.all(4),
         child: CachedNetworkImage(
           imageUrl: notification.relatedPost!.image,
-          placeholder: (context, url) => const CircularProgressIndicator(),
+          placeholder: (context, url) => const CardLoading(
+            height: 80,
+            width: 30,
+          ),
           errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
       ),
@@ -161,7 +168,10 @@ class NotificationContainer extends StatelessWidget {
         padding: const EdgeInsets.all(4),
         child: CachedNetworkImage(
           imageUrl: notification.relatedPost!.image,
-          placeholder: (context, url) => const CircularProgressIndicator(),
+          placeholder: (context, url) => const CardLoading(
+            height: 80,
+            width: 30,
+          ),
           errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
       ),

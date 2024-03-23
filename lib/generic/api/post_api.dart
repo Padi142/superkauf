@@ -26,11 +26,13 @@ abstract class PostApi {
 
   @POST('/post')
   Future<PostModel> createPost({
+    @Header('Authorization') required String token,
     @Body() required Map<String, dynamic> body,
   });
 
   @DELETE('/post')
   Future<PostModel> deletePost({
+    @Header('Authorization') required String token,
     @Body() required Map<String, dynamic> body,
   });
 
@@ -49,23 +51,27 @@ abstract class PostApi {
 
   @PUT('/post/image')
   Future<PostModel> updatePostImage({
+    @Header('Authorization') required String token,
     @Body() required Map<String, dynamic> body,
   });
 
   @PUT('/post?field={field}')
   Future<PostModel> updatePostContent({
+    @Header('Authorization') required String token,
     @Body() required Map<String, dynamic> body,
     @Path() required String field,
   });
 
   @POST('/post/{id}/add_reaction')
   Future<ReactionModel> addReaction({
+    @Header('Authorization') required String token,
     @Path() required String id,
     @Body() required Map<String, dynamic> body,
   });
 
   @POST('/post/{id}/remove_reaction')
   Future<ReactionModel> removeReaction({
+    @Header('Authorization') required String token,
     @Path() required String id,
     @Body() required Map<String, dynamic> body,
   });

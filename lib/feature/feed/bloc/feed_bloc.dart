@@ -37,7 +37,7 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     GetFeed event,
     Emitter<FeedState> emit,
   ) async {
-    final user = await getCurrentUserUseCase.call();
+    final user = await getCurrentUserUseCase.call(false);
 
     final settings = await getSettingsUseCase.call();
 

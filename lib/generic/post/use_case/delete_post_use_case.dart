@@ -3,7 +3,7 @@ import 'package:superkauf/generic/post/model/delete_post_body.dart';
 import 'package:superkauf/generic/post/model/delete_post_result.dart';
 import 'package:superkauf/library/use_case.dart';
 
-class DeletePostUseCase extends UseCase<DeletePostResult, DeletePostBody> {
+class DeletePostUseCase extends UseCase<DeletePostResult, ({DeletePostBody model, String token})> {
   PostsRepository repository;
 
   DeletePostUseCase({
@@ -12,6 +12,6 @@ class DeletePostUseCase extends UseCase<DeletePostResult, DeletePostBody> {
 
   @override
   Future<DeletePostResult> call(params) async {
-    return await repository.deletePost(params);
+    return await repository.deletePost(params.model, params.token);
   }
 }

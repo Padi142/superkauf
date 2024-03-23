@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:superkauf/feature/account/bloc/account_bloc.dart';
 import 'package:superkauf/feature/settings/bloc/settings_bloc.dart';
 import 'package:superkauf/feature/settings/view/settings_page.dart';
 import 'package:superkauf/generic/countries/bloc/countries_bloc.dart';
@@ -36,6 +37,9 @@ class UserSettingsModule extends AppModule {
           ),
           BlocProvider<CountriesBloc>.value(
             value: GetIt.I.get<CountriesBloc>(),
+          ),
+          BlocProvider<AccountBloc>.value(
+            value: GetIt.I.get<AccountBloc>(),
           ),
         ],
         child: GetIt.I.get<SettingsScreen>(),

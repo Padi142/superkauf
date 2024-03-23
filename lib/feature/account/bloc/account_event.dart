@@ -26,12 +26,14 @@ class ChangeInstagram extends AccountEvent {
 }
 
 class ChangeProfilePic extends AccountEvent {
-  final UserModel user;
+  final UserModel? user;
+
   const ChangeProfilePic({required this.user});
 }
 
 class UpdateCountry extends AccountEvent {
   final CountryModel country;
+
   const UpdateCountry({required this.country});
 }
 
