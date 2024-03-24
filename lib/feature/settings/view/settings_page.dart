@@ -75,6 +75,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                         ),
                         const Gap(20),
+                        const Text('Change the country of posts and stores'),
+                        const Gap(2),
                         CountriesPicker(
                           pickedCountry: pickedCountry,
                           onCountryPicked: (value) {

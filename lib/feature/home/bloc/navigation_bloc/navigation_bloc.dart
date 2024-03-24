@@ -130,7 +130,7 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     OpenPostDetailScreen event,
     Emitter<NavigationState> emit,
   ) async {
-    AppNavigation().push(ScreenPath.postDetailScreen);
+    AppNavigation().push(ScreenPath.postDetailScreen, replace: event.shouldReplace ? 1 : 0);
 
     Posthog().screen(
       screenName: ScreenPath.postDetailScreen,

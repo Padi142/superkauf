@@ -89,6 +89,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       'login_type': 'email',
     });
 
+    // Posthog().capture(eventName: 'user_logged_in', properties: {
+    //   'login_type': 'email',
+    // });
+
     emit(const LoginState.confirmEmail());
   }
 
@@ -157,9 +161,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         "username": success.user.username,
       });
 
-      Posthog().capture(eventName: 'user_signed_up', properties: {
-        'login_type': 'email',
-      });
+      // Posthog().capture(eventName: 'user_signed_up', properties: {
+      //   'login_type': 'email',
+      // });
 
       accountNavigation.goToAccount();
     }, failure: (failure) {

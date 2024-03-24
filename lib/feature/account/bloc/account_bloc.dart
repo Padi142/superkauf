@@ -60,9 +60,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     GetUser event,
     Emitter<AccountState> emit,
   ) async {
-    final box = await Hive.openBox('user');
-    box.clear();
-    final user = await getCurrentUserUseCase.call(false);
+    final user = await getCurrentUserUseCase.call(true);
 
     if (user == null) {
       emit(const AccountState.error('You are not logged in'));

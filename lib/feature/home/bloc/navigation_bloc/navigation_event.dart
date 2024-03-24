@@ -6,6 +6,7 @@ abstract class NavigationEvent extends Equatable {
 
 class OpenSettingsScreen extends NavigationEvent {
   final bool shouldReplace;
+
   const OpenSettingsScreen({
     this.shouldReplace = false,
   });
@@ -84,9 +85,11 @@ class OpenSearchScreen extends NavigationEvent {
 
 class OpenPostDetailScreen extends NavigationEvent {
   final int postId;
+  final bool shouldReplace;
 
   const OpenPostDetailScreen({
     required this.postId,
+    this.shouldReplace = false,
   });
 
   @override

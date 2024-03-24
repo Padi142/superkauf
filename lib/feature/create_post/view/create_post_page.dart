@@ -190,7 +190,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                         }, success: (success) {
                           //Reload feed on post created
                           BlocProvider.of<postDetail.PostDetailBloc>(context).add(postDetail.InitialEvent(postId: success));
-                          BlocProvider.of<NavigationBloc>(context).add(OpenPostDetailScreen(postId: success));
+                          BlocProvider.of<NavigationBloc>(context).add(OpenPostDetailScreen(postId: success, shouldReplace: true));
                           return Container();
                         }, orElse: () {
                           return AppButton(

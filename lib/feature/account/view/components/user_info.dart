@@ -130,9 +130,11 @@ class AccountInfoWidget extends StatelessWidget {
                       ? ChangeInstagramField(
                           onDone: onInstagramChangeDone,
                         )
-                      : InstagramButton(
-                          user: user,
-                        ),
+                      : user.instagram != ""
+                          ? InstagramButton(
+                              user: user,
+                            )
+                          : const SizedBox(),
                 ],
               ),
             ),

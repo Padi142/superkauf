@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:superkauf/feature/discover/bloc/discover_bloc.dart';
 import 'package:superkauf/generic/store/model/store_model.dart';
 import 'package:superkauf/generic/widget/app_button.dart';
@@ -26,6 +27,8 @@ class SortingButtons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        Text('sort_by'.tr()),
+        const Gap(8),
         AppButton(
           backgroundColor: App.appTheme.colorScheme.primary,
           text: sortType.name,
