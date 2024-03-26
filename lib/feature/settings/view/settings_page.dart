@@ -44,64 +44,66 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          appBar: AppBar(),
-          backgroundColor: Theme.of(context).colorScheme.background,
-          body: LayoutBuilder(builder: (context, constraints) {
-            return SizedBox(
-              height: constraints.maxHeight,
-              width: constraints.maxWidth,
-              child: BlocBuilder<UserSettingsBloc, SettingsState>(
-                builder: (context, state) {
-                  return state.maybeMap(loaded: (loaded) {
-                    pickedCountry = loaded.settings.country.code;
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 120,
-                          height: 40,
-                          child: AppButton(
-                            text: 'Change pfp',
-                            radius: 8,
-                            elevation: 4,
-                            textStyle: App.appTheme.textTheme.titleMedium!.copyWith(),
-                            backgroundColor: App.appTheme.colorScheme.surface,
-                            onClick: () {
-                              BlocProvider.of<AccountBloc>(context).add(const ChangeProfilePic(user: null));
-                            },
-                          ),
-                        ),
-                        const Gap(20),
-                        const Text('Change the country of posts and stores'),
-                        const Gap(2),
-                        CountriesPicker(
-                          pickedCountry: pickedCountry,
-                          onCountryPicked: (value) {
-                            Future.delayed(const Duration(milliseconds: 500)).then((value) {
-                              BlocProvider.of<UserSettingsBloc>(context).add(const GetSettings());
-                            });
-
-                            pickedCountry = value;
-                            setState(() {});
+    return Scaffold(
+        appBar: AppBar(),
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: LayoutBuilder(builder: (context, constraints) {
+          return SizedBox(
+            height: constraints.maxHeight,
+            width: constraints.maxWidth,
+            child: BlocBuilder<UserSettingsBloc, SettingsState>(
+              builder: (context, state) {
+                return state.maybeMap(loaded: (loaded) {
+                  pickedCountry = loaded.settings.country.code;
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 120,
+                        height: 40,
+                        child: AppButton(
+                          text: 'Change pfp',
+                          radius: 8,
+                          elevation: 4,
+                          textStyle:
+                              App.appTheme.textTheme.titleMedium!.copyWith(),
+                          backgroundColor: App.appTheme.colorScheme.surface,
+                          onClick: () {
+                            BlocProvider.of<AccountBloc>(context)
+                                .add(const ChangeProfilePic(user: null));
                           },
                         ),
-                        const Gap(200),
-                        const SocialsPanel(),
-                      ],
-                    );
-                  }, error: (error) {
-                    return Center(child: Text(error.error));
-                  }, orElse: () {
-                    return const PostLoadingView();
-                  });
-                },
-              ),
-            );
-          })),
-    );
+                      ),
+                      const Gap(20),
+                      const Text('Change the country of posts and stores'),
+                      const Gap(2),
+                      CountriesPicker(
+                        pickedCountry: pickedCountry,
+                        onCountryPicked: (value) {
+                          Future.delayed(const Duration(milliseconds: 500))
+                              .then((value) {
+                            BlocProvider.of<UserSettingsBloc>(context)
+                                .add(const GetSettings());
+                          });
+
+                          pickedCountry = value;
+                          setState(() {});
+                        },
+                      ),
+                      const Gap(200),
+                      const SocialsPanel(),
+                    ],
+                  );
+                }, error: (error) {
+                  return Center(child: Text(error.error));
+                }, orElse: () {
+                  return const PostLoadingView();
+                });
+              },
+            ),
+          );
+        }));
   }
 
   @override

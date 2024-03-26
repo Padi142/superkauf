@@ -47,81 +47,83 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: BlocListener<ShoppingListDataBloc, ShoppingListDataState>(
-        listener: (context, state) {
-          state.maybeMap(
-              orElse: () {},
-              listJoined: (list) {
-                context.read<ShoppingListBloc>().add(PickShoppingList(
-                      shoppingListId: list.listId,
-                    ));
-              },
-              listDeleted: (list) {
-                context.read<ShoppingListBloc>().add(const InitialListEvent());
-              },
-              listLeaved: (leaved) {
-                context.read<ShoppingListBloc>().add(const InitialListEvent());
-              },
-              error: (error) {
-                BlocProvider.of<SnackbarBloc>(context).add(ErrorSnackbar(
-                  message: error.message,
-                ));
-              });
-        },
-        child: Scaffold(
-          floatingActionButton: FloatingActionButton(
-            elevation: 4,
-            onPressed: () {
-              _showPopup(
-                context,
-                (code) {
-                  context.read<ShoppingListDataBloc>().add(JoinList(code: code));
-
-                  Posthog().capture(
-                    eventName: 'shopping_list_joined',
-                    properties: {
-                      'code': code,
-                    },
-                  );
-                },
-                (name) {
-                  context.read<ShoppingListDataBloc>().add(CreateList(name: name));
-                  Posthog().capture(
-                    eventName: 'shopping_list_created',
-                    properties: {
-                      'name': name,
-                    },
-                  );
-                },
-              );
+    return BlocListener<ShoppingListDataBloc, ShoppingListDataState>(
+      listener: (context, state) {
+        state.maybeMap(
+            orElse: () {},
+            listJoined: (list) {
+              context.read<ShoppingListBloc>().add(PickShoppingList(
+                    shoppingListId: list.listId,
+                  ));
             },
-            child: const Icon(Icons.add),
-          ),
-          body: LayoutBuilder(builder: (context, constraints) {
-            return SingleChildScrollView(
-              child: RefreshIndicator(
-                onRefresh: () async {
-                  context.read<ShoppingListBloc>().add(
-                        const ReloadShoppingList(),
-                      );
-                },
-                child: Column(
-                  children: [
-                    BlocBuilder<ShoppingListBloc, ShoppingListState>(builder: (context, state) {
-                      return _builder(context, state, constraints);
-                    }),
-                  ],
-                ),
-              ),
+            listDeleted: (list) {
+              context.read<ShoppingListBloc>().add(const InitialListEvent());
+            },
+            listLeaved: (leaved) {
+              context.read<ShoppingListBloc>().add(const InitialListEvent());
+            },
+            error: (error) {
+              BlocProvider.of<SnackbarBloc>(context).add(ErrorSnackbar(
+                message: error.message,
+              ));
+            });
+      },
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          elevation: 4,
+          onPressed: () {
+            _showPopup(
+              context,
+              (code) {
+                context.read<ShoppingListDataBloc>().add(JoinList(code: code));
+
+                Posthog().capture(
+                  eventName: 'shopping_list_joined',
+                  properties: {
+                    'code': code,
+                  },
+                );
+              },
+              (name) {
+                context
+                    .read<ShoppingListDataBloc>()
+                    .add(CreateList(name: name));
+                Posthog().capture(
+                  eventName: 'shopping_list_created',
+                  properties: {
+                    'name': name,
+                  },
+                );
+              },
             );
-          }),
+          },
+          child: const Icon(Icons.add),
         ),
+        body: LayoutBuilder(builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: RefreshIndicator(
+              onRefresh: () async {
+                context.read<ShoppingListBloc>().add(
+                      const ReloadShoppingList(),
+                    );
+              },
+              child: Column(
+                children: [
+                  BlocBuilder<ShoppingListBloc, ShoppingListState>(
+                      builder: (context, state) {
+                    return _builder(context, state, constraints);
+                  }),
+                ],
+              ),
+            ),
+          );
+        }),
       ),
     );
   }
 
-  Widget _builder(BuildContext context, ShoppingListState state, BoxConstraints constraints) {
+  Widget _builder(BuildContext context, ShoppingListState state,
+      BoxConstraints constraints) {
     return state.maybeMap(initial: (initial) {
       return SizedBox(
         key: UniqueKey(),
@@ -135,7 +137,12 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
             }
             var posts = 0;
             if (index > initial.shoppingLists.length) {
-              posts = initial.savedPosts.where((element) => element.post.store == initial.stores[index - (initial.shoppingLists.length + 1)].id).length;
+              posts = initial.savedPosts
+                  .where((element) =>
+                      element.post.store ==
+                      initial.stores[index - (initial.shoppingLists.length + 1)]
+                          .id)
+                  .length;
               if (posts == 0) {
                 return const SizedBox();
               }
@@ -143,18 +150,39 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
 
             return ShoppingListTile(
               key: UniqueKey(),
-              image: index < initial.shoppingLists.length ? initial.shoppingLists[index].logo : initial.stores[index - (initial.shoppingLists.length + 1)].image,
-              name: index < initial.shoppingLists.length ? initial.shoppingLists[index].name : initial.stores[index - (initial.shoppingLists.length + 1)].name,
-              items: (index < initial.shoppingLists.length ? initial.shoppingLists[index].postsLength : posts) ?? 0,
+              image: index < initial.shoppingLists.length
+                  ? initial.shoppingLists[index].logo
+                  : initial
+                      .stores[index - (initial.shoppingLists.length + 1)].image,
+              name: index < initial.shoppingLists.length
+                  ? initial.shoppingLists[index].name
+                  : initial
+                      .stores[index - (initial.shoppingLists.length + 1)].name,
+              items: (index < initial.shoppingLists.length
+                      ? initial.shoppingLists[index].postsLength
+                      : posts) ??
+                  0,
               constraints: constraints,
               onTap: () {
                 index < initial.shoppingLists.length
-                    ? context.read<ShoppingListBloc>().add(PickShoppingList(shoppingListId: initial.shoppingLists[index].id))
-                    : context.read<ShoppingListBloc>().add(PickStore(store: initial.stores[index - (initial.shoppingLists.length + 1)]));
+                    ? context.read<ShoppingListBloc>().add(PickShoppingList(
+                        shoppingListId: initial.shoppingLists[index].id))
+                    : context.read<ShoppingListBloc>().add(PickStore(
+                        store: initial.stores[
+                            index - (initial.shoppingLists.length + 1)]));
 
-                Posthog().capture(eventName: index < initial.shoppingLists.length ? 'shopping_list_tile_tapped' : 'store_tile_tapped', properties: {
-                  'list': index < initial.shoppingLists.length ? initial.shoppingLists[index].id : initial.stores[index - (initial.shoppingLists.length + 1)].id,
-                });
+                Posthog().capture(
+                    eventName: index < initial.shoppingLists.length
+                        ? 'shopping_list_tile_tapped'
+                        : 'store_tile_tapped',
+                    properties: {
+                      'list': index < initial.shoppingLists.length
+                          ? initial.shoppingLists[index].id
+                          : initial
+                              .stores[
+                                  index - (initial.shoppingLists.length + 1)]
+                              .id,
+                    });
               },
             );
           },
@@ -201,7 +229,8 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     super.dispose();
   }
 
-  Future<void> _showPopup(BuildContext context, Function(String) onJoin, Function(String) onCreate) async {
+  Future<void> _showPopup(BuildContext context, Function(String) onJoin,
+      Function(String) onCreate) async {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -219,6 +248,7 @@ class ListDialog extends StatefulWidget {
   final BuildContext originalContext;
   final Function(String) onJoin;
   final Function(String) onCreate;
+
   const ListDialog({
     super.key,
     required this.originalContext,
@@ -235,6 +265,7 @@ class _ListDialogState extends State<ListDialog> {
   var showJoin = false;
 
   final inputField = TextEntryModel();
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -250,7 +281,10 @@ class _ListDialogState extends State<ListDialog> {
                       backgroundColor: App.appTheme.colorScheme.primary,
                       radius: 6,
                       text: 'Join a list',
-                      textStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+                      textStyle: Theme.of(context)
+                          .textTheme
+                          .titleMedium!
+                          .copyWith(color: Colors.white),
                       elevation: 4,
                       onClick: () {
                         setState(() {
@@ -263,7 +297,10 @@ class _ListDialogState extends State<ListDialog> {
                       backgroundColor: App.appTheme.colorScheme.primary,
                       radius: 6,
                       text: 'Create a list',
-                      textStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+                      textStyle: Theme.of(context)
+                          .textTheme
+                          .titleMedium!
+                          .copyWith(color: Colors.white),
                       elevation: 4,
                       onClick: () {
                         setState(() {
@@ -282,7 +319,8 @@ class _ListDialogState extends State<ListDialog> {
                       label: showCreate ? 'My List :PP ' : 'Join code',
                       validators: [
                         ValidatorEmpty(),
-                        ValidatorRegex(r'^.{3,20}$', 'Invalid input. 3-20 characters only'),
+                        ValidatorRegex(r'^.{3,20}$',
+                            'Invalid input. 3-20 characters only'),
                       ],
                     ),
                     const Gap(8),
@@ -290,10 +328,14 @@ class _ListDialogState extends State<ListDialog> {
                       backgroundColor: App.appTheme.colorScheme.primary,
                       radius: 6,
                       text: showCreate ? 'Create' : 'Join',
-                      textStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+                      textStyle: Theme.of(context)
+                          .textTheme
+                          .titleMedium!
+                          .copyWith(color: Colors.white),
                       elevation: 4,
                       onClick: () async {
-                        final valid = await TextEntryModel.validateFields([inputField]);
+                        final valid =
+                            await TextEntryModel.validateFields([inputField]);
 
                         if (!valid) {
                           setState(() {});

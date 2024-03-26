@@ -32,7 +32,8 @@ class LoginScreen extends Screen<String> {
   State<StatefulWidget> createState() => _InitScreenState();
 }
 
-class _InitScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin {
+class _InitScreenState extends State<LoginScreen>
+    with SingleTickerProviderStateMixin {
   bool _redirecting = false;
   late final StreamSubscription<AuthState> _authStateSubscription;
 
@@ -47,7 +48,8 @@ class _InitScreenState extends State<LoginScreen> with SingleTickerProviderState
         BlocProvider.of<LoginBloc>(context).add(const CreateUserProfile());
 
         if (widget.params == null) {
-          BlocProvider.of<NavigationBloc>(context).add(const OpenProfileScreen(shouldReplace: true));
+          BlocProvider.of<NavigationBloc>(context)
+              .add(const OpenProfileScreen(shouldReplace: true));
         } else {
           BlocProvider.of<LoginBloc>(context).add(GoBack(path: widget.params!));
         }
@@ -67,106 +69,119 @@ class _InitScreenState extends State<LoginScreen> with SingleTickerProviderState
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        // appBar: AppBar(
-        //   title: Text('login_page_title'.tr()),
-        // ),
-        body: LayoutBuilder(builder: (context, constraints) {
-          return SizedBox(
-            height: constraints.maxHeight,
-            width: constraints.maxWidth,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                SizedBox(
-                  height: constraints.maxHeight,
-                  width: constraints.maxWidth,
-                  child: Lottie.asset(
-                    'assets/lottie/lottie_login_1.json',
-                    controller: controller,
-                    fit: BoxFit.cover,
-                  ),
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      // appBar: AppBar(
+      //   title: Text('login_page_title'.tr()),
+      // ),
+      body: LayoutBuilder(builder: (context, constraints) {
+        return SizedBox(
+          height: constraints.maxHeight,
+          width: constraints.maxWidth,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              SizedBox(
+                height: constraints.maxHeight,
+                width: constraints.maxWidth,
+                child: Lottie.asset(
+                  'assets/lottie/lottie_login_1.json',
+                  controller: controller,
+                  fit: BoxFit.cover,
                 ),
-                AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 200),
-                  switchInCurve: Curves.easeIn,
-                  transitionBuilder: (child, animation) {
-                    return ScaleTransition(
-                      scale: animation,
-                      child: child,
-                    );
-                  },
-                  child: showLogin
-                      ? const LoginView()
-                      : showRegister
-                          ? const RegisterView()
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  height: 60,
-                                  width: constraints.maxWidth * 0.8,
-                                  child: AppButton(
-                                    text: 'Log in',
-                                    textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
-                                    onClick: () {
-                                      controller.forward();
-                                      showLogin = true;
-                                      setState(() {});
-                                    },
-                                    backgroundColor: App.appTheme.colorScheme.primary,
-                                    radius: 8,
-                                    elevation: 10,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                SizedBox(
-                                  height: 60,
-                                  width: constraints.maxWidth * 0.8,
-                                  child: AppButton(
-                                    text: 'Register',
-                                    textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
-                                    onClick: () {
-                                      controller.forward();
-                                      showRegister = true;
-                                      setState(() {});
-                                    },
-                                    backgroundColor: App.appTheme.colorScheme.primary,
-                                    radius: 8,
-                                    elevation: 10,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 40,
-                                ),
-                                Text('By logging in you agree to our', style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.grey)),
-                                GestureDetector(
-                                  onTap: () async {
-                                    final url = Uri.parse('https://superkauf-api.krejzac.cz/terms');
-                                    // if (await canLaunchUrl(url)) {
-                                    await launchUrl(url);
-                                    // } else {
-                                    //   // Handle the case where the URL cannot be launched
-                                    // }
+              ),
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 200),
+                switchInCurve: Curves.easeIn,
+                transitionBuilder: (child, animation) {
+                  return ScaleTransition(
+                    scale: animation,
+                    child: child,
+                  );
+                },
+                child: showLogin
+                    ? const LoginView()
+                    : showRegister
+                        ? const RegisterView()
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: 60,
+                                width: constraints.maxWidth * 0.8,
+                                child: AppButton(
+                                  text: 'Log in',
+                                  textStyle: App.appTheme.textTheme.titleMedium!
+                                      .copyWith(color: Colors.white),
+                                  onClick: () {
+                                    controller.forward();
+                                    showLogin = true;
+                                    setState(() {});
                                   },
-                                  child: Text('Terms of Service', style: Theme.of(context).textTheme.titleMedium!.copyWith(color: App.appTheme.colorScheme.primary)),
+                                  backgroundColor:
+                                      App.appTheme.colorScheme.primary,
+                                  radius: 8,
+                                  elevation: 10,
                                 ),
-                              ],
-                            ),
-                )
-              ],
-            ),
-          );
-        }),
-      ),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              SizedBox(
+                                height: 60,
+                                width: constraints.maxWidth * 0.8,
+                                child: AppButton(
+                                  text: 'Register',
+                                  textStyle: App.appTheme.textTheme.titleMedium!
+                                      .copyWith(color: Colors.white),
+                                  onClick: () {
+                                    controller.forward();
+                                    showRegister = true;
+                                    setState(() {});
+                                  },
+                                  backgroundColor:
+                                      App.appTheme.colorScheme.primary,
+                                  radius: 8,
+                                  elevation: 10,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 40,
+                              ),
+                              Text('By logging in you agree to our',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .copyWith(color: Colors.grey)),
+                              GestureDetector(
+                                onTap: () async {
+                                  final url = Uri.parse(
+                                      'https://superkauf-api.krejzac.cz/terms');
+                                  // if (await canLaunchUrl(url)) {
+                                  await launchUrl(url);
+                                  // } else {
+                                  //   // Handle the case where the URL cannot be launched
+                                  // }
+                                },
+                                child: Text('Terms of Service',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .copyWith(
+                                            color: App
+                                                .appTheme.colorScheme.primary)),
+                              ),
+                            ],
+                          ),
+              )
+            ],
+          ),
+        );
+      }),
     );
   }
 
@@ -248,7 +263,8 @@ class RegisterView extends StatelessWidget {
                     width: 200,
                     child: AppButton(
                       text: 'open_email_button_text'.tr(),
-                      textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
+                      textStyle: App.appTheme.textTheme.titleMedium!
+                          .copyWith(color: Colors.white),
                       radius: 8,
                       backgroundColor: App.appTheme.colorScheme.primary,
                       imagePrefix: const FaIcon(
@@ -317,10 +333,16 @@ class AuthProviders extends StatelessWidget {
           child: AppButton(
             backgroundColor: const Color(0xFF7289DA),
             radius: 6,
-            imagePrefix: SvgPicture.asset('assets/images/discord-icon.svg', width: 25, colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
+            imagePrefix: SvgPicture.asset('assets/images/discord-icon.svg',
+                width: 25,
+                colorFilter:
+                    const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
             spaceTextImage: 15,
             text: 'Discord',
-            textStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+            textStyle: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(color: Colors.white),
             onClick: () {
               BlocProvider.of<LoginBloc>(context).add(const DiscordLogin());
             },
@@ -335,10 +357,16 @@ class AuthProviders extends StatelessWidget {
           child: AppButton(
             backgroundColor: Colors.black,
             radius: 6,
-            imagePrefix: SvgPicture.asset('assets/images/apple-logo.svg', width: 25, colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
+            imagePrefix: SvgPicture.asset('assets/images/apple-logo.svg',
+                width: 25,
+                colorFilter:
+                    const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
             spaceTextImage: 15,
             text: 'Apple',
-            textStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+            textStyle: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(color: Colors.white),
             onClick: () {
               BlocProvider.of<LoginBloc>(context).add(const AppleLogin());
             },
@@ -353,10 +381,16 @@ class AuthProviders extends StatelessWidget {
           child: AppButton(
             backgroundColor: const Color(0xFF4285F4),
             radius: 6,
-            imagePrefix: SvgPicture.asset('assets/images/google-logo.svg', width: 25, colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
+            imagePrefix: SvgPicture.asset('assets/images/google-logo.svg',
+                width: 25,
+                colorFilter:
+                    const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
             spaceTextImage: 15,
             text: 'Google',
-            textStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+            textStyle: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(color: Colors.white),
             onClick: () {
               BlocProvider.of<LoginBloc>(context).add(const GoogleLogin());
             },
@@ -412,7 +446,8 @@ class _EmailLoginState extends State<EmailLogin> {
         BlocConsumer<LoginBloc, LoginState>(listener: (context, state) {
           state.maybeMap(
               error: (value) {
-                BlocProvider.of<SnackbarBloc>(context).add(ErrorSnackbar(message: value.message));
+                BlocProvider.of<SnackbarBloc>(context)
+                    .add(ErrorSnackbar(message: value.message));
               },
               orElse: () {});
         }, builder: (context, state) {
@@ -425,7 +460,10 @@ class _EmailLoginState extends State<EmailLogin> {
                 radius: 6,
                 enabled: false,
                 imagePrefix: const AppProgress(),
-                textStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+                textStyle: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(color: Colors.white),
                 onClick: () async {},
               ),
             );
@@ -437,9 +475,13 @@ class _EmailLoginState extends State<EmailLogin> {
                 backgroundColor: App.appTheme.colorScheme.primary,
                 radius: 6,
                 text: 'login_button_text'.tr(),
-                textStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+                textStyle: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(color: Colors.white),
                 onClick: () async {
-                  final valid = await TextEntryModel.validateFields([emailController, passwordController]);
+                  final valid = await TextEntryModel.validateFields(
+                      [emailController, passwordController]);
                   if (!valid) {
                     setState(() {});
                     return;
@@ -514,7 +556,8 @@ class _EmailRegisterState extends State<EmailRegister> {
         BlocConsumer<LoginBloc, LoginState>(listener: (context, state) {
           state.maybeMap(
               error: (value) {
-                BlocProvider.of<SnackbarBloc>(context).add(ErrorSnackbar(message: value.message));
+                BlocProvider.of<SnackbarBloc>(context)
+                    .add(ErrorSnackbar(message: value.message));
               },
               orElse: () {});
         }, builder: (context, state) {
@@ -527,7 +570,10 @@ class _EmailRegisterState extends State<EmailRegister> {
                 radius: 6,
                 enabled: false,
                 imagePrefix: const AppProgress(),
-                textStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+                textStyle: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(color: Colors.white),
                 onClick: () async {},
               ),
             );
@@ -539,9 +585,13 @@ class _EmailRegisterState extends State<EmailRegister> {
                 backgroundColor: App.appTheme.colorScheme.primary,
                 radius: 6,
                 text: 'register_button_text'.tr(),
-                textStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+                textStyle: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(color: Colors.white),
                 onClick: () async {
-                  final valid = await TextEntryModel.validateFields([emailController, passwordController]);
+                  final valid = await TextEntryModel.validateFields(
+                      [emailController, passwordController]);
                   if (!valid) {
                     setState(() {});
                     return;

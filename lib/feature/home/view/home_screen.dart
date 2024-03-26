@@ -28,7 +28,8 @@ class HomeScreen extends Screen {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    BlocProvider.of<CheckNotificationBloc>(context).add(const CheckNotifications());
+    BlocProvider.of<CheckNotificationBloc>(context)
+        .add(const CheckNotifications());
     super.initState();
   }
 
@@ -63,7 +64,8 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         }
       },
-      child: BlocBuilder<NavigationBloc, NavigationState>(builder: (context, state) {
+      child: BlocBuilder<NavigationBloc, NavigationState>(
+          builder: (context, state) {
         switch (state) {
           case final NavigationStateLoaded loaded:
             return SlidingUpPanel(
@@ -76,125 +78,135 @@ class _HomeScreenState extends State<HomeScreen> {
               panelBuilder: (ScrollController sc) {
                 return SavePostPanel(panelController: _postSavedPanel);
               },
-              body: SafeArea(
-                child: Scaffold(
-                  backgroundColor: Theme.of(context).colorScheme.background,
-                  appBar: AppBar(
-                    title: Text('app_title'.tr()),
-                    leading: BlocBuilder<CheckNotificationBloc, CheckNotificationsState>(
-                      builder: (context, state) {
-                        return state.maybeMap(success: (success) {
-                          if (success.notifications.newNotifications) {
-                            return IconButton(
-                              onPressed: () {
-                                BlocProvider.of<NavigationBloc>(context).add(const OpenMyNotificationsScreen());
-                                BlocProvider.of<CheckNotificationBloc>(context).add(const ClearNotifications());
-                              },
-                              icon: Badge(
-                                  alignment: Alignment.topRight,
-                                  label: Text(
-                                    success.notifications.notificationCount.toString(),
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                    ),
+              body: Scaffold(
+                backgroundColor: Theme.of(context).colorScheme.background,
+                appBar: AppBar(
+                  title: Text('app_title'.tr()),
+                  leading: BlocBuilder<CheckNotificationBloc,
+                      CheckNotificationsState>(
+                    builder: (context, state) {
+                      return state.maybeMap(success: (success) {
+                        if (success.notifications.newNotifications) {
+                          return IconButton(
+                            onPressed: () {
+                              BlocProvider.of<NavigationBloc>(context)
+                                  .add(const OpenMyNotificationsScreen());
+                              BlocProvider.of<CheckNotificationBloc>(context)
+                                  .add(const ClearNotifications());
+                            },
+                            icon: Badge(
+                                alignment: Alignment.topRight,
+                                label: Text(
+                                  success.notifications.notificationCount
+                                      .toString(),
+                                  style: const TextStyle(
+                                    color: Colors.white,
                                   ),
-                                  child: const Icon(Icons.notifications)),
-                            );
-                          }
-                          return IconButton(
-                            onPressed: () {
-                              BlocProvider.of<NavigationBloc>(context).add(const OpenMyNotificationsScreen());
-                            },
-                            icon: const Icon(Icons.notifications),
+                                ),
+                                child: const Icon(Icons.notifications)),
                           );
-                        }, orElse: () {
-                          return IconButton(
-                            onPressed: () {
-                              BlocProvider.of<NavigationBloc>(context).add(const OpenMyNotificationsScreen());
-                            },
-                            icon: const Icon(Icons.notifications),
-                          );
-                        });
+                        }
+                        return IconButton(
+                          onPressed: () {
+                            BlocProvider.of<NavigationBloc>(context)
+                                .add(const OpenMyNotificationsScreen());
+                          },
+                          icon: const Icon(Icons.notifications),
+                        );
+                      }, orElse: () {
+                        return IconButton(
+                          onPressed: () {
+                            BlocProvider.of<NavigationBloc>(context)
+                                .add(const OpenMyNotificationsScreen());
+                          },
+                          icon: const Icon(Icons.notifications),
+                        );
+                      });
+                    },
+                  ),
+                  actions: [
+                    IconButton(
+                      onPressed: () {
+                        BlocProvider.of<NavigationBloc>(context)
+                            .add(const OpenProfileScreen());
                       },
+                      icon: const Icon(Icons.person),
                     ),
-                    actions: [
-                      IconButton(
-                        onPressed: () {
-                          BlocProvider.of<NavigationBloc>(context).add(const OpenProfileScreen());
-                        },
-                        icon: const Icon(Icons.person),
-                      ),
-                    ],
-                  ),
-                  bottomNavigationBar: NavigationBar(
-                    backgroundColor: App.appTheme.colorScheme.secondary,
-                    indicatorColor: App.appTheme.colorScheme.surface,
-                    height: 60,
-                    labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-                    onDestinationSelected: (index) {
-                      switch (index) {
-                        case 0:
-                          BlocProvider.of<NavigationBloc>(context).add(OpenFeedScreen(index));
-                          break;
-                        case 1:
-                          BlocProvider.of<NavigationBloc>(context).add(OpenSearchScreen(index));
-                          break;
-                        case 2:
-                          BlocProvider.of<NavigationBloc>(context).add(GoToCreatePostScreen(index));
-                          break;
-                        case 3:
-                          BlocProvider.of<NavigationBloc>(context).add(OpenDiscoverScreen(index));
-                          break;
+                  ],
+                ),
+                bottomNavigationBar: NavigationBar(
+                  backgroundColor: App.appTheme.colorScheme.secondary,
+                  indicatorColor: App.appTheme.colorScheme.surface,
+                  height: 60,
+                  labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+                  onDestinationSelected: (index) {
+                    switch (index) {
+                      case 0:
+                        BlocProvider.of<NavigationBloc>(context)
+                            .add(OpenFeedScreen(index));
+                        break;
+                      case 1:
+                        BlocProvider.of<NavigationBloc>(context)
+                            .add(OpenSearchScreen(index));
+                        break;
+                      case 2:
+                        BlocProvider.of<NavigationBloc>(context)
+                            .add(GoToCreatePostScreen(index));
+                        break;
+                      case 3:
+                        BlocProvider.of<NavigationBloc>(context)
+                            .add(OpenDiscoverScreen(index));
+                        break;
 
-                        case 4:
-                          BlocProvider.of<NavigationBloc>(context).add(OpenShoppingListScreen(index));
-                          break;
-                        default:
-                          break;
-                      }
-                    },
-                    destinations: const [
-                      NavigationDestination(
-                        selectedIcon: Icon(Icons.home),
-                        icon: Icon(Icons.home_outlined),
-                        label: 'Feed',
-                      ),
-                      NavigationDestination(
-                        selectedIcon: Icon(Icons.search),
-                        icon: Icon(Icons.search),
-                        label: 'Search',
-                      ),
-                      NavigationDestination(
-                        selectedIcon: Icon(Icons.add),
-                        icon: Icon(Icons.add),
-                        label: 'Create',
-                      ),
-                      NavigationDestination(
-                        selectedIcon: Icon(Icons.list),
-                        icon: Icon(Icons.list_outlined),
-                        label: 'Discover',
-                      ),
-                      NavigationDestination(
-                        selectedIcon: Icon(Icons.shopping_basket),
-                        icon: Icon(Icons.shopping_basket_outlined),
-                        label: 'Saved',
-                      ),
-                    ],
-                    selectedIndex: loaded.bottomNavIndex,
-                  ),
-                  body: BlocListener<SavedPostsPanelBloc, SavedPostsPanelState>(
-                    listener: (context, state) {
-                      state.maybeMap(
-                        openSavedPostPanel: (_) {
-                          _postSavedPanel.open();
-                        },
-                        orElse: () {},
-                      );
-                    },
-                    child: AppNavigation().pathContent(
-                      state.screenName,
-                      params: loaded.params,
+                      case 4:
+                        BlocProvider.of<NavigationBloc>(context)
+                            .add(OpenShoppingListScreen(index));
+                        break;
+                      default:
+                        break;
+                    }
+                  },
+                  destinations: const [
+                    NavigationDestination(
+                      selectedIcon: Icon(Icons.home),
+                      icon: Icon(Icons.home_outlined),
+                      label: 'Feed',
                     ),
+                    NavigationDestination(
+                      selectedIcon: Icon(Icons.search),
+                      icon: Icon(Icons.search),
+                      label: 'Search',
+                    ),
+                    NavigationDestination(
+                      selectedIcon: Icon(Icons.add),
+                      icon: Icon(Icons.add),
+                      label: 'Create',
+                    ),
+                    NavigationDestination(
+                      selectedIcon: Icon(Icons.list),
+                      icon: Icon(Icons.list_outlined),
+                      label: 'Discover',
+                    ),
+                    NavigationDestination(
+                      selectedIcon: Icon(Icons.shopping_basket),
+                      icon: Icon(Icons.shopping_basket_outlined),
+                      label: 'Saved',
+                    ),
+                  ],
+                  selectedIndex: loaded.bottomNavIndex,
+                ),
+                body: BlocListener<SavedPostsPanelBloc, SavedPostsPanelState>(
+                  listener: (context, state) {
+                    state.maybeMap(
+                      openSavedPostPanel: (_) {
+                        _postSavedPanel.open();
+                      },
+                      orElse: () {},
+                    );
+                  },
+                  child: AppNavigation().pathContent(
+                    state.screenName,
+                    params: loaded.params,
                   ),
                 ),
               ),
