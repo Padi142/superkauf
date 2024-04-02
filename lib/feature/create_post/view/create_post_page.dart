@@ -45,6 +45,12 @@ class _CreatePostScreen extends State<CreatePostScreen> {
         _imagePickPanelController.open();
       }
     });
+    priceField.validators.addAll([
+      ValidatorEmpty(),
+      ValidatorRegex(r'^\d{1,5}(?:[.,]\d{1,2})?$', 'invalid number'),
+    ]);
+
+    descriptionField.validators.addAll([ValidatorEmpty(), ValidatorRegex(r'^.{5,250}$', 'Post can be 5-250 chars long')]);
     super.initState();
   }
 
@@ -167,7 +173,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
                               }
                               descriptionField.controller.text.trim();
                               //Validate fields
-                              final valid = await TextEntryModel.validateFields([priceField, descriptionField]);
+                              final valid = await TextEntryModel.validateFields([descriptionField, priceField]);
                               if (!valid) {
                                 setState(() {});
 
@@ -356,7 +362,7 @@ class CreatePostContainer extends StatelessWidget {
                               initialText: '--,--',
                               model: priceField,
                               width: null,
-                              keyboardType: TextInputType.number,
+                              keyboardType: const TextInputType.numberWithOptions(decimal: true),
                               filledColor: Colors.yellowAccent,
                               validators: [
                                 ValidatorEmpty(),

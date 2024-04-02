@@ -65,13 +65,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         child: AppButton(
                           text: 'Change pfp',
                           radius: 8,
+                          backgroundColor: Colors.black,
                           elevation: 4,
-                          textStyle:
-                              App.appTheme.textTheme.titleMedium!.copyWith(),
-                          backgroundColor: App.appTheme.colorScheme.surface,
+                          textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
                           onClick: () {
-                            BlocProvider.of<AccountBloc>(context)
-                                .add(const ChangeProfilePic(user: null));
+                            BlocProvider.of<AccountBloc>(context).add(const ChangeProfilePic(user: null));
                           },
                         ),
                       ),
@@ -81,10 +79,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       CountriesPicker(
                         pickedCountry: pickedCountry,
                         onCountryPicked: (value) {
-                          Future.delayed(const Duration(milliseconds: 500))
-                              .then((value) {
-                            BlocProvider.of<UserSettingsBloc>(context)
-                                .add(const GetSettings());
+                          Future.delayed(const Duration(milliseconds: 500)).then((value) {
+                            BlocProvider.of<UserSettingsBloc>(context).add(const GetSettings());
                           });
 
                           pickedCountry = value;

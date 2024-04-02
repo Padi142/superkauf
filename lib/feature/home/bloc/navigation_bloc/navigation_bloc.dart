@@ -59,7 +59,7 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     OpenSearchScreen event,
     Emitter<NavigationState> emit,
   ) async {
-    bottomBarIndex = 2;
+    bottomBarIndex = 3;
     emit(NavigationStateLoaded(bottomNavIndex: event.index != null ? event.index! : bottomBarIndex, screenName: ScreenPath.searchScreen));
 
     Posthog().screen(

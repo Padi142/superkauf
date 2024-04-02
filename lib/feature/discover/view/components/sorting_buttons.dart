@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 import 'package:superkauf/feature/discover/bloc/discover_bloc.dart';
 import 'package:superkauf/generic/store/model/store_model.dart';
 import 'package:superkauf/generic/widget/app_button.dart';
@@ -27,10 +26,9 @@ class SortingButtons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text('sort_by'.tr()),
-        const Gap(8),
         AppButton(
-          backgroundColor: App.appTheme.colorScheme.primary,
+          backgroundColor: Colors.black,
+          elevation: 4,
           text: sortType.name,
           radius: 8,
           textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
@@ -43,7 +41,8 @@ class SortingButtons extends StatelessWidget {
         ),
         const SizedBox(width: 8),
         AppButton(
-          backgroundColor: App.appTheme.colorScheme.primary,
+          backgroundColor: Colors.black,
+          elevation: 4,
           radius: 8,
           textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
           text: timeRange.name,
@@ -56,7 +55,8 @@ class SortingButtons extends StatelessWidget {
         ),
         const SizedBox(width: 8),
         AppButton(
-          backgroundColor: App.appTheme.colorScheme.primary,
+          backgroundColor: Colors.black,
+          elevation: 4,
           radius: 8,
           textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
           text: selectedStore != null ? selectedStore!.name : 'stores'.tr(),

@@ -28,8 +28,7 @@ class HomeScreen extends Screen {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    BlocProvider.of<CheckNotificationBloc>(context)
-        .add(const CheckNotifications());
+    BlocProvider.of<CheckNotificationBloc>(context).add(const CheckNotifications());
     super.initState();
   }
 
@@ -64,8 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         }
       },
-      child: BlocBuilder<NavigationBloc, NavigationState>(
-          builder: (context, state) {
+      child: BlocBuilder<NavigationBloc, NavigationState>(builder: (context, state) {
         switch (state) {
           case final NavigationStateLoaded loaded:
             return SlidingUpPanel(
@@ -82,23 +80,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 backgroundColor: Theme.of(context).colorScheme.background,
                 appBar: AppBar(
                   title: Text('app_title'.tr()),
-                  leading: BlocBuilder<CheckNotificationBloc,
-                      CheckNotificationsState>(
+                  leading: BlocBuilder<CheckNotificationBloc, CheckNotificationsState>(
                     builder: (context, state) {
                       return state.maybeMap(success: (success) {
                         if (success.notifications.newNotifications) {
                           return IconButton(
                             onPressed: () {
-                              BlocProvider.of<NavigationBloc>(context)
-                                  .add(const OpenMyNotificationsScreen());
-                              BlocProvider.of<CheckNotificationBloc>(context)
-                                  .add(const ClearNotifications());
+                              BlocProvider.of<NavigationBloc>(context).add(const OpenMyNotificationsScreen());
+                              BlocProvider.of<CheckNotificationBloc>(context).add(const ClearNotifications());
                             },
                             icon: Badge(
                                 alignment: Alignment.topRight,
                                 label: Text(
-                                  success.notifications.notificationCount
-                                      .toString(),
+                                  success.notifications.notificationCount.toString(),
                                   style: const TextStyle(
                                     color: Colors.white,
                                   ),
@@ -108,16 +102,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         }
                         return IconButton(
                           onPressed: () {
-                            BlocProvider.of<NavigationBloc>(context)
-                                .add(const OpenMyNotificationsScreen());
+                            BlocProvider.of<NavigationBloc>(context).add(const OpenMyNotificationsScreen());
                           },
                           icon: const Icon(Icons.notifications),
                         );
                       }, orElse: () {
                         return IconButton(
                           onPressed: () {
-                            BlocProvider.of<NavigationBloc>(context)
-                                .add(const OpenMyNotificationsScreen());
+                            BlocProvider.of<NavigationBloc>(context).add(const OpenMyNotificationsScreen());
                           },
                           icon: const Icon(Icons.notifications),
                         );
@@ -127,8 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   actions: [
                     IconButton(
                       onPressed: () {
-                        BlocProvider.of<NavigationBloc>(context)
-                            .add(const OpenProfileScreen());
+                        BlocProvider.of<NavigationBloc>(context).add(const OpenProfileScreen());
                       },
                       icon: const Icon(Icons.person),
                     ),
@@ -142,25 +133,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   onDestinationSelected: (index) {
                     switch (index) {
                       case 0:
-                        BlocProvider.of<NavigationBloc>(context)
-                            .add(OpenFeedScreen(index));
+                        BlocProvider.of<NavigationBloc>(context).add(OpenFeedScreen(index));
                         break;
                       case 1:
-                        BlocProvider.of<NavigationBloc>(context)
-                            .add(OpenSearchScreen(index));
+                        BlocProvider.of<NavigationBloc>(context).add(OpenDiscoverScreen(index));
                         break;
                       case 2:
-                        BlocProvider.of<NavigationBloc>(context)
-                            .add(GoToCreatePostScreen(index));
+                        BlocProvider.of<NavigationBloc>(context).add(GoToCreatePostScreen(index));
                         break;
                       case 3:
-                        BlocProvider.of<NavigationBloc>(context)
-                            .add(OpenDiscoverScreen(index));
+                        BlocProvider.of<NavigationBloc>(context).add(OpenSearchScreen(index));
                         break;
 
                       case 4:
-                        BlocProvider.of<NavigationBloc>(context)
-                            .add(OpenShoppingListScreen(index));
+                        BlocProvider.of<NavigationBloc>(context).add(OpenShoppingListScreen(index));
                         break;
                       default:
                         break;
@@ -173,9 +159,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       label: 'Feed',
                     ),
                     NavigationDestination(
-                      selectedIcon: Icon(Icons.search),
-                      icon: Icon(Icons.search),
-                      label: 'Search',
+                      selectedIcon: Icon(Icons.explore),
+                      icon: Icon(Icons.explore_outlined),
+                      label: '',
                     ),
                     NavigationDestination(
                       selectedIcon: Icon(Icons.add),
@@ -183,9 +169,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       label: 'Create',
                     ),
                     NavigationDestination(
-                      selectedIcon: Icon(Icons.list),
-                      icon: Icon(Icons.list_outlined),
-                      label: 'Discover',
+                      selectedIcon: Icon(Icons.search),
+                      icon: Icon(Icons.search),
+                      label: 'Search',
                     ),
                     NavigationDestination(
                       selectedIcon: Icon(Icons.shopping_basket),

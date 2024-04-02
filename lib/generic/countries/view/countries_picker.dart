@@ -29,11 +29,11 @@ class CountriesPicker extends StatelessWidget {
           width: 120,
           height: 40,
           child: AppButton(
+            backgroundColor: Colors.black,
             elevation: 4,
             popupMenu: loaded.countries.map((it) => PopupOption<String>(value: it.code, title: it.name)).toList(),
             text: pickedCountry ?? 'Country',
-            textStyle: App.appTheme.textTheme.titleMedium!.copyWith(),
-            backgroundColor: App.appTheme.colorScheme.surface,
+            textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
             onSelectPopup: (value) {
               BlocProvider.of<CountriesBloc>(context).add(SetCountry(country: loaded.countries.firstWhere((element) => element.code == value.value)));
               // BlocProvider.of<FeedBloc>(context).add(const GetFeed());

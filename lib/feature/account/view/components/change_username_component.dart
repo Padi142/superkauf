@@ -14,6 +14,7 @@ class ChangeUsernameField extends StatefulWidget {
 
 class _ChangeUsernameFieldState extends State<ChangeUsernameField> {
   final usernameModel = TextEntryModel(text: '');
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -27,7 +28,7 @@ class _ChangeUsernameFieldState extends State<ChangeUsernameField> {
             filled: App.appTheme.colorScheme.surface,
             hint: 'Username',
             autofocus: true,
-            validators: [ValidatorEmpty(), ValidatorRegex(r'^[a-zA-Z0-9_]{3,15}$', 'Invalid username (3-15 characters')],
+            validators: [ValidatorEmpty(), ValidatorRegex(r'^[a-zA-Z0-9_!@#$%^&*()\-+=.]{3,30}', 'Invalid username (3-30 characters')],
           ),
         ),
         const SizedBox(
@@ -77,7 +78,7 @@ class _ChangeInstagramFieldState extends State<ChangeInstagramField> {
             filled: App.appTheme.colorScheme.surface,
             hint: 'ig username',
             autofocus: true,
-            validators: [ValidatorEmpty(), ValidatorRegex(r'^[a-zA-Z0-9_]{3,30}$', 'Invalid username (3-30 characters')],
+            validators: [ValidatorEmpty(), ValidatorRegex(r'^[a-zA-Z0-9._]{1,30}$', 'Invalid username (3-30 characters')],
           ),
         ),
         const SizedBox(

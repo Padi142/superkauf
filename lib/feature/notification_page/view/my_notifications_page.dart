@@ -37,13 +37,9 @@ class _MyNotificationsScreenState extends State<MyNotificationsScreen> {
 
   void _loadMoreListener() {
     scrollToRefreshListener(controller: _scrollController);
-    if (_scrollController.position.pixels >
-        _scrollController.position.maxScrollExtent - 300) {
+    if (_scrollController.position.pixels > _scrollController.position.maxScrollExtent - 300) {
       if ((context.read<MyNotificationsBloc>().state is Loaded) &&
-          ((context.read<MyNotificationsBloc>().state as Loaded).isLoading ||
-              (context.read<MyNotificationsBloc>().state as Loaded)
-                      .canLoadMore ==
-                  false)) {
+          ((context.read<MyNotificationsBloc>().state as Loaded).isLoading || (context.read<MyNotificationsBloc>().state as Loaded).canLoadMore == false)) {
         return;
       }
       print('loading more');
@@ -82,29 +78,21 @@ class _MyNotificationsScreenState extends State<MyNotificationsScreen> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              Text('no_notifications_for_user_2'.tr(),
-                                  style:
-                                      Theme.of(context).textTheme.titleSmall),
+                              Text('no_notifications_for_user_2'.tr(), style: Theme.of(context).textTheme.titleSmall),
                             ],
                           ));
                         }
                         return SizedBox(
                           height: constraints.maxHeight,
                           child: ListView.builder(
-                            itemCount: loaded.isLoading
-                                ? loaded.notifications.length + 1
-                                : loaded.notifications.length,
+                            itemCount: loaded.isLoading ? loaded.notifications.length + 1 : loaded.notifications.length,
                             controller: _scrollController,
                             itemBuilder: (context, index) {
                               if (index == loaded.notifications.length) {
                                 return const PostLoadingView();
                               }
                               return Padding(
-                                padding: EdgeInsets.only(
-                                    bottom:
-                                        loaded.notifications.length == index + 1
-                                            ? 100
-                                            : 0),
+                                padding: EdgeInsets.only(bottom: loaded.notifications.length == index + 1 ? 100 : 0),
                                 child: NotificationContainer(
                                   notification: loaded.notifications[index],
                                 ),
