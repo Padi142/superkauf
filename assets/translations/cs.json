@@ -37,8 +37,8 @@
 
   "today_label": "dneska",
   "tomorrow_label": "zítra",
-  "ends_in_multiple_days_label": "dní",
-  "ends_in_days_label": "dny",
+  "ends_in_multiple_days_label": "dny",
+  "ends_in_days_label": "dní",
   "ends_in_label": "Končí za",
   "sale_ends_in_label": "Sleva končí",
   "sale_ends_in_not_picked_label": "Vybrat",
