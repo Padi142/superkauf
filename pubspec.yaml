@@ -51,7 +51,7 @@ dependencies:
   hive_flutter: ^1.1.0
   googleapis: ^13.0.0
   googleapis_auth: ^1.4.2
-  meilisearch: ^0.15.0
+  meilisearch: ^0.16.0
   sentry_flutter: ^7.17.0
   textfield_tags: ^3.0.1
   easy_debounce: ^2.0.3

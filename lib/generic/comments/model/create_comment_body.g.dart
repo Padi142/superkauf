@@ -10,10 +10,14 @@ CreateCommentBody _$CreateCommentBodyFromJson(Map<String, dynamic> json) => Crea
       comment: json['comment'] as String,
       user: json['user'] as int,
       post: json['post'] as int,
+      parentId: json['parent_id'] as int?,
+      reactionId: json['reaction_id'] as int?,
     );
 
 Map<String, dynamic> _$CreateCommentBodyToJson(CreateCommentBody instance) => <String, dynamic>{
       'comment': instance.comment,
       'user': instance.user,
       'post': instance.post,
+      'parent_id': instance.parentId,
+      'reaction_id': instance.reactionId,
     };

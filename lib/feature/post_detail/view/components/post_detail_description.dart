@@ -43,19 +43,6 @@ class PostDetailDescription extends StatelessWidget {
           ),
           const Divider(),
           const SizedBox(
-            height: 10,
-          ),
-          AddCommentField(
-            post: post,
-            onStartEdit: () {
-              scrollController.animateTo(
-                scrollController.offset + 200,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeIn,
-              );
-            },
-          ),
-          const SizedBox(
             height: 40,
           ),
           Text('post_tags_label'.tr(), style: Theme.of(context).textTheme.titleSmall),
@@ -75,6 +62,19 @@ class PostDetailDescription extends StatelessWidget {
           Text('post_comments_label'.tr(), style: Theme.of(context).textTheme.titleSmall),
           const SizedBox(
             height: 20,
+          ),
+          AddCommentField(
+            post: post,
+            onStartEdit: () {
+              scrollController.animateTo(
+                scrollController.offset + 200,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeIn,
+              );
+            },
+          ),
+          const SizedBox(
+            height: 10,
           ),
           CommentSection(
             post: post,

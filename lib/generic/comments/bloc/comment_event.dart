@@ -17,8 +17,30 @@ class GetCommentsForPost extends CommentEvent {
 class CreateCommentEvent extends CommentEvent {
   final int postId;
   final String comment;
+  final String? reaction;
   const CreateCommentEvent({
     required this.postId,
+    required this.comment,
+    required this.reaction,
+  });
+}
+
+class LikeCommentEvent extends CommentEvent {
+  final int comment;
+  final int postId;
+  const LikeCommentEvent({
+    required this.comment,
+    required this.postId,
+  });
+}
+
+class ReplyCommentEvent extends CommentEvent {
+  final int postId;
+  final int commentId;
+  final String comment;
+  const ReplyCommentEvent({
+    required this.postId,
+    required this.commentId,
     required this.comment,
   });
 }

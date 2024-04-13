@@ -19,6 +19,11 @@ abstract class CommentApi {
     @Body() required Map<String, dynamic> body,
   });
 
+  @POST('/comment/like')
+  Future<CommentModel> likeComment({
+    @Body() required Map<String, dynamic> body,
+  });
+
   @GET('/post/{id}/comments')
   Future<List<PostCommentModel>> getCommentsForPost({
     @Path() required int id,

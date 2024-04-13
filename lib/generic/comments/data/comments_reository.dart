@@ -4,6 +4,7 @@ import 'package:superkauf/generic/comments/model/create_comment_body.dart';
 import 'package:superkauf/generic/comments/model/delete_comment_body.dart';
 import 'package:superkauf/generic/comments/model/get_comments_for_post_result.dart';
 import 'package:superkauf/generic/comments/model/get_comments_result.dart';
+import 'package:superkauf/generic/comments/model/like_comment_body.dart';
 
 class CommentsRepository {
   final CommentApi commentApi;
@@ -29,6 +30,17 @@ class CommentsRepository {
     }).onError((error, stackTrace) {
       if (error is DioException) {
         return GetCommentsResult.failure(error.message ?? 'error creating comment');
+      }
+      return const GetCommentsResult.failure('error');
+    });
+  }
+
+  Future<GetCommentsResult> likeComment(LikeCommentBody body) async {
+    return commentApi.likeComment(body: body.toJson()).then((comment) {
+      return GetCommentsResult.success([comment]);
+    }).onError((error, stackTrace) {
+      if (error is DioException) {
+        return GetCommentsResult.failure(error.message ?? 'error deleting comment');
       }
       return const GetCommentsResult.failure('error');
     });

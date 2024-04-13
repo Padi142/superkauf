@@ -19,21 +19,21 @@ mixin _$CommentState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<PostCommentModel> comments, UserModel? currentUser) success,
+    required TResult Function(List<PostCommentModel> comments, Map<int, List<PostCommentModel>> replies, UserModel? currentUser) success,
     required TResult Function(String error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<PostCommentModel> comments, UserModel? currentUser)? success,
+    TResult? Function(List<PostCommentModel> comments, Map<int, List<PostCommentModel>> replies, UserModel? currentUser)? success,
     TResult? Function(String error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<PostCommentModel> comments, UserModel? currentUser)? success,
+    TResult Function(List<PostCommentModel> comments, Map<int, List<PostCommentModel>> replies, UserModel? currentUser)? success,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) =>
@@ -109,7 +109,7 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<PostCommentModel> comments, UserModel? currentUser) success,
+    required TResult Function(List<PostCommentModel> comments, Map<int, List<PostCommentModel>> replies, UserModel? currentUser) success,
     required TResult Function(String error) error,
   }) {
     return loading();
@@ -119,7 +119,7 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<PostCommentModel> comments, UserModel? currentUser)? success,
+    TResult? Function(List<PostCommentModel> comments, Map<int, List<PostCommentModel>> replies, UserModel? currentUser)? success,
     TResult? Function(String error)? error,
   }) {
     return loading?.call();
@@ -129,7 +129,7 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<PostCommentModel> comments, UserModel? currentUser)? success,
+    TResult Function(List<PostCommentModel> comments, Map<int, List<PostCommentModel>> replies, UserModel? currentUser)? success,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -182,7 +182,7 @@ abstract class Loading implements CommentState {
 abstract class _$$SuccessImplCopyWith<$Res> {
   factory _$$SuccessImplCopyWith(_$SuccessImpl value, $Res Function(_$SuccessImpl) then) = __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<PostCommentModel> comments, UserModel? currentUser});
+  $Res call({List<PostCommentModel> comments, Map<int, List<PostCommentModel>> replies, UserModel? currentUser});
 }
 
 /// @nodoc
@@ -193,6 +193,7 @@ class __$$SuccessImplCopyWithImpl<$Res> extends _$CommentStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? comments = null,
+    Object? replies = null,
     Object? currentUser = freezed,
   }) {
     return _then(_$SuccessImpl(
@@ -200,6 +201,10 @@ class __$$SuccessImplCopyWithImpl<$Res> extends _$CommentStateCopyWithImpl<$Res,
           ? _value._comments
           : comments // ignore: cast_nullable_to_non_nullable
               as List<PostCommentModel>,
+      null == replies
+          ? _value._replies
+          : replies // ignore: cast_nullable_to_non_nullable
+              as Map<int, List<PostCommentModel>>,
       freezed == currentUser
           ? _value.currentUser
           : currentUser // ignore: cast_nullable_to_non_nullable
@@ -211,7 +216,9 @@ class __$$SuccessImplCopyWithImpl<$Res> extends _$CommentStateCopyWithImpl<$Res,
 /// @nodoc
 
 class _$SuccessImpl implements Success {
-  const _$SuccessImpl(final List<PostCommentModel> comments, this.currentUser) : _comments = comments;
+  const _$SuccessImpl(final List<PostCommentModel> comments, final Map<int, List<PostCommentModel>> replies, this.currentUser)
+      : _comments = comments,
+        _replies = replies;
 
   final List<PostCommentModel> _comments;
   @override
@@ -221,12 +228,20 @@ class _$SuccessImpl implements Success {
     return EqualUnmodifiableListView(_comments);
   }
 
+  final Map<int, List<PostCommentModel>> _replies;
+  @override
+  Map<int, List<PostCommentModel>> get replies {
+    if (_replies is EqualUnmodifiableMapView) return _replies;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_replies);
+  }
+
   @override
   final UserModel? currentUser;
 
   @override
   String toString() {
-    return 'CommentState.success(comments: $comments, currentUser: $currentUser)';
+    return 'CommentState.success(comments: $comments, replies: $replies, currentUser: $currentUser)';
   }
 
   @override
@@ -235,11 +250,12 @@ class _$SuccessImpl implements Success {
         (other.runtimeType == runtimeType &&
             other is _$SuccessImpl &&
             const DeepCollectionEquality().equals(other._comments, _comments) &&
+            const DeepCollectionEquality().equals(other._replies, _replies) &&
             (identical(other.currentUser, currentUser) || other.currentUser == currentUser));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_comments), currentUser);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_comments), const DeepCollectionEquality().hash(_replies), currentUser);
 
   @JsonKey(ignore: true)
   @override
@@ -250,32 +266,32 @@ class _$SuccessImpl implements Success {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<PostCommentModel> comments, UserModel? currentUser) success,
+    required TResult Function(List<PostCommentModel> comments, Map<int, List<PostCommentModel>> replies, UserModel? currentUser) success,
     required TResult Function(String error) error,
   }) {
-    return success(comments, currentUser);
+    return success(comments, replies, currentUser);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<PostCommentModel> comments, UserModel? currentUser)? success,
+    TResult? Function(List<PostCommentModel> comments, Map<int, List<PostCommentModel>> replies, UserModel? currentUser)? success,
     TResult? Function(String error)? error,
   }) {
-    return success?.call(comments, currentUser);
+    return success?.call(comments, replies, currentUser);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<PostCommentModel> comments, UserModel? currentUser)? success,
+    TResult Function(List<PostCommentModel> comments, Map<int, List<PostCommentModel>> replies, UserModel? currentUser)? success,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(comments, currentUser);
+      return success(comments, replies, currentUser);
     }
     return orElse();
   }
@@ -316,9 +332,10 @@ class _$SuccessImpl implements Success {
 }
 
 abstract class Success implements CommentState {
-  const factory Success(final List<PostCommentModel> comments, final UserModel? currentUser) = _$SuccessImpl;
+  const factory Success(final List<PostCommentModel> comments, final Map<int, List<PostCommentModel>> replies, final UserModel? currentUser) = _$SuccessImpl;
 
   List<PostCommentModel> get comments;
+  Map<int, List<PostCommentModel>> get replies;
   UserModel? get currentUser;
   @JsonKey(ignore: true)
   _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith => throw _privateConstructorUsedError;
@@ -379,7 +396,7 @@ class _$ErrorImpl implements Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<PostCommentModel> comments, UserModel? currentUser) success,
+    required TResult Function(List<PostCommentModel> comments, Map<int, List<PostCommentModel>> replies, UserModel? currentUser) success,
     required TResult Function(String error) error,
   }) {
     return error(this.error);
@@ -389,7 +406,7 @@ class _$ErrorImpl implements Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<PostCommentModel> comments, UserModel? currentUser)? success,
+    TResult? Function(List<PostCommentModel> comments, Map<int, List<PostCommentModel>> replies, UserModel? currentUser)? success,
     TResult? Function(String error)? error,
   }) {
     return error?.call(this.error);
@@ -399,7 +416,7 @@ class _$ErrorImpl implements Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<PostCommentModel> comments, UserModel? currentUser)? success,
+    TResult Function(List<PostCommentModel> comments, Map<int, List<PostCommentModel>> replies, UserModel? currentUser)? success,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {

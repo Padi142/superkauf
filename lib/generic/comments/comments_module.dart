@@ -5,6 +5,8 @@ import 'package:superkauf/generic/comments/data/comments_reository.dart';
 import 'package:superkauf/generic/comments/use_case/create_comment_use_case.dart';
 import 'package:superkauf/generic/comments/use_case/delete_comment_use_case.dart';
 import 'package:superkauf/generic/comments/use_case/get_comments_for_post_use_case.dart';
+import 'package:superkauf/generic/comments/use_case/like_comment_use_case.dart';
+import 'package:superkauf/generic/post/use_case/add_reaction_use_case.dart';
 import 'package:superkauf/generic/user/use_case/get_current_user_use_case.dart';
 import 'package:superkauf/library/app_module.dart';
 
@@ -29,6 +31,8 @@ class CommentsModule extends AppModule {
         deleteCommentUseCase: GetIt.I.get<DeleteCommentUseCase>(),
         getCommentsUseCase: GetIt.I.get<GetCommentsForPostUseCase>(),
         getCurrentUserUseCase: GetIt.I.get<GetCurrentUserUseCase>(),
+        likeCommentUseCase: GetIt.I.get<LikeCommentUseCase>(),
+        addPostReactionUseCase: GetIt.I.get<AddReactionUseCase>(),
       ),
     );
   }
@@ -52,6 +56,10 @@ class CommentsModule extends AppModule {
 
     GetIt.I.registerFactory<GetCommentsForPostUseCase>(
       () => GetCommentsForPostUseCase(repository: GetIt.I.get<CommentsRepository>()),
+    );
+
+    GetIt.I.registerFactory<LikeCommentUseCase>(
+      () => LikeCommentUseCase(repository: GetIt.I.get<CommentsRepository>()),
     );
   }
 

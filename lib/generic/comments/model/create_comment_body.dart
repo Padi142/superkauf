@@ -8,11 +8,15 @@ class CreateCommentBody extends Equatable {
   final String comment;
   final int user;
   final int post;
+  final int? parentId;
+  final int? reactionId;
 
   const CreateCommentBody({
     required this.comment,
     required this.user,
     required this.post,
+    required this.parentId,
+    required this.reactionId,
   });
 
   factory CreateCommentBody.fromJson(Map<String, dynamic> json) => _$CreateCommentBodyFromJson(json);

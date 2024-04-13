@@ -8,7 +8,7 @@ part 'comment_state.freezed.dart';
 abstract class CommentState with _$CommentState {
   const factory CommentState.loading() = Loading;
 
-  const factory CommentState.success(List<PostCommentModel> comments, UserModel? currentUser) = Success;
+  const factory CommentState.success(List<PostCommentModel> comments, Map<int, List<PostCommentModel>> replies, UserModel? currentUser) = Success;
 
   const factory CommentState.error(String error) = Error;
 }

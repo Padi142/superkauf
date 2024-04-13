@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:superkauf/generic/post/model/models/reaction_model.dart';
 
 part 'comment_model.g.dart';
 
@@ -9,6 +10,10 @@ class CommentModel extends Equatable {
   final String comment;
   final int user;
   final int post;
+  final int? parentId;
+  final int? reactionId;
+  final ReactionModel? reaction;
+  final int likes;
   final DateTime createdAt;
 
   const CommentModel({
@@ -16,6 +21,10 @@ class CommentModel extends Equatable {
     required this.comment,
     required this.user,
     required this.post,
+    required this.parentId,
+    required this.reactionId,
+    required this.likes,
+    required this.reaction,
     required this.createdAt,
   });
 

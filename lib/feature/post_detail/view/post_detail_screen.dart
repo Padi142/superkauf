@@ -151,7 +151,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                                   startEdit: descriptionEdit,
                                 ),
                                 const SizedBox(
-                                  height: 100,
+                                  height: 200,
                                 ),
                               ],
                             ));

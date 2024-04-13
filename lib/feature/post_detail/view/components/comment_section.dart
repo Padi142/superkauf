@@ -39,10 +39,29 @@ class _CommentSectionState extends State<CommentSection> {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: success.comments.length,
           itemBuilder: (context, index) {
-            return CommentContainer(
-              comment: success.comments[index],
-              postId: widget.post.id,
-              currentUser: success.currentUser,
+            return Column(
+              children: [
+                CommentContainer(
+                  comment: success.comments[index],
+                  postId: widget.post.id,
+                  currentUser: success.currentUser,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 32.0),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: success.replies[index]?.length ?? 0,
+                    itemBuilder: (context, replyIndex) {
+                      return CommentContainer(
+                        comment: success.replies[index]![replyIndex],
+                        postId: widget.post.id,
+                        currentUser: success.currentUser,
+                      );
+                    },
+                  ),
+                ),
+              ],
             );
           },
         );

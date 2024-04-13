@@ -59,6 +59,11 @@
   "no_posts_for_timerange_1":"Žádne příspěvky pro tyto filtry :/",
   "no_posts_for_timerange_2":"Zkus vybrat jiné",
 
+  "reply_button_label": "Odpovědět",
+  "mark_comment_label": "Označit jako",
+  "mark_comment_as_bought": "Koupil jsem",
+  "mark_comment_sale_end": "Sleva skončila",
+  "mark_comment_as_sold_out": "Vyprodáno",
 
   "user_info_registered_on_label": "Registrován od",
 
