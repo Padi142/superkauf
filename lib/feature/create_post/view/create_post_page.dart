@@ -81,6 +81,7 @@ class _CreatePostScreen extends State<CreatePostScreen> {
           controller: _imagePickPanelController,
           backdropEnabled: true,
           backdropOpacity: 0.8,
+          color: Theme.of(context).colorScheme.background,
           // defaultPanelState: PanelState.OPEN,
           borderRadius: BorderRadius.circular(16),
           minHeight: 0,
@@ -92,6 +93,8 @@ class _CreatePostScreen extends State<CreatePostScreen> {
             controller: _storePickPanelController,
             backdropEnabled: true,
             backdropOpacity: 0.8,
+            color: Theme.of(context).colorScheme.background,
+
             // defaultPanelState: PanelState.OPEN,
             borderRadius: BorderRadius.circular(16),
             isDraggable: false,
@@ -248,6 +251,7 @@ class CreatePostContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Theme.of(context).colorScheme.surface,
       elevation: 7,
       child: Padding(
         padding: const EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 6),

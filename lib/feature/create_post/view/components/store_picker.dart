@@ -52,7 +52,7 @@ class _StoreCarouselState extends State<StoreCarousel> {
         margin: const EdgeInsets.symmetric(horizontal: 10.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.secondary,
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.5),

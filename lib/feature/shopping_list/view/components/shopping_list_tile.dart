@@ -11,6 +11,7 @@ class ShoppingListTile extends StatelessWidget {
   final int items;
   final BoxConstraints constraints;
   final Function() onTap;
+
   const ShoppingListTile({
     super.key,
     required this.image,
@@ -34,7 +35,13 @@ class ShoppingListTile extends StatelessWidget {
             width: 80,
             imageUrl: image,
             fit: BoxFit.fitWidth,
-            placeholder: (context, url) => const CardLoading(height: 40),
+            placeholder: (context, url) => CardLoading(
+              height: 40,
+              cardLoadingTheme: CardLoadingTheme(
+                colorOne: Theme.of(context).colorScheme.secondary,
+                colorTwo: Theme.of(context).colorScheme.primary,
+              ),
+            ),
             errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
         ),

@@ -6,6 +6,7 @@ import 'package:superkauf/library/app.dart';
 class PostTagsField extends StatefulWidget {
   final BoxConstraints constraints;
   final Function(List<String>) onTagsChanged;
+
   const PostTagsField({
     super.key,
     required this.constraints,
@@ -28,6 +29,7 @@ class _PostTagsFieldState extends State<PostTagsField> {
   }
 
   var initialText = " ";
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -46,6 +48,7 @@ class _PostTagsFieldState extends State<PostTagsField> {
             context: context,
             hint: 'max. 3 tags',
             textInputAction: TextInputAction.go,
+            filled: Theme.of(context).colorScheme.surface,
             onChanged: (text) {
               if (tagsModel.controller.text.length < initialText.length) {
                 tagsModel.controller.text = initialText;

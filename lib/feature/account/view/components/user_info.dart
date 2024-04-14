@@ -33,6 +33,7 @@ class AccountInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Theme.of(context).colorScheme.surface,
       elevation: 3.0,
       margin: const EdgeInsets.all(16.0),
       child: Stack(

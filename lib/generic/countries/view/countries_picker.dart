@@ -20,7 +20,11 @@ class CountriesPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CountriesBloc, CountriesState>(builder: (context, state) {
       return state.maybeMap(orElse: () {
-        return const CardLoading(
+        return CardLoading(
+          cardLoadingTheme: CardLoadingTheme(
+            colorOne: Theme.of(context).colorScheme.secondary,
+            colorTwo: Theme.of(context).colorScheme.primary,
+          ),
           width: 120,
           height: 40,
         );

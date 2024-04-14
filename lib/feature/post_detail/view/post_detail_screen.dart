@@ -61,6 +61,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
           backdropEnabled: true,
           backdropOpacity: 0.8,
           borderRadius: BorderRadius.circular(16),
+          color: Theme.of(context).colorScheme.background,
           minHeight: 0,
           maxHeight: 400,
           panelBuilder: (ScrollController sc) {

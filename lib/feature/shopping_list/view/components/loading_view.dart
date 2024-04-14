@@ -32,6 +32,10 @@ class ShoppingListLoadingView extends StatelessWidget {
                       height: 80,
                       borderRadius: BorderRadius.circular(8),
                       width: constraints.maxWidth * 0.8,
+                      cardLoadingTheme: CardLoadingTheme(
+                        colorOne: Theme.of(context).colorScheme.secondary,
+                        colorTwo: Theme.of(context).colorScheme.primary,
+                      ),
                     ),
                   ),
                 );

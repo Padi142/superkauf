@@ -27,22 +27,19 @@ class StoreLabel extends StatelessWidget {
         },
         child: Container(
             decoration: BoxDecoration(
-              color: Colors.black,
+              color: Theme.of(context).colorScheme.primary,
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
                 BoxShadow(
                   offset: const Offset(0, 4),
                   blurRadius: 4,
-                  color: Colors.black.withOpacity(0.25),
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.25),
                 ),
               ],
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(storeLabel,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: Colors.white,
-                      )),
+              child: Text(storeLabel, style: Theme.of(context).textTheme.titleMedium!.copyWith()),
             )),
       ),
     );

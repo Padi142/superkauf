@@ -17,11 +17,15 @@ class LoadingFeedPost extends StatelessWidget {
               children: [
                 SizedBox(
                   width: constraints.maxWidth * 0.1,
-                  child: const Padding(
-                    padding: EdgeInsets.all(2),
+                  child: Padding(
+                    padding: const EdgeInsets.all(2),
                     child: CardLoading(
                       height: 40,
-                      borderRadius: BorderRadius.all(Radius.circular(40)),
+                      cardLoadingTheme: CardLoadingTheme(
+                        colorOne: Theme.of(context).colorScheme.secondary,
+                        colorTwo: Theme.of(context).colorScheme.primary,
+                      ),
+                      borderRadius: const BorderRadius.all(Radius.circular(40)),
                     ),
                   ),
                 ),
@@ -34,6 +38,10 @@ class LoadingFeedPost extends StatelessWidget {
                         child: Column(
                           children: [
                             CardLoading(
+                              cardLoadingTheme: CardLoadingTheme(
+                                colorOne: Theme.of(context).colorScheme.secondary,
+                                colorTwo: Theme.of(context).colorScheme.primary,
+                              ),
                               height: 270,
                               width: constraints.maxWidth,
                               borderRadius: const BorderRadius.all(Radius.circular(4)),
@@ -45,6 +53,10 @@ class LoadingFeedPost extends StatelessWidget {
                                     Padding(
                                       padding: const EdgeInsets.all(2),
                                       child: CardLoading(
+                                        cardLoadingTheme: CardLoadingTheme(
+                                          colorOne: Theme.of(context).colorScheme.secondary,
+                                          colorTwo: Theme.of(context).colorScheme.primary,
+                                        ),
                                         width: constraints.maxWidth * 0.79,
                                         height: 60,
                                         borderRadius: const BorderRadius.all(Radius.circular(4)),

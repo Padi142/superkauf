@@ -59,9 +59,13 @@ class _StoresPostsListViewState extends State<StoresPostsListView> {
                       width: 120,
                       imageUrl: widget.store.image,
                       fit: BoxFit.fitWidth,
-                      placeholder: (context, url) => const Center(
+                      placeholder: (context, url) => Center(
                           child: CardLoading(
                         height: 60,
+                        cardLoadingTheme: CardLoadingTheme(
+                          colorOne: Theme.of(context).colorScheme.secondary,
+                          colorTwo: Theme.of(context).colorScheme.primary,
+                        ),
                       )),
                       errorWidget: (context, url, error) => const Icon(Icons.error),
                     ),

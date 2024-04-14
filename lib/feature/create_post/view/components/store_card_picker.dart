@@ -39,7 +39,7 @@ class _StoreCardPickerState extends State<StoreCardPicker> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   AppButton(
-                      backgroundColor: cardRequired ? App.appTheme.colorScheme.surface : App.appTheme.colorScheme.primary,
+                      backgroundColor: cardRequired ? Theme.of(context).colorScheme.surface : Theme.of(context).colorScheme.primary,
                       text: 'No',
                       textStyle: Theme.of(context).textTheme.bodyMedium,
                       radius: 8,
@@ -54,7 +54,7 @@ class _StoreCardPickerState extends State<StoreCardPicker> {
                     width: 5,
                   ),
                   AppButton(
-                      backgroundColor: cardRequired ? App.appTheme.colorScheme.primary : App.appTheme.colorScheme.surface,
+                      backgroundColor: cardRequired ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.surface,
                       text: 'Yes',
                       textStyle: Theme.of(context).textTheme.bodyMedium,
                       radius: 8,

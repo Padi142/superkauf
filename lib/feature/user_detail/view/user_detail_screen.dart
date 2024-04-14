@@ -126,7 +126,13 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                       stalePeriod: const Duration(days: 7),
                                     ),
                                   ),
-                                  progressIndicatorBuilder: (context, url, downloadProgress) => CardLoading(height: constraints.maxWidth * 0.3),
+                                  progressIndicatorBuilder: (context, url, downloadProgress) => CardLoading(
+                                    height: constraints.maxWidth * 0.3,
+                                    cardLoadingTheme: CardLoadingTheme(
+                                      colorOne: Theme.of(context).colorScheme.secondary,
+                                      colorTwo: Theme.of(context).colorScheme.primary,
+                                    ),
+                                  ),
                                   errorWidget: (context, url, error) => const Icon(Icons.error),
                                 ),
                               ),

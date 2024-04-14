@@ -25,6 +25,7 @@ class SearchPostContainer extends StatelessWidget {
         ));
       },
       child: Card(
+        color: Theme.of(context).colorScheme.surface,
         elevation: 7,
         child: Padding(
           padding: const EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 6),

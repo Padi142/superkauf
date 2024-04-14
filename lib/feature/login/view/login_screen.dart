@@ -385,7 +385,7 @@ class _EmailLoginState extends State<EmailLogin> {
           child: AppTextField(
             emailController,
             context: context,
-            filled: App.appTheme.colorScheme.surface,
+            filled: Theme.of(context).colorScheme.surface,
             hint: 'E-mail',
             validators: [ValidatorEmpty(), ValidatorEmail()],
           ),
@@ -398,7 +398,7 @@ class _EmailLoginState extends State<EmailLogin> {
           child: AppTextField(
             passwordController,
             context: context,
-            filled: App.appTheme.colorScheme.surface,
+            filled: Theme.of(context).colorScheme.surface,
             hint: 'Password',
             validators: [ValidatorEmpty()],
             secure: true,
@@ -477,7 +477,7 @@ class _EmailRegisterState extends State<EmailRegister> {
           child: AppTextField(
             emailController,
             context: context,
-            filled: App.appTheme.colorScheme.surface,
+            filled: Theme.of(context).colorScheme.surface,
             hint: 'E-mail',
             validators: [ValidatorEmpty(), ValidatorEmail()],
           ),

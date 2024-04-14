@@ -15,11 +15,11 @@ class RequiresStoreCard extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(50),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(6),
+        child: const Padding(
+          padding: EdgeInsets.all(6),
           child: Icon(
             Icons.add_card,
-            color: Theme.of(context).colorScheme.primary,
+            color: Colors.white,
           ),
         ),
       ),
@@ -53,22 +53,21 @@ class HeartReaction extends StatelessWidget {
   final int reactions;
   final bool isClicked;
 
-  const HeartReaction(
-      {super.key, required this.reactions, required this.isClicked});
+  const HeartReaction({super.key, required this.reactions, required this.isClicked});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: isClicked
           ? BoxDecoration(
-              color: Colors.pinkAccent.withOpacity(0.8),
+              color: Theme.of(context).colorScheme.tertiary.withOpacity(0.8),
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.pinkAccent, width: 2),
+              border: Border.all(color: Theme.of(context).colorScheme.tertiary, width: 2),
               boxShadow: [
                 BoxShadow(
                   offset: const Offset(0, 4),
                   blurRadius: 4,
-                  color: Colors.pinkAccent.withOpacity(0.25),
+                  color: Theme.of(context).colorScheme.tertiary.withOpacity(0.25),
                 ),
               ],
             )
@@ -99,7 +98,7 @@ class HeartReaction extends StatelessWidget {
             Text(
               reactions.toString(),
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    color: const Color(0xFF402cac),
+                    color: Colors.white,
                   ),
             ),
           ],
@@ -118,7 +117,7 @@ class FeedContainerPrice extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 10,
-      color: Colors.yellowAccent,
+      color: Theme.of(context).colorScheme.secondary,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
       ),
@@ -126,10 +125,7 @@ class FeedContainerPrice extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: Text(
           '${(price % 1 == 0) ? price.toInt().toString() : price.toStringAsFixed(2)} ${App.appConfig.settings.country.currency}',
-          style: Theme.of(context)
-              .textTheme
-              .titleLarge!
-              .copyWith(color: const Color(0xFF402cac)),
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.black),
         ),
       ),
     );
@@ -148,13 +144,7 @@ class FeedPostValidUntilLabel extends StatelessWidget {
       triggerMode: TooltipTriggerMode.tap,
       child: Card(
         elevation: 4,
-        color: validUntil
-                    .difference(DateTime(DateTime.now().year,
-                        DateTime.now().month, DateTime.now().day))
-                    .inDays >
-                3
-            ? Theme.of(context).colorScheme.background
-            : Colors.redAccent,
+        color: validUntil.difference(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)).inDays > 3 ? Theme.of(context).colorScheme.background : Colors.redAccent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
         ),

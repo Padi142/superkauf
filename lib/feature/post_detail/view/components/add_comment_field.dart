@@ -8,7 +8,6 @@ import 'package:superkauf/generic/comments/bloc/comment_state.dart';
 import 'package:superkauf/generic/post/model/post_model.dart';
 import 'package:superkauf/generic/widget/app_button.dart';
 import 'package:superkauf/generic/widget/app_text_field/index.dart';
-import 'package:superkauf/library/app.dart';
 
 class AddCommentField extends StatefulWidget {
   final PostModel post;
@@ -49,21 +48,23 @@ class _AddCommentFieldState extends State<AddCommentField> {
             orElse: () {});
       },
       child: LayoutBuilder(builder: (context, constrains) {
-        return Column(
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // const FaIcon(FontAwesomeIcons.commentDots),
-                // const SizedBox(width: 5),
-                SizedBox(
-                  width: constrains.maxWidth * 0.8,
-                  child: AppTextField(
+            // const FaIcon(FontAwesomeIcons.commentDots),
+            // const SizedBox(width: 5),
+            SizedBox(
+              width: constrains.maxWidth * 0.8,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  AppTextField(
                     commentModel,
                     context: context,
                     hint: 'comment_create_label'.tr(),
-                    filled: App.appTheme.colorScheme.surface,
+                    filled: Theme.of(context).colorScheme.surface,
                     radius: 16,
                     lines: lines,
                     beginEdit: (value) {
@@ -79,55 +80,55 @@ class _AddCommentFieldState extends State<AddCommentField> {
                     },
                     validators: [ValidatorEmpty(), ValidatorRegex(r'^.{1,250}$', 'Comment is too long')],
                   ),
-                ),
-                IconButton(
-                    onPressed: () async {
-                      if (sendButtonClicked) {
-                        return;
-                      }
-
-                      commentModel.controller.text.trim();
-                      final valid = await TextEntryModel.validateFields([commentModel]);
-                      if (!valid) {
-                        setState(() {});
-                        return;
-                      }
-
-                      sendButtonClicked = true;
-
-                      BlocProvider.of<CommentBloc>(context).add(
-                        CreateCommentEvent(
-                          postId: widget.post.id,
-                          comment: commentModel.text,
-                          reaction: selectedInteraction?.value,
-                        ),
-                      );
-
-                      BlocProvider.of<PostDetailBloc>(context).add(
-                        GetPost(postId: widget.post.id.toString()),
-                      );
-                    },
-                    icon: const FaIcon(FontAwesomeIcons.paperPlane))
-              ],
-            ),
-            const SizedBox(height: 2),
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: SizedBox(
-                width: constrains.maxWidth * 0.4,
-                child: AppButton(
-                  backgroundColor: getColorForInteraction(selectedInteraction?.value),
-                  text: selectedInteraction != null ? selectedInteraction!.title : 'Mark comment',
-                  textStyle: Theme.of(context).textTheme.titleSmall,
-                  radius: 8,
-                  popupMenu: interactions,
-                  onSelectPopup: (value) {
-                    setState(() {
-                      selectedInteraction = value;
-                    });
-                  },
-                ),
+                  const SizedBox(height: 2),
+                  SizedBox(
+                    width: constrains.maxWidth * 0.4,
+                    child: AppButton(
+                      backgroundColor: getColorForInteraction(selectedInteraction?.value),
+                      text: selectedInteraction != null ? selectedInteraction!.title : 'Mark comment',
+                      textStyle: Theme.of(context).textTheme.titleSmall,
+                      radius: 8,
+                      popupMenu: interactions,
+                      onSelectPopup: (value) {
+                        setState(() {
+                          selectedInteraction = value;
+                        });
+                      },
+                    ),
+                  )
+                ],
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: IconButton(
+                  onPressed: () async {
+                    if (sendButtonClicked) {
+                      return;
+                    }
+
+                    commentModel.controller.text.trim();
+                    final valid = await TextEntryModel.validateFields([commentModel]);
+                    if (!valid) {
+                      setState(() {});
+                      return;
+                    }
+
+                    sendButtonClicked = true;
+
+                    BlocProvider.of<CommentBloc>(context).add(
+                      CreateCommentEvent(
+                        postId: widget.post.id,
+                        comment: commentModel.text,
+                        reaction: selectedInteraction?.value,
+                      ),
+                    );
+
+                    BlocProvider.of<PostDetailBloc>(context).add(
+                      GetPost(postId: widget.post.id.toString()),
+                    );
+                  },
+                  icon: const FaIcon(FontAwesomeIcons.paperPlane)),
             )
           ],
         );
@@ -144,7 +145,7 @@ class _AddCommentFieldState extends State<AddCommentField> {
       case 'sold_out':
         return Colors.orange;
       default:
-        return App.appTheme.colorScheme.surface;
+        return Theme.of(context).colorScheme.surface;
     }
   }
 }

@@ -27,7 +27,7 @@ class SortingButtons extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         AppButton(
-          backgroundColor: Colors.black,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           elevation: 4,
           text: sortType.name,
           radius: 8,
@@ -41,7 +41,7 @@ class SortingButtons extends StatelessWidget {
         ),
         const SizedBox(width: 8),
         AppButton(
-          backgroundColor: Colors.black,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           elevation: 4,
           radius: 8,
           textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
@@ -55,7 +55,7 @@ class SortingButtons extends StatelessWidget {
         ),
         const SizedBox(width: 8),
         AppButton(
-          backgroundColor: Colors.black,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           elevation: 4,
           radius: 8,
           textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),

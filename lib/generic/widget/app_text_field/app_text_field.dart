@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../../../library/app.dart';
 import 'validator.dart';
 
 class AppTextField extends StatelessWidget {
@@ -58,7 +57,7 @@ class AppTextField extends StatelessWidget {
           },
           autofocus: autofocus,
           style: Theme.of(context).textTheme.titleMedium,
-          cursorColor: cursorColor ?? App.appTheme.primaryColor,
+          cursorColor: cursorColor ?? Theme.of(context).primaryColor,
           cursorWidth: 1,
           decoration: InputDecoration(
             suffixIcon: suffixWidget,
@@ -70,36 +69,27 @@ class AppTextField extends StatelessWidget {
             filled: filled != null,
             isDense: false,
             errorText: model.error?.tr(),
-            fillColor: filled ?? App.appTheme.colorScheme.background,
-            focusColor: filled ?? App.appTheme.colorScheme.background,
+            fillColor: filled ?? Theme.of(context).colorScheme.background,
+            focusColor: filled ?? Theme.of(context).colorScheme.background,
             border: border ??
                 OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: App.appTheme.primaryColor, width: 1),
+                  borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
                   borderRadius: BorderRadius.circular(radius),
                 ),
             focusedBorder: border ??
                 OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: App.appTheme.primaryColor, width: 1),
+                  borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
                   borderRadius: BorderRadius.circular(radius),
                 ),
             enabledBorder: border ??
                 OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: App.appTheme.primaryColor, width: 1),
+                  borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
                   borderRadius: BorderRadius.circular(radius),
                 ),
             hintText: hint,
-            hintStyle: Theme.of(context)
-                .textTheme
-                .titleMedium!
-                .copyWith(color: App.appTheme.colorScheme.onSecondary),
+            hintStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: Theme.of(context).colorScheme.secondary),
             labelText: label,
-            labelStyle: Theme.of(context)
-                .textTheme
-                .titleMedium!
-                .copyWith(color: App.appTheme.colorScheme.onSecondary),
+            labelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: Theme.of(context).colorScheme.secondary),
           ),
         ) {
     model.validators = validators;
@@ -131,8 +121,7 @@ class TextEntryModel {
   String? error;
   List<Validator> validators = [];
 
-  TextEntryModel({String text = ''})
-      : controller = TextEditingController(text: text);
+  TextEntryModel({String text = ''}) : controller = TextEditingController(text: text);
 
   String get text => controller.text;
 
@@ -152,8 +141,7 @@ class TextEntryModel {
     String? hasError;
 
     for (final Validator validator in validators) {
-      final ValidatorResult result = await validator.validate(
-          <ValidableParam, dynamic>{ValidableParam.text: controller.text});
+      final ValidatorResult result = await validator.validate(<ValidableParam, dynamic>{ValidableParam.text: controller.text});
       if (!result.valid) {
         isValid = isValid && result.valid;
         hasError = hasError ?? result.error;

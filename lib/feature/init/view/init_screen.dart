@@ -26,6 +26,7 @@ class _InitScreenState extends State<InitScreen> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Theme.of(context).colorScheme.surface,
       child: const AppScaffold(
         desktopLayout: MobileInitBody(),
         mobileLayout: MobileInitBody(),

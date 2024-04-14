@@ -64,7 +64,7 @@ class PostDetailViewComponent extends StatelessWidget {
                 child: Hero(
                   tag: post.id,
                   child: Container(
-                    color: App.appTheme.colorScheme.surface,
+                    color: Theme.of(context).colorScheme.surface,
                     child: CachedNetworkImage(
                       imageUrl: post.image,
                       imageBuilder: (context, imageProvider) => Container(

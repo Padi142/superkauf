@@ -69,6 +69,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
             });
       },
       child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
         floatingActionButton: FloatingActionButton(
           elevation: 4,
           onPressed: () {
@@ -279,6 +280,7 @@ class _ListDialogState extends State<ListDialog> {
                     AppTextField(
                       inputField,
                       context: context,
+                      filled: Theme.of(context).colorScheme.surface,
                       label: showCreate ? 'My List :PP ' : 'Join code',
                       validators: [
                         ValidatorEmpty(),

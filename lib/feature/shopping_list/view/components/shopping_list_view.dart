@@ -182,7 +182,14 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
                           fit: BoxFit.fitWidth,
                           color: isCompleted ? Colors.grey : null,
                           colorBlendMode: isCompleted ? BlendMode.saturation : null,
-                          placeholder: (context, url) => const Center(child: CardLoading(height: 50)),
+                          placeholder: (context, url) => Center(
+                              child: CardLoading(
+                            height: 50,
+                            cardLoadingTheme: CardLoadingTheme(
+                              colorOne: Theme.of(context).colorScheme.secondary,
+                              colorTwo: Theme.of(context).colorScheme.primary,
+                            ),
+                          )),
                           errorWidget: (context, url, error) => const Icon(Icons.error),
                         ),
                       ),
@@ -219,7 +226,7 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
             decoration: isCompleted ? TextDecoration.lineThrough : TextDecoration.none,
-            color: isCompleted ? Colors.grey : Colors.black,
+            color: isCompleted ? Colors.grey : Theme.of(context).textTheme.titleMedium!.color,
           ),
         ),
         trailing: Checkbox(

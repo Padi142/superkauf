@@ -73,9 +73,17 @@ class StoreHeaders extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(
                       5,
-                      (index) => const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8),
-                            child: CardLoading(height: 30, width: 70, borderRadius: BorderRadius.all(Radius.circular(10))),
+                      (index) => Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: CardLoading(
+                              height: 30,
+                              width: 70,
+                              borderRadius: const BorderRadius.all(Radius.circular(10)),
+                              cardLoadingTheme: CardLoadingTheme(
+                                colorOne: Theme.of(context).colorScheme.secondary,
+                                colorTwo: Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
                           ))),
             ),
           ),

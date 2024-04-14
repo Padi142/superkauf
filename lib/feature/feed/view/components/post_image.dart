@@ -36,7 +36,13 @@ class FeedPostImage extends StatelessWidget {
               stalePeriod: const Duration(days: 7),
             ),
           ),
-          progressIndicatorBuilder: (context, url, downloadProgress) => CardLoading(height: constraints.maxHeight),
+          progressIndicatorBuilder: (context, url, downloadProgress) => CardLoading(
+            height: constraints.maxHeight,
+            cardLoadingTheme: CardLoadingTheme(
+              colorOne: Theme.of(context).colorScheme.secondary,
+              colorTwo: Theme.of(context).colorScheme.primary,
+            ),
+          ),
           errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
       ),

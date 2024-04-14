@@ -10,7 +10,7 @@ class PriceWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.yellowAccent,
+      color: Theme.of(context).colorScheme.secondary,
       elevation: 12,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),

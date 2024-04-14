@@ -30,6 +30,7 @@ class App {
   static Map<String, WidgetBuilder> get routes => I._routes;
 
   static ThemeData get appTheme => I._appTheme;
+
   static ThemeData get appThemeDark => I._appThemeDark;
 
   late final ThemeData _appTheme;
@@ -66,64 +67,28 @@ class App {
         systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       textTheme: const TextTheme(
-        displayLarge: TextStyle(
-            fontSize: 57,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF402cac)),
-        displayMedium: TextStyle(
-            fontSize: 45,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF402cac)),
-        displaySmall: TextStyle(
-            fontSize: 36,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF402cac)),
-        headlineLarge: TextStyle(
-            fontSize: 32,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF402cac)),
-        headlineMedium: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF402cac)),
-        headlineSmall: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF402cac)),
-        titleLarge: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF402cac)),
-        titleMedium: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF402cac)),
-        titleSmall: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF402cac)),
+        displayLarge: TextStyle(fontSize: 57, fontWeight: FontWeight.bold, color: Color(0xFF402cac)),
+        displayMedium: TextStyle(fontSize: 45, fontWeight: FontWeight.bold, color: Color(0xFF402cac)),
+        displaySmall: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Color(0xFF402cac)),
+        headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Color(0xFF402cac)),
+        headlineMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Color(0xFF402cac)),
+        headlineSmall: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF402cac)),
+        titleLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF402cac)),
+        titleMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF402cac)),
+        titleSmall: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF402cac)),
         bodyLarge: TextStyle(fontSize: 16, color: Color(0xFF402cac)),
         bodyMedium: TextStyle(fontSize: 14, color: Color(0xFF402cac)),
         bodySmall: TextStyle(fontSize: 12, color: Color(0xFF402cac)),
-        labelLarge: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF402cac)),
-        labelMedium: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF402cac)),
-        labelSmall: TextStyle(
-            fontSize: 11,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF402cac)),
+        labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF402cac)),
+        labelMedium: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF402cac)),
+        labelSmall: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF402cac)),
       ),
       colorScheme: const ColorScheme.light(
         primary: Color(0xFF715df2),
         secondary: Color(0xFFb1a8fd),
-        surface: Color(0xFFb1a8fd),
+        surface: Color(0xFFFFFFFF),
         background: Color(0xFFf2efff),
-        tertiary: Color(0xFF171116),
+        tertiary: Color(0xFF9081f5),
         error: Color(0xFFB00020),
       ),
 
@@ -148,64 +113,28 @@ class App {
         systemOverlayStyle: SystemUiOverlayStyle.dark,
       ),
       textTheme: const TextTheme(
-        displayLarge: TextStyle(
-            fontSize: 57,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF9e9e9e)),
-        displayMedium: TextStyle(
-            fontSize: 45,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF9e9e9e)),
-        displaySmall: TextStyle(
-            fontSize: 36,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF9e9e9e)),
-        headlineLarge: TextStyle(
-            fontSize: 32,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF9e9e9e)),
-        headlineMedium: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF9e9e9e)),
-        headlineSmall: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF9e9e9e)),
-        titleLarge: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF9e9e9e)),
-        titleMedium: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF9e9e9e)),
-        titleSmall: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF9e9e9e)),
-        bodyLarge: TextStyle(fontSize: 16, color: Color(0xFF9e9e9e)),
-        bodyMedium: TextStyle(fontSize: 14, color: Color(0xFF9e9e9e)),
-        bodySmall: TextStyle(fontSize: 12, color: Color(0xFF9e9e9e)),
-        labelLarge: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF9e9e9e)),
-        labelMedium: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF9e9e9e)),
-        labelSmall: TextStyle(
-            fontSize: 11,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF9e9e9e)),
+        displayLarge: TextStyle(fontSize: 57, fontWeight: FontWeight.bold, color: Color(0xFFb2a9fe)),
+        displayMedium: TextStyle(fontSize: 45, fontWeight: FontWeight.bold, color: Color(0xFFb2a9fe)),
+        displaySmall: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Color(0xFFb2a9fe)),
+        headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Color(0xFFb2a9fe)),
+        headlineMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Color(0xFFb2a9fe)),
+        headlineSmall: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFFb2a9fe)),
+        titleLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFFb2a9fe)),
+        titleMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFFb2a9fe)),
+        titleSmall: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFFb2a9fe)),
+        bodyLarge: TextStyle(fontSize: 16, color: Color(0xFFb2a9fe)),
+        bodyMedium: TextStyle(fontSize: 14, color: Color(0xFFb2a9fe)),
+        bodySmall: TextStyle(fontSize: 12, color: Color(0xFFb2a9fe)),
+        labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFFb2a9fe)),
+        labelMedium: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFFb2a9fe)),
+        labelSmall: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFFb2a9fe)),
       ),
       colorScheme: const ColorScheme.dark(
         primary: Color(0xFF503dc6),
-        secondary: Color(0xff8674f5),
-        surface: Color(0xFF8674f5),
+        secondary: Color(0xffb2a9fe),
+        surface: Color(0xFF3c2ba9),
         background: Color(0xFF090237),
-        tertiary: Color(0xFFeee8ed),
+        tertiary: Color(0xFF958ae9),
         error: Color(0xFFB00020),
       ),
 
@@ -235,8 +164,7 @@ class App {
     runApp(
       EasyLocalization(
         key: UniqueKey(),
-        supportedLocales:
-            _appConfig.languages.map((lang) => Locale(lang)).toList(),
+        supportedLocales: _appConfig.languages.map((lang) => Locale(lang)).toList(),
         path: 'assets/translations',
         fallbackLocale: const Locale('cs'),
         child: appWidget,
@@ -247,10 +175,7 @@ class App {
 
 // custom text styles
 extension CustomTextStyles on TextTheme {
-  TextStyle get customTextStyle => TextStyle(
-      fontSize: 60,
-      fontWeight: FontWeight.bold,
-      color: App.appTheme.primaryColor);
+  TextStyle get customTextStyle => TextStyle(fontSize: 60, fontWeight: FontWeight.bold, color: App.appTheme.primaryColor);
 }
 
 // custom colors

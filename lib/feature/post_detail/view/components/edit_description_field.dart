@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:superkauf/generic/post/model/post_model.dart';
 import 'package:superkauf/generic/widget/app_text_field/index.dart';
-import 'package:superkauf/library/app.dart';
 
 class EditDescriptionField extends StatefulWidget {
   final PostModel post;
@@ -38,7 +37,7 @@ class _EditDescriptionFieldState extends State<EditDescriptionField> {
             child: AppTextField(
               postModel,
               context: context,
-              filled: App.appTheme.colorScheme.surface,
+              filled: Theme.of(context).colorScheme.surface,
               lines: 10,
               autofocus: true,
               hint: 'description_post_create_label'.tr(),

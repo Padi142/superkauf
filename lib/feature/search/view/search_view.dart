@@ -7,7 +7,6 @@ import 'package:superkauf/feature/search/bloc/search_state.dart';
 import 'package:superkauf/feature/search/view/components/search_post_container.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/widget/app_text_field/app_text_field.dart';
-import 'package:superkauf/library/app.dart';
 
 import '../../../library/app_screen.dart';
 
@@ -47,7 +46,7 @@ class _PostDetailScreenState extends State<SearchScreen> {
                 child: AppTextField(
                   model,
                   hint: 'search_page_placeholder'.tr(),
-                  filled: App.appTheme.scaffoldBackgroundColor,
+                  filled: Theme.of(context).colorScheme.surface,
                   autofocus: true,
                   suffixWidget: const Icon(Icons.search),
                   radius: 20,

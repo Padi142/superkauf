@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:superkauf/library/app.dart';
 
 import '../../../../generic/widget/app_text_field/index.dart';
 
@@ -25,7 +24,7 @@ class _ChangeUsernameFieldState extends State<ChangeUsernameField> {
           child: AppTextField(
             usernameModel,
             context: context,
-            filled: App.appTheme.colorScheme.surface,
+            filled: Theme.of(context).colorScheme.surface,
             hint: 'Username',
             autofocus: true,
             validators: [ValidatorEmpty(), ValidatorRegex(r'^[a-zA-Z0-9_!@#$%^&*()\-+=.]{3,30}', 'Invalid username (3-30 characters')],
@@ -75,7 +74,7 @@ class _ChangeInstagramFieldState extends State<ChangeInstagramField> {
           child: AppTextField(
             instagramEntry,
             context: context,
-            filled: App.appTheme.colorScheme.surface,
+            filled: Theme.of(context).colorScheme.surface,
             hint: 'ig username',
             autofocus: true,
             validators: [ValidatorEmpty(), ValidatorRegex(r'^[a-zA-Z0-9._]{1,30}$', 'Invalid username (3-30 characters')],

@@ -12,6 +12,7 @@ import 'package:superkauf/generic/widget/app_text_field/validator_regex.dart';
 class ReplyButton extends StatefulWidget {
   final int postId;
   final PostCommentModel parentComment;
+
   const ReplyButton({
     super.key,
     required this.postId,
@@ -40,7 +41,7 @@ class _ReplyButtonState extends State<ReplyButton> {
                     commentModel,
                     context: context,
                     hint: 'comment_create_label'.tr(),
-                    // filled: App.appTheme.colorScheme.surface,
+                    filled: Theme.of(context).colorScheme.surface,
                     radius: 16,
                     lines: lines,
                     beginEdit: (value) {

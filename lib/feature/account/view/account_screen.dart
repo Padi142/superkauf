@@ -126,7 +126,13 @@ class _FeedScreenState extends State<AccountScreen> {
                                   stalePeriod: const Duration(days: 7),
                                 ),
                               ),
-                              progressIndicatorBuilder: (context, url, downloadProgress) => Center(child: CardLoading(height: constraints.maxWidth * 0.3)),
+                              progressIndicatorBuilder: (context, url, downloadProgress) => Center(
+                                  child: CardLoading(
+                                      cardLoadingTheme: CardLoadingTheme(
+                                        colorOne: Theme.of(context).colorScheme.secondary,
+                                        colorTwo: Theme.of(context).colorScheme.primary,
+                                      ),
+                                      height: constraints.maxWidth * 0.3)),
                               errorWidget: (context, url, error) => const Icon(Icons.error),
                             ),
                           ),

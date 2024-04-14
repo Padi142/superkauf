@@ -27,8 +27,7 @@ class HomeScreen extends Screen {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    BlocProvider.of<CheckNotificationBloc>(context)
-        .add(const CheckNotifications());
+    BlocProvider.of<CheckNotificationBloc>(context).add(const CheckNotifications());
     super.initState();
   }
 
@@ -63,8 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         }
       },
-      child: BlocBuilder<NavigationBloc, NavigationState>(
-          builder: (context, state) {
+      child: BlocBuilder<NavigationBloc, NavigationState>(builder: (context, state) {
         switch (state) {
           case final NavigationStateLoaded loaded:
             return SlidingUpPanel(
@@ -72,6 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
               backdropEnabled: true,
               backdropOpacity: 0.8,
               borderRadius: BorderRadius.circular(16),
+              color: Theme.of(context).colorScheme.background,
               minHeight: 0,
               maxHeight: 400,
               panelBuilder: (ScrollController sc) {
@@ -80,54 +79,39 @@ class _HomeScreenState extends State<HomeScreen> {
               body: Scaffold(
                 backgroundColor: Theme.of(context).colorScheme.background,
                 appBar: AppBar(
-                  title: Text('app_title'.tr(),
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge!
-                          .copyWith(color: Colors.white)),
-                  leading: BlocBuilder<CheckNotificationBloc,
-                      CheckNotificationsState>(
+                  title: Text('app_title'.tr(), style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.white)),
+                  leading: BlocBuilder<CheckNotificationBloc, CheckNotificationsState>(
                     builder: (context, state) {
                       return state.maybeMap(success: (success) {
                         if (success.notifications.newNotifications) {
                           return IconButton(
                             onPressed: () {
-                              BlocProvider.of<NavigationBloc>(context)
-                                  .add(const OpenMyNotificationsScreen());
-                              BlocProvider.of<CheckNotificationBloc>(context)
-                                  .add(const ClearNotifications());
+                              BlocProvider.of<NavigationBloc>(context).add(const OpenMyNotificationsScreen());
+                              BlocProvider.of<CheckNotificationBloc>(context).add(const ClearNotifications());
                             },
                             icon: Badge(
                                 alignment: Alignment.topRight,
                                 label: Text(
-                                  success.notifications.notificationCount
-                                      .toString(),
+                                  success.notifications.notificationCount.toString(),
                                   style: const TextStyle(
                                     color: Colors.white,
                                   ),
                                 ),
-                                child: Icon(Icons.notifications,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .secondary)),
+                                child: Icon(Icons.notifications, color: Theme.of(context).colorScheme.secondary)),
                           );
                         }
                         return IconButton(
                           onPressed: () {
-                            BlocProvider.of<NavigationBloc>(context)
-                                .add(const OpenMyNotificationsScreen());
+                            BlocProvider.of<NavigationBloc>(context).add(const OpenMyNotificationsScreen());
                           },
-                          icon: Icon(Icons.notifications,
-                              color: Theme.of(context).colorScheme.secondary),
+                          icon: Icon(Icons.notifications, color: Theme.of(context).colorScheme.secondary),
                         );
                       }, orElse: () {
                         return IconButton(
                           onPressed: () {
-                            BlocProvider.of<NavigationBloc>(context)
-                                .add(const OpenMyNotificationsScreen());
+                            BlocProvider.of<NavigationBloc>(context).add(const OpenMyNotificationsScreen());
                           },
-                          icon: Icon(Icons.notifications,
-                              color: Theme.of(context).colorScheme.secondary),
+                          icon: Icon(Icons.notifications, color: Theme.of(context).colorScheme.secondary),
                         );
                       });
                     },
@@ -135,11 +119,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   actions: [
                     IconButton(
                       onPressed: () {
-                        BlocProvider.of<NavigationBloc>(context)
-                            .add(const OpenProfileScreen());
+                        BlocProvider.of<NavigationBloc>(context).add(const OpenProfileScreen());
                       },
-                      icon: Icon(Icons.person,
-                          color: Theme.of(context).colorScheme.secondary),
+                      icon: Icon(Icons.person, color: Theme.of(context).colorScheme.secondary),
                     ),
                   ],
                 ),
@@ -151,25 +133,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   onDestinationSelected: (index) {
                     switch (index) {
                       case 0:
-                        BlocProvider.of<NavigationBloc>(context)
-                            .add(OpenFeedScreen(index));
+                        BlocProvider.of<NavigationBloc>(context).add(OpenFeedScreen(index));
                         break;
                       case 1:
-                        BlocProvider.of<NavigationBloc>(context)
-                            .add(OpenDiscoverScreen(index));
+                        BlocProvider.of<NavigationBloc>(context).add(OpenDiscoverScreen(index));
                         break;
                       case 2:
-                        BlocProvider.of<NavigationBloc>(context)
-                            .add(GoToCreatePostScreen(index));
+                        BlocProvider.of<NavigationBloc>(context).add(GoToCreatePostScreen(index));
                         break;
                       case 3:
-                        BlocProvider.of<NavigationBloc>(context)
-                            .add(OpenSearchScreen(index));
+                        BlocProvider.of<NavigationBloc>(context).add(OpenSearchScreen(index));
                         break;
 
                       case 4:
-                        BlocProvider.of<NavigationBloc>(context)
-                            .add(OpenShoppingListScreen(index));
+                        BlocProvider.of<NavigationBloc>(context).add(OpenShoppingListScreen(index));
                         break;
                       default:
                         break;
@@ -177,28 +154,28 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   destinations: const [
                     NavigationDestination(
-                      selectedIcon: Icon(Icons.home),
-                      icon: Icon(Icons.home_outlined),
+                      selectedIcon: Icon(Icons.home, color: Colors.black),
+                      icon: Icon(Icons.home_outlined, color: Colors.black),
                       label: 'Feed',
                     ),
                     NavigationDestination(
-                      selectedIcon: Icon(Icons.explore),
-                      icon: Icon(Icons.explore_outlined),
+                      selectedIcon: Icon(Icons.explore, color: Colors.black),
+                      icon: Icon(Icons.explore_outlined, color: Colors.black),
                       label: '',
                     ),
                     NavigationDestination(
-                      selectedIcon: Icon(Icons.add),
-                      icon: Icon(Icons.add),
+                      selectedIcon: Icon(Icons.add, color: Colors.black),
+                      icon: Icon(Icons.add, color: Colors.black),
                       label: 'Create',
                     ),
                     NavigationDestination(
-                      selectedIcon: Icon(Icons.search),
-                      icon: Icon(Icons.search),
+                      selectedIcon: Icon(Icons.search, color: Colors.black),
+                      icon: Icon(Icons.search, color: Colors.black),
                       label: 'Search',
                     ),
                     NavigationDestination(
-                      selectedIcon: Icon(Icons.shopping_basket),
-                      icon: Icon(Icons.shopping_basket_outlined),
+                      selectedIcon: Icon(Icons.shopping_basket, color: Colors.black),
+                      icon: Icon(Icons.shopping_basket_outlined, color: Colors.black),
                       label: 'Saved',
                     ),
                   ],

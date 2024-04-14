@@ -8,7 +8,6 @@ import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart
 import 'package:superkauf/feature/post_detail/bloc/post_detail_bloc.dart';
 import 'package:superkauf/feature/user_detail/bloc/user_detail_bloc.dart';
 import 'package:superkauf/generic/notifications/model/models/notification_model.dart';
-import 'package:superkauf/library/app.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NotificationContainer extends StatelessWidget {
@@ -46,32 +45,26 @@ class NotificationContainer extends StatelessWidget {
           },
         );
 
-        BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(
-            post: notification.relatedPost, user: notification.relatedUser));
+        BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(post: notification.relatedPost, user: notification.relatedUser));
 
         BlocProvider.of<NavigationBloc>(context).add(OpenPostDetailScreen(
           postId: notification.relatedPost!.id,
         ));
       },
-      tileColor: notification.seen
-          ? App.appTheme.scaffoldBackgroundColor
-          : Colors.grey[200],
+      tileColor: notification.seen ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.tertiary,
       leading: GestureDetector(
         onTap: () {
           if (notification.relatedUserId == null) {
             return;
           }
 
-          BlocProvider.of<UserDetailBloc>(context)
-              .add(GetUser(userID: notification.relatedUserId!));
-          BlocProvider.of<NavigationBloc>(context)
-              .add(const OpenUserDetailScreen());
+          BlocProvider.of<UserDetailBloc>(context).add(GetUser(userID: notification.relatedUserId!));
+          BlocProvider.of<NavigationBloc>(context).add(const OpenUserDetailScreen());
         },
         child: Padding(
           padding: const EdgeInsets.all(2),
           child: CircleAvatar(
-            backgroundImage: CachedNetworkImageProvider(
-                notification.relatedUser!.profilePicture),
+            backgroundImage: CachedNetworkImageProvider(notification.relatedUser!.profilePicture),
           ),
         ),
       ),
@@ -83,9 +76,13 @@ class NotificationContainer extends StatelessWidget {
         padding: const EdgeInsets.all(4),
         child: CachedNetworkImage(
           imageUrl: notification.relatedPost!.image,
-          placeholder: (context, url) => const CardLoading(
+          placeholder: (context, url) => CardLoading(
             height: 80,
             width: 30,
+            cardLoadingTheme: CardLoadingTheme(
+              colorOne: Theme.of(context).colorScheme.secondary,
+              colorTwo: Theme.of(context).colorScheme.primary,
+            ),
           ),
           errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
@@ -104,28 +101,22 @@ class NotificationContainer extends StatelessWidget {
           },
         );
 
-        BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(
-            post: notification.relatedPost, user: notification.relatedUser));
+        BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(post: notification.relatedPost, user: notification.relatedUser));
 
         BlocProvider.of<NavigationBloc>(context).add(OpenPostDetailScreen(
           postId: notification.relatedPost!.id,
         ));
       },
-      tileColor: notification.seen
-          ? App.appTheme.scaffoldBackgroundColor
-          : Colors.grey[200],
+      tileColor: notification.seen ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.tertiary,
       leading: GestureDetector(
         onTap: () {
-          BlocProvider.of<UserDetailBloc>(context)
-              .add(GetUser(userID: notification.recipientId));
-          BlocProvider.of<NavigationBloc>(context)
-              .add(const OpenUserDetailScreen());
+          BlocProvider.of<UserDetailBloc>(context).add(GetUser(userID: notification.recipientId));
+          BlocProvider.of<NavigationBloc>(context).add(const OpenUserDetailScreen());
         },
         child: Padding(
           padding: const EdgeInsets.all(2),
           child: CircleAvatar(
-            backgroundImage: CachedNetworkImageProvider(
-                notification.relatedUser!.profilePicture),
+            backgroundImage: CachedNetworkImageProvider(notification.relatedUser!.profilePicture),
           ),
         ),
       ),
@@ -137,9 +128,13 @@ class NotificationContainer extends StatelessWidget {
         padding: const EdgeInsets.all(4),
         child: CachedNetworkImage(
           imageUrl: notification.relatedPost!.image,
-          placeholder: (context, url) => const CardLoading(
+          placeholder: (context, url) => CardLoading(
             height: 80,
             width: 30,
+            cardLoadingTheme: CardLoadingTheme(
+              colorOne: Theme.of(context).colorScheme.secondary,
+              colorTwo: Theme.of(context).colorScheme.primary,
+            ),
           ),
           errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
@@ -158,24 +153,20 @@ class NotificationContainer extends StatelessWidget {
           },
         );
 
-        BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(
-            post: notification.relatedPost, user: notification.relatedUser));
+        BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(post: notification.relatedPost, user: notification.relatedUser));
 
         BlocProvider.of<NavigationBloc>(context).add(OpenPostDetailScreen(
           postId: notification.relatedPost!.id,
         ));
       },
-      tileColor: notification.seen
-          ? App.appTheme.scaffoldBackgroundColor
-          : Colors.grey[200],
+      tileColor: notification.seen ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.tertiary,
       leading: GestureDetector(
         onTap: () {},
         child: const Padding(
           padding: EdgeInsets.all(2),
           child: CircleAvatar(
             backgroundColor: Colors.transparent,
-            backgroundImage: CachedNetworkImageProvider(
-                "https://storage.googleapis.com/superkauf/logos/logo1.png"),
+            backgroundImage: CachedNetworkImageProvider("https://storage.googleapis.com/superkauf/logos/logo1.png"),
           ),
         ),
       ),
@@ -187,9 +178,13 @@ class NotificationContainer extends StatelessWidget {
         padding: const EdgeInsets.all(4),
         child: CachedNetworkImage(
           imageUrl: notification.relatedPost!.image,
-          placeholder: (context, url) => const CardLoading(
+          placeholder: (context, url) => CardLoading(
             height: 80,
             width: 30,
+            cardLoadingTheme: CardLoadingTheme(
+              colorOne: Theme.of(context).colorScheme.secondary,
+              colorTwo: Theme.of(context).colorScheme.primary,
+            ),
           ),
           errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
@@ -208,16 +203,13 @@ class NotificationContainer extends StatelessWidget {
           },
         );
       },
-      tileColor: notification.seen
-          ? App.appTheme.scaffoldBackgroundColor
-          : Colors.grey[200],
+      tileColor: notification.seen ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.tertiary,
       leading: GestureDetector(
         onTap: () {},
         child: const Padding(
           padding: EdgeInsets.all(2),
           child: CircleAvatar(
-            backgroundImage: CachedNetworkImageProvider(
-                "https://storage.googleapis.com/superkauf/logos/logo1.png"),
+            backgroundImage: CachedNetworkImageProvider("https://storage.googleapis.com/superkauf/logos/logo1.png"),
           ),
         ),
       ),
@@ -249,15 +241,11 @@ class NotificationContainer extends StatelessWidget {
 
         await launchUrl(link);
       },
-      tileColor: notification.seen
-          ? App.appTheme.scaffoldBackgroundColor
-          : Colors.grey[200],
+      tileColor: notification.seen ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.tertiary,
       leading: Padding(
         padding: const EdgeInsets.all(2),
         child: CircleAvatar(
-          backgroundImage: CachedNetworkImageProvider(notification.image == null
-              ? "https://storage.googleapis.com/superkauf/logos/logo1.png"
-              : notification.image!),
+          backgroundImage: CachedNetworkImageProvider(notification.image == null ? "https://storage.googleapis.com/superkauf/logos/logo1.png" : notification.image!),
         ),
       ),
       title: Text(notification.text),

@@ -7,6 +7,7 @@ import 'package:superkauf/library/app.dart';
 class ListActionButtons extends StatelessWidget {
   final ShoppingListModel list;
   final bool canEdit;
+
   const ListActionButtons({
     super.key,
     required this.list,
@@ -118,6 +119,7 @@ class ListActionButtons extends StatelessWidget {
         return SizedBox(
           child: AlertDialog(
             title: const Text('Do you really want to delete this list?'),
+            backgroundColor: Theme.of(context).colorScheme.background,
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -146,6 +148,7 @@ class ListActionButtons extends StatelessWidget {
         return SizedBox(
           child: AlertDialog(
             title: const Text('Do you really want to leave this list?'),
+            backgroundColor: Theme.of(context).colorScheme.background,
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -174,6 +177,7 @@ class ListActionButtons extends StatelessWidget {
         return SizedBox(
           child: AlertDialog(
             title: const Text('Share this code with the person you want to invite'),
+            backgroundColor: Theme.of(context).colorScheme.background,
             titleTextStyle: App.appTheme.textTheme.titleSmall,
             content: SelectableText(code, style: App.appTheme.textTheme.titleLarge),
             actions: <Widget>[
