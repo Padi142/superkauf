@@ -6,7 +6,8 @@ part of 'create_comment_body.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CreateCommentBody _$CreateCommentBodyFromJson(Map<String, dynamic> json) => CreateCommentBody(
+CreateCommentBody _$CreateCommentBodyFromJson(Map<String, dynamic> json) =>
+    CreateCommentBody(
       comment: json['comment'] as String,
       user: json['user'] as int,
       post: json['post'] as int,
@@ -14,7 +15,8 @@ CreateCommentBody _$CreateCommentBodyFromJson(Map<String, dynamic> json) => Crea
       reactionId: json['reaction_id'] as int?,
     );
 
-Map<String, dynamic> _$CreateCommentBodyToJson(CreateCommentBody instance) => <String, dynamic>{
+Map<String, dynamic> _$CreateCommentBodyToJson(CreateCommentBody instance) =>
+    <String, dynamic>{
       'comment': instance.comment,
       'user': instance.user,
       'post': instance.post,

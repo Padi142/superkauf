@@ -12,6 +12,8 @@ class NotificationModel extends Equatable {
   final int recipientId;
   final int? relatedPostId;
   final int? relatedUserId;
+  final String? image;
+  final String? url;
   final bool seen;
   final NotificationType type;
   final DateTime createdAt;
@@ -25,13 +27,16 @@ class NotificationModel extends Equatable {
     required this.relatedPostId,
     required this.relatedUserId,
     required this.seen,
+    required this.image,
+    required this.url,
     required this.type,
     required this.createdAt,
     required this.relatedPost,
     required this.relatedUser,
   });
 
-  factory NotificationModel.fromJson(Map<String, dynamic> json) => _$NotificationModelFromJson(json);
+  factory NotificationModel.fromJson(Map<String, dynamic> json) =>
+      _$NotificationModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$NotificationModelToJson(this);
 
@@ -55,5 +60,6 @@ enum NotificationType {
   post_like_count,
   none,
   highlight,
+  link,
   generic,
 }

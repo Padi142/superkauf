@@ -9,6 +9,7 @@ import 'package:superkauf/feature/post_detail/bloc/post_detail_bloc.dart';
 import 'package:superkauf/feature/user_detail/bloc/user_detail_bloc.dart';
 import 'package:superkauf/generic/notifications/model/models/notification_model.dart';
 import 'package:superkauf/library/app.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NotificationContainer extends StatelessWidget {
   final NotificationModel notification;
@@ -24,6 +25,8 @@ class NotificationContainer extends StatelessWidget {
         return _buildPostCommentNotification(context);
       case NotificationType.highlight:
         return _buildPostHighlightNotification(context);
+      case NotificationType.link:
+        return _buildLinkNotification(context);
       case NotificationType.generic:
         return _buildGenericNotification(context);
 
@@ -43,26 +46,32 @@ class NotificationContainer extends StatelessWidget {
           },
         );
 
-        BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(post: notification.relatedPost, user: notification.relatedUser));
+        BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(
+            post: notification.relatedPost, user: notification.relatedUser));
 
         BlocProvider.of<NavigationBloc>(context).add(OpenPostDetailScreen(
           postId: notification.relatedPost!.id,
         ));
       },
-      tileColor: notification.seen ? App.appTheme.scaffoldBackgroundColor : Colors.grey[200],
+      tileColor: notification.seen
+          ? App.appTheme.scaffoldBackgroundColor
+          : Colors.grey[200],
       leading: GestureDetector(
         onTap: () {
           if (notification.relatedUserId == null) {
             return;
           }
 
-          BlocProvider.of<UserDetailBloc>(context).add(GetUser(userID: notification.relatedUserId!));
-          BlocProvider.of<NavigationBloc>(context).add(const OpenUserDetailScreen());
+          BlocProvider.of<UserDetailBloc>(context)
+              .add(GetUser(userID: notification.relatedUserId!));
+          BlocProvider.of<NavigationBloc>(context)
+              .add(const OpenUserDetailScreen());
         },
         child: Padding(
           padding: const EdgeInsets.all(2),
           child: CircleAvatar(
-            backgroundImage: CachedNetworkImageProvider(notification.relatedUser!.profilePicture),
+            backgroundImage: CachedNetworkImageProvider(
+                notification.relatedUser!.profilePicture),
           ),
         ),
       ),
@@ -95,22 +104,28 @@ class NotificationContainer extends StatelessWidget {
           },
         );
 
-        BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(post: notification.relatedPost, user: notification.relatedUser));
+        BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(
+            post: notification.relatedPost, user: notification.relatedUser));
 
         BlocProvider.of<NavigationBloc>(context).add(OpenPostDetailScreen(
           postId: notification.relatedPost!.id,
         ));
       },
-      tileColor: notification.seen ? App.appTheme.scaffoldBackgroundColor : Colors.grey[200],
+      tileColor: notification.seen
+          ? App.appTheme.scaffoldBackgroundColor
+          : Colors.grey[200],
       leading: GestureDetector(
         onTap: () {
-          BlocProvider.of<UserDetailBloc>(context).add(GetUser(userID: notification.recipientId));
-          BlocProvider.of<NavigationBloc>(context).add(const OpenUserDetailScreen());
+          BlocProvider.of<UserDetailBloc>(context)
+              .add(GetUser(userID: notification.recipientId));
+          BlocProvider.of<NavigationBloc>(context)
+              .add(const OpenUserDetailScreen());
         },
         child: Padding(
           padding: const EdgeInsets.all(2),
           child: CircleAvatar(
-            backgroundImage: CachedNetworkImageProvider(notification.relatedUser!.profilePicture),
+            backgroundImage: CachedNetworkImageProvider(
+                notification.relatedUser!.profilePicture),
           ),
         ),
       ),
@@ -143,20 +158,24 @@ class NotificationContainer extends StatelessWidget {
           },
         );
 
-        BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(post: notification.relatedPost, user: notification.relatedUser));
+        BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(
+            post: notification.relatedPost, user: notification.relatedUser));
 
         BlocProvider.of<NavigationBloc>(context).add(OpenPostDetailScreen(
           postId: notification.relatedPost!.id,
         ));
       },
-      tileColor: notification.seen ? App.appTheme.scaffoldBackgroundColor : Colors.grey[200],
+      tileColor: notification.seen
+          ? App.appTheme.scaffoldBackgroundColor
+          : Colors.grey[200],
       leading: GestureDetector(
         onTap: () {},
         child: const Padding(
           padding: EdgeInsets.all(2),
           child: CircleAvatar(
             backgroundColor: Colors.transparent,
-            backgroundImage: CachedNetworkImageProvider("https://storage.googleapis.com/superkauf/logos/logo1.png"),
+            backgroundImage: CachedNetworkImageProvider(
+                "https://storage.googleapis.com/superkauf/logos/logo1.png"),
           ),
         ),
       ),
@@ -189,14 +208,56 @@ class NotificationContainer extends StatelessWidget {
           },
         );
       },
-      tileColor: notification.seen ? App.appTheme.scaffoldBackgroundColor : Colors.grey[200],
+      tileColor: notification.seen
+          ? App.appTheme.scaffoldBackgroundColor
+          : Colors.grey[200],
       leading: GestureDetector(
         onTap: () {},
         child: const Padding(
           padding: EdgeInsets.all(2),
           child: CircleAvatar(
-            backgroundImage: CachedNetworkImageProvider("https://storage.googleapis.com/superkauf/logos/logo1.png"),
+            backgroundImage: CachedNetworkImageProvider(
+                "https://storage.googleapis.com/superkauf/logos/logo1.png"),
           ),
+        ),
+      ),
+      title: Text(notification.text),
+      subtitle: TimeAgoWidget(
+        dateTime: notification.createdAt,
+      ),
+    );
+  }
+
+  Widget _buildLinkNotification(BuildContext context) {
+    return ListTile(
+      onTap: () async {
+        Posthog().capture(
+          eventName: 'notification_opened',
+          properties: {
+            'notification_type': 'link',
+            'notification_id': notification.id,
+          },
+        );
+
+        if (notification.url == null) {
+          return;
+        }
+        final link = Uri.parse(notification.url!);
+        if (!(await canLaunchUrl(link))) {
+          return;
+        }
+
+        await launchUrl(link);
+      },
+      tileColor: notification.seen
+          ? App.appTheme.scaffoldBackgroundColor
+          : Colors.grey[200],
+      leading: Padding(
+        padding: const EdgeInsets.all(2),
+        child: CircleAvatar(
+          backgroundImage: CachedNetworkImageProvider(notification.image == null
+              ? "https://storage.googleapis.com/superkauf/logos/logo1.png"
+              : notification.image!),
         ),
       ),
       title: Text(notification.text),

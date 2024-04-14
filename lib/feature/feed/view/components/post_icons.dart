@@ -15,11 +15,11 @@ class RequiresStoreCard extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(50),
         ),
-        child: const Padding(
-          padding: EdgeInsets.all(6),
+        child: Padding(
+          padding: const EdgeInsets.all(6),
           child: Icon(
             Icons.add_card,
-            color: Colors.black,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
       ),
@@ -53,7 +53,8 @@ class HeartReaction extends StatelessWidget {
   final int reactions;
   final bool isClicked;
 
-  const HeartReaction({super.key, required this.reactions, required this.isClicked});
+  const HeartReaction(
+      {super.key, required this.reactions, required this.isClicked});
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +99,7 @@ class HeartReaction extends StatelessWidget {
             Text(
               reactions.toString(),
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    color: Colors.white,
+                    color: const Color(0xFF402cac),
                   ),
             ),
           ],
@@ -125,7 +126,10 @@ class FeedContainerPrice extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: Text(
           '${(price % 1 == 0) ? price.toInt().toString() : price.toStringAsFixed(2)} ${App.appConfig.settings.country.currency}',
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.black),
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge!
+              .copyWith(color: const Color(0xFF402cac)),
         ),
       ),
     );
@@ -144,7 +148,13 @@ class FeedPostValidUntilLabel extends StatelessWidget {
       triggerMode: TooltipTriggerMode.tap,
       child: Card(
         elevation: 4,
-        color: validUntil.difference(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)).inDays > 3 ? Theme.of(context).colorScheme.background : Colors.redAccent,
+        color: validUntil
+                    .difference(DateTime(DateTime.now().year,
+                        DateTime.now().month, DateTime.now().day))
+                    .inDays >
+                3
+            ? Theme.of(context).colorScheme.background
+            : Colors.redAccent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
         ),

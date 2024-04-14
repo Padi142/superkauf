@@ -19,21 +19,27 @@ mixin _$MyNotificationsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<NotificationModel> notifications, bool isLoading, bool canLoadMore) loaded,
+    required TResult Function(List<NotificationModel> notifications,
+            bool isLoading, bool canLoadMore)
+        loaded,
     required TResult Function(String error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<NotificationModel> notifications, bool isLoading, bool canLoadMore)? loaded,
+    TResult? Function(List<NotificationModel> notifications, bool isLoading,
+            bool canLoadMore)?
+        loaded,
     TResult? Function(String error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<NotificationModel> notifications, bool isLoading, bool canLoadMore)? loaded,
+    TResult Function(List<NotificationModel> notifications, bool isLoading,
+            bool canLoadMore)?
+        loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) =>
@@ -64,11 +70,15 @@ mixin _$MyNotificationsState {
 
 /// @nodoc
 abstract class $MyNotificationsStateCopyWith<$Res> {
-  factory $MyNotificationsStateCopyWith(MyNotificationsState value, $Res Function(MyNotificationsState) then) = _$MyNotificationsStateCopyWithImpl<$Res, MyNotificationsState>;
+  factory $MyNotificationsStateCopyWith(MyNotificationsState value,
+          $Res Function(MyNotificationsState) then) =
+      _$MyNotificationsStateCopyWithImpl<$Res, MyNotificationsState>;
 }
 
 /// @nodoc
-class _$MyNotificationsStateCopyWithImpl<$Res, $Val extends MyNotificationsState> implements $MyNotificationsStateCopyWith<$Res> {
+class _$MyNotificationsStateCopyWithImpl<$Res,
+        $Val extends MyNotificationsState>
+    implements $MyNotificationsStateCopyWith<$Res> {
   _$MyNotificationsStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -79,12 +89,18 @@ class _$MyNotificationsStateCopyWithImpl<$Res, $Val extends MyNotificationsState
 
 /// @nodoc
 abstract class _$$LoadingImplCopyWith<$Res> {
-  factory _$$LoadingImplCopyWith(_$LoadingImpl value, $Res Function(_$LoadingImpl) then) = __$$LoadingImplCopyWithImpl<$Res>;
+  factory _$$LoadingImplCopyWith(
+          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
+      __$$LoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$LoadingImplCopyWithImpl<$Res> extends _$MyNotificationsStateCopyWithImpl<$Res, _$LoadingImpl> implements _$$LoadingImplCopyWith<$Res> {
-  __$$LoadingImplCopyWithImpl(_$LoadingImpl _value, $Res Function(_$LoadingImpl) _then) : super(_value, _then);
+class __$$LoadingImplCopyWithImpl<$Res>
+    extends _$MyNotificationsStateCopyWithImpl<$Res, _$LoadingImpl>
+    implements _$$LoadingImplCopyWith<$Res> {
+  __$$LoadingImplCopyWithImpl(
+      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -99,7 +115,8 @@ class _$LoadingImpl implements Loading {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$LoadingImpl);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$LoadingImpl);
   }
 
   @override
@@ -109,7 +126,9 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<NotificationModel> notifications, bool isLoading, bool canLoadMore) loaded,
+    required TResult Function(List<NotificationModel> notifications,
+            bool isLoading, bool canLoadMore)
+        loaded,
     required TResult Function(String error) error,
   }) {
     return loading();
@@ -119,7 +138,9 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<NotificationModel> notifications, bool isLoading, bool canLoadMore)? loaded,
+    TResult? Function(List<NotificationModel> notifications, bool isLoading,
+            bool canLoadMore)?
+        loaded,
     TResult? Function(String error)? error,
   }) {
     return loading?.call();
@@ -129,7 +150,9 @@ class _$LoadingImpl implements Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<NotificationModel> notifications, bool isLoading, bool canLoadMore)? loaded,
+    TResult Function(List<NotificationModel> notifications, bool isLoading,
+            bool canLoadMore)?
+        loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -180,14 +203,23 @@ abstract class Loading implements MyNotificationsState {
 
 /// @nodoc
 abstract class _$$LoadedImplCopyWith<$Res> {
-  factory _$$LoadedImplCopyWith(_$LoadedImpl value, $Res Function(_$LoadedImpl) then) = __$$LoadedImplCopyWithImpl<$Res>;
+  factory _$$LoadedImplCopyWith(
+          _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
+      __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<NotificationModel> notifications, bool isLoading, bool canLoadMore});
+  $Res call(
+      {List<NotificationModel> notifications,
+      bool isLoading,
+      bool canLoadMore});
 }
 
 /// @nodoc
-class __$$LoadedImplCopyWithImpl<$Res> extends _$MyNotificationsStateCopyWithImpl<$Res, _$LoadedImpl> implements _$$LoadedImplCopyWith<$Res> {
-  __$$LoadedImplCopyWithImpl(_$LoadedImpl _value, $Res Function(_$LoadedImpl) _then) : super(_value, _then);
+class __$$LoadedImplCopyWithImpl<$Res>
+    extends _$MyNotificationsStateCopyWithImpl<$Res, _$LoadedImpl>
+    implements _$$LoadedImplCopyWith<$Res> {
+  __$$LoadedImplCopyWithImpl(
+      _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -216,7 +248,9 @@ class __$$LoadedImplCopyWithImpl<$Res> extends _$MyNotificationsStateCopyWithImp
 /// @nodoc
 
 class _$LoadedImpl implements Loaded {
-  const _$LoadedImpl(final List<NotificationModel> notifications, this.isLoading, this.canLoadMore) : _notifications = notifications;
+  const _$LoadedImpl(final List<NotificationModel> notifications,
+      this.isLoading, this.canLoadMore)
+      : _notifications = notifications;
 
   final List<NotificationModel> _notifications;
   @override
@@ -241,24 +275,34 @@ class _$LoadedImpl implements Loaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LoadedImpl &&
-            const DeepCollectionEquality().equals(other._notifications, _notifications) &&
-            (identical(other.isLoading, isLoading) || other.isLoading == isLoading) &&
-            (identical(other.canLoadMore, canLoadMore) || other.canLoadMore == canLoadMore));
+            const DeepCollectionEquality()
+                .equals(other._notifications, _notifications) &&
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading) &&
+            (identical(other.canLoadMore, canLoadMore) ||
+                other.canLoadMore == canLoadMore));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_notifications), isLoading, canLoadMore);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_notifications),
+      isLoading,
+      canLoadMore);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith => __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<NotificationModel> notifications, bool isLoading, bool canLoadMore) loaded,
+    required TResult Function(List<NotificationModel> notifications,
+            bool isLoading, bool canLoadMore)
+        loaded,
     required TResult Function(String error) error,
   }) {
     return loaded(notifications, isLoading, canLoadMore);
@@ -268,7 +312,9 @@ class _$LoadedImpl implements Loaded {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<NotificationModel> notifications, bool isLoading, bool canLoadMore)? loaded,
+    TResult? Function(List<NotificationModel> notifications, bool isLoading,
+            bool canLoadMore)?
+        loaded,
     TResult? Function(String error)? error,
   }) {
     return loaded?.call(notifications, isLoading, canLoadMore);
@@ -278,7 +324,9 @@ class _$LoadedImpl implements Loaded {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<NotificationModel> notifications, bool isLoading, bool canLoadMore)? loaded,
+    TResult Function(List<NotificationModel> notifications, bool isLoading,
+            bool canLoadMore)?
+        loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -324,25 +372,33 @@ class _$LoadedImpl implements Loaded {
 }
 
 abstract class Loaded implements MyNotificationsState {
-  const factory Loaded(final List<NotificationModel> notifications, final bool isLoading, final bool canLoadMore) = _$LoadedImpl;
+  const factory Loaded(final List<NotificationModel> notifications,
+      final bool isLoading, final bool canLoadMore) = _$LoadedImpl;
 
   List<NotificationModel> get notifications;
   bool get isLoading;
   bool get canLoadMore;
   @JsonKey(ignore: true)
-  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$ErrorImplCopyWith<$Res> {
-  factory _$$ErrorImplCopyWith(_$ErrorImpl value, $Res Function(_$ErrorImpl) then) = __$$ErrorImplCopyWithImpl<$Res>;
+  factory _$$ErrorImplCopyWith(
+          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
+      __$$ErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String error});
 }
 
 /// @nodoc
-class __$$ErrorImplCopyWithImpl<$Res> extends _$MyNotificationsStateCopyWithImpl<$Res, _$ErrorImpl> implements _$$ErrorImplCopyWith<$Res> {
-  __$$ErrorImplCopyWithImpl(_$ErrorImpl _value, $Res Function(_$ErrorImpl) _then) : super(_value, _then);
+class __$$ErrorImplCopyWithImpl<$Res>
+    extends _$MyNotificationsStateCopyWithImpl<$Res, _$ErrorImpl>
+    implements _$$ErrorImplCopyWith<$Res> {
+  __$$ErrorImplCopyWithImpl(
+      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -373,7 +429,10 @@ class _$ErrorImpl implements Error {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$ErrorImpl && (identical(other.error, error) || other.error == error));
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ErrorImpl &&
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
@@ -382,13 +441,16 @@ class _$ErrorImpl implements Error {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith => __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
+  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
+      __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<NotificationModel> notifications, bool isLoading, bool canLoadMore) loaded,
+    required TResult Function(List<NotificationModel> notifications,
+            bool isLoading, bool canLoadMore)
+        loaded,
     required TResult Function(String error) error,
   }) {
     return error(this.error);
@@ -398,7 +460,9 @@ class _$ErrorImpl implements Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<NotificationModel> notifications, bool isLoading, bool canLoadMore)? loaded,
+    TResult? Function(List<NotificationModel> notifications, bool isLoading,
+            bool canLoadMore)?
+        loaded,
     TResult? Function(String error)? error,
   }) {
     return error?.call(this.error);
@@ -408,7 +472,9 @@ class _$ErrorImpl implements Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<NotificationModel> notifications, bool isLoading, bool canLoadMore)? loaded,
+    TResult Function(List<NotificationModel> notifications, bool isLoading,
+            bool canLoadMore)?
+        loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -458,5 +524,6 @@ abstract class Error implements MyNotificationsState {
 
   String get error;
   @JsonKey(ignore: true)
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

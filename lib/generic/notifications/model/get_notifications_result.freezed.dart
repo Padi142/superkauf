@@ -58,11 +58,15 @@ mixin _$GetNotificationsResult {
 
 /// @nodoc
 abstract class $GetNotificationsResultCopyWith<$Res> {
-  factory $GetNotificationsResultCopyWith(GetNotificationsResult value, $Res Function(GetNotificationsResult) then) = _$GetNotificationsResultCopyWithImpl<$Res, GetNotificationsResult>;
+  factory $GetNotificationsResultCopyWith(GetNotificationsResult value,
+          $Res Function(GetNotificationsResult) then) =
+      _$GetNotificationsResultCopyWithImpl<$Res, GetNotificationsResult>;
 }
 
 /// @nodoc
-class _$GetNotificationsResultCopyWithImpl<$Res, $Val extends GetNotificationsResult> implements $GetNotificationsResultCopyWith<$Res> {
+class _$GetNotificationsResultCopyWithImpl<$Res,
+        $Val extends GetNotificationsResult>
+    implements $GetNotificationsResultCopyWith<$Res> {
   _$GetNotificationsResultCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -73,14 +77,20 @@ class _$GetNotificationsResultCopyWithImpl<$Res, $Val extends GetNotificationsRe
 
 /// @nodoc
 abstract class _$$SuccessImplCopyWith<$Res> {
-  factory _$$SuccessImplCopyWith(_$SuccessImpl value, $Res Function(_$SuccessImpl) then) = __$$SuccessImplCopyWithImpl<$Res>;
+  factory _$$SuccessImplCopyWith(
+          _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
+      __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<NotificationModel> notifications});
 }
 
 /// @nodoc
-class __$$SuccessImplCopyWithImpl<$Res> extends _$GetNotificationsResultCopyWithImpl<$Res, _$SuccessImpl> implements _$$SuccessImplCopyWith<$Res> {
-  __$$SuccessImplCopyWithImpl(_$SuccessImpl _value, $Res Function(_$SuccessImpl) _then) : super(_value, _then);
+class __$$SuccessImplCopyWithImpl<$Res>
+    extends _$GetNotificationsResultCopyWithImpl<$Res, _$SuccessImpl>
+    implements _$$SuccessImplCopyWith<$Res> {
+  __$$SuccessImplCopyWithImpl(
+      _$SuccessImpl _value, $Res Function(_$SuccessImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -99,7 +109,8 @@ class __$$SuccessImplCopyWithImpl<$Res> extends _$GetNotificationsResultCopyWith
 /// @nodoc
 
 class _$SuccessImpl implements Success {
-  const _$SuccessImpl(final List<NotificationModel> notifications) : _notifications = notifications;
+  const _$SuccessImpl(final List<NotificationModel> notifications)
+      : _notifications = notifications;
 
   final List<NotificationModel> _notifications;
   @override
@@ -116,16 +127,22 @@ class _$SuccessImpl implements Success {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$SuccessImpl && const DeepCollectionEquality().equals(other._notifications, _notifications));
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SuccessImpl &&
+            const DeepCollectionEquality()
+                .equals(other._notifications, _notifications));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_notifications));
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_notifications));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith => __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+      __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -191,23 +208,31 @@ class _$SuccessImpl implements Success {
 }
 
 abstract class Success implements GetNotificationsResult {
-  const factory Success(final List<NotificationModel> notifications) = _$SuccessImpl;
+  const factory Success(final List<NotificationModel> notifications) =
+      _$SuccessImpl;
 
   List<NotificationModel> get notifications;
   @JsonKey(ignore: true)
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$FailureImplCopyWith<$Res> {
-  factory _$$FailureImplCopyWith(_$FailureImpl value, $Res Function(_$FailureImpl) then) = __$$FailureImplCopyWithImpl<$Res>;
+  factory _$$FailureImplCopyWith(
+          _$FailureImpl value, $Res Function(_$FailureImpl) then) =
+      __$$FailureImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class __$$FailureImplCopyWithImpl<$Res> extends _$GetNotificationsResultCopyWithImpl<$Res, _$FailureImpl> implements _$$FailureImplCopyWith<$Res> {
-  __$$FailureImplCopyWithImpl(_$FailureImpl _value, $Res Function(_$FailureImpl) _then) : super(_value, _then);
+class __$$FailureImplCopyWithImpl<$Res>
+    extends _$GetNotificationsResultCopyWithImpl<$Res, _$FailureImpl>
+    implements _$$FailureImplCopyWith<$Res> {
+  __$$FailureImplCopyWithImpl(
+      _$FailureImpl _value, $Res Function(_$FailureImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -238,7 +263,10 @@ class _$FailureImpl implements Failure {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$FailureImpl && (identical(other.message, message) || other.message == message));
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FailureImpl &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
@@ -247,7 +275,8 @@ class _$FailureImpl implements Failure {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$FailureImplCopyWith<_$FailureImpl> get copyWith => __$$FailureImplCopyWithImpl<_$FailureImpl>(this, _$identity);
+  _$$FailureImplCopyWith<_$FailureImpl> get copyWith =>
+      __$$FailureImplCopyWithImpl<_$FailureImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -317,5 +346,6 @@ abstract class Failure implements GetNotificationsResult {
 
   String get message;
   @JsonKey(ignore: true)
-  _$$FailureImplCopyWith<_$FailureImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$FailureImplCopyWith<_$FailureImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

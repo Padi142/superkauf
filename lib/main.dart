@@ -118,16 +118,26 @@ Future<void> main() async {
               GetIt.I.registerFactory<LocaleResource>(
                 () => LocaleResource(appConfig: config),
               );
-              GetIt.I.registerFactory<PostApi>(() => PostApi(_dio(config.endpoint)));
-              GetIt.I.registerFactory<UserApi>(() => UserApi(_dio(config.endpoint)));
-              GetIt.I.registerFactory<StoreApi>(() => StoreApi(_dio(config.endpoint)));
-              GetIt.I.registerFactory<SavedPostsApi>(() => SavedPostsApi(_dio(config.endpoint)));
-              GetIt.I.registerFactory<CommentApi>(() => CommentApi(_dio(config.endpoint)));
-              GetIt.I.registerFactory<ReportApi>(() => ReportApi(_dio(config.endpoint)));
-              GetIt.I.registerFactory<NotificationApi>(() => NotificationApi(_dio(config.endpoint)));
-              GetIt.I.registerFactory<ShoppingListApi>(() => ShoppingListApi(_dio(config.endpoint)));
-              GetIt.I.registerFactory<LabelApi>(() => LabelApi(_dio(config.endpoint)));
-              GetIt.I.registerFactory<CountriesApi>(() => CountriesApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<PostApi>(
+                  () => PostApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<UserApi>(
+                  () => UserApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<StoreApi>(
+                  () => StoreApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<SavedPostsApi>(
+                  () => SavedPostsApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<CommentApi>(
+                  () => CommentApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<ReportApi>(
+                  () => ReportApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<NotificationApi>(
+                  () => NotificationApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<ShoppingListApi>(
+                  () => ShoppingListApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<LabelApi>(
+                  () => LabelApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<CountriesApi>(
+                  () => CountriesApi(_dio(config.endpoint)));
             },
           ));
 
