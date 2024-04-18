@@ -235,9 +235,6 @@ class NotificationContainer extends StatelessWidget {
           return;
         }
         final link = Uri.parse(notification.url!);
-        if (!(await canLaunchUrl(link))) {
-          return;
-        }
 
         await launchUrl(link);
       },
