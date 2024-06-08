@@ -36,7 +36,7 @@ class _ReplyButtonState extends State<ReplyButton> {
             return Row(
               children: [
                 SizedBox(
-                  width: constrains.maxWidth * 0.8,
+                  width: constrains.maxWidth * 0.76,
                   child: AppTextField(
                     commentModel,
                     context: context,
@@ -58,6 +58,7 @@ class _ReplyButtonState extends State<ReplyButton> {
                   ),
                 ),
                 IconButton(
+                    iconSize: 18,
                     onPressed: () async {
                       if (sendButtonClicked) {
                         return;

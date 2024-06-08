@@ -52,7 +52,7 @@ dependencies:
   googleapis: ^13.0.0
   googleapis_auth: ^1.4.2
   meilisearch: ^0.16.0
-  sentry_flutter: ^7.17.0
+  sentry_flutter: ^8.2.0
   textfield_tags: ^3.0.1
   easy_debounce: ^2.0.3
   shared_preferences: ^2.2.2
@@ -62,7 +62,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.1
+  flutter_lints: ^4.0.0
   build_runner: ^2.3.3
   json_serializable: ^6.6.0
   retrofit_generator: ^8.0.4

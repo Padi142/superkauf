@@ -51,7 +51,7 @@ class NotificationContainer extends StatelessWidget {
           postId: notification.relatedPost!.id,
         ));
       },
-      tileColor: notification.seen ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.tertiary,
+      tileColor: notification.seen ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.surface,
       leading: GestureDetector(
         onTap: () {
           if (notification.relatedUserId == null) {
@@ -107,7 +107,7 @@ class NotificationContainer extends StatelessWidget {
           postId: notification.relatedPost!.id,
         ));
       },
-      tileColor: notification.seen ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.tertiary,
+      tileColor: notification.seen ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.surface,
       leading: GestureDetector(
         onTap: () {
           BlocProvider.of<UserDetailBloc>(context).add(GetUser(userID: notification.recipientId));
@@ -159,7 +159,7 @@ class NotificationContainer extends StatelessWidget {
           postId: notification.relatedPost!.id,
         ));
       },
-      tileColor: notification.seen ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.tertiary,
+      tileColor: notification.seen ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.surface,
       leading: GestureDetector(
         onTap: () {},
         child: const Padding(
@@ -203,7 +203,7 @@ class NotificationContainer extends StatelessWidget {
           },
         );
       },
-      tileColor: notification.seen ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.tertiary,
+      tileColor: notification.seen ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.surface,
       leading: GestureDetector(
         onTap: () {},
         child: const Padding(
@@ -238,7 +238,7 @@ class NotificationContainer extends StatelessWidget {
 
         await launchUrl(link);
       },
-      tileColor: notification.seen ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.tertiary,
+      tileColor: notification.seen ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.surface,
       leading: Padding(
         padding: const EdgeInsets.all(2),
         child: CircleAvatar(

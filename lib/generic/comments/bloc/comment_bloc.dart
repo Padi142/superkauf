@@ -163,6 +163,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     LikeCommentEvent event,
     Emitter<CommentState> emit,
   ) async {
+    final oldState = state;
     emit(const CommentState.loading());
 
     final user = await getCurrentUserUseCase.call(false);
@@ -187,7 +188,8 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
         add(GetCommentsForPost(postId: event.postId));
       },
       failure: (message) {
-        emit(CommentState.error(message));
+        emit(const CommentState.error("Can't like this comment. Try again later."));
+        emit(oldState);
       },
     );
   }
@@ -224,5 +226,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
         emit(CommentState.error(message));
       },
     );
+
+    add(GetCommentsForPost(postId: event.postId));
   }
 }

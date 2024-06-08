@@ -88,7 +88,7 @@ class App {
         secondary: Color(0xFFb1a8fd),
         surface: Color(0xFFFFFFFF),
         background: Color(0xFFf2efff),
-        tertiary: Color(0xFF9081f5),
+        tertiary: Colors.pinkAccent,
         error: Color(0xFFB00020),
       ),
 
@@ -134,7 +134,7 @@ class App {
         secondary: Color(0xffb2a9fe),
         surface: Color(0xFF3c2ba9),
         background: Color(0xFF090237),
-        tertiary: Color(0xFF958ae9),
+        tertiary: Colors.pinkAccent,
         error: Color(0xFFB00020),
       ),
 
