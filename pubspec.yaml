@@ -60,6 +60,7 @@ dependencies:
   cloudinary_url_gen: ^1.5.0
   cloudinary_public: ^0.23.1
   twicpics_components: ^0.3.0
+  home_widget: ^0.6.0
 #  flutter_native_splash: ^2.3.10
 
 
