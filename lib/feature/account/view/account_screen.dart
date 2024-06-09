@@ -1,9 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:card_loading/card_loading.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:superkauf/feature/account/bloc/account_bloc.dart';
 import 'package:superkauf/feature/account/bloc/account_state.dart';
 import 'package:superkauf/feature/account/view/components/user_info.dart';
@@ -12,6 +9,7 @@ import 'package:superkauf/feature/post_detail/bloc/post_detail_bloc.dart';
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/countries/bloc/countries_bloc.dart';
 import 'package:superkauf/generic/widget/app_progress.dart';
+import 'package:superkauf/generic/widget/cdn_image.dart';
 
 import '../../../library/app_screen.dart';
 
@@ -65,7 +63,8 @@ class _FeedScreenState extends State<AccountScreen> {
                           });
                         },
                         onUsernameChaneDone: (String username) {
-                          BlocProvider.of<AccountBloc>(context).add(ChangeUsername(
+                          BlocProvider.of<AccountBloc>(context)
+                              .add(ChangeUsername(
                             username: username,
                             user: loaded.user,
                           ));
@@ -74,7 +73,8 @@ class _FeedScreenState extends State<AccountScreen> {
                           });
                         },
                         onInstagramChangeDone: (String instagram) {
-                          BlocProvider.of<AccountBloc>(context).add(ChangeInstagram(
+                          BlocProvider.of<AccountBloc>(context)
+                              .add(ChangeInstagram(
                             instagram: instagram,
                             user: loaded.user,
                           ));
@@ -91,7 +91,8 @@ class _FeedScreenState extends State<AccountScreen> {
                     //   height: 10,
                     // ),
                     SliverGrid.builder(
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
                         mainAxisSpacing: 8.0,
                         crossAxisSpacing: 8.0,
@@ -102,38 +103,22 @@ class _FeedScreenState extends State<AccountScreen> {
                           tag: loaded.posts[index].post.id,
                           child: GestureDetector(
                             onTap: () {
-                              BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(
+                              BlocProvider.of<PostDetailBloc>(context)
+                                  .add(InitialEvent(
                                 post: loaded.posts[index].post,
                                 user: loaded.posts[index].user,
                               ));
 
-                              BlocProvider.of<NavigationBloc>(context).add(OpenPostDetailScreen(
+                              BlocProvider.of<NavigationBloc>(context)
+                                  .add(OpenPostDetailScreen(
                                 postId: loaded.posts[index].post.id,
                               ));
                             },
-                            child: CachedNetworkImage(
-                              imageUrl: loaded.posts[index].post.image,
-                              imageBuilder: (context, imageProvider) => Container(
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                  image: imageProvider,
-                                  fit: BoxFit.cover,
-                                )),
-                              ),
-                              cacheManager: CacheManager(
-                                Config(
-                                  'post_image',
-                                  stalePeriod: const Duration(days: 7),
-                                ),
-                              ),
-                              progressIndicatorBuilder: (context, url, downloadProgress) => Center(
-                                  child: CardLoading(
-                                      cardLoadingTheme: CardLoadingTheme(
-                                        colorOne: Theme.of(context).colorScheme.secondary,
-                                        colorTwo: Theme.of(context).colorScheme.primary,
-                                      ),
-                                      height: constraints.maxWidth * 0.3)),
-                              errorWidget: (context, url, error) => const Icon(Icons.error),
+                            child: CdnImage(
+                              url: loaded.posts[index].post.image,
+                              constraints: constraints,
+                              width: 300,
+                              height: 300,
                             ),
                           ),
                         );

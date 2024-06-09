@@ -60,6 +60,7 @@ import 'package:superkauf/generic/shopping_list/shopping_list_module.dart';
 import 'package:superkauf/generic/store/store_module.dart';
 import 'package:superkauf/generic/user/user_module.dart';
 import 'package:superkauf/library/app_navigation.dart';
+import 'package:twicpics_components/twicpics_components.dart';
 
 import 'library/app.dart';
 import 'library/app_config.dart';
@@ -83,6 +84,11 @@ Future<void> main() async {
   //Push notification service
   OneSignal.initialize(dotenv.env['ONESIGNAL_KEY'] ?? '');
   OneSignal.Notifications.requestPermission(true);
+
+  install(
+    domain: "https://superkauf.twic.pics/",
+    cacheMaxNrOfObjects: 500,
+  );
 
   final getSettingsUseCase = GetSettingsUseCase();
   final settings = await getSettingsUseCase.call();
@@ -118,16 +124,26 @@ Future<void> main() async {
               GetIt.I.registerFactory<LocaleResource>(
                 () => LocaleResource(appConfig: config),
               );
-              GetIt.I.registerFactory<PostApi>(() => PostApi(_dio(config.endpoint)));
-              GetIt.I.registerFactory<UserApi>(() => UserApi(_dio(config.endpoint)));
-              GetIt.I.registerFactory<StoreApi>(() => StoreApi(_dio(config.endpoint)));
-              GetIt.I.registerFactory<SavedPostsApi>(() => SavedPostsApi(_dio(config.endpoint)));
-              GetIt.I.registerFactory<CommentApi>(() => CommentApi(_dio(config.endpoint)));
-              GetIt.I.registerFactory<ReportApi>(() => ReportApi(_dio(config.endpoint)));
-              GetIt.I.registerFactory<NotificationApi>(() => NotificationApi(_dio(config.endpoint)));
-              GetIt.I.registerFactory<ShoppingListApi>(() => ShoppingListApi(_dio(config.endpoint)));
-              GetIt.I.registerFactory<LabelApi>(() => LabelApi(_dio(config.endpoint)));
-              GetIt.I.registerFactory<CountriesApi>(() => CountriesApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<PostApi>(
+                  () => PostApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<UserApi>(
+                  () => UserApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<StoreApi>(
+                  () => StoreApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<SavedPostsApi>(
+                  () => SavedPostsApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<CommentApi>(
+                  () => CommentApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<ReportApi>(
+                  () => ReportApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<NotificationApi>(
+                  () => NotificationApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<ShoppingListApi>(
+                  () => ShoppingListApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<LabelApi>(
+                  () => LabelApi(_dio(config.endpoint)));
+              GetIt.I.registerFactory<CountriesApi>(
+                  () => CountriesApi(_dio(config.endpoint)));
             },
           ));
 

@@ -2,7 +2,7 @@ name: superkauf
 description: "A new Flutter project."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+14
+version: 1.0.0+15
 
 environment:
   sdk: '>=3.2.3 <4.0.0'
@@ -12,15 +12,15 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.2
-  supabase_flutter: ^2.3.3
+  cupertino_icons: ^1.0.8
+  supabase_flutter: ^2.5.4
   equatable: ^2.0.5
-  bloc: ^8.1.3
-  flutter_bloc: ^8.1.4
-  google_fonts: ^6.1.0
+  bloc: ^8.1.4
+  flutter_bloc: ^8.1.5
+  google_fonts: ^6.2.1
   get_it: ^7.6.4
-  easy_localization: ^3.0.3
-  dio: ^5.4.0
+  easy_localization: ^3.0.7
+  dio: ^5.4.3+1
   pretty_dio_logger: ^1.3.1
   freezed: ^2.4.6
   freezed_annotation: ^2.2.0
@@ -29,7 +29,7 @@ dependencies:
   font_awesome_flutter: ^10.7.0
   flutter_dotenv: ^5.1.0
   flutter_svg: ^2.0.9
-  image_picker: ^1.0.7
+  image_picker: ^1.1.2
   cached_network_image: ^3.3.1
   easy_image_viewer: ^1.4.1
   google_sign_in: ^6.2.1
@@ -39,7 +39,7 @@ dependencies:
   path_provider: ^2.1.2
   isar_flutter_libs: ^3.1.0+1
   hive: ^2.2.3
-  posthog_flutter: ^4.0.0
+  posthog_flutter: ^4.5.0
   onesignal_flutter: ^5.1.0
   sliding_up_panel: ^2.0.0+1
   lottie: ^3.0.0
@@ -56,6 +56,10 @@ dependencies:
   textfield_tags: ^3.0.1
   easy_debounce: ^2.0.3
   shared_preferences: ^2.2.2
+  cloudinary_flutter: ^1.3.0
+  cloudinary_url_gen: ^1.5.0
+  cloudinary_public: ^0.23.1
+  twicpics_components: ^0.3.0
 #  flutter_native_splash: ^2.3.10
 
 

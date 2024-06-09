@@ -36,6 +36,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
   final GetCurrentUserUseCase getCurrentUserUseCase;
   final UpdatePostImageUseCase updatePostImageUseCase;
   final UploadS3PostImageUseCase uploadS3PostImageUseCase;
+  final UploadCloudinaryPostImage uploadCloudinaryPostImage;
   final GetLabelsUseCase getLabelsUseCase;
   final CreateLabelUseCase createLabelUseCase;
   final GetSettingsUseCase getSettingsUseCase;
@@ -50,6 +51,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     required this.getCurrentUserUseCase,
     required this.updatePostImageUseCase,
     required this.uploadS3PostImageUseCase,
+    required this.uploadCloudinaryPostImage,
     required this.getLabelsUseCase,
     required this.createLabelUseCase,
     required this.getSettingsUseCase,
@@ -73,9 +75,12 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     }
     final flag = await Posthog().isFeatureEnabled('protected-files-upload');
     if (flag) {
-      final requiredKarma = await Posthog().getFeatureFlagPayload('protected-files-upload') as int;
+      final requiredKarma = await Posthog()
+          .getFeatureFlagPayload('protected-files-upload') as int;
 
-      emit(CreatePostState.initial(canUploadFiles: user.karma >= requiredKarma, requiredKarma: requiredKarma));
+      emit(CreatePostState.initial(
+          canUploadFiles: user.karma >= requiredKarma,
+          requiredKarma: requiredKarma));
 
       return;
     }
@@ -113,7 +118,8 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
   ) async {
     emit(const CreatePostState.uploading());
 
-    final params = UploadImageParams(file: event.image, path: userID.toString());
+    final params =
+        UploadImageParams(file: event.image, path: userID.toString());
 
     late UploadImageResult result;
     await Posthog().reloadFeatureFlags();
@@ -121,7 +127,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     if (isEnabled) {
       result = await uploadPostImageUseCase.call(params);
     } else {
-      result = await uploadS3PostImageUseCase.call(params);
+      result = await uploadCloudinaryPostImage.call(params);
     }
 
     var imageLink = '';
@@ -135,7 +141,8 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
       },
     );
 
-    final token = Supabase.instance.client.auth.currentSession?.accessToken ?? '';
+    final token =
+        Supabase.instance.client.auth.currentSession?.accessToken ?? '';
 
     final imageUpdateResult = await updatePostImageUseCase.call((
       model: UpdatePostImageBody(
@@ -193,7 +200,8 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
       return createLabelUseCase.call(params);
     }).toList();
 
-    final token = Supabase.instance.client.auth.currentSession?.accessToken ?? '';
+    final token =
+        Supabase.instance.client.auth.currentSession?.accessToken ?? '';
 
     final result = await createPostUseCase.call((model: params, token: token));
     await Future.wait(labelCalls);

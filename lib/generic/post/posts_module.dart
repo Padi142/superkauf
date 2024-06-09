@@ -102,7 +102,8 @@ class PostModule extends AppModule {
     );
 
     GetIt.I.registerFactory<UpdatePostValidUntilUseCase>(
-      () => UpdatePostValidUntilUseCase(repository: GetIt.I.get<PostsRepository>()),
+      () => UpdatePostValidUntilUseCase(
+          repository: GetIt.I.get<PostsRepository>()),
     );
 
     GetIt.I.registerFactory<GetTopPostsUseCase>(
@@ -111,6 +112,10 @@ class PostModule extends AppModule {
 
     GetIt.I.registerFactory<UploadS3PostImageUseCase>(
       () => UploadS3PostImageUseCase(),
+    );
+
+    GetIt.I.registerFactory<UploadCloudinaryPostImage>(
+      () => UploadCloudinaryPostImage(),
     );
   }
 

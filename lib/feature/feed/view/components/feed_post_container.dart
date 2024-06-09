@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:superkauf/feature/feed/view/components/post_icons.dart';
@@ -14,6 +13,7 @@ import 'package:superkauf/generic/post/model/get_post_response.dart';
 import 'package:superkauf/generic/post/model/models/get_personal_post_response.dart';
 import 'package:superkauf/generic/saved_posts/model/saved_post_model.dart';
 import 'package:superkauf/generic/user/view/username_label.dart';
+import 'package:superkauf/generic/widget/cdn_image.dart';
 
 class FeedPostContainer extends StatefulWidget {
   final FeedPostModel post;
@@ -63,9 +63,12 @@ class _FeedPostContainerState extends State<FeedPostContainer> {
                           padding: const EdgeInsets.all(2),
                           child: GestureDetector(
                             onTap: () {
-                              BlocProvider.of<UserDetailBloc>(context).add(InitialUserEvent(user: widget.post.user));
-                              BlocProvider.of<UserDetailBloc>(context).add(GetUser(userID: widget.post.post.author));
-                              BlocProvider.of<NavigationBloc>(context).add(const OpenUserDetailScreen());
+                              BlocProvider.of<UserDetailBloc>(context).add(
+                                  InitialUserEvent(user: widget.post.user));
+                              BlocProvider.of<UserDetailBloc>(context).add(
+                                  GetUser(userID: widget.post.post.author));
+                              BlocProvider.of<NavigationBloc>(context)
+                                  .add(const OpenUserDetailScreen());
                             },
                             child: const Material(
                               elevation: 4,
@@ -81,19 +84,22 @@ class _FeedPostContainerState extends State<FeedPostContainer> {
                           children: [
                             SizedBox(
                               width: constraints.maxWidth * 0.89,
-                              child: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.end, children: [
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                UsernameLabel(user: widget.post.user),
-                                const Spacer(),
-                                TimeAgoWidget(
-                                  dateTime: widget.post.post.createdAt,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                              ]),
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    UsernameLabel(user: widget.post.user),
+                                    const Spacer(),
+                                    TimeAgoWidget(
+                                      dateTime: widget.post.post.createdAt,
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                  ]),
                             ),
                             PostContent(
                               post: widget.post,
@@ -139,7 +145,8 @@ class PersonalFeedPostContainer extends StatefulWidget {
   });
 
   @override
-  State<PersonalFeedPostContainer> createState() => _PersonalFeedPostContainerState();
+  State<PersonalFeedPostContainer> createState() =>
+      _PersonalFeedPostContainerState();
 }
 
 class _PersonalFeedPostContainerState extends State<PersonalFeedPostContainer> {
@@ -175,16 +182,32 @@ class _PersonalFeedPostContainerState extends State<PersonalFeedPostContainer> {
                           padding: const EdgeInsets.all(2),
                           child: GestureDetector(
                             onTap: () {
-                              BlocProvider.of<UserDetailBloc>(context).add(GetUser(userID: widget.post.post.author));
-                              BlocProvider.of<NavigationBloc>(context).add(const OpenUserDetailScreen());
+                              BlocProvider.of<UserDetailBloc>(context).add(
+                                  GetUser(userID: widget.post.post.author));
+                              BlocProvider.of<NavigationBloc>(context)
+                                  .add(const OpenUserDetailScreen());
                             },
                             child: Material(
-                              elevation: 4,
-                              shape: const CircleBorder(),
-                              child: CircleAvatar(
-                                backgroundImage: CachedNetworkImageProvider(widget.post.user.profilePicture),
-                              ),
-                            ),
+                                elevation: 4,
+                                shape: const CircleBorder(),
+                                child: ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.circular(80), // Image border
+                                  child: SizedBox.fromSize(
+                                    size: const Size.fromRadius(
+                                        16), // Image radius
+                                    child: CdnImage(
+                                      url: widget.post.user.profilePicture,
+                                      constraints: const BoxConstraints(
+                                          maxWidth: 40,
+                                          maxHeight: 40,
+                                          minWidth: 40,
+                                          minHeight: 40),
+                                      width: 150,
+                                      height: 150,
+                                    ),
+                                  ),
+                                )),
                           ),
                         ),
                       ),
@@ -194,19 +217,22 @@ class _PersonalFeedPostContainerState extends State<PersonalFeedPostContainer> {
                           children: [
                             SizedBox(
                               width: constraints.maxWidth * 0.89,
-                              child: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.end, children: [
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                UsernameLabel(user: widget.post.user),
-                                const Spacer(),
-                                TimeAgoWidget(
-                                  dateTime: widget.post.post.createdAt,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                              ]),
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    UsernameLabel(user: widget.post.user),
+                                    const Spacer(),
+                                    TimeAgoWidget(
+                                      dateTime: widget.post.post.createdAt,
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                  ]),
                             ),
                             PostContent(
                               post: FeedPostModel(
@@ -223,14 +249,17 @@ class _PersonalFeedPostContainerState extends State<PersonalFeedPostContainer> {
                                         ? true
                                         : false
                                     : widget.post.reaction != null) {
-                                  BlocProvider.of<PostBloc>(context).add(RemoveReaction(postId: widget.post.post.id));
+                                  BlocProvider.of<PostBloc>(context).add(
+                                      RemoveReaction(
+                                          postId: widget.post.post.id));
                                   setState(() {
                                     reactions--;
                                     likeState = LikedState.unliked;
                                   });
                                   return;
                                 }
-                                BlocProvider.of<PostBloc>(context).add(AddReaction(postId: widget.post.post.id));
+                                BlocProvider.of<PostBloc>(context).add(
+                                    AddReaction(postId: widget.post.post.id));
                                 setState(() {
                                   reactions++;
                                   likeState = LikedState.liked;
@@ -255,14 +284,16 @@ class _PersonalFeedPostContainerState extends State<PersonalFeedPostContainer> {
                                     ? true
                                     : false
                                 : widget.post.reaction != null) {
-                              BlocProvider.of<PostBloc>(context).add(RemoveReaction(postId: widget.post.post.id));
+                              BlocProvider.of<PostBloc>(context).add(
+                                  RemoveReaction(postId: widget.post.post.id));
                               setState(() {
                                 reactions--;
                                 likeState = LikedState.unliked;
                               });
                               return;
                             }
-                            BlocProvider.of<PostBloc>(context).add(AddReaction(postId: widget.post.post.id));
+                            BlocProvider.of<PostBloc>(context)
+                                .add(AddReaction(postId: widget.post.post.id));
                             setState(() {
                               reactions++;
                               likeState = LikedState.liked;
@@ -309,7 +340,8 @@ class PostContent extends StatelessWidget {
         addReaction();
       },
       onTap: () {
-        BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(post: post.post, user: post.user));
+        BlocProvider.of<PostDetailBloc>(context)
+            .add(InitialEvent(post: post.post, user: post.user));
         BlocProvider.of<NavigationBloc>(context).add(OpenPostDetailScreen(
           postId: post.post.id,
         ));
@@ -338,7 +370,9 @@ class PostContent extends StatelessWidget {
                           StoreNameIcon(
                             storeName: post.post.storeName,
                           ),
-                          post.post.requiresStoreCard ? const RequiresStoreCard() : const SizedBox(),
+                          post.post.requiresStoreCard
+                              ? const RequiresStoreCard()
+                              : const SizedBox(),
                         ],
                       ),
                     ),
@@ -358,7 +392,8 @@ class PostContent extends StatelessWidget {
                                     postId: post.post.id,
                                   ),
                                 );
-                                BlocProvider.of<SavedPostsPanelBloc>(context).add(OpenSavedPostsPanel(
+                                BlocProvider.of<SavedPostsPanelBloc>(context)
+                                    .add(OpenSavedPostsPanel(
                                   storeId: post.post.store,
                                   postId: post.post.id,
                                 ));

@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:card_loading/card_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -13,6 +12,7 @@ import 'package:superkauf/generic/post/bloc/post_bloc.dart';
 import 'package:superkauf/generic/shopping_list/model/get_shopping_list_response.dart';
 import 'package:superkauf/generic/user/model/user_model.dart';
 import 'package:superkauf/generic/widget/app_progress.dart';
+import 'package:superkauf/generic/widget/cdn_image.dart';
 import 'package:superkauf/library/app.dart';
 
 class ShoppingListView extends StatefulWidget {
@@ -46,7 +46,8 @@ class _ShoppingListViewState extends State<ShoppingListView> {
                 width: widget.constraints.maxWidth * 0.1,
                 child: IconButton(
                     onPressed: () {
-                      BlocProvider.of<ShoppingListBloc>(context).add(const InitialListEvent());
+                      BlocProvider.of<ShoppingListBloc>(context)
+                          .add(const InitialListEvent());
                     },
                     icon: const FaIcon(FontAwesomeIcons.arrowLeft)),
               ),
@@ -63,14 +64,19 @@ class _ShoppingListViewState extends State<ShoppingListView> {
                       width: widget.constraints.maxWidth * 0.25,
                       imageUrl: widget.list.list.logo,
                       fit: BoxFit.fitWidth,
-                      placeholder: (context, url) => const Center(child: AppProgress()),
-                      errorWidget: (context, url, error) => const Icon(Icons.error),
+                      placeholder: (context, url) =>
+                          const Center(child: AppProgress()),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
                     ),
                   ),
                 ),
               ),
               const Gap(2),
-              SizedBox(width: widget.constraints.maxWidth * 0.45, child: Text(widget.list.list.name, maxLines: 4, style: App.appTheme.textTheme.titleMedium)),
+              SizedBox(
+                  width: widget.constraints.maxWidth * 0.45,
+                  child: Text(widget.list.list.name,
+                      maxLines: 4, style: App.appTheme.textTheme.titleMedium)),
               ListActionButtons(
                 list: widget.list.list,
                 canEdit: widget.list.list.createdBy == widget.userId,
@@ -150,7 +156,8 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
       duration: const Duration(milliseconds: 300),
       child: ListTile(
         key: _widgetKey,
-        subtitle: Text('${widget.post.post.price}${App.appConfig.settings.country.currency}'),
+        subtitle: Text(
+            '${widget.post.post.price}${App.appConfig.settings.country.currency}'),
         leading: Padding(
           padding: const EdgeInsets.all(1),
           child: GestureDetector(
@@ -172,28 +179,25 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
                   child: Padding(
                     padding: const EdgeInsets.all(2),
                     child: Material(
-                      elevation: 6,
-                      borderRadius: BorderRadius.circular(6),
-                      child: ClipRRect(
+                        elevation: 6,
                         borderRadius: BorderRadius.circular(6),
-                        // Adjust the radius as needed
-                        child: CachedNetworkImage(
-                          imageUrl: widget.post.post.image,
-                          fit: BoxFit.fitWidth,
-                          color: isCompleted ? Colors.grey : null,
-                          colorBlendMode: isCompleted ? BlendMode.saturation : null,
-                          placeholder: (context, url) => Center(
-                              child: CardLoading(
-                            height: 50,
-                            cardLoadingTheme: CardLoadingTheme(
-                              colorOne: Theme.of(context).colorScheme.secondary,
-                              colorTwo: Theme.of(context).colorScheme.primary,
+                        child: ClipRRect(
+                          borderRadius:
+                              BorderRadius.circular(6), // Image border
+                          child: SizedBox.fromSize(
+                            size: const Size.fromRadius(28), // Image radius
+                            child: CdnImage(
+                              url: widget.post.post.image,
+                              constraints: const BoxConstraints(
+                                  maxWidth: 40,
+                                  maxHeight: 40,
+                                  minWidth: 40,
+                                  minHeight: 40),
+                              width: 150,
+                              height: 150,
                             ),
-                          )),
-                          errorWidget: (context, url, error) => const Icon(Icons.error),
-                        ),
-                      ),
-                    ),
+                          ),
+                        )),
                   ),
                 ),
                 Positioned(
@@ -203,15 +207,19 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
                     elevation: 4, // Adjust the elevation as needed
                     borderRadius: BorderRadius.circular(40),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(40),
-                      // Adjust the radius as needed
-                      child: CachedNetworkImage(
-                        height: 20,
-                        width: 20,
-                        imageUrl: widget.addedBy.profilePicture,
-                        fit: BoxFit.fitWidth,
-                        placeholder: (context, url) => const Center(child: AppProgress()),
-                        errorWidget: (context, url, error) => const Icon(Icons.error),
+                      borderRadius: BorderRadius.circular(80), // Image border
+                      child: SizedBox.fromSize(
+                        size: const Size.fromRadius(12), // Image radius
+                        child: CdnImage(
+                          url: widget.addedBy.profilePicture,
+                          constraints: const BoxConstraints(
+                              maxWidth: 40,
+                              maxHeight: 40,
+                              minWidth: 40,
+                              minHeight: 40),
+                          width: 150,
+                          height: 150,
+                        ),
                       ),
                     ),
                   ),
@@ -225,8 +233,11 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
-            decoration: isCompleted ? TextDecoration.lineThrough : TextDecoration.none,
-            color: isCompleted ? Colors.grey : Theme.of(context).textTheme.titleMedium!.color,
+            decoration:
+                isCompleted ? TextDecoration.lineThrough : TextDecoration.none,
+            color: isCompleted
+                ? Colors.grey
+                : Theme.of(context).textTheme.titleMedium!.color,
           ),
         ),
         trailing: Checkbox(
@@ -244,13 +255,15 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
         ),
         onTap: () {},
         onLongPress: () {
-          final RenderBox renderBox = _widgetKey.currentContext!.findRenderObject() as RenderBox;
+          final RenderBox renderBox =
+              _widgetKey.currentContext!.findRenderObject() as RenderBox;
           showMenu(
             context: context,
             position: RelativeRect.fromRect(
               Rect.fromPoints(
                 renderBox.localToGlobal(Offset.zero),
-                renderBox.localToGlobal(renderBox.size.bottomRight(Offset.zero)),
+                renderBox
+                    .localToGlobal(renderBox.size.bottomRight(Offset.zero)),
               ),
               Offset.zero & MediaQuery.of(context).size,
             ),
@@ -259,9 +272,11 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
                   value: 'delete',
                   child: const Text('Delete post'),
                   onTap: () {
-                    BlocProvider.of<PostBloc>(context).add(RemoveSavedPost(postId: widget.post.post.id));
+                    BlocProvider.of<PostBloc>(context)
+                        .add(RemoveSavedPost(postId: widget.post.post.id));
 
-                    BlocProvider.of<ShoppingListBloc>(context).add(PickShoppingList(shoppingListId: widget.listId));
+                    BlocProvider.of<ShoppingListBloc>(context)
+                        .add(PickShoppingList(shoppingListId: widget.listId));
                   }),
             ],
           );

@@ -1,8 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:card_loading/card_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
 import 'package:superkauf/feature/post_detail/bloc/post_detail_bloc.dart';
 import 'package:superkauf/feature/user_detail/bloc/user_detail_bloc.dart';
@@ -11,6 +8,7 @@ import 'package:superkauf/feature/user_detail/view/componenets/user_detail_view_
 import 'package:superkauf/generic/constants.dart';
 import 'package:superkauf/generic/functions.dart';
 import 'package:superkauf/generic/widget/app_progress.dart';
+import 'package:superkauf/generic/widget/cdn_image.dart';
 
 import '../../../library/app_screen.dart';
 import 'componenets/user_detail_view.dart';
@@ -41,8 +39,12 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
 
   void _loadMoreListener() {
     scrollToRefreshListener(controller: _scrollController);
-    if (_scrollController.position.pixels > _scrollController.position.maxScrollExtent - 300) {
-      if ((context.read<UserDetailBloc>().state is Loaded) && ((context.read<UserDetailBloc>().state as Loaded).isLoading || (context.read<UserDetailBloc>().state as Loaded).canLoadMore == false)) {
+    if (_scrollController.position.pixels >
+        _scrollController.position.maxScrollExtent - 300) {
+      if ((context.read<UserDetailBloc>().state is Loaded) &&
+          ((context.read<UserDetailBloc>().state as Loaded).isLoading ||
+              (context.read<UserDetailBloc>().state as Loaded).canLoadMore ==
+                  false)) {
         return;
       }
       print('loading more');
@@ -91,7 +93,8 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                           ),
                         ),
                         SliverGrid.builder(
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3,
                             mainAxisSpacing: 8.0,
                             crossAxisSpacing: 8.0,
@@ -102,38 +105,22 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                               tag: loaded.posts[index].post.id,
                               child: GestureDetector(
                                 onTap: () {
-                                  BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(
+                                  BlocProvider.of<PostDetailBloc>(context)
+                                      .add(InitialEvent(
                                     post: loaded.posts[index].post,
                                     user: loaded.posts[index].user,
                                   ));
 
-                                  BlocProvider.of<NavigationBloc>(context).add(OpenPostDetailScreen(
+                                  BlocProvider.of<NavigationBloc>(context)
+                                      .add(OpenPostDetailScreen(
                                     postId: loaded.posts[index].post.id,
                                   ));
                                 },
-                                child: CachedNetworkImage(
-                                  imageUrl: loaded.posts[index].post.image,
-                                  imageBuilder: (context, imageProvider) => Container(
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                      image: imageProvider,
-                                      fit: BoxFit.cover,
-                                    )),
-                                  ),
-                                  cacheManager: CacheManager(
-                                    Config(
-                                      'post_image',
-                                      stalePeriod: const Duration(days: 7),
-                                    ),
-                                  ),
-                                  progressIndicatorBuilder: (context, url, downloadProgress) => CardLoading(
-                                    height: constraints.maxWidth * 0.3,
-                                    cardLoadingTheme: CardLoadingTheme(
-                                      colorOne: Theme.of(context).colorScheme.secondary,
-                                      colorTwo: Theme.of(context).colorScheme.primary,
-                                    ),
-                                  ),
-                                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                                child: CdnImage(
+                                  url: loaded.posts[index].post.image,
+                                  constraints: constraints,
+                                  width: 300,
+                                  height: 300,
                                 ),
                               ),
                             );
