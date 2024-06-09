@@ -84,9 +84,11 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       },
     );
 
-    final params = DeletePostBody(postId: event.postId, author: userId.toString());
+    final params =
+        DeletePostBody(postId: event.postId, author: userId.toString());
 
-    final token = Supabase.instance.client.auth.currentSession?.accessToken ?? '';
+    final token =
+        Supabase.instance.client.auth.currentSession?.accessToken ?? '';
 
     final result = await deletePostUseCase.call((model: params, token: token));
     result.when(
@@ -139,9 +141,11 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       return;
     }
 
-    final params = UpdatePostBody(postId: event.postId, content: event.newDescription, user: user.id);
+    final params = UpdatePostBody(
+        postId: event.postId, content: event.newDescription, user: user.id);
 
-    final token = Supabase.instance.client.auth.currentSession?.accessToken ?? '';
+    final token =
+        Supabase.instance.client.auth.currentSession?.accessToken ?? '';
     final result = await updatePostUseCase.call((model: params, token: token));
     result.map(
       success: (value) async {
@@ -167,11 +171,14 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       return;
     }
 
-    final params = UpdatePostValidUntilBody(postId: event.postId, validUntil: event.newValidUntil, user: user.id);
+    final params = UpdatePostValidUntilBody(
+        postId: event.postId, validUntil: event.newValidUntil, user: user.id);
 
-    final token = Supabase.instance.client.auth.currentSession?.accessToken ?? '';
+    final token =
+        Supabase.instance.client.auth.currentSession?.accessToken ?? '';
 
-    final result = await updatePostValidUntilUseCase.call((model: params, token: token));
+    final result =
+        await updatePostValidUntilUseCase.call((model: params, token: token));
     result.map(
       success: (value) async {
         Posthog().capture(eventName: 'post_sale_end_updated', properties: {
@@ -196,7 +203,8 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       return;
     }
 
-    final params = DeleteSavedPostBody(savedPostId: event.postId, user: user.id);
+    final params =
+        DeleteSavedPostBody(savedPostId: event.postId, user: user.id);
     final result = await deleteSavedPostUseCase.call(params);
     result.map(
       success: (value) {
@@ -222,9 +230,11 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       return;
     }
 
-    final params = AddReactionModel(post: event.postId, user: user.id, type: 'like');
+    final params =
+        AddReactionModel(post: event.postId, user: user.id, type: 'like');
 
-    final token = Supabase.instance.client.auth.currentSession?.accessToken ?? '';
+    final token =
+        Supabase.instance.client.auth.currentSession?.accessToken ?? '';
 
     final result = await addReactionUseCase.call((model: params, token: token));
     result.map(
@@ -251,11 +261,14 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       return;
     }
 
-    final params = RemoveReactionModel(post: event.postId, user: user.id, type: 'like');
+    final params =
+        RemoveReactionModel(post: event.postId, user: user.id, type: 'like');
 
-    final token = Supabase.instance.client.auth.currentSession?.accessToken ?? '';
+    final token =
+        Supabase.instance.client.auth.currentSession?.accessToken ?? '';
 
-    final result = await removeReactionUseCase.call((model: params, token: token));
+    final result =
+        await removeReactionUseCase.call((model: params, token: token));
     result.map(
       success: (value) {
         Posthog().capture(eventName: 'post_unliked', properties: {
@@ -276,7 +289,12 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   ) async {
     final user = await getCurrentUserUseCase.call(false);
 
-    final params = CreateReportBody(reportedPost: event.postId, reportedBy: user?.id ?? 0, type: 'post');
+    final params = CreateReportBody(
+      reportedPost: event.postId,
+      reportedBy: user?.id ?? 0,
+      type: 'post',
+      reason: event.reason,
+    );
     final result = await createReportUseCase.call(params);
     result.map(
       success: (value) {

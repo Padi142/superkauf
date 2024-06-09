@@ -6,6 +6,7 @@ import 'package:superkauf/feature/home/bloc/saved_posts_panel_bloc/saved_posts_p
 import 'package:superkauf/feature/snackbar/bloc/snackbar_bloc.dart';
 import 'package:superkauf/generic/post/bloc/post_bloc.dart';
 import 'package:superkauf/generic/post/model/post_model.dart';
+import 'package:superkauf/generic/widget/app_text_field/app_text_field.dart';
 
 class PostActionButtons extends StatelessWidget {
   final PostModel post;
@@ -31,7 +32,8 @@ class PostActionButtons extends StatelessWidget {
           case 'delete':
             {
               _showConfirmDeletion(context, () {
-                BlocProvider.of<PostBloc>(context).add(DeletePost(postId: post.id.toString(), author: post.author));
+                BlocProvider.of<PostBloc>(context).add(DeletePost(
+                    postId: post.id.toString(), author: post.author));
                 BlocProvider.of<FeedBloc>(context).add(const ReloadFeed());
                 Navigator.of(context).pop();
               });
@@ -41,12 +43,15 @@ class PostActionButtons extends StatelessWidget {
 
           case 'report':
             {
-              BlocProvider.of<PostBloc>(context).add(ReportPost(
-                postId: post.id,
-              ));
-              BlocProvider.of<SnackbarBloc>(context).add(SuccessSnackbar(
-                message: 'post_reported_successfully'.tr(),
-              ));
+              _showReportReason(context, (reason) {
+                BlocProvider.of<PostBloc>(context).add(ReportPost(
+                  postId: post.id,
+                  reason: reason,
+                ));
+                BlocProvider.of<SnackbarBloc>(context).add(SuccessSnackbar(
+                  message: 'post_reported_successfully'.tr(),
+                ));
+              });
 
               break;
             }
@@ -80,7 +85,8 @@ class PostActionButtons extends StatelessWidget {
                   postId: post.id,
                 ),
               );
-              BlocProvider.of<SavedPostsPanelBloc>(context).add(OpenSavedPostsPanel(
+              BlocProvider.of<SavedPostsPanelBloc>(context)
+                  .add(OpenSavedPostsPanel(
                 storeId: post.store,
                 postId: post.id,
               ));
@@ -215,6 +221,31 @@ class PostActionButtons extends StatelessWidget {
                   Navigator.of(context).pop();
                 },
                 child: const Text('Yes'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showReportReason(BuildContext context, Function(String) onDone) {
+    final reportTextModel = TextEntryModel();
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SizedBox(
+          child: AlertDialog(
+            title: const Text('Describe what seems to be wrong'),
+            actions: <Widget>[
+              AppTextField(reportTextModel, context: context),
+              const SizedBox(height: 20),
+              TextButton(
+                onPressed: () {
+                  onDone(reportTextModel.text);
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Report'),
               ),
             ],
           ),

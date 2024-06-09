@@ -71,8 +71,10 @@ class RemoveReaction extends PostEvent {
 
 class ReportPost extends PostEvent {
   final int postId;
+  final String reason;
 
   const ReportPost({
     required this.postId,
+    required this.reason,
   });
 }
