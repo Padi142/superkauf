@@ -35,7 +35,7 @@ class _ChangeUsernameFieldState extends State<ChangeUsernameField> {
         ),
         IconButton(
           onPressed: () async {
-            usernameModel.controller.text.trim();
+            usernameModel.controller.text = usernameModel.controller.text.trim();
             final valid = await TextEntryModel.validateFields([usernameModel]);
             if (!valid) {
               setState(() {});

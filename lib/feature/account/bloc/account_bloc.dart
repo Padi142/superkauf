@@ -118,25 +118,32 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   ) async {
     emit(const AccountState.loading());
 
+    final normalizedUsername = event.username.trim().toLowerCase();
+
+    if (normalizedUsername == event.user.username.trim().toLowerCase()) {
+      add(const GetUser());
+      return;
+    }
+
     Posthog().capture(
       eventName: 'change_user_name',
       properties: {
         'user_id': event.user.id,
-        'name': event.username,
+        'name': normalizedUsername,
       },
     );
 
     var shouldReturn = false;
 
-    final userResult =
-        await getUserByUsernameUseCase.call(event.username.toLowerCase());
+    final userResult = await getUserByUsernameUseCase.call(normalizedUsername);
 
     userResult.map(
         success: (success) {
-          emit(const AccountState.error("Username already taken"));
-
-          shouldReturn = true;
-          add(const GetUser());
+          if (success.user.id != event.user.id) {
+            emit(const AccountState.error("Username already taken"));
+            shouldReturn = true;
+            add(const GetUser());
+          }
         },
         failure: (failure) {});
 
@@ -145,14 +152,29 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     }
 
     final params = UpdateUserBody(
-      username: event.username,
+      username: normalizedUsername,
       id: event.user.id,
     );
-    await updateUserUseCase.call(params);
+    final updateResult = await updateUserUseCase.call(params);
 
-    Posthog().identify(userId: params.id.toString(), userProperties: {
-      "username": params.username!,
-    });
+    var updateFailed = false;
+
+    updateResult.map(
+      success: (success) {
+        Posthog().identify(userId: success.user.id.toString(), userProperties: {
+          "username": success.user.username,
+        });
+      },
+      failure: (failure) {
+        updateFailed = true;
+        emit(AccountState.error(failure.message));
+        add(const GetUser());
+      },
+    );
+
+    if (updateFailed) {
+      return;
+    }
 
     await Future.delayed(const Duration(milliseconds: 600));
 
