@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_loading/card_loading.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class CdnImage extends StatelessWidget {
   final String url;
@@ -18,19 +17,14 @@ class CdnImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      imageUrl: getCdnUrl(),
+      imageUrl: getDisplayUrl(),
+      fit: BoxFit.cover,
       imageBuilder: (context, imageProvider) => Container(
         decoration: BoxDecoration(
             image: DecorationImage(
           image: imageProvider,
           fit: BoxFit.cover,
         )),
-      ),
-      cacheManager: CacheManager(
-        Config(
-          'post_image',
-          stalePeriod: const Duration(days: 7),
-        ),
       ),
       progressIndicatorBuilder: (context, url, downloadProgress) => CardLoading(
         height: constraints.maxHeight,
@@ -39,19 +33,30 @@ class CdnImage extends StatelessWidget {
           colorTwo: Theme.of(context).colorScheme.primary,
         ),
       ),
-      errorWidget: (context, url, error) => const Icon(Icons.error),
+      errorWidget: (context, url, error) => ColoredBox(
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        child: const Center(
+          child: Icon(Icons.broken_image_outlined),
+        ),
+      ),
     );
   }
 
-  String getCdnUrl() {
-    final parts = url.split('?');
-    if (parts.length == 1) {
-      return 'https://superkauf-images.netlify.app/.netlify/images?url=$url&w=$width&h=$height';
+  String getDisplayUrl() {
+    if (_isLegacyGoogleStorageUrl || _isLegacySupabaseStorageUrl) {
+      return _getProxyUrl();
     }
 
-    final parsedUrl = parts[0].replaceAll("%2F", "/").split('superkauf/o')[1];
-    return 'https://superkauf-images.netlify.app/.netlify/images?url=https://storage.googleapis.com/superkauf$parsedUrl&w=$width&h=$height';
+    return url;
+  }
 
-    // return 'https://superkauf-images.netlify.app/.netlify/images?url=${url.split('?')[0]}&w=$width&h=$height';
+  bool get _isLegacyGoogleStorageUrl =>
+      url.contains('storage.googleapis.com/superkauf');
+
+  bool get _isLegacySupabaseStorageUrl => url.contains('supabase.co/storage/');
+
+  String _getProxyUrl() {
+    final encodedUrl = Uri.encodeComponent(url);
+    return 'https://superkauf-images.netlify.app/.netlify/images?url=$encodedUrl&w=$width&h=$height';
   }
 }

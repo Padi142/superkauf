@@ -45,26 +45,21 @@ class NotificationContainer extends StatelessWidget {
           },
         );
 
-        BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(
-            post: notification.relatedPost, user: notification.relatedUser));
+        BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(post: notification.relatedPost, user: notification.relatedUser));
 
         BlocProvider.of<NavigationBloc>(context).add(OpenPostDetailScreen(
           postId: notification.relatedPost!.id,
         ));
       },
-      tileColor: notification.seen
-          ? Theme.of(context).colorScheme.background
-          : Theme.of(context).colorScheme.surface,
+      tileColor: notification.seen ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.surface,
       leading: GestureDetector(
         onTap: () {
           if (notification.relatedUserId == null) {
             return;
           }
 
-          BlocProvider.of<UserDetailBloc>(context)
-              .add(GetUser(userID: notification.relatedUserId!));
-          BlocProvider.of<NavigationBloc>(context)
-              .add(const OpenUserDetailScreen());
+          BlocProvider.of<UserDetailBloc>(context).add(GetUser(userID: notification.relatedUserId!));
+          BlocProvider.of<NavigationBloc>(context).add(const OpenUserDetailScreen());
         },
         child: Padding(
           padding: const EdgeInsets.all(2),
@@ -74,8 +69,7 @@ class NotificationContainer extends StatelessWidget {
               size: const Size.fromRadius(20), // Image radius
               child: CdnImage(
                 url: notification.relatedUser!.profilePicture,
-                constraints: const BoxConstraints(
-                    maxWidth: 40, maxHeight: 40, minWidth: 40, minHeight: 40),
+                constraints: const BoxConstraints(maxWidth: 40, maxHeight: 40, minWidth: 40, minHeight: 40),
                 width: 150,
                 height: 150,
               ),
@@ -94,8 +88,7 @@ class NotificationContainer extends StatelessWidget {
           height: 80,
           child: CdnImage(
             url: notification.relatedPost!.image,
-            constraints: const BoxConstraints(
-                maxWidth: 30, maxHeight: 80, minWidth: 30, minHeight: 80),
+            constraints: const BoxConstraints(maxWidth: 30, maxHeight: 80, minWidth: 30, minHeight: 80),
             width: 150,
             height: 260,
           ),
@@ -115,22 +108,17 @@ class NotificationContainer extends StatelessWidget {
           },
         );
 
-        BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(
-            post: notification.relatedPost, user: notification.relatedUser));
+        BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(post: notification.relatedPost, user: notification.relatedUser));
 
         BlocProvider.of<NavigationBloc>(context).add(OpenPostDetailScreen(
           postId: notification.relatedPost!.id,
         ));
       },
-      tileColor: notification.seen
-          ? Theme.of(context).colorScheme.background
-          : Theme.of(context).colorScheme.surface,
+      tileColor: notification.seen ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.surface,
       leading: GestureDetector(
         onTap: () {
-          BlocProvider.of<UserDetailBloc>(context)
-              .add(GetUser(userID: notification.recipientId));
-          BlocProvider.of<NavigationBloc>(context)
-              .add(const OpenUserDetailScreen());
+          BlocProvider.of<UserDetailBloc>(context).add(GetUser(userID: notification.recipientId));
+          BlocProvider.of<NavigationBloc>(context).add(const OpenUserDetailScreen());
         },
         child: Padding(
           padding: const EdgeInsets.all(2),
@@ -140,8 +128,7 @@ class NotificationContainer extends StatelessWidget {
               size: const Size.fromRadius(20), // Image radius
               child: CdnImage(
                 url: notification.relatedUser!.profilePicture,
-                constraints: const BoxConstraints(
-                    maxWidth: 40, maxHeight: 40, minWidth: 40, minHeight: 40),
+                constraints: const BoxConstraints(maxWidth: 40, maxHeight: 40, minWidth: 40, minHeight: 40),
                 width: 150,
                 height: 150,
               ),
@@ -160,8 +147,7 @@ class NotificationContainer extends StatelessWidget {
           height: 80,
           child: CdnImage(
             url: notification.relatedPost!.image,
-            constraints: const BoxConstraints(
-                maxWidth: 30, maxHeight: 80, minWidth: 30, minHeight: 80),
+            constraints: const BoxConstraints(maxWidth: 30, maxHeight: 80, minWidth: 30, minHeight: 80),
             width: 150,
             height: 260,
           ),
@@ -181,16 +167,13 @@ class NotificationContainer extends StatelessWidget {
           },
         );
 
-        BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(
-            post: notification.relatedPost, user: notification.relatedUser));
+        BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(post: notification.relatedPost, user: notification.relatedUser));
 
         BlocProvider.of<NavigationBloc>(context).add(OpenPostDetailScreen(
           postId: notification.relatedPost!.id,
         ));
       },
-      tileColor: notification.seen
-          ? Theme.of(context).colorScheme.background
-          : Theme.of(context).colorScheme.surface,
+      tileColor: notification.seen ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.surface,
       leading: GestureDetector(
         onTap: () {},
         child: Padding(
@@ -201,8 +184,7 @@ class NotificationContainer extends StatelessWidget {
               size: const Size.fromRadius(20), // Image radius
               child: const CdnImage(
                 url: "https://storage.googleapis.com/superkauf/logos/logo1.png",
-                constraints: BoxConstraints(
-                    maxWidth: 40, maxHeight: 40, minWidth: 40, minHeight: 40),
+                constraints: BoxConstraints(maxWidth: 40, maxHeight: 40, minWidth: 40, minHeight: 40),
                 width: 150,
                 height: 150,
               ),
@@ -221,8 +203,7 @@ class NotificationContainer extends StatelessWidget {
           height: 80,
           child: CdnImage(
             url: notification.relatedPost!.image,
-            constraints: const BoxConstraints(
-                maxWidth: 30, maxHeight: 80, minWidth: 30, minHeight: 80),
+            constraints: const BoxConstraints(maxWidth: 30, maxHeight: 80, minWidth: 30, minHeight: 80),
             width: 150,
             height: 260,
           ),
@@ -242,9 +223,7 @@ class NotificationContainer extends StatelessWidget {
           },
         );
       },
-      tileColor: notification.seen
-          ? Theme.of(context).colorScheme.background
-          : Theme.of(context).colorScheme.surface,
+      tileColor: notification.seen ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.surface,
       leading: GestureDetector(
         onTap: () {},
         child: Padding(
@@ -254,10 +233,8 @@ class NotificationContainer extends StatelessWidget {
               child: SizedBox.fromSize(
                 size: const Size.fromRadius(20), // Image radius
                 child: const CdnImage(
-                  url:
-                      "https://storage.googleapis.com/superkauf/logos/logo1.png",
-                  constraints: BoxConstraints(
-                      maxWidth: 40, maxHeight: 40, minWidth: 40, minHeight: 40),
+                  url: "https://storage.googleapis.com/superkauf/logos/logo1.png",
+                  constraints: BoxConstraints(maxWidth: 40, maxHeight: 40, minWidth: 40, minHeight: 40),
                   width: 150,
                   height: 150,
                 ),
@@ -289,15 +266,11 @@ class NotificationContainer extends StatelessWidget {
 
         await launchUrl(link);
       },
-      tileColor: notification.seen
-          ? Theme.of(context).colorScheme.background
-          : Theme.of(context).colorScheme.surface,
+      tileColor: notification.seen ? Theme.of(context).colorScheme.background : Theme.of(context).colorScheme.surface,
       leading: Padding(
         padding: const EdgeInsets.all(2),
         child: CircleAvatar(
-          backgroundImage: CachedNetworkImageProvider(notification.image == null
-              ? "https://storage.googleapis.com/superkauf/logos/logo1.png"
-              : notification.image!),
+          backgroundImage: CachedNetworkImageProvider(notification.image == null ? "https://storage.googleapis.com/superkauf/logos/logo1.png" : notification.image!),
         ),
       ),
       title: Text(notification.text),

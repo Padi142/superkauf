@@ -12,7 +12,6 @@ import 'package:superkauf/generic/post/model/get_posts_body.dart';
 import 'package:superkauf/generic/post/model/models/get_personal_post_response.dart';
 import 'package:superkauf/generic/post/model/pagination_model.dart';
 import 'package:superkauf/generic/post/model/upload_post_image_params.dart';
-import 'package:superkauf/generic/post/model/upload_post_image_result.dart';
 import 'package:superkauf/generic/post/use_case/get_posts_by_user.dart';
 import 'package:superkauf/generic/settings/use_case/get_settings_use_case.dart';
 import 'package:superkauf/generic/user/model/update_user_body.dart';
@@ -34,7 +33,6 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   final UploadUserImageUseCase uploadUserImageUseCase;
   final GetPostsByUserUseCase getPostsByUserUseCase;
   final GetSettingsUseCase getSettingsUseCase;
-  final UploadUserS3ImageUseCase uploadUserS3ImageUseCase;
   final RefreshCurrentUserUseCase refreshCurrentUserUseCase;
 
   AccountBloc({
@@ -46,7 +44,6 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     required this.uploadUserImageUseCase,
     required this.getPostsByUserUseCase,
     required this.getSettingsUseCase,
-    required this.uploadUserS3ImageUseCase,
     required this.refreshCurrentUserUseCase,
   }) : super(const AccountState.loading()) {
     on<GetUser>(_onGetUser);
@@ -131,7 +128,8 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
 
     var shouldReturn = false;
 
-    final userResult = await getUserByUsernameUseCase.call(event.username.toLowerCase());
+    final userResult =
+        await getUserByUsernameUseCase.call(event.username.toLowerCase());
 
     userResult.map(
         success: (success) {
@@ -189,16 +187,13 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     }
 
     final path = '${user.id}/${user.username}';
-    final params = UploadImageParams(path: path, file: image);
+    final params = UploadImageParams(
+      path: path,
+      file: image,
+      userId: user.id,
+    );
 
-    late UploadImageResult result;
-    await Posthog().reloadFeatureFlags();
-    final isEnabled = await Posthog().isFeatureEnabled('use-supabase-storage');
-    if (isEnabled) {
-      result = await uploadUserImageUseCase.call(params);
-    } else {
-      result = await uploadUserS3ImageUseCase.call(params);
-    }
+    final result = await uploadUserImageUseCase.call(params);
 
     String imageLink = '';
     result.map(success: (success) {

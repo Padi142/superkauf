@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:superkauf/generic/upload/data/r2_upload_service.dart';
 import 'package:superkauf/generic/api/user_api.dart';
 import 'package:superkauf/generic/user/data/user_repository.dart';
 import 'package:superkauf/generic/user/use_case/create_user_use_case.dart';
@@ -57,15 +58,14 @@ class UserModule extends AppModule {
     );
 
     GetIt.I.registerFactory<UploadUserImageUseCase>(
-      () => UploadUserImageUseCase(),
-    );
-
-    GetIt.I.registerFactory<UploadUserS3ImageUseCase>(
-      () => UploadUserS3ImageUseCase(),
+      () => UploadUserImageUseCase(
+        uploadService: GetIt.I.get<R2UploadService>(),
+      ),
     );
 
     GetIt.I.registerFactory<RefreshCurrentUserUseCase>(
-      () => RefreshCurrentUserUseCase(repository: GetIt.I.get<UserRepository>()),
+      () =>
+          RefreshCurrentUserUseCase(repository: GetIt.I.get<UserRepository>()),
     );
   }
 

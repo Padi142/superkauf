@@ -97,7 +97,7 @@ Future<void> main() async {
 
   GetIt.I.allowReassignment = true;
 
-  Dio _dio(String endpoint) {
+  Dio dio0(String endpoint) {
     final Dio dio = Dio(
       BaseOptions(
         baseUrl: endpoint,
@@ -124,26 +124,29 @@ Future<void> main() async {
               GetIt.I.registerFactory<LocaleResource>(
                 () => LocaleResource(appConfig: config),
               );
-              GetIt.I.registerFactory<PostApi>(
-                  () => PostApi(_dio(config.endpoint)));
-              GetIt.I.registerFactory<UserApi>(
-                  () => UserApi(_dio(config.endpoint)));
+              GetIt.I.registerLazySingleton<Dio>(
+                () => dio0(config.endpoint),
+              );
+              GetIt.I
+                  .registerFactory<PostApi>(() => PostApi(GetIt.I.get<Dio>()));
+              GetIt.I
+                  .registerFactory<UserApi>(() => UserApi(GetIt.I.get<Dio>()));
               GetIt.I.registerFactory<StoreApi>(
-                  () => StoreApi(_dio(config.endpoint)));
+                  () => StoreApi(GetIt.I.get<Dio>()));
               GetIt.I.registerFactory<SavedPostsApi>(
-                  () => SavedPostsApi(_dio(config.endpoint)));
+                  () => SavedPostsApi(GetIt.I.get<Dio>()));
               GetIt.I.registerFactory<CommentApi>(
-                  () => CommentApi(_dio(config.endpoint)));
+                  () => CommentApi(GetIt.I.get<Dio>()));
               GetIt.I.registerFactory<ReportApi>(
-                  () => ReportApi(_dio(config.endpoint)));
+                  () => ReportApi(GetIt.I.get<Dio>()));
               GetIt.I.registerFactory<NotificationApi>(
-                  () => NotificationApi(_dio(config.endpoint)));
+                  () => NotificationApi(GetIt.I.get<Dio>()));
               GetIt.I.registerFactory<ShoppingListApi>(
-                  () => ShoppingListApi(_dio(config.endpoint)));
+                  () => ShoppingListApi(GetIt.I.get<Dio>()));
               GetIt.I.registerFactory<LabelApi>(
-                  () => LabelApi(_dio(config.endpoint)));
+                  () => LabelApi(GetIt.I.get<Dio>()));
               GetIt.I.registerFactory<CountriesApi>(
-                  () => CountriesApi(_dio(config.endpoint)));
+                  () => CountriesApi(GetIt.I.get<Dio>()));
             },
           ));
 

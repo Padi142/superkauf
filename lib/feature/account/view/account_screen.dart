@@ -63,8 +63,7 @@ class _FeedScreenState extends State<AccountScreen> {
                           });
                         },
                         onUsernameChaneDone: (String username) {
-                          BlocProvider.of<AccountBloc>(context)
-                              .add(ChangeUsername(
+                          BlocProvider.of<AccountBloc>(context).add(ChangeUsername(
                             username: username,
                             user: loaded.user,
                           ));
@@ -73,8 +72,7 @@ class _FeedScreenState extends State<AccountScreen> {
                           });
                         },
                         onInstagramChangeDone: (String instagram) {
-                          BlocProvider.of<AccountBloc>(context)
-                              .add(ChangeInstagram(
+                          BlocProvider.of<AccountBloc>(context).add(ChangeInstagram(
                             instagram: instagram,
                             user: loaded.user,
                           ));
@@ -91,8 +89,7 @@ class _FeedScreenState extends State<AccountScreen> {
                     //   height: 10,
                     // ),
                     SliverGrid.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
                         mainAxisSpacing: 8.0,
                         crossAxisSpacing: 8.0,
@@ -103,14 +100,12 @@ class _FeedScreenState extends State<AccountScreen> {
                           tag: loaded.posts[index].post.id,
                           child: GestureDetector(
                             onTap: () {
-                              BlocProvider.of<PostDetailBloc>(context)
-                                  .add(InitialEvent(
+                              BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(
                                 post: loaded.posts[index].post,
                                 user: loaded.posts[index].user,
                               ));
 
-                              BlocProvider.of<NavigationBloc>(context)
-                                  .add(OpenPostDetailScreen(
+                              BlocProvider.of<NavigationBloc>(context).add(OpenPostDetailScreen(
                                 postId: loaded.posts[index].post.id,
                               ));
                             },

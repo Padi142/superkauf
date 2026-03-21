@@ -21,10 +21,8 @@ class PostAuthor extends StatelessWidget {
             padding: const EdgeInsets.all(2),
             child: GestureDetector(
               onTap: () {
-                BlocProvider.of<UserDetailBloc>(context)
-                    .add(InitialUserEvent(user: user));
-                BlocProvider.of<NavigationBloc>(context)
-                    .add(const OpenUserDetailScreen());
+                BlocProvider.of<UserDetailBloc>(context).add(InitialUserEvent(user: user));
+                BlocProvider.of<NavigationBloc>(context).add(const OpenUserDetailScreen());
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(80), // Image border

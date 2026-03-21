@@ -15,7 +15,6 @@ import 'package:superkauf/generic/post/model/create_post_model.dart';
 import 'package:superkauf/generic/post/model/post_model.dart';
 import 'package:superkauf/generic/post/model/update_post_image_body.dart';
 import 'package:superkauf/generic/post/model/upload_post_image_params.dart';
-import 'package:superkauf/generic/post/model/upload_post_image_result.dart';
 import 'package:superkauf/generic/post/use_case/create_post_use_case.dart';
 import 'package:superkauf/generic/post/use_case/update_post_image_use_case.dart';
 import 'package:superkauf/generic/post/use_case/upload_post_image_use_case.dart';
@@ -35,8 +34,6 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
   final GetStoresUseCase getStoresUseCase;
   final GetCurrentUserUseCase getCurrentUserUseCase;
   final UpdatePostImageUseCase updatePostImageUseCase;
-  final UploadS3PostImageUseCase uploadS3PostImageUseCase;
-  final UploadCloudinaryPostImage uploadCloudinaryPostImage;
   final GetLabelsUseCase getLabelsUseCase;
   final CreateLabelUseCase createLabelUseCase;
   final GetSettingsUseCase getSettingsUseCase;
@@ -50,8 +47,6 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     required this.getStoresUseCase,
     required this.getCurrentUserUseCase,
     required this.updatePostImageUseCase,
-    required this.uploadS3PostImageUseCase,
-    required this.uploadCloudinaryPostImage,
     required this.getLabelsUseCase,
     required this.createLabelUseCase,
     required this.getSettingsUseCase,
@@ -118,17 +113,13 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
   ) async {
     emit(const CreatePostState.uploading());
 
-    final params =
-        UploadImageParams(file: event.image, path: userID.toString());
+    final params = UploadImageParams(
+      file: event.image,
+      path: userID.toString(),
+      userId: userID,
+    );
 
-    late UploadImageResult result;
-    await Posthog().reloadFeatureFlags();
-    final isEnabled = await Posthog().isFeatureEnabled('use-supabase-storage');
-    if (isEnabled) {
-      result = await uploadPostImageUseCase.call(params);
-    } else {
-      result = await uploadCloudinaryPostImage.call(params);
-    }
+    final result = await uploadPostImageUseCase.call(params);
 
     var imageLink = '';
     result.map(

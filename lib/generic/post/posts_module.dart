@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:dio/dio.dart';
 import 'package:superkauf/generic/api/post_api.dart';
 import 'package:superkauf/generic/post/bloc/post_bloc.dart';
 import 'package:superkauf/generic/post/data/post_repository.dart';
@@ -14,6 +15,7 @@ import 'package:superkauf/generic/post/use_case/remove_reaction_use_case.dart';
 import 'package:superkauf/generic/post/use_case/update_post_image_use_case.dart';
 import 'package:superkauf/generic/post/use_case/update_post_use_case.dart';
 import 'package:superkauf/generic/post/use_case/upload_post_image_use_case.dart';
+import 'package:superkauf/generic/upload/data/r2_upload_service.dart';
 import 'package:superkauf/generic/report/user_case/create_report_use_case.dart';
 import 'package:superkauf/generic/saved_posts/use_case/create_saved_post_use_case.dart';
 import 'package:superkauf/generic/saved_posts/use_case/delete_saved_post_use_case.dart';
@@ -62,7 +64,9 @@ class PostModule extends AppModule {
     );
 
     GetIt.I.registerFactory<UploadPostImageUseCase>(
-      () => UploadPostImageUseCase(),
+      () => UploadPostImageUseCase(
+        uploadService: GetIt.I.get<R2UploadService>(),
+      ),
     );
 
     GetIt.I.registerFactory<CreatePostUseCase>(
@@ -110,12 +114,10 @@ class PostModule extends AppModule {
       () => GetTopPostsUseCase(repository: GetIt.I.get<PostsRepository>()),
     );
 
-    GetIt.I.registerFactory<UploadS3PostImageUseCase>(
-      () => UploadS3PostImageUseCase(),
-    );
-
-    GetIt.I.registerFactory<UploadCloudinaryPostImage>(
-      () => UploadCloudinaryPostImage(),
+    GetIt.I.registerLazySingleton<R2UploadService>(
+      () => R2UploadService(
+        dio: GetIt.I.get<Dio>(),
+      ),
     );
   }
 

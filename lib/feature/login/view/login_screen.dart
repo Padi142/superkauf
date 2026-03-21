@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
-import 'package:open_mail_app/open_mail_app.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
 import 'package:superkauf/feature/login/bloc/login_state.dart';
@@ -254,7 +253,7 @@ class RegisterView extends StatelessWidget {
                         color: Colors.white,
                       ),
                       onClick: () async {
-                        await OpenMailApp.openMailApp();
+                        // await OpenMailApp.openMailApp();
                       },
                     ),
                   )

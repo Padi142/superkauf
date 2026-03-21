@@ -32,8 +32,7 @@ class PostActionButtons extends StatelessWidget {
           case 'delete':
             {
               _showConfirmDeletion(context, () {
-                BlocProvider.of<PostBloc>(context).add(DeletePost(
-                    postId: post.id.toString(), author: post.author));
+                BlocProvider.of<PostBloc>(context).add(DeletePost(postId: post.id.toString(), author: post.author));
                 BlocProvider.of<FeedBloc>(context).add(const ReloadFeed());
                 Navigator.of(context).pop();
               });
@@ -85,8 +84,7 @@ class PostActionButtons extends StatelessWidget {
                   postId: post.id,
                 ),
               );
-              BlocProvider.of<SavedPostsPanelBloc>(context)
-                  .add(OpenSavedPostsPanel(
+              BlocProvider.of<SavedPostsPanelBloc>(context).add(OpenSavedPostsPanel(
                 storeId: post.store,
                 postId: post.id,
               ));

@@ -39,12 +39,8 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
 
   void _loadMoreListener() {
     scrollToRefreshListener(controller: _scrollController);
-    if (_scrollController.position.pixels >
-        _scrollController.position.maxScrollExtent - 300) {
-      if ((context.read<UserDetailBloc>().state is Loaded) &&
-          ((context.read<UserDetailBloc>().state as Loaded).isLoading ||
-              (context.read<UserDetailBloc>().state as Loaded).canLoadMore ==
-                  false)) {
+    if (_scrollController.position.pixels > _scrollController.position.maxScrollExtent - 300) {
+      if ((context.read<UserDetailBloc>().state is Loaded) && ((context.read<UserDetailBloc>().state as Loaded).isLoading || (context.read<UserDetailBloc>().state as Loaded).canLoadMore == false)) {
         return;
       }
       print('loading more');
@@ -93,8 +89,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                           ),
                         ),
                         SliverGrid.builder(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3,
                             mainAxisSpacing: 8.0,
                             crossAxisSpacing: 8.0,
@@ -105,14 +100,12 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                               tag: loaded.posts[index].post.id,
                               child: GestureDetector(
                                 onTap: () {
-                                  BlocProvider.of<PostDetailBloc>(context)
-                                      .add(InitialEvent(
+                                  BlocProvider.of<PostDetailBloc>(context).add(InitialEvent(
                                     post: loaded.posts[index].post,
                                     user: loaded.posts[index].user,
                                   ));
 
-                                  BlocProvider.of<NavigationBloc>(context)
-                                      .add(OpenPostDetailScreen(
+                                  BlocProvider.of<NavigationBloc>(context).add(OpenPostDetailScreen(
                                     postId: loaded.posts[index].post.id,
                                   ));
                                 },

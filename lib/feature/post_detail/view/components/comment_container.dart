@@ -44,13 +44,10 @@ class _CommentContainerState extends State<CommentContainer> {
     return InkWell(
       key: _widgetKey,
       onLongPress: () {
-        if (widget.currentUser == null ||
-            (widget.currentUser!.id != widget.comment.user.id &&
-                !widget.currentUser!.isAdmin)) {
+        if (widget.currentUser == null || (widget.currentUser!.id != widget.comment.user.id && !widget.currentUser!.isAdmin)) {
           return;
         }
-        final RenderBox renderBox =
-            _widgetKey.currentContext!.findRenderObject() as RenderBox;
+        final RenderBox renderBox = _widgetKey.currentContext!.findRenderObject() as RenderBox;
 
         showMenu(
           context: context,
@@ -66,8 +63,7 @@ class _CommentContainerState extends State<CommentContainer> {
                 value: 'delete',
                 child: const Text('Delete comment'),
                 onTap: () {
-                  BlocProvider.of<CommentBloc>(context).add(DeleteCommentEvent(
-                      post: widget.comment, postId: widget.postId));
+                  BlocProvider.of<CommentBloc>(context).add(DeleteCommentEvent(post: widget.comment, postId: widget.postId));
                 }),
           ],
         );
@@ -79,10 +75,8 @@ class _CommentContainerState extends State<CommentContainer> {
             children: [
               GestureDetector(
                 onTap: () {
-                  BlocProvider.of<UserDetailBloc>(context)
-                      .add(GetUser(userID: widget.comment.user.id));
-                  BlocProvider.of<NavigationBloc>(context)
-                      .add(const OpenUserDetailScreen());
+                  BlocProvider.of<UserDetailBloc>(context).add(GetUser(userID: widget.comment.user.id));
+                  BlocProvider.of<NavigationBloc>(context).add(const OpenUserDetailScreen());
                 },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(80), // Image border
@@ -90,11 +84,7 @@ class _CommentContainerState extends State<CommentContainer> {
                     size: const Size.fromRadius(16), // Image radius
                     child: CdnImage(
                       url: widget.comment.user.profilePicture,
-                      constraints: const BoxConstraints(
-                          maxWidth: 40,
-                          maxHeight: 40,
-                          minWidth: 40,
-                          minHeight: 40),
+                      constraints: const BoxConstraints(maxWidth: 40, maxHeight: 40, minWidth: 40, minHeight: 40),
                       width: 150,
                       height: 150,
                     ),
@@ -109,8 +99,7 @@ class _CommentContainerState extends State<CommentContainer> {
                   const Gap(
                     2,
                   ),
-                  GetCommentSubtype(
-                      reaction: widget.comment.comment.reaction?.type)
+                  GetCommentSubtype(reaction: widget.comment.comment.reaction?.type)
                 ],
               ),
               const Spacer(),
@@ -163,8 +152,7 @@ class _CommentContainerState extends State<CommentContainer> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 42),
-            child: ReplyButton(
-                postId: widget.postId, parentComment: widget.comment),
+            child: ReplyButton(postId: widget.postId, parentComment: widget.comment),
           ),
           const SizedBox(
             height: 20,
@@ -187,23 +175,11 @@ class GetCommentSubtype extends StatelessWidget {
     if (reaction == null) return const SizedBox.shrink();
     switch (reaction) {
       case 'bought':
-        return Text('mark_comment_as_bought'.tr(),
-            style: Theme.of(context)
-                .textTheme
-                .bodySmall!
-                .copyWith(color: Colors.green));
+        return Text('mark_comment_as_bought'.tr(), style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.green));
       case 'not_on_sale':
-        return Text('mark_comment_sale_end'.tr(),
-            style: Theme.of(context)
-                .textTheme
-                .bodySmall!
-                .copyWith(color: Colors.red));
+        return Text('mark_comment_sale_end'.tr(), style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.red));
       case 'sold_out':
-        return Text('mark_comment_as_sold_out'.tr(),
-            style: Theme.of(context)
-                .textTheme
-                .bodySmall!
-                .copyWith(color: Colors.orange));
+        return Text('mark_comment_as_sold_out'.tr(), style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.orange));
       default:
         return const SizedBox.shrink();
     }

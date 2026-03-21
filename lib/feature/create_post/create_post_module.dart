@@ -47,8 +47,6 @@ class CreatePostModule extends AppModule {
         getStoresUseCase: GetIt.I.get<GetStoresUseCase>(),
         getCurrentUserUseCase: GetIt.I.get<GetCurrentUserUseCase>(),
         updatePostImageUseCase: GetIt.I.get<UpdatePostImageUseCase>(),
-        uploadS3PostImageUseCase: GetIt.I.get<UploadS3PostImageUseCase>(),
-        uploadCloudinaryPostImage: GetIt.I.get<UploadCloudinaryPostImage>(),
         getLabelsUseCase: GetIt.I.get<GetLabelsUseCase>(),
         createLabelUseCase: GetIt.I.get<CreateLabelUseCase>(),
         getSettingsUseCase: GetIt.I.get<GetSettingsUseCase>(),

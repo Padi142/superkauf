@@ -23,12 +23,10 @@ class StoreCarousel extends StatefulWidget {
 }
 
 class _StoreCarouselState extends State<StoreCarousel> {
-  int _currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return FlutterCarousel(
-      options: CarouselOptions(
+      options: FlutterCarouselOptions(
         height: widget.height,
         viewportFraction: 0.6,
         showIndicator: true,

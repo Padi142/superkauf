@@ -19,8 +19,7 @@ class CreateReportBody extends Equatable {
     required this.reason,
   });
 
-  factory CreateReportBody.fromJson(Map<String, dynamic> json) =>
-      _$CreateReportBodyFromJson(json);
+  factory CreateReportBody.fromJson(Map<String, dynamic> json) => _$CreateReportBodyFromJson(json);
 
   Map<String, dynamic> toJson() => _$CreateReportBodyToJson(this);
 
@@ -30,6 +29,6 @@ class CreateReportBody extends Equatable {
         reportedComment,
         reportedPost,
         reportedBy,
-    reason,
+        reason,
       ];
 }

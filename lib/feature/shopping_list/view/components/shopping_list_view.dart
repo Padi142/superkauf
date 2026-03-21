@@ -46,8 +46,7 @@ class _ShoppingListViewState extends State<ShoppingListView> {
                 width: widget.constraints.maxWidth * 0.1,
                 child: IconButton(
                     onPressed: () {
-                      BlocProvider.of<ShoppingListBloc>(context)
-                          .add(const InitialListEvent());
+                      BlocProvider.of<ShoppingListBloc>(context).add(const InitialListEvent());
                     },
                     icon: const FaIcon(FontAwesomeIcons.arrowLeft)),
               ),
@@ -64,19 +63,14 @@ class _ShoppingListViewState extends State<ShoppingListView> {
                       width: widget.constraints.maxWidth * 0.25,
                       imageUrl: widget.list.list.logo,
                       fit: BoxFit.fitWidth,
-                      placeholder: (context, url) =>
-                          const Center(child: AppProgress()),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
+                      placeholder: (context, url) => const Center(child: AppProgress()),
+                      errorWidget: (context, url, error) => const Icon(Icons.error),
                     ),
                   ),
                 ),
               ),
               const Gap(2),
-              SizedBox(
-                  width: widget.constraints.maxWidth * 0.45,
-                  child: Text(widget.list.list.name,
-                      maxLines: 4, style: App.appTheme.textTheme.titleMedium)),
+              SizedBox(width: widget.constraints.maxWidth * 0.45, child: Text(widget.list.list.name, maxLines: 4, style: App.appTheme.textTheme.titleMedium)),
               ListActionButtons(
                 list: widget.list.list,
                 canEdit: widget.list.list.createdBy == widget.userId,
@@ -156,8 +150,7 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
       duration: const Duration(milliseconds: 300),
       child: ListTile(
         key: _widgetKey,
-        subtitle: Text(
-            '${widget.post.post.price}${App.appConfig.settings.country.currency}'),
+        subtitle: Text('${widget.post.post.price}${App.appConfig.settings.country.currency}'),
         leading: Padding(
           padding: const EdgeInsets.all(1),
           child: GestureDetector(
@@ -182,17 +175,12 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
                         elevation: 6,
                         borderRadius: BorderRadius.circular(6),
                         child: ClipRRect(
-                          borderRadius:
-                              BorderRadius.circular(6), // Image border
+                          borderRadius: BorderRadius.circular(6), // Image border
                           child: SizedBox.fromSize(
                             size: const Size.fromRadius(28), // Image radius
                             child: CdnImage(
                               url: widget.post.post.image,
-                              constraints: const BoxConstraints(
-                                  maxWidth: 40,
-                                  maxHeight: 40,
-                                  minWidth: 40,
-                                  minHeight: 40),
+                              constraints: const BoxConstraints(maxWidth: 40, maxHeight: 40, minWidth: 40, minHeight: 40),
                               width: 150,
                               height: 150,
                             ),
@@ -212,11 +200,7 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
                         size: const Size.fromRadius(12), // Image radius
                         child: CdnImage(
                           url: widget.addedBy.profilePicture,
-                          constraints: const BoxConstraints(
-                              maxWidth: 40,
-                              maxHeight: 40,
-                              minWidth: 40,
-                              minHeight: 40),
+                          constraints: const BoxConstraints(maxWidth: 40, maxHeight: 40, minWidth: 40, minHeight: 40),
                           width: 150,
                           height: 150,
                         ),
@@ -233,11 +217,8 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
-            decoration:
-                isCompleted ? TextDecoration.lineThrough : TextDecoration.none,
-            color: isCompleted
-                ? Colors.grey
-                : Theme.of(context).textTheme.titleMedium!.color,
+            decoration: isCompleted ? TextDecoration.lineThrough : TextDecoration.none,
+            color: isCompleted ? Colors.grey : Theme.of(context).textTheme.titleMedium!.color,
           ),
         ),
         trailing: Checkbox(
@@ -255,15 +236,13 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
         ),
         onTap: () {},
         onLongPress: () {
-          final RenderBox renderBox =
-              _widgetKey.currentContext!.findRenderObject() as RenderBox;
+          final RenderBox renderBox = _widgetKey.currentContext!.findRenderObject() as RenderBox;
           showMenu(
             context: context,
             position: RelativeRect.fromRect(
               Rect.fromPoints(
                 renderBox.localToGlobal(Offset.zero),
-                renderBox
-                    .localToGlobal(renderBox.size.bottomRight(Offset.zero)),
+                renderBox.localToGlobal(renderBox.size.bottomRight(Offset.zero)),
               ),
               Offset.zero & MediaQuery.of(context).size,
             ),
@@ -272,11 +251,9 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
                   value: 'delete',
                   child: const Text('Delete post'),
                   onTap: () {
-                    BlocProvider.of<PostBloc>(context)
-                        .add(RemoveSavedPost(postId: widget.post.post.id));
+                    BlocProvider.of<PostBloc>(context).add(RemoveSavedPost(postId: widget.post.post.id));
 
-                    BlocProvider.of<ShoppingListBloc>(context)
-                        .add(PickShoppingList(shoppingListId: widget.listId));
+                    BlocProvider.of<ShoppingListBloc>(context).add(PickShoppingList(shoppingListId: widget.listId));
                   }),
             ],
           );

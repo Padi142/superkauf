@@ -33,7 +33,6 @@ class AccountModule extends AppModule {
         uploadUserImageUseCase: GetIt.I.get<UploadUserImageUseCase>(),
         getPostsByUserUseCase: GetIt.I.get<GetPostsByUserUseCase>(),
         getSettingsUseCase: GetIt.I.get<GetSettingsUseCase>(),
-        uploadUserS3ImageUseCase: GetIt.I.get<UploadUserS3ImageUseCase>(),
         refreshCurrentUserUseCase: GetIt.I.get<RefreshCurrentUserUseCase>(),
       ),
     );
