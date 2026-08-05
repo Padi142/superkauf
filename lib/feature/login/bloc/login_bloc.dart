@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:superkauf/feature/account/use_case/account_navigation.dart';
 import 'package:superkauf/feature/login/model/login_params.dart';
@@ -9,6 +10,7 @@ import 'package:superkauf/feature/login/use_case/email_register_use_case.dart';
 import 'package:superkauf/feature/login/use_case/login_navigation.dart';
 import 'package:superkauf/generic/user/model/create_user_body.dart';
 import 'package:superkauf/generic/user/use_case/create_user_use_case.dart';
+import 'package:superkauf/generic/user/use_case/get_user_by_uid_use_case.dart';
 
 import '../use_case/apple_login.dart';
 import '../use_case/discord_login.dart';
@@ -26,6 +28,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final EmailLoginUseCase emailLoginUseCase;
   final AccountNavigation accountNavigation;
   final CreateUserUseCase createUserUseCase;
+  final GetUserByUidUseCase getUserByUidUseCase;
   final LoginNavigation loginNavigation;
   final EmailRegisterUseCase emailRegisterUseCase;
 
@@ -37,6 +40,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     required this.emailLoginUseCase,
     required this.loginNavigation,
     required this.createUserUseCase,
+    required this.getUserByUidUseCase,
     required this.accountNavigation,
     required this.emailRegisterUseCase,
   }) : super(const LoginState.loading()) {
@@ -56,19 +60,29 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async {
     emit(const LoginState.loginInProgress());
 
-    final params = LoginParams(email: event.email, password: event.password);
-    final response = await emailLoginUseCase.call(params);
-    if (response == null || response.session == null) {
-      emit(const LoginState.error('There was an error logging in. Please try again.'));
+    try {
+      final params = LoginParams(email: event.email, password: event.password);
+      final response = await emailLoginUseCase.call(params);
+      if (response == null || response.session == null) {
+        emit(const LoginState.error(
+            'There was an error logging in. Please try again.'));
+        emit(const LoginState.loading());
+        return;
+      }
+
+      Posthog().capture(eventName: 'user_logged_in', properties: {
+        'login_type': 'email',
+      });
+
+      accountNavigation.goToAccount();
+    } on AuthException catch (error) {
+      emit(LoginState.error(error.message));
       emit(const LoginState.loading());
-      return;
+    } catch (_) {
+      emit(const LoginState.error(
+          'There was an error logging in. Please try again.'));
+      emit(const LoginState.loading());
     }
-
-    Posthog().capture(eventName: 'user_logged_in', properties: {
-      'login_type': 'email',
-    });
-
-    accountNavigation.goToAccount();
   }
 
   Future<void> _onEmailRegisterEvent(
@@ -77,23 +91,33 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async {
     emit(const LoginState.loginInProgress());
 
-    final params = LoginParams(email: event.email, password: event.password);
-    final response = await emailRegisterUseCase.call(params);
-    if (response == null) {
-      emit(const LoginState.error('There was an error registering you. Please try again.'));
+    try {
+      final params = LoginParams(email: event.email, password: event.password);
+      final response = await emailRegisterUseCase.call(params);
+      if (response == null) {
+        emit(const LoginState.error(
+            'There was an error registering you. Please try again.'));
+        emit(const LoginState.loading());
+        return;
+      }
+
+      Posthog().capture(eventName: 'user_registered', properties: {
+        'login_type': 'email',
+      });
+
+      // Posthog().capture(eventName: 'user_logged_in', properties: {
+      //   'login_type': 'email',
+      // });
+
+      emit(const LoginState.confirmEmail());
+    } on AuthException catch (error) {
+      emit(LoginState.error(error.message));
       emit(const LoginState.loading());
-      return;
+    } catch (_) {
+      emit(const LoginState.error(
+          'There was an error registering you. Please try again.'));
+      emit(const LoginState.loading());
     }
-
-    Posthog().capture(eventName: 'user_registered', properties: {
-      'login_type': 'email',
-    });
-
-    // Posthog().capture(eventName: 'user_logged_in', properties: {
-    //   'login_type': 'email',
-    // });
-
-    emit(const LoginState.confirmEmail());
   }
 
   Future<void> _onDiscordLogin(
@@ -111,16 +135,20 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     GoogleLogin event,
     Emitter<LoginState> emit,
   ) async {
+    emit(const LoginState.loginInProgress());
+
     try {
       await googleLoginUseCase.call();
+
+      Posthog().capture(eventName: 'user_logged_in', properties: {
+        'login_type': 'google',
+      });
     } catch (e) {
       print(e);
-      emit(const LoginState.error('There was an error logging you in with google. Please try another provider.'));
+      emit(const LoginState.error(
+          'There was an error logging you in with Google. Please try again.'));
     }
 
-    Posthog().capture(eventName: 'user_logged_in', properties: {
-      'login_type': 'google',
-    });
     emit(const LoginState.loading());
   }
 
@@ -128,11 +156,25 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     AppleLogin event,
     Emitter<LoginState> emit,
   ) async {
-    await appleLoginUseCase.call();
+    emit(const LoginState.loginInProgress());
 
-    Posthog().capture(eventName: 'user_logged_in', properties: {
-      'login_type': 'apple',
-    });
+    try {
+      await appleLoginUseCase.call();
+
+      Posthog().capture(eventName: 'user_logged_in', properties: {
+        'login_type': 'apple',
+      });
+    } on SignInWithAppleAuthorizationException catch (error) {
+      if (error.code != AuthorizationErrorCode.canceled) {
+        emit(const LoginState.error(
+            'There was an error logging you in with Apple. Please try again.'));
+      }
+    } catch (_) {
+      emit(const LoginState.error(
+          'There was an error logging you in with Apple. Please try again.'));
+    }
+
+    emit(const LoginState.loading());
   }
 
   Future<void> _onSpotifyEvent(
@@ -146,29 +188,55 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     CreateUserProfile event,
     Emitter<LoginState> emit,
   ) async {
+    emit(const LoginState.loginInProgress());
+
     final supabase = Supabase.instance.client;
     final session = supabase.auth.currentSession;
     if (session == null) {
+      emit(const LoginState.loading());
       return;
     }
 
-    final params = CreateUserBody(username: 'somarek123', supabaseUid: session.user.id);
-    final result = await createUserUseCase.call(params);
+    final existingUserResult = await getUserByUidUseCase.call(session.user.id);
+    var appUser = existingUserResult.when(
+      success: (user) => user,
+      failure: (_) => null,
+    );
 
-    result.map(success: (success) {
-      Posthog().identify(userId: success.user.id.toString(), userProperties: {
-        "supabase_uid": session.user.id,
-        "username": success.user.username,
-      });
+    if (appUser == null) {
+      final params = CreateUserBody(
+        username: _fallbackUsername(session.user.id),
+        supabaseUid: session.user.id,
+      );
+      final createResult = await createUserUseCase.call(params);
+      appUser = createResult.when(
+        success: (user) => user,
+        failure: (_) => null,
+      );
+    }
 
-      // Posthog().capture(eventName: 'user_signed_up', properties: {
-      //   'login_type': 'email',
-      // });
+    if (appUser == null) {
+      await supabase.auth.signOut();
+      emit(const LoginState.error(
+          'Your login succeeded, but your profile could not be loaded. Please try again.'));
+      emit(const LoginState.loading());
+      return;
+    }
 
-      accountNavigation.goToAccount();
-    }, failure: (failure) {
-      print(failure);
+    Posthog().identify(userId: appUser.id.toString(), userProperties: {
+      'supabase_uid': session.user.id,
+      'username': appUser.username,
     });
+
+    if (event.returnPath == null) {
+      accountNavigation.goToAccount();
+    } else {
+      loginNavigation.goBack(event.returnPath!);
+    }
+  }
+
+  String _fallbackUsername(String userId) {
+    return 'user_${userId.replaceAll('-', '').substring(0, 12)}';
   }
 
   Future<void> _onGoBack(

@@ -23,6 +23,13 @@ class AccountActionsButton extends StatelessWidget {
       // Icon for three dots
       onSelected: (String value) async {
         switch (value) {
+          case 'deleteMyAccount':
+            {
+              BlocProvider.of<AccountBloc>(context).add(
+                const LogOut(),
+              );
+              break;
+            }
           case 'logout':
             {
               BlocProvider.of<AccountBloc>(context).add(
@@ -32,7 +39,6 @@ class AccountActionsButton extends StatelessWidget {
             }
           case 'settings':
             {
-              print('mlem');
               BlocProvider.of<NavigationBloc>(context).add(
                 const OpenSettingsScreen(shouldReplace: true),
               );
@@ -65,7 +71,7 @@ class AccountActionsButton extends StatelessWidget {
               const SizedBox(
                 width: 8,
               ),
-              Text('change_username_button_text'.tr()),
+              Text('change_instagram_button_text'.tr()),
             ],
           ),
         ));
@@ -82,6 +88,26 @@ class AccountActionsButton extends StatelessWidget {
                 width: 8,
               ),
               Text('change_username_button_text'.tr()),
+            ],
+          ),
+        ));
+
+        list.add(PopupMenuItem<String>(
+          value: 'deleteMyAccount',
+          child: Row(
+            children: [
+              const Icon(
+                Icons.delete_outline,
+                color: Colors.red,
+                size: 20,
+              ),
+              const SizedBox(
+                width: 8,
+              ),
+              Text(
+                'delete_my_account_button_text'.tr(),
+                style: const TextStyle(color: Colors.red),
+              ),
             ],
           ),
         ));

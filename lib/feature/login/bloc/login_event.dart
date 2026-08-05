@@ -4,7 +4,7 @@ abstract class LoginEvent extends Equatable {
   const LoginEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class CallbackEvent extends LoginEvent {
@@ -42,7 +42,12 @@ class SpotifyEvent extends LoginEvent {
 }
 
 class CreateUserProfile extends LoginEvent {
-  const CreateUserProfile();
+  final String? returnPath;
+
+  const CreateUserProfile({this.returnPath});
+
+  @override
+  List<Object?> get props => [returnPath];
 }
 
 class GoBack extends LoginEvent {

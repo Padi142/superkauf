@@ -12,6 +12,7 @@ import 'package:superkauf/generic/post/bloc/post_bloc.dart';
 import 'package:superkauf/generic/post/model/get_post_response.dart';
 import 'package:superkauf/generic/post/model/models/get_personal_post_response.dart';
 import 'package:superkauf/generic/saved_posts/model/saved_post_model.dart';
+import 'package:superkauf/generic/user/model/user_model.dart';
 import 'package:superkauf/generic/user/view/username_label.dart';
 import 'package:superkauf/generic/widget/cdn_image.dart';
 
@@ -42,58 +43,56 @@ class _FeedPostContainerState extends State<FeedPostContainer> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final contentWidth = _feedCardWidth(screenWidth);
+    final avatarSize = _avatarSize(contentWidth);
+
     return Padding(
-      padding: const EdgeInsets.only(top: 20, left: 2, right: 8, bottom: 2),
-      child: SizedBox(
-          width: double.infinity,
+      padding: EdgeInsets.fromLTRB(
+        _outerHorizontalPadding(screenWidth),
+        20,
+        _outerHorizontalPadding(screenWidth),
+        2,
+      ),
+      child: Center(
+        child: SizedBox(
+          width: contentWidth,
           child: LayoutBuilder(builder: (context, constraints) {
             return Stack(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: 8.0,
-                  ),
+                  padding: const EdgeInsets.only(bottom: 8),
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        width: constraints.maxWidth * 0.1,
+                        width: avatarSize,
                         child: Padding(
-                          padding: const EdgeInsets.all(2),
+                          padding: const EdgeInsets.only(top: 2, right: 8),
                           child: GestureDetector(
                             onTap: () {
                               BlocProvider.of<UserDetailBloc>(context).add(InitialUserEvent(user: widget.post.user));
                               BlocProvider.of<UserDetailBloc>(context).add(GetUser(userID: widget.post.post.author));
                               BlocProvider.of<NavigationBloc>(context).add(const OpenUserDetailScreen());
                             },
-                            child: const Material(
+                            child: Material(
                               elevation: 4,
-                              shape: CircleBorder(),
-                              child: CircleAvatar(),
+                              shape: const CircleBorder(),
+                              child: SizedBox(
+                                width: avatarSize,
+                                height: avatarSize,
+                                child: const CircleAvatar(),
+                              ),
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: constraints.maxWidth * 0.89,
+                      Expanded(
                         child: Column(
                           children: [
-                            SizedBox(
-                              width: constraints.maxWidth * 0.89,
-                              child: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.end, children: [
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                UsernameLabel(user: widget.post.user),
-                                const Spacer(),
-                                TimeAgoWidget(
-                                  dateTime: widget.post.post.createdAt,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                              ]),
+                            _FeedPostHeader(
+                              user: widget.post.user,
+                              createdAt: widget.post.post.createdAt,
                             ),
                             PostContent(
                               post: widget.post,
@@ -121,7 +120,9 @@ class _FeedPostContainerState extends State<FeedPostContainer> {
                       ),
               ],
             );
-          })),
+          }),
+        ),
+      ),
     );
   }
 }
@@ -154,25 +155,32 @@ class _PersonalFeedPostContainerState extends State<PersonalFeedPostContainer> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final contentWidth = _feedCardWidth(screenWidth);
+    final avatarSize = _avatarSize(contentWidth);
+
     return Padding(
-      padding: const EdgeInsets.only(top: 20, left: 2, right: 8, bottom: 2),
-      child: SizedBox(
-          width: double.infinity,
+      padding: EdgeInsets.fromLTRB(
+        _outerHorizontalPadding(screenWidth),
+        20,
+        _outerHorizontalPadding(screenWidth),
+        2,
+      ),
+      child: Center(
+        child: SizedBox(
+          width: contentWidth,
           child: LayoutBuilder(builder: (context, constraints) {
             return Stack(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: 8.0,
-                  ),
+                  padding: const EdgeInsets.only(bottom: 8),
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        width: constraints.maxWidth * 0.1,
+                        width: avatarSize,
                         child: Padding(
-                          padding: const EdgeInsets.all(2),
+                          padding: const EdgeInsets.only(top: 2, right: 8),
                           child: GestureDetector(
                             onTap: () {
                               BlocProvider.of<UserDetailBloc>(context).add(GetUser(userID: widget.post.post.author));
@@ -182,39 +190,27 @@ class _PersonalFeedPostContainerState extends State<PersonalFeedPostContainer> {
                                 elevation: 4,
                                 shape: const CircleBorder(),
                                 child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(80), // Image border
-                                  child: SizedBox.fromSize(
-                                    size: const Size.fromRadius(16), // Image radius
+                                  borderRadius: BorderRadius.circular(avatarSize),
+                                  child: SizedBox(
+                                    width: avatarSize,
+                                    height: avatarSize,
                                     child: CdnImage(
                                       url: widget.post.user.profilePicture,
-                                      constraints: const BoxConstraints(maxWidth: 40, maxHeight: 40, minWidth: 40, minHeight: 40),
-                                      width: 150,
-                                      height: 150,
+                                      constraints: BoxConstraints.tightFor(width: avatarSize, height: avatarSize),
+                                      width: avatarSize.round(),
+                                      height: avatarSize.round(),
                                     ),
                                   ),
                                 )),
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: constraints.maxWidth * 0.89,
+                      Expanded(
                         child: Column(
                           children: [
-                            SizedBox(
-                              width: constraints.maxWidth * 0.89,
-                              child: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.end, children: [
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                UsernameLabel(user: widget.post.user),
-                                const Spacer(),
-                                TimeAgoWidget(
-                                  dateTime: widget.post.post.createdAt,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                              ]),
+                            _FeedPostHeader(
+                              user: widget.post.user,
+                              createdAt: widget.post.post.createdAt,
                             ),
                             PostContent(
                               post: FeedPostModel(
@@ -287,7 +283,9 @@ class _PersonalFeedPostContainerState extends State<PersonalFeedPostContainer> {
                       ),
               ],
             );
-          })),
+          }),
+        ),
+      ),
     );
   }
 }
@@ -312,6 +310,8 @@ class PostContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final imageHeight = _imageHeight(constraints.maxWidth);
+
     return GestureDetector(
       onDoubleTap: () {
         addReaction();
@@ -326,11 +326,11 @@ class PostContent extends StatelessWidget {
         elevation: 7,
         color: Theme.of(context).colorScheme.surface,
         child: Padding(
-          padding: const EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 6),
+          padding: const EdgeInsets.all(6),
           child: Column(
             children: [
               SizedBox(
-                height: 280,
+                height: imageHeight,
                 child: Stack(
                   children: [
                     FeedPostImage(
@@ -407,10 +407,9 @@ class PostContent extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(2),
-                        child: SizedBox(
-                          width: constraints.maxWidth * 0.79,
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(6),
                           child: Text(
                             post.post.description,
                             style: Theme.of(context).textTheme.bodyMedium,
@@ -427,6 +426,68 @@ class PostContent extends StatelessWidget {
       ),
     );
   }
+}
+
+class _FeedPostHeader extends StatelessWidget {
+  final UserModel user;
+  final DateTime createdAt;
+
+  const _FeedPostHeader({
+    required this.user,
+    required this.createdAt,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 6, right: 6, bottom: 6),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: UsernameLabel(user: user),
+            ),
+          ),
+          const SizedBox(width: 8),
+          TimeAgoWidget(dateTime: createdAt),
+        ],
+      ),
+    );
+  }
+}
+
+double _feedCardWidth(double screenWidth) {
+  if (screenWidth >= 1180) {
+    return 920;
+  }
+  if (screenWidth >= 900) {
+    return screenWidth * 0.82;
+  }
+  return screenWidth;
+}
+
+double _outerHorizontalPadding(double screenWidth) {
+  if (screenWidth >= 900) {
+    return 12;
+  }
+  return 2;
+}
+
+double _avatarSize(double contentWidth) {
+  return contentWidth >= 720 ? 52 : 40;
+}
+
+double _imageHeight(double width) {
+  final scaledHeight = width * 0.58;
+  if (scaledHeight < 260) {
+    return 260;
+  }
+  if (scaledHeight > 420) {
+    return 420;
+  }
+  return scaledHeight;
 }
 
 // class FeedPostContainer extends StatelessWidget {

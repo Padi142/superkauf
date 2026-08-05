@@ -40,7 +40,6 @@ class _FeedScreenState extends State<FeedScreen> {
       if ((context.read<FeedBloc>().state is Loaded) && ((context.read<FeedBloc>().state as Loaded).isLoading || (context.read<FeedBloc>().state as Loaded).canLoadMore == false)) {
         return;
       }
-      print('loading more');
       context.read<FeedBloc>().add(
             const LoadMore(),
           );

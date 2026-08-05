@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:superkauf/feature/home/bloc/navigation_bloc/navigation_bloc.dart';
 import 'package:superkauf/feature/login/bloc/login_state.dart';
 import 'package:superkauf/feature/snackbar/bloc/snackbar_bloc.dart';
 import 'package:superkauf/generic/constants.dart';
@@ -31,27 +31,29 @@ class LoginScreen extends Screen<String> {
   State<StatefulWidget> createState() => _InitScreenState();
 }
 
-class _InitScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin {
+class _InitScreenState extends State<LoginScreen>
+    with SingleTickerProviderStateMixin {
   bool _redirecting = false;
   late final StreamSubscription<AuthState> _authStateSubscription;
 
   @override
   void initState() {
     final supabase = Supabase.instance.client;
+    final loginBloc = BlocProvider.of<LoginBloc>(context);
+    final countriesBloc = BlocProvider.of<CountriesBloc>(context);
     _authStateSubscription = supabase.auth.onAuthStateChange.listen((data) {
+      if (data.event == AuthChangeEvent.signedOut) {
+        _redirecting = false;
+      }
       if (_redirecting) return;
       final session = data.session;
       if (session != null) {
         _redirecting = true;
-        BlocProvider.of<LoginBloc>(context).add(const CreateUserProfile());
-
-        if (widget.params == null) {
-          BlocProvider.of<NavigationBloc>(context).add(const OpenProfileScreen(shouldReplace: true));
-        } else {
-          BlocProvider.of<LoginBloc>(context).add(GoBack(path: widget.params!));
-        }
+        loginBloc.add(
+          CreateUserProfile(returnPath: widget.params),
+        );
       }
-      BlocProvider.of<CountriesBloc>(context).add(const GetCountries());
+      countriesBloc.add(const GetCountries());
     });
     controller = AnimationController(
       vsync: this,
@@ -109,13 +111,15 @@ class _InitScreenState extends State<LoginScreen> with SingleTickerProviderState
                                 width: constraints.maxWidth * 0.8,
                                 child: AppButton(
                                   text: 'Log in',
-                                  textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
+                                  textStyle: App.appTheme.textTheme.titleMedium!
+                                      .copyWith(color: Colors.white),
                                   onClick: () {
                                     controller.forward();
                                     showLogin = true;
                                     setState(() {});
                                   },
-                                  backgroundColor: App.appTheme.colorScheme.primary,
+                                  backgroundColor:
+                                      App.appTheme.colorScheme.primary,
                                   radius: 8,
                                   elevation: 10,
                                 ),
@@ -131,13 +135,15 @@ class _InitScreenState extends State<LoginScreen> with SingleTickerProviderState
                                 width: constraints.maxWidth * 0.8,
                                 child: AppButton(
                                   text: 'Register',
-                                  textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
+                                  textStyle: App.appTheme.textTheme.titleMedium!
+                                      .copyWith(color: Colors.white),
                                   onClick: () {
                                     controller.forward();
                                     showRegister = true;
                                     setState(() {});
                                   },
-                                  backgroundColor: App.appTheme.colorScheme.primary,
+                                  backgroundColor:
+                                      App.appTheme.colorScheme.primary,
                                   radius: 8,
                                   elevation: 10,
                                 ),
@@ -145,17 +151,28 @@ class _InitScreenState extends State<LoginScreen> with SingleTickerProviderState
                               const SizedBox(
                                 height: 40,
                               ),
-                              Text('By logging in you agree to our', style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.grey)),
+                              Text('By logging in you agree to our',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .copyWith(color: Colors.grey)),
                               GestureDetector(
                                 onTap: () async {
-                                  final url = Uri.parse('https://superkauf-api.krejzac.cz/terms');
+                                  final url = Uri.parse(
+                                      'https://superkauf-api.krejzac.cz/terms');
                                   // if (await canLaunchUrl(url)) {
                                   await launchUrl(url);
                                   // } else {
                                   //   // Handle the case where the URL cannot be launched
                                   // }
                                 },
-                                child: Text('Terms of Service', style: Theme.of(context).textTheme.titleMedium!.copyWith(color: App.appTheme.colorScheme.primary)),
+                                child: Text('Terms of Service',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .copyWith(
+                                            color: App
+                                                .appTheme.colorScheme.primary)),
                               ),
                             ],
                           ),
@@ -245,7 +262,8 @@ class RegisterView extends StatelessWidget {
                     width: 200,
                     child: AppButton(
                       text: 'open_email_button_text'.tr(),
-                      textStyle: App.appTheme.textTheme.titleMedium!.copyWith(color: Colors.white),
+                      textStyle: App.appTheme.textTheme.titleMedium!
+                          .copyWith(color: Colors.white),
                       radius: 8,
                       backgroundColor: App.appTheme.colorScheme.primary,
                       imagePrefix: const FaIcon(
@@ -304,6 +322,8 @@ class AuthProviders extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final showAppleSignIn = Platform.isIOS || Platform.isMacOS;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -314,10 +334,16 @@ class AuthProviders extends StatelessWidget {
           child: AppButton(
             backgroundColor: const Color(0xFF7289DA),
             radius: 6,
-            imagePrefix: SvgPicture.asset('assets/images/discord-icon.svg', width: 25, colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
+            imagePrefix: SvgPicture.asset('assets/images/discord-icon.svg',
+                width: 25,
+                colorFilter:
+                    const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
             spaceTextImage: 15,
             text: 'Discord',
-            textStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+            textStyle: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(color: Colors.white),
             onClick: () {
               BlocProvider.of<LoginBloc>(context).add(const DiscordLogin());
             },
@@ -326,34 +352,52 @@ class AuthProviders extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        SizedBox(
-          height: 50,
-          width: 330,
-          child: AppButton(
-            backgroundColor: Colors.black,
-            radius: 6,
-            imagePrefix: SvgPicture.asset('assets/images/apple-logo.svg', width: 25, colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
-            spaceTextImage: 15,
-            text: 'Apple',
-            textStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
-            onClick: () {
-              BlocProvider.of<LoginBloc>(context).add(const AppleLogin());
-            },
+        if (showAppleSignIn) ...[
+          SizedBox(
+            height: 50,
+            width: 330,
+            child: AppButton(
+              backgroundColor: Colors.black,
+              radius: 6,
+              imagePrefix: SvgPicture.asset(
+                'assets/images/apple-logo.svg',
+                width: 25,
+                colorFilter: const ColorFilter.mode(
+                  Colors.white,
+                  BlendMode.srcIn,
+                ),
+              ),
+              spaceTextImage: 15,
+              text: 'Apple',
+              textStyle: Theme.of(context)
+                  .textTheme
+                  .titleMedium!
+                  .copyWith(color: Colors.white),
+              onClick: () {
+                BlocProvider.of<LoginBloc>(context).add(const AppleLogin());
+              },
+            ),
           ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
+          const SizedBox(
+            height: 20,
+          ),
+        ],
         SizedBox(
           height: 50,
           width: 330,
           child: AppButton(
             backgroundColor: const Color(0xFF4285F4),
             radius: 6,
-            imagePrefix: SvgPicture.asset('assets/images/google-logo.svg', width: 25, colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
+            imagePrefix: SvgPicture.asset('assets/images/google-logo.svg',
+                width: 25,
+                colorFilter:
+                    const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
             spaceTextImage: 15,
             text: 'Google',
-            textStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+            textStyle: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(color: Colors.white),
             onClick: () {
               BlocProvider.of<LoginBloc>(context).add(const GoogleLogin());
             },
@@ -409,7 +453,8 @@ class _EmailLoginState extends State<EmailLogin> {
         BlocConsumer<LoginBloc, LoginState>(listener: (context, state) {
           state.maybeMap(
               error: (value) {
-                BlocProvider.of<SnackbarBloc>(context).add(ErrorSnackbar(message: value.message));
+                BlocProvider.of<SnackbarBloc>(context)
+                    .add(ErrorSnackbar(message: value.message));
               },
               orElse: () {});
         }, builder: (context, state) {
@@ -422,7 +467,10 @@ class _EmailLoginState extends State<EmailLogin> {
                 radius: 6,
                 enabled: false,
                 imagePrefix: const AppProgress(),
-                textStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+                textStyle: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(color: Colors.white),
                 onClick: () async {},
               ),
             );
@@ -434,9 +482,13 @@ class _EmailLoginState extends State<EmailLogin> {
                 backgroundColor: App.appTheme.colorScheme.primary,
                 radius: 6,
                 text: 'login_button_text'.tr(),
-                textStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+                textStyle: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(color: Colors.white),
                 onClick: () async {
-                  final valid = await TextEntryModel.validateFields([emailController, passwordController]);
+                  final valid = await TextEntryModel.validateFields(
+                      [emailController, passwordController]);
                   if (!valid) {
                     setState(() {});
                     return;
@@ -511,7 +563,8 @@ class _EmailRegisterState extends State<EmailRegister> {
         BlocConsumer<LoginBloc, LoginState>(listener: (context, state) {
           state.maybeMap(
               error: (value) {
-                BlocProvider.of<SnackbarBloc>(context).add(ErrorSnackbar(message: value.message));
+                BlocProvider.of<SnackbarBloc>(context)
+                    .add(ErrorSnackbar(message: value.message));
               },
               orElse: () {});
         }, builder: (context, state) {
@@ -524,7 +577,10 @@ class _EmailRegisterState extends State<EmailRegister> {
                 radius: 6,
                 enabled: false,
                 imagePrefix: const AppProgress(),
-                textStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+                textStyle: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(color: Colors.white),
                 onClick: () async {},
               ),
             );
@@ -536,9 +592,13 @@ class _EmailRegisterState extends State<EmailRegister> {
                 backgroundColor: App.appTheme.colorScheme.primary,
                 radius: 6,
                 text: 'register_button_text'.tr(),
-                textStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+                textStyle: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(color: Colors.white),
                 onClick: () async {
-                  final valid = await TextEntryModel.validateFields([emailController, passwordController]);
+                  final valid = await TextEntryModel.validateFields(
+                      [emailController, passwordController]);
                   if (!valid) {
                     setState(() {});
                     return;

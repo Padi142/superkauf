@@ -12,6 +12,7 @@ import 'package:superkauf/feature/login/view/login_screen.dart';
 import 'package:superkauf/generic/countries/bloc/countries_bloc.dart';
 
 import '../../generic/user/use_case/create_user_use_case.dart';
+import '../../generic/user/use_case/get_user_by_uid_use_case.dart';
 import '../../library/app_module.dart';
 import 'bloc/login_bloc.dart';
 
@@ -55,6 +56,7 @@ class LoginModule extends AppModule {
         accountNavigation: GetIt.I.get<AccountNavigation>(),
         loginNavigation: GetIt.I.get<LoginNavigation>(),
         createUserUseCase: GetIt.I.get<CreateUserUseCase>(),
+        getUserByUidUseCase: GetIt.I.get<GetUserByUidUseCase>(),
         emailRegisterUseCase: GetIt.I.get<EmailRegisterUseCase>(),
       ),
     );
